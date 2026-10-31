@@ -15,10 +15,14 @@ RSpec.describe "Concurrent searches" do
   it "isolates validation failures in a shared function registry" do
     ready = Queue.new
     release = Queue.new
+    expected_errors = Array.new(4)
     functions = JMESPath::Functions.default.with("nested", signature: [[:number]]) do |number|
       ready << true
       release.pop
       JMESPath.search("length(@)", number)
+    rescue JMESPath::Errors::InvalidTypeError => e
+      expected_errors[number] = e
+      raise
     end
     workers = 4.times.map do |index|
       Thread.new do
@@ -32,7 +36,7 @@ RSpec.describe "Concurrent searches" do
     4.times { release << true }
     errors = workers.map(&:value)
     expect(errors).to all(be_a(JMESPath::Errors::InvalidTypeError))
-    expect(errors.map(&:object_id).uniq.length).to eq(4)
+    errors.each_with_index { |error, index| expect(error).to equal(expected_errors[index]) }
   ensure
     workers&.each do |worker|
       worker.kill if worker.alive?
