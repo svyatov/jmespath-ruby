@@ -21,6 +21,12 @@ module JMESPath
     def equality: (AST::Node, value) -> bool
     def ordering: (AST::Node, value) -> bool?
     def list: (AST::Node, value) -> Array[value]?
+    def projection: (AST::Node, value) -> Array[value]?
+    def value_projection: (AST::Node, value) -> Array[value]?
+    def filter_projection: (AST::Node, value) -> Array[value]?
+    def project: (AST::Node, Array[value]?) -> Array[value]?
+    def flatten: (AST::Node, value) -> Array[value]?
+    def slice: (AST::Node, value) -> Array[value]?
     def mapping: (AST::Node, value) -> Hash[String, value]?
   end
 end

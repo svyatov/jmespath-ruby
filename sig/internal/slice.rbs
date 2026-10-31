@@ -1,0 +1,11 @@
+module JMESPath
+  class Slice
+    @start: Integer?
+    @stop: Integer?
+    @step: Integer
+    def initialize: (start: Integer?, stop: Integer?, step: Integer?) -> void
+    def apply: (Array[value]) -> Array[value]
+    private
+    def bound: (Integer?, Integer, Integer) -> Integer
+  end
+end

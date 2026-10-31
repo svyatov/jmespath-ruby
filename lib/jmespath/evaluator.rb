@@ -9,7 +9,9 @@ module JMESPath
       and: :boolean, or: :boolean, not: :negation?,
       eq: :equality, ne: :equality, lt: :ordering, lte: :ordering, gt: :ordering, gte: :ordering,
       multi_select_list: :list, multi_select_hash: :mapping,
-      function: :function, expression_reference: :reference
+      function: :function, expression_reference: :reference,
+      projection: :projection, value_projection: :value_projection,
+      filter_projection: :filter_projection, flatten: :flatten, slice: :slice
     }.freeze
 
     def initialize(functions:, disable_visit_errors: false)
@@ -28,3 +30,5 @@ end
 require_relative "evaluation/scalars"
 require_relative "evaluation/logic"
 require_relative "evaluation/construction"
+require_relative "evaluation/projections"
+require_relative "evaluation/slices"
