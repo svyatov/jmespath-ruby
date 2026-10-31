@@ -27,9 +27,7 @@ module JMESPath
       end
 
       def initialize(arguments, variadic: false)
-        unless arguments.all? { |types| !types.empty? && (types - TYPES).empty? }
-          raise ArgumentError, "Invalid function signature"
-        end
+        raise ArgumentError, "Invalid function signature" unless valid_definition?(arguments)
         raise ArgumentError, "Variadic signatures require an argument" if variadic && arguments.empty?
 
         @arguments = arguments.map { |types| types.dup.freeze }.freeze
@@ -51,6 +49,12 @@ module JMESPath
       end
 
       private
+
+      def valid_definition?(arguments)
+        arguments.is_a?(Array) && arguments.all? do |types|
+          types.is_a?(Array) && !types.empty? && (types - TYPES).empty?
+        end
+      end
 
       def valid_arity?(count)
         @variadic ? count >= @arguments.length : count == @arguments.length

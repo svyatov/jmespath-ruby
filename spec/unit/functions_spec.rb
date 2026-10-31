@@ -39,3 +39,17 @@ RSpec.describe "Custom function registries" do
     expect { empty.with("bad", signature: [], variadic: true) { nil } }.to raise_error(ArgumentError)
   end
 end
+
+RSpec.describe "Invalid custom function definitions" do
+  it "rejects names that cannot resolve from query text" do
+    [:example, nil, 42].each do |name|
+      expect { JMESPath::Functions.new.with(name, signature: []) { 1 } }.to raise_error(ArgumentError)
+    end
+  end
+
+  it "rejects malformed signature containers with the documented error" do
+    [nil, "number", [nil], [1], [["number"]]].each do |signature|
+      expect { JMESPath::Functions.new.with("example", signature: signature) { 1 } }.to raise_error(ArgumentError)
+    end
+  end
+end

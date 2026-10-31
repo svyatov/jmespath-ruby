@@ -24,6 +24,7 @@ module JMESPath
       def initialize: (Array[Array[Symbol]], ?variadic: bool) -> void
       def validate!: (Array[value], String, ?origin: Object?) -> void
       private
+      def valid_definition?: (value) -> bool
       def valid_arity?: (Integer) -> bool
       def matches?: (value, Symbol) -> bool?
       def array_matches?: (value, Symbol) -> bool?

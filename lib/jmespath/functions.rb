@@ -62,7 +62,9 @@ module JMESPath
     private
 
     def add(name, definition, override:)
-      raise ArgumentError, "Invalid function name" unless name.match?(/\A[A-Za-z_][A-Za-z0-9_]*\z/)
+      unless name.is_a?(String) && name.match?(/\A[A-Za-z_][A-Za-z0-9_]*\z/)
+        raise ArgumentError, "Invalid function name"
+      end
       raise ArgumentError, "Function #{name} is already registered" if @definitions.key?(name) && !override
 
       result = dup
