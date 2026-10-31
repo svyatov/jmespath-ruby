@@ -13,8 +13,21 @@ module JMESPath
         @children = children.freeze
         @start = start
         @finish = finish
-        @depth = (children.map(&:depth).max || -1) + 1
+        @depth = if kind == :literal
+                   self.class.literal_depth(value)
+                 else
+                   (children.map(&:depth).max || -1) + 1
+                 end
         freeze
+      end
+
+      def self.literal_depth(value)
+        values = case value
+                 when Array then value
+                 when Hash then value.values
+                 else return 0
+                 end
+        1 + (values.map { |entry| literal_depth(entry) }.max || 0)
       end
 
       def self.immutable(value)

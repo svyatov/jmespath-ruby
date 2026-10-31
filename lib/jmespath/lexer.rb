@@ -107,6 +107,8 @@ module JMESPath
 
     def literal(content)
       JSON.parse(content, max_nesting: @max_depth)
+    rescue JSON::NestingError
+      raise
     rescue JSON::ParserError
       JSON.parse("\"#{content.lstrip}\"", max_nesting: @max_depth)
     end

@@ -10,6 +10,7 @@ module JMESPath
       def self.new: (kind: Symbol, ?value: value, ?children: Array[Node], ?start: Integer, ?finish: Integer) -> instance
       def initialize: (kind: Symbol, ?value: value, ?children: Array[Node], ?start: Integer, ?finish: Integer) -> void
       def self.immutable: (value) -> value
+      def self.literal_depth: (value) -> Integer
     end
   end
   class Parser
