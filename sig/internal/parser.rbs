@@ -1,0 +1,62 @@
+module JMESPath
+  module AST
+    class Node
+      attr_reader kind: Symbol
+      attr_reader value: value
+      attr_reader children: Array[Node]
+      attr_reader start: Integer
+      attr_reader finish: Integer
+      attr_reader depth: Integer
+      def self.new: (kind: Symbol, ?value: value, ?children: Array[Node], ?start: Integer, ?finish: Integer) -> instance
+      def initialize: (kind: Symbol, ?value: value, ?children: Array[Node], ?start: Integer, ?finish: Integer) -> void
+      def self.immutable: (value) -> value
+    end
+  end
+  class Parser
+    POWER: Hash[Symbol, Integer]
+    PREFIX: Hash[Symbol, Symbol]
+    INFIX: Hash[Symbol, Symbol]
+    @source: String
+    @tokens: Array[Token]
+    @index: Integer
+    @level: Integer
+    @max_depth: Integer
+    def initialize: (String, ?max_depth: Integer) -> void
+    def parse: () -> AST::Node
+    private
+    def expression: (?Integer) -> AST::Node
+    def infix: (AST::Node, Token) -> AST::Node
+    def sequence: (Symbol, AST::Node, AST::Node) -> AST::Node
+    def node: (Symbol, ?value, ?Array[AST::Node], ?start: Integer?) -> AST::Node
+    def peek: () -> Token
+    def previous: () -> Token
+    def advance: () -> Token
+    def expect: (Symbol) -> Token
+    def separated: (Symbol, ?empty: bool) { () -> AST::Node } -> Array[AST::Node]
+    def syntax!: (String, ?Token) -> bot
+    def prefix_identifier: (Token) -> AST::Node
+    def prefix_literal: (Token) -> AST::Node
+    def prefix_current: (Token) -> AST::Node
+    def prefix_group: (Token) -> AST::Node
+    def prefix_not: (Token) -> AST::Node
+    def prefix_reference: (Token) -> AST::Node
+    def prefix_hash: (Token) -> AST::Node
+    def multi_select_list: (Token) -> AST::Node
+    def infix_function: (AST::Node, Token) -> AST::Node
+    def infix_dot: (AST::Node, Token) -> AST::Node
+    def dot_rhs: (Integer) -> AST::Node
+    def prefix_bracket: (Token) -> AST::Node
+    def infix_bracket: (AST::Node, Token) -> AST::Node
+    def bracket_body: (AST::Node) -> AST::Node
+    def index_or_slice: (AST::Node) -> AST::Node
+    def slice: (AST::Node, Integer?) -> AST::Node
+    def slice_step: () -> Integer?
+    def integer: () -> Integer
+    def prefix_star: (Token) -> AST::Node
+    def prefix_flatten: (Token) -> AST::Node
+    def infix_flatten: (AST::Node, Token) -> AST::Node
+    def prefix_filter: (Token) -> AST::Node
+    def infix_filter: (AST::Node, Token) -> AST::Node
+    def projection_rhs: (Integer) -> AST::Node
+  end
+end

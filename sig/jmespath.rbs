@@ -1,4 +1,5 @@
 module JMESPath
   VERSION: String
+  type value = Object?
   type json = nil | bool | Integer | Float | String | Array[json] | Hash[String, json]
 end
