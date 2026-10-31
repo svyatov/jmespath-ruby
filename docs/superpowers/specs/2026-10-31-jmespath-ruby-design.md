@@ -1,6 +1,6 @@
 # jmespath-ruby design
 
-Status: proposed, awaiting user approval.
+Status: approved by the user on 2026-10-31.
 
 ## Intent
 
@@ -17,7 +17,7 @@ The project must identify incompatible behavior before claiming replacement comp
 The user selected a fresh implementation with a compatibility layer, approach A1.
 The user selected the package name, require path, search entry point, and Ruby 3.3 minimum.
 The user requested RuboCop, crap4ruby, RSpec, and YARD documentation.
-Other choices below are implementation proposals for approval through this document.
+The user approved the remaining proposals through this document on 2026-10-31.
 
 ## Approaches
 
@@ -106,7 +106,7 @@ Preserve established extensions when they do not conflict with standard behavior
 Material conflicts affecting supported applications require a user decision before implementation proceeds in that area.
 Private implementation differences do not require compatibility wrappers.
 
-The following reference defects have a proposed resolution through approval of this design:
+The user approved the following corrections through this design:
 
 | Reference behavior | Proposed behavior | Compatibility consequence |
 | --- | --- | --- |
@@ -295,7 +295,7 @@ Install it in an isolated environment without development dependencies.
 Verify its require path, API, executables, packaged signatures, and documentation files.
 Exclude coverage, generated documentation, local caches, and development secrets from the gem.
 
-The proposed initial version is 0.1.0.
+The initial version is 0.1.0.
 Use Semantic Versioning and document the public compatibility surface.
 Dropping Ruby 3.3 support requires a major release after 1.0.
 
@@ -305,7 +305,7 @@ The implementation is complete only when required local checks pass and remainin
 
 ## Provenance and licenses
 
-Use MIT for authored code, subject to approval of this design.
+Use MIT for authored code.
 Preserve upstream license terms and attribution for imported fixtures or other copied material.
 jmespath.py uses MIT; jmespath.rb uses Apache-2.0.
 Verify the license of each imported path before copying it.
@@ -323,6 +323,5 @@ The builder chooses file layout, node representation, registry syntax, tool vers
 The builder also selects cache capacities and a documented nesting default, supported by tests and benchmarks.
 The implementation plan must make these choices concrete before their corresponding code is written.
 
-This document proposes full language support, custom functions, CLI compatibility, RBS/Steep, quality thresholds, and MIT licensing.
-Those proposals become requirements only when the user approves this document.
-Implementation starts after design approval and completion of the implementation plan.
+The approved scope includes full language support, custom functions, CLI compatibility, RBS/Steep, quality thresholds, and MIT licensing.
+Implementation starts after review of the implementation plan and selection of an execution method.
