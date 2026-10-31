@@ -28,12 +28,12 @@ Median milliseconds per 1,000 evaluations:
 
 | Workload | Search, new | Search, reference | Compiled, new | Compiled, reference |
 | --- | ---: | ---: | ---: | ---: |
-| Nested field | 3.700 | 13.995 | 1.962 | 0.751 |
-| Projection | 34.144 | 27.230 | 32.458 | 17.944 |
-| Filter | 77.085 | 51.176 | 74.001 | 39.887 |
-| Sort by key | 113.052 | 100.913 | 111.037 | 80.537 |
-| Slice | 8.288 | 18.489 | 6.271 | 3.140 |
-| Unicode | 5.507 | 17.025 | 3.557 | 0.969 |
+| Nested field | 3.989 | 14.331 | 2.044 | 0.774 |
+| Projection | 34.929 | 29.330 | 33.016 | 18.390 |
+| Filter | 78.222 | 53.317 | 75.015 | 39.641 |
+| Sort by key | 118.263 | 103.812 | 116.201 | 80.566 |
+| Slice | 8.339 | 18.306 | 6.406 | 3.195 |
+| Unicode | 7.200 | 17.579 | 4.023 | 0.970 |
 
 Convenience search improved in three workloads and regressed in three.
 Compiled reuse was slower than the reference in all six.
@@ -44,26 +44,26 @@ Source inspection identifies two likely costs: generic evaluator dispatch on eve
 Stable sorting also builds intermediate key/index pairs.
 These observations explain candidate optimization areas; they do not isolate each cost experimentally.
 The implementation retains its current architecture and semantics.
-No performance optimization was made during this comparison.
+Correctness fixes were included before this final measurement; no performance optimization was made during the comparison.
 
 Median allocated objects per 1,000 evaluations:
 
 | Workload | Search, new | Search, reference | Compiled, new | Compiled, reference |
 | --- | ---: | ---: | ---: | ---: |
-| Nested field | 19,007 | 78,012 | 9,007 | 4,007 |
-| Projection | 19,007 | 56,020 | 9,007 | 1,007 |
+| Nested field | 19,007 | 78,015 | 9,007 | 4,007 |
+| Projection | 19,007 | 56,022 | 9,007 | 1,007 |
 | Filter | 20,007 | 63,016 | 10,007 | 1,007 |
-| Sort by key | 333,007 | 230,012 | 323,007 | 109,007 |
-| Slice | 22,007 | 87,014 | 12,007 | 5,007 |
-| Unicode | 25,007 | 102,011 | 15,007 | 4,007 |
+| Sort by key | 335,007 | 230,019 | 325,007 | 109,007 |
+| Slice | 22,007 | 87,019 | 12,007 | 5,007 |
+| Unicode | 29,007 | 102,011 | 19,007 | 4,007 |
 
-Cold process startup plus one query had medians from 134 to 161 ms for the new library and 134 to 143 ms for the reference.
+Cold process startup plus one query had medians from 136 to 142 ms for the new library and 136 to 142 ms for the reference.
 Startup allocations measure only the query after library loading; startup time includes process creation, Bundler, loading, and the query.
 They are not total process allocation or memory measurements.
 
 Cache churn cycles through 320 distinct, equivalent expressions.
 This exceeds the new cache's 256-entry capacity but fits the reference's larger cache.
-New/reference median milliseconds were 40.317/43.549 for fields, 69.065/58.360 for projection, 113.641/81.334 for filters, 169.756/136.768 for sorting, 50.444/48.471 for slicing, and 53.364/48.235 for Unicode.
+New/reference median milliseconds were 41.551/45.149 for nested field, 72.462/60.136 for projection, 117.043/83.348 for filter, 174.178/135.781 for sort by key, 52.196/49.682 for slice, and 54.160/48.828 for unicode.
 This mode compares the documented cache policies under the same query stream, not equal cache capacities.
 
 ## Reproduce

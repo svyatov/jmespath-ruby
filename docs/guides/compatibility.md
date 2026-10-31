@@ -46,6 +46,7 @@ A callback's exception object and backtrace remain intact.
 | Missing or surplus arguments to `to_array` | InvalidArityError |
 | `min_by` or `max_by` on an empty array | nil |
 | Invalid trailing variadic arguments | InvalidTypeError |
+| Indexes beyond native machine integer range | nil, without a Ruby RangeError |
 
 Legacy bare backtick literals and ordering between strings remain supported.
 Numeric operations accept finite integers and floats; non-finite values are outside the JSON number domain.
@@ -55,6 +56,8 @@ Cyclic values raise InvalidValueError when structural comparison or serializatio
 
 Expression nesting defaults to 128 and can be reduced with `max_depth`.
 The maximum supported setting is 128.
+Nested arrays and objects in JSON literals count toward this limit.
+Compiled searches also check literal depth when a caller requests a lower limit.
 Flat field chains use iterative evaluation and do not consume that nesting budget per field.
 The compilation cache holds at most 256 entries and 1,048,576 source bytes.
 Oversized expressions bypass caching without becoming invalid.

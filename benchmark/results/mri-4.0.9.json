@@ -3,8 +3,8 @@
   "rounds": 5,
   "workload_sha256": "e970e035b16089dec9613f346e0c50a39d716fe08e42998825650ffdc5effacf",
   "source_sha256": {
-    "current": "f486d7177fa7ffe1e0508612edfd0866521ec0a84d7f4bac9aca020b0e0b0023",
-    "reference": "745a08e1e6fa5134b35b21078893da9ca93adf70b8ae1fd7887c4994f1812ed3"
+    "current": "993ccf1b24dee6836d84571b64cf718000fef0adbe5eb0c42019f1a0412a98c3",
+    "reference": "2f34b58022062f5e093f2f999c2a0ed6d41f04a687f85a57eedf6c9e36e88a86"
   },
   "measurements": [
     {
@@ -12,7 +12,7 @@
       "mode": "startup",
       "implementations": {
         "current": {
-          "seconds": 0.13403400010429323,
+          "seconds": 0.14226899994537234,
           "allocated_objects": 228,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -21,7 +21,7 @@
           },
           "samples": [
             {
-              "seconds": 0.13403400010429323,
+              "seconds": 0.1438770000822842,
               "allocated_objects": 228,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -30,7 +30,7 @@
               }
             },
             {
-              "seconds": 0.13529299991205335,
+              "seconds": 0.14226899994537234,
               "allocated_objects": 228,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -39,7 +39,7 @@
               }
             },
             {
-              "seconds": 0.13323999987915158,
+              "seconds": 0.1416220001410693,
               "allocated_objects": 228,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -48,7 +48,7 @@
               }
             },
             {
-              "seconds": 0.1330440000165254,
+              "seconds": 0.146894000004977,
               "allocated_objects": 228,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -57,7 +57,7 @@
               }
             },
             {
-              "seconds": 0.13706000009551644,
+              "seconds": 0.14186099986545742,
               "allocated_objects": 228,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -68,7 +68,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.13386399997398257,
+          "seconds": 0.14232799992896616,
           "allocated_objects": 206,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -77,7 +77,7 @@
           },
           "samples": [
             {
-              "seconds": 0.13386399997398257,
+              "seconds": 0.14129099994897842,
               "allocated_objects": 206,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -86,7 +86,7 @@
               }
             },
             {
-              "seconds": 0.13461800012737513,
+              "seconds": 0.14216799987480044,
               "allocated_objects": 206,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -95,7 +95,7 @@
               }
             },
             {
-              "seconds": 0.13365900004282594,
+              "seconds": 0.14232799992896616,
               "allocated_objects": 206,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -104,7 +104,7 @@
               }
             },
             {
-              "seconds": 0.13508399995043874,
+              "seconds": 0.1516429998446256,
               "allocated_objects": 206,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -113,7 +113,7 @@
               }
             },
             {
-              "seconds": 0.13183999992907047,
+              "seconds": 0.15082199987955391,
               "allocated_objects": 206,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -130,7 +130,7 @@
       "mode": "search",
       "implementations": {
         "current": {
-          "seconds": 0.003700000001117587,
+          "seconds": 0.0039889998733997345,
           "allocated_objects": 19007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -139,7 +139,7 @@
           },
           "samples": [
             {
-              "seconds": 0.003671000013127923,
+              "seconds": 0.004031999967992306,
               "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -148,7 +148,7 @@
               }
             },
             {
-              "seconds": 0.003700000001117587,
+              "seconds": 0.003957999870181084,
               "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -157,7 +157,7 @@
               }
             },
             {
-              "seconds": 0.0037200001534074545,
+              "seconds": 0.0039889998733997345,
               "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -166,7 +166,7 @@
               }
             },
             {
-              "seconds": 0.00368200009688735,
+              "seconds": 0.0038960000965744257,
               "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -175,7 +175,7 @@
               }
             },
             {
-              "seconds": 0.003780999919399619,
+              "seconds": 0.004175999900326133,
               "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -186,8 +186,8 @@
           ]
         },
         "reference": {
-          "seconds": 0.01399499992839992,
-          "allocated_objects": 78012,
+          "seconds": 0.014330999925732613,
+          "allocated_objects": 78015,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -195,8 +195,8 @@
           },
           "samples": [
             {
-              "seconds": 0.014309999998658895,
-              "allocated_objects": 78011,
+              "seconds": 0.013959999894723296,
+              "allocated_objects": 78015,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -204,8 +204,8 @@
               }
             },
             {
-              "seconds": 0.013190000085160136,
-              "allocated_objects": 78012,
+              "seconds": 0.014462999999523163,
+              "allocated_objects": 78015,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -213,8 +213,8 @@
               }
             },
             {
-              "seconds": 0.013835000107064843,
-              "allocated_objects": 78012,
+              "seconds": 0.014330999925732613,
+              "allocated_objects": 78013,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -222,8 +222,8 @@
               }
             },
             {
-              "seconds": 0.01447700010612607,
-              "allocated_objects": 78012,
+              "seconds": 0.014007000019773841,
+              "allocated_objects": 78013,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -231,8 +231,8 @@
               }
             },
             {
-              "seconds": 0.01399499992839992,
-              "allocated_objects": 78012,
+              "seconds": 0.015429000137373805,
+              "allocated_objects": 78015,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -248,7 +248,7 @@
       "mode": "compiled",
       "implementations": {
         "current": {
-          "seconds": 0.001962000038474798,
+          "seconds": 0.0020439999643713236,
           "allocated_objects": 9007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -257,7 +257,7 @@
           },
           "samples": [
             {
-              "seconds": 0.001955999992787838,
+              "seconds": 0.002025000052526593,
               "allocated_objects": 9007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -266,7 +266,7 @@
               }
             },
             {
-              "seconds": 0.0019570000004023314,
+              "seconds": 0.0020439999643713236,
               "allocated_objects": 9007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -275,7 +275,7 @@
               }
             },
             {
-              "seconds": 0.0020409999415278435,
+              "seconds": 0.0021609999239444733,
               "allocated_objects": 9007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -284,7 +284,7 @@
               }
             },
             {
-              "seconds": 0.002167999977245927,
+              "seconds": 0.002067999914288521,
               "allocated_objects": 9007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -293,7 +293,7 @@
               }
             },
             {
-              "seconds": 0.001962000038474798,
+              "seconds": 0.0019970000721514225,
               "allocated_objects": 9007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -304,7 +304,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.0007509998977184296,
+          "seconds": 0.0007740000728517771,
           "allocated_objects": 4007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -313,7 +313,7 @@
           },
           "samples": [
             {
-              "seconds": 0.0007619999814778566,
+              "seconds": 0.000780999893322587,
               "allocated_objects": 4007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -322,7 +322,7 @@
               }
             },
             {
-              "seconds": 0.0007479998748749495,
+              "seconds": 0.0008010000456124544,
               "allocated_objects": 4007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -331,7 +331,7 @@
               }
             },
             {
-              "seconds": 0.0007509998977184296,
+              "seconds": 0.0007740000728517771,
               "allocated_objects": 4007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -340,7 +340,7 @@
               }
             },
             {
-              "seconds": 0.0007470001000910997,
+              "seconds": 0.0007690000347793102,
               "allocated_objects": 4007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -349,7 +349,7 @@
               }
             },
             {
-              "seconds": 0.0007760000880807638,
+              "seconds": 0.0007539999205619097,
               "allocated_objects": 4007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -366,7 +366,7 @@
       "mode": "churn",
       "implementations": {
         "current": {
-          "seconds": 0.04031699988991022,
+          "seconds": 0.041550999972969294,
           "allocated_objects": 72953,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -375,7 +375,7 @@
           },
           "samples": [
             {
-              "seconds": 0.04031699988991022,
+              "seconds": 0.04187999991700053,
               "allocated_objects": 72953,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -384,7 +384,7 @@
               }
             },
             {
-              "seconds": 0.04062799992971122,
+              "seconds": 0.04149700002744794,
               "allocated_objects": 72953,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -393,7 +393,7 @@
               }
             },
             {
-              "seconds": 0.03970499988645315,
+              "seconds": 0.041550999972969294,
               "allocated_objects": 72953,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -402,7 +402,7 @@
               }
             },
             {
-              "seconds": 0.03963800007477403,
+              "seconds": 0.041824999963864684,
               "allocated_objects": 72953,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -411,7 +411,7 @@
               }
             },
             {
-              "seconds": 0.04047299991361797,
+              "seconds": 0.040837000124156475,
               "allocated_objects": 72953,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -422,7 +422,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.04354900005273521,
+          "seconds": 0.04514900012873113,
           "allocated_objects": 233909,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -431,7 +431,7 @@
           },
           "samples": [
             {
-              "seconds": 0.04354900005273521,
+              "seconds": 0.056077999994158745,
               "allocated_objects": 233909,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -440,7 +440,7 @@
               }
             },
             {
-              "seconds": 0.04249999998137355,
+              "seconds": 0.04575599986128509,
               "allocated_objects": 233909,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -449,7 +449,7 @@
               }
             },
             {
-              "seconds": 0.04315900010988116,
+              "seconds": 0.04495299980044365,
               "allocated_objects": 233909,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -458,7 +458,7 @@
               }
             },
             {
-              "seconds": 0.04356499994173646,
+              "seconds": 0.04446200001984835,
               "allocated_objects": 233909,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -467,7 +467,7 @@
               }
             },
             {
-              "seconds": 0.044242999982088804,
+              "seconds": 0.04514900012873113,
               "allocated_objects": 233909,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -484,7 +484,7 @@
       "mode": "startup",
       "implementations": {
         "current": {
-          "seconds": 0.16074500000104308,
+          "seconds": 0.14014500007033348,
           "allocated_objects": 232,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -493,7 +493,7 @@
           },
           "samples": [
             {
-              "seconds": 0.14241000008769333,
+              "seconds": 0.13770099985413253,
               "allocated_objects": 232,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -502,7 +502,7 @@
               }
             },
             {
-              "seconds": 0.22693199990317225,
+              "seconds": 0.14014500007033348,
               "allocated_objects": 232,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -511,7 +511,7 @@
               }
             },
             {
-              "seconds": 0.2688649999909103,
+              "seconds": 0.13873700005933642,
               "allocated_objects": 232,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -520,7 +520,7 @@
               }
             },
             {
-              "seconds": 0.16074500000104308,
+              "seconds": 0.16228000004775822,
               "allocated_objects": 232,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -529,7 +529,7 @@
               }
             },
             {
-              "seconds": 0.13079400011338294,
+              "seconds": 0.15736700012348592,
               "allocated_objects": 232,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -540,7 +540,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.14313900005072355,
+          "seconds": 0.13900900003500283,
           "allocated_objects": 173,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -549,7 +549,7 @@
           },
           "samples": [
             {
-              "seconds": 0.14313900005072355,
+              "seconds": 0.13900900003500283,
               "allocated_objects": 173,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -558,7 +558,7 @@
               }
             },
             {
-              "seconds": 0.1421660000924021,
+              "seconds": 0.14118200005032122,
               "allocated_objects": 173,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -567,7 +567,7 @@
               }
             },
             {
-              "seconds": 0.18210599990561604,
+              "seconds": 0.13788199983537197,
               "allocated_objects": 173,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -576,7 +576,7 @@
               }
             },
             {
-              "seconds": 0.14773500012233853,
+              "seconds": 0.13752000010572374,
               "allocated_objects": 173,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -585,7 +585,7 @@
               }
             },
             {
-              "seconds": 0.1334540001116693,
+              "seconds": 0.14246600004844368,
               "allocated_objects": 173,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -602,7 +602,7 @@
       "mode": "search",
       "implementations": {
         "current": {
-          "seconds": 0.034143999917432666,
+          "seconds": 0.034928999841213226,
           "allocated_objects": 19007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -611,7 +611,7 @@
           },
           "samples": [
             {
-              "seconds": 0.034336999990046024,
+              "seconds": 0.034629999892786145,
               "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -620,7 +620,7 @@
               }
             },
             {
-              "seconds": 0.034143999917432666,
+              "seconds": 0.03460399992763996,
               "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -629,7 +629,7 @@
               }
             },
             {
-              "seconds": 0.03402200015261769,
+              "seconds": 0.035767999943345785,
               "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -638,7 +638,7 @@
               }
             },
             {
-              "seconds": 0.03381499997340143,
+              "seconds": 0.0349479999858886,
               "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -647,7 +647,7 @@
               }
             },
             {
-              "seconds": 0.03453600010834634,
+              "seconds": 0.034928999841213226,
               "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -658,8 +658,8 @@
           ]
         },
         "reference": {
-          "seconds": 0.02722999989055097,
-          "allocated_objects": 56020,
+          "seconds": 0.029329999815672636,
+          "allocated_objects": 56022,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -667,8 +667,8 @@
           },
           "samples": [
             {
-              "seconds": 0.02875200007110834,
-              "allocated_objects": 56020,
+              "seconds": 0.029997000005096197,
+              "allocated_objects": 56022,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -676,8 +676,8 @@
               }
             },
             {
-              "seconds": 0.02902800007723272,
-              "allocated_objects": 56018,
+              "seconds": 0.029719999991357327,
+              "allocated_objects": 56022,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -685,8 +685,8 @@
               }
             },
             {
-              "seconds": 0.027228999882936478,
-              "allocated_objects": 56020,
+              "seconds": 0.029329999815672636,
+              "allocated_objects": 56022,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -694,8 +694,8 @@
               }
             },
             {
-              "seconds": 0.02722999989055097,
-              "allocated_objects": 56020,
+              "seconds": 0.0290629998780787,
+              "allocated_objects": 56022,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -703,8 +703,8 @@
               }
             },
             {
-              "seconds": 0.02706300001591444,
-              "allocated_objects": 56020,
+              "seconds": 0.028941999888047576,
+              "allocated_objects": 56022,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -720,7 +720,7 @@
       "mode": "compiled",
       "implementations": {
         "current": {
-          "seconds": 0.03245800011791289,
+          "seconds": 0.03301599994301796,
           "allocated_objects": 9007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -729,7 +729,7 @@
           },
           "samples": [
             {
-              "seconds": 0.032091999892145395,
+              "seconds": 0.03318200004287064,
               "allocated_objects": 9007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -738,7 +738,7 @@
               }
             },
             {
-              "seconds": 0.031915999948978424,
+              "seconds": 0.03288099984638393,
               "allocated_objects": 9007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -747,7 +747,7 @@
               }
             },
             {
-              "seconds": 0.03278400003910065,
+              "seconds": 0.03301599994301796,
               "allocated_objects": 9007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -756,7 +756,7 @@
               }
             },
             {
-              "seconds": 0.03249099990352988,
+              "seconds": 0.03281000000424683,
               "allocated_objects": 9007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -765,7 +765,7 @@
               }
             },
             {
-              "seconds": 0.03245800011791289,
+              "seconds": 0.03311499999836087,
               "allocated_objects": 9007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -776,7 +776,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.017943999962881207,
+          "seconds": 0.01839000009931624,
           "allocated_objects": 1007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -785,7 +785,7 @@
           },
           "samples": [
             {
-              "seconds": 0.017780999885872006,
+              "seconds": 0.01831099996343255,
               "allocated_objects": 1007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -794,7 +794,7 @@
               }
             },
             {
-              "seconds": 0.018001999938860536,
+              "seconds": 0.01839000009931624,
               "allocated_objects": 1007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -803,7 +803,7 @@
               }
             },
             {
-              "seconds": 0.01790799992159009,
+              "seconds": 0.018734999932348728,
               "allocated_objects": 1007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -812,7 +812,7 @@
               }
             },
             {
-              "seconds": 0.017945999978110194,
+              "seconds": 0.01855699997395277,
               "allocated_objects": 1007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -821,7 +821,7 @@
               }
             },
             {
-              "seconds": 0.017943999962881207,
+              "seconds": 0.018108000047504902,
               "allocated_objects": 1007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -838,7 +838,7 @@
       "mode": "churn",
       "implementations": {
         "current": {
-          "seconds": 0.06906499993056059,
+          "seconds": 0.07246199995279312,
           "allocated_objects": 70955,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -847,7 +847,7 @@
           },
           "samples": [
             {
-              "seconds": 0.06880800006911159,
+              "seconds": 0.07178799994289875,
               "allocated_objects": 70955,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -856,7 +856,7 @@
               }
             },
             {
-              "seconds": 0.07129500014707446,
+              "seconds": 0.07246199995279312,
               "allocated_objects": 70955,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -865,7 +865,7 @@
               }
             },
             {
-              "seconds": 0.0702690000180155,
+              "seconds": 0.07303099986165762,
               "allocated_objects": 70955,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -874,7 +874,7 @@
               }
             },
             {
-              "seconds": 0.06906499993056059,
+              "seconds": 0.07236099988222122,
               "allocated_objects": 70955,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -883,7 +883,7 @@
               }
             },
             {
-              "seconds": 0.0682600000873208,
+              "seconds": 0.0742639999371022,
               "allocated_objects": 70955,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -894,8 +894,8 @@
           ]
         },
         "reference": {
-          "seconds": 0.05835999990813434,
-          "allocated_objects": 211931,
+          "seconds": 0.060135999927297235,
+          "allocated_objects": 211935,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -903,8 +903,8 @@
           },
           "samples": [
             {
-              "seconds": 0.05860499991104007,
-              "allocated_objects": 211931,
+              "seconds": 0.05990499979816377,
+              "allocated_objects": 211935,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -912,8 +912,8 @@
               }
             },
             {
-              "seconds": 0.05690399999730289,
-              "allocated_objects": 211931,
+              "seconds": 0.06051600002683699,
+              "allocated_objects": 211935,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -921,8 +921,8 @@
               }
             },
             {
-              "seconds": 0.05835999990813434,
-              "allocated_objects": 211931,
+              "seconds": 0.05936599988490343,
+              "allocated_objects": 211935,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -930,8 +930,8 @@
               }
             },
             {
-              "seconds": 0.05855900002643466,
-              "allocated_objects": 211931,
+              "seconds": 0.060135999927297235,
+              "allocated_objects": 211935,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -939,7 +939,7 @@
               }
             },
             {
-              "seconds": 0.05764300003647804,
+              "seconds": 0.06046300008893013,
               "allocated_objects": 211935,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -956,7 +956,7 @@
       "mode": "startup",
       "implementations": {
         "current": {
-          "seconds": 0.13421500008553267,
+          "seconds": 0.13942099991254508,
           "allocated_objects": 249,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -965,7 +965,7 @@
           },
           "samples": [
             {
-              "seconds": 0.13146200007759035,
+              "seconds": 0.13942099991254508,
               "allocated_objects": 249,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -974,7 +974,7 @@
               }
             },
             {
-              "seconds": 0.13297099992632866,
+              "seconds": 0.13873000000603497,
               "allocated_objects": 249,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -983,7 +983,7 @@
               }
             },
             {
-              "seconds": 0.13421500008553267,
+              "seconds": 0.1384450001642108,
               "allocated_objects": 249,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -992,7 +992,7 @@
               }
             },
             {
-              "seconds": 0.1346080000512302,
+              "seconds": 0.14936399995349348,
               "allocated_objects": 249,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1001,7 +1001,7 @@
               }
             },
             {
-              "seconds": 0.13584100012667477,
+              "seconds": 0.14339699991978705,
               "allocated_objects": 249,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1012,7 +1012,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.13618599995970726,
+          "seconds": 0.14096500002779067,
           "allocated_objects": 192,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1021,7 +1021,7 @@
           },
           "samples": [
             {
-              "seconds": 0.1310189999639988,
+              "seconds": 0.14142300002276897,
               "allocated_objects": 192,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1030,7 +1030,7 @@
               }
             },
             {
-              "seconds": 0.13618599995970726,
+              "seconds": 0.14096500002779067,
               "allocated_objects": 192,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1039,7 +1039,7 @@
               }
             },
             {
-              "seconds": 0.14005799987353384,
+              "seconds": 0.14105400000698864,
               "allocated_objects": 192,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1048,7 +1048,7 @@
               }
             },
             {
-              "seconds": 0.1329869998153299,
+              "seconds": 0.14031699998304248,
               "allocated_objects": 192,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1057,7 +1057,7 @@
               }
             },
             {
-              "seconds": 0.14528500009328127,
+              "seconds": 0.14050000021234155,
               "allocated_objects": 192,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1074,7 +1074,7 @@
       "mode": "search",
       "implementations": {
         "current": {
-          "seconds": 0.07708499999716878,
+          "seconds": 0.07822199980728328,
           "allocated_objects": 20007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1083,7 +1083,7 @@
           },
           "samples": [
             {
-              "seconds": 0.07708499999716878,
+              "seconds": 0.07738299993798137,
               "allocated_objects": 20007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1092,7 +1092,7 @@
               }
             },
             {
-              "seconds": 0.07536099990829825,
+              "seconds": 0.0779999999795109,
               "allocated_objects": 20007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1101,7 +1101,7 @@
               }
             },
             {
-              "seconds": 0.07614300004206598,
+              "seconds": 0.07962600002065301,
               "allocated_objects": 20007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1110,7 +1110,7 @@
               }
             },
             {
-              "seconds": 0.07753599993884563,
+              "seconds": 0.07822199980728328,
               "allocated_objects": 20007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1119,7 +1119,7 @@
               }
             },
             {
-              "seconds": 0.07831399980932474,
+              "seconds": 0.07862599985674024,
               "allocated_objects": 20007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1130,7 +1130,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.05117599992081523,
+          "seconds": 0.05331699992530048,
           "allocated_objects": 63016,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1139,25 +1139,7 @@
           },
           "samples": [
             {
-              "seconds": 0.05149900005199015,
-              "allocated_objects": 63012,
-              "runtime": {
-                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
-                "yjit": false,
-                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
-              }
-            },
-            {
-              "seconds": 0.05117599992081523,
-              "allocated_objects": 63013,
-              "runtime": {
-                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
-                "yjit": false,
-                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
-              }
-            },
-            {
-              "seconds": 0.05073000001721084,
+              "seconds": 0.053475999971851707,
               "allocated_objects": 63016,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1166,7 +1148,7 @@
               }
             },
             {
-              "seconds": 0.051746999844908714,
+              "seconds": 0.053032999858260155,
               "allocated_objects": 63016,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1175,7 +1157,25 @@
               }
             },
             {
-              "seconds": 0.05037600011564791,
+              "seconds": 0.05331699992530048,
+              "allocated_objects": 63016,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05235100002028048,
+              "allocated_objects": 63016,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0538119999691844,
               "allocated_objects": 63016,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1192,7 +1192,7 @@
       "mode": "compiled",
       "implementations": {
         "current": {
-          "seconds": 0.07400100002996624,
+          "seconds": 0.07501500006765127,
           "allocated_objects": 10007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1201,7 +1201,7 @@
           },
           "samples": [
             {
-              "seconds": 0.07386799994856119,
+              "seconds": 0.07501500006765127,
               "allocated_objects": 10007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1210,7 +1210,7 @@
               }
             },
             {
-              "seconds": 0.08716800017282367,
+              "seconds": 0.07535999990068376,
               "allocated_objects": 10007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1219,7 +1219,7 @@
               }
             },
             {
-              "seconds": 0.07547699986025691,
+              "seconds": 0.07530100014992058,
               "allocated_objects": 10007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1228,7 +1228,7 @@
               }
             },
             {
-              "seconds": 0.07400100002996624,
+              "seconds": 0.0747620000038296,
               "allocated_objects": 10007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1237,7 +1237,7 @@
               }
             },
             {
-              "seconds": 0.07375600002706051,
+              "seconds": 0.07439600001089275,
               "allocated_objects": 10007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1248,7 +1248,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.03988700010813773,
+          "seconds": 0.03964099986478686,
           "allocated_objects": 1007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1257,7 +1257,7 @@
           },
           "samples": [
             {
-              "seconds": 0.039994000224396586,
+              "seconds": 0.03964099986478686,
               "allocated_objects": 1007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1266,7 +1266,7 @@
               }
             },
             {
-              "seconds": 0.04046100005507469,
+              "seconds": 0.04126099986024201,
               "allocated_objects": 1007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1275,7 +1275,7 @@
               }
             },
             {
-              "seconds": 0.03988700010813773,
+              "seconds": 0.039733999874442816,
               "allocated_objects": 1007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1284,7 +1284,7 @@
               }
             },
             {
-              "seconds": 0.03911300003528595,
+              "seconds": 0.03945899987593293,
               "allocated_objects": 1007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1293,7 +1293,7 @@
               }
             },
             {
-              "seconds": 0.03925199992954731,
+              "seconds": 0.039582999888807535,
               "allocated_objects": 1007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1310,7 +1310,7 @@
       "mode": "churn",
       "implementations": {
         "current": {
-          "seconds": 0.11364100011996925,
+          "seconds": 0.1170429999474436,
           "allocated_objects": 74952,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1319,7 +1319,7 @@
           },
           "samples": [
             {
-              "seconds": 0.11364100011996925,
+              "seconds": 0.1170429999474436,
               "allocated_objects": 74952,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1328,7 +1328,7 @@
               }
             },
             {
-              "seconds": 0.11620499985292554,
+              "seconds": 0.11856499989517033,
               "allocated_objects": 74952,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1337,7 +1337,7 @@
               }
             },
             {
-              "seconds": 0.1152539998292923,
+              "seconds": 0.11984099983237684,
               "allocated_objects": 74952,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1346,7 +1346,7 @@
               }
             },
             {
-              "seconds": 0.11256000003777444,
+              "seconds": 0.1166709999088198,
               "allocated_objects": 74952,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1355,7 +1355,7 @@
               }
             },
             {
-              "seconds": 0.11297100014053285,
+              "seconds": 0.11690200003795326,
               "allocated_objects": 74952,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1366,7 +1366,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.08133399998769164,
+          "seconds": 0.08334799995645881,
           "allocated_objects": 218921,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1375,7 +1375,7 @@
           },
           "samples": [
             {
-              "seconds": 0.08010899997316301,
+              "seconds": 0.0833790001925081,
               "allocated_objects": 218921,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1384,7 +1384,7 @@
               }
             },
             {
-              "seconds": 0.08071299991570413,
+              "seconds": 0.08377499994821846,
               "allocated_objects": 218921,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1393,7 +1393,7 @@
               }
             },
             {
-              "seconds": 0.08150900015607476,
+              "seconds": 0.08327999990433455,
               "allocated_objects": 218921,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1402,7 +1402,7 @@
               }
             },
             {
-              "seconds": 0.08133399998769164,
+              "seconds": 0.08334799995645881,
               "allocated_objects": 218921,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1411,7 +1411,7 @@
               }
             },
             {
-              "seconds": 0.08252100017853081,
+              "seconds": 0.08267399994656444,
               "allocated_objects": 218921,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1428,8 +1428,8 @@
       "mode": "startup",
       "implementations": {
         "current": {
-          "seconds": 0.13389199995435774,
-          "allocated_objects": 654,
+          "seconds": 0.1382509998511523,
+          "allocated_objects": 658,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -1437,8 +1437,8 @@
           },
           "samples": [
             {
-              "seconds": 0.1345669999718666,
-              "allocated_objects": 654,
+              "seconds": 0.14222100004553795,
+              "allocated_objects": 658,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1446,8 +1446,8 @@
               }
             },
             {
-              "seconds": 0.12996900011785328,
-              "allocated_objects": 654,
+              "seconds": 0.13691499992273748,
+              "allocated_objects": 658,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1455,8 +1455,8 @@
               }
             },
             {
-              "seconds": 0.1363330001477152,
-              "allocated_objects": 654,
+              "seconds": 0.14211999997496605,
+              "allocated_objects": 658,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1464,8 +1464,8 @@
               }
             },
             {
-              "seconds": 0.13300600019283593,
-              "allocated_objects": 654,
+              "seconds": 0.1345679999794811,
+              "allocated_objects": 658,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1473,8 +1473,8 @@
               }
             },
             {
-              "seconds": 0.13389199995435774,
-              "allocated_objects": 654,
+              "seconds": 0.1382509998511523,
+              "allocated_objects": 658,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1484,7 +1484,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.13653800007887185,
+          "seconds": 0.13647100003436208,
           "allocated_objects": 441,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1493,7 +1493,7 @@
           },
           "samples": [
             {
-              "seconds": 0.1325740001630038,
+              "seconds": 0.13647100003436208,
               "allocated_objects": 441,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1502,7 +1502,7 @@
               }
             },
             {
-              "seconds": 0.13653800007887185,
+              "seconds": 0.13925300003029406,
               "allocated_objects": 441,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1511,7 +1511,7 @@
               }
             },
             {
-              "seconds": 0.13401899999007583,
+              "seconds": 0.13447199994698167,
               "allocated_objects": 441,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1520,7 +1520,7 @@
               }
             },
             {
-              "seconds": 0.13948799995705485,
+              "seconds": 0.13861499982886016,
               "allocated_objects": 441,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1529,7 +1529,7 @@
               }
             },
             {
-              "seconds": 0.14322900003753603,
+              "seconds": 0.13416299992240965,
               "allocated_objects": 441,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1546,8 +1546,8 @@
       "mode": "search",
       "implementations": {
         "current": {
-          "seconds": 0.11305200005881488,
-          "allocated_objects": 333007,
+          "seconds": 0.11826299992389977,
+          "allocated_objects": 335007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -1555,8 +1555,8 @@
           },
           "samples": [
             {
-              "seconds": 0.11533100018277764,
-              "allocated_objects": 333007,
+              "seconds": 0.11831700010225177,
+              "allocated_objects": 335007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1564,8 +1564,8 @@
               }
             },
             {
-              "seconds": 0.11305200005881488,
-              "allocated_objects": 333007,
+              "seconds": 0.11898300005123019,
+              "allocated_objects": 335007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1573,8 +1573,8 @@
               }
             },
             {
-              "seconds": 0.11261700000613928,
-              "allocated_objects": 333007,
+              "seconds": 0.1174940001219511,
+              "allocated_objects": 335007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1582,8 +1582,8 @@
               }
             },
             {
-              "seconds": 0.11513900011777878,
-              "allocated_objects": 333007,
+              "seconds": 0.11826299992389977,
+              "allocated_objects": 335007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1591,8 +1591,8 @@
               }
             },
             {
-              "seconds": 0.11081799981184304,
-              "allocated_objects": 333007,
+              "seconds": 0.11706600012257695,
+              "allocated_objects": 335007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1602,8 +1602,8 @@
           ]
         },
         "reference": {
-          "seconds": 0.1009130000602454,
-          "allocated_objects": 230012,
+          "seconds": 0.10381200001575053,
+          "allocated_objects": 230019,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -1611,8 +1611,8 @@
           },
           "samples": [
             {
-              "seconds": 0.09991299989633262,
-              "allocated_objects": 230012,
+              "seconds": 0.10225799982436001,
+              "allocated_objects": 230019,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1620,8 +1620,8 @@
               }
             },
             {
-              "seconds": 0.10075500002130866,
-              "allocated_objects": 230013,
+              "seconds": 0.10611599986441433,
+              "allocated_objects": 230019,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1629,8 +1629,8 @@
               }
             },
             {
-              "seconds": 0.1011939998716116,
-              "allocated_objects": 230012,
+              "seconds": 0.10148599999956787,
+              "allocated_objects": 230019,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1638,8 +1638,8 @@
               }
             },
             {
-              "seconds": 0.10113699990324676,
-              "allocated_objects": 230012,
+              "seconds": 0.10381200001575053,
+              "allocated_objects": 230019,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1647,8 +1647,8 @@
               }
             },
             {
-              "seconds": 0.1009130000602454,
-              "allocated_objects": 230012,
+              "seconds": 0.10554299992509186,
+              "allocated_objects": 230019,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1664,8 +1664,8 @@
       "mode": "compiled",
       "implementations": {
         "current": {
-          "seconds": 0.11103700008243322,
-          "allocated_objects": 323007,
+          "seconds": 0.11620100005529821,
+          "allocated_objects": 325007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -1673,8 +1673,8 @@
           },
           "samples": [
             {
-              "seconds": 0.10969099984504282,
-              "allocated_objects": 323007,
+              "seconds": 0.11623500008136034,
+              "allocated_objects": 325007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1682,8 +1682,8 @@
               }
             },
             {
-              "seconds": 0.11082899989560246,
-              "allocated_objects": 323007,
+              "seconds": 0.11496299994178116,
+              "allocated_objects": 325007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1691,8 +1691,8 @@
               }
             },
             {
-              "seconds": 0.11103700008243322,
-              "allocated_objects": 323007,
+              "seconds": 0.11620100005529821,
+              "allocated_objects": 325007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1700,8 +1700,8 @@
               }
             },
             {
-              "seconds": 0.11113300011493266,
-              "allocated_objects": 323007,
+              "seconds": 0.11830700002610683,
+              "allocated_objects": 325007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1709,8 +1709,8 @@
               }
             },
             {
-              "seconds": 0.11274500004947186,
-              "allocated_objects": 323007,
+              "seconds": 0.11585399997420609,
+              "allocated_objects": 325007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1720,7 +1720,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.08053699997253716,
+          "seconds": 0.08056599996052682,
           "allocated_objects": 109007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1729,7 +1729,7 @@
           },
           "samples": [
             {
-              "seconds": 0.07967199990525842,
+              "seconds": 0.07993700006045401,
               "allocated_objects": 109007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1738,7 +1738,7 @@
               }
             },
             {
-              "seconds": 0.07986699999310076,
+              "seconds": 0.08056599996052682,
               "allocated_objects": 109007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1747,7 +1747,7 @@
               }
             },
             {
-              "seconds": 0.08055599988438189,
+              "seconds": 0.0802189998794347,
               "allocated_objects": 109007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1756,7 +1756,7 @@
               }
             },
             {
-              "seconds": 0.14565099985338748,
+              "seconds": 0.08076700009405613,
               "allocated_objects": 109007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1765,7 +1765,7 @@
               }
             },
             {
-              "seconds": 0.08053699997253716,
+              "seconds": 0.08245899993926287,
               "allocated_objects": 109007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1782,8 +1782,8 @@
       "mode": "churn",
       "implementations": {
         "current": {
-          "seconds": 0.1697560001630336,
-          "allocated_objects": 434905,
+          "seconds": 0.1741779998410493,
+          "allocated_objects": 436905,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -1791,8 +1791,8 @@
           },
           "samples": [
             {
-              "seconds": 0.1697560001630336,
-              "allocated_objects": 434905,
+              "seconds": 0.1741779998410493,
+              "allocated_objects": 436905,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1800,8 +1800,8 @@
               }
             },
             {
-              "seconds": 0.16932599991559982,
-              "allocated_objects": 434905,
+              "seconds": 0.17248700000345707,
+              "allocated_objects": 436905,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1809,8 +1809,8 @@
               }
             },
             {
-              "seconds": 0.17047100001946092,
-              "allocated_objects": 434905,
+              "seconds": 0.1745909999590367,
+              "allocated_objects": 436905,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1818,8 +1818,8 @@
               }
             },
             {
-              "seconds": 0.1689699999988079,
-              "allocated_objects": 434905,
+              "seconds": 0.1735780001617968,
+              "allocated_objects": 436905,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1827,8 +1827,8 @@
               }
             },
             {
-              "seconds": 0.17110300017520785,
-              "allocated_objects": 434905,
+              "seconds": 0.17524500004947186,
+              "allocated_objects": 436905,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1838,7 +1838,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.13676799996756017,
+          "seconds": 0.1357809999026358,
           "allocated_objects": 385911,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1847,7 +1847,16 @@
           },
           "samples": [
             {
-              "seconds": 0.13676799996756017,
+              "seconds": 0.1358350000809878,
+              "allocated_objects": 385915,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1357809999026358,
               "allocated_objects": 385911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1856,7 +1865,7 @@
               }
             },
             {
-              "seconds": 0.21081000007689,
+              "seconds": 0.13503600005060434,
               "allocated_objects": 385911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1865,7 +1874,7 @@
               }
             },
             {
-              "seconds": 0.13476200005970895,
+              "seconds": 0.13745400006882846,
               "allocated_objects": 385911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1874,17 +1883,8 @@
               }
             },
             {
-              "seconds": 0.13268900010734797,
-              "allocated_objects": 385911,
-              "runtime": {
-                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
-                "yjit": false,
-                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
-              }
-            },
-            {
-              "seconds": 0.1406859999988228,
-              "allocated_objects": 385911,
+              "seconds": 0.1353160000871867,
+              "allocated_objects": 385915,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -1900,7 +1900,7 @@
       "mode": "startup",
       "implementations": {
         "current": {
-          "seconds": 0.13806600007228553,
+          "seconds": 0.14033399987965822,
           "allocated_objects": 284,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1909,7 +1909,7 @@
           },
           "samples": [
             {
-              "seconds": 0.1412070000078529,
+              "seconds": 0.14767799992114305,
               "allocated_objects": 284,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1918,7 +1918,7 @@
               }
             },
             {
-              "seconds": 0.137845000019297,
+              "seconds": 0.14033399987965822,
               "allocated_objects": 284,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1927,7 +1927,7 @@
               }
             },
             {
-              "seconds": 0.13882200000807643,
+              "seconds": 0.1405390000436455,
               "allocated_objects": 284,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1936,7 +1936,7 @@
               }
             },
             {
-              "seconds": 0.13806600007228553,
+              "seconds": 0.13507199985906482,
               "allocated_objects": 284,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1945,7 +1945,7 @@
               }
             },
             {
-              "seconds": 0.1376219999510795,
+              "seconds": 0.1341729999985546,
               "allocated_objects": 284,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1956,7 +1956,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.13787199999205768,
+          "seconds": 0.13832600018940866,
           "allocated_objects": 244,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1965,7 +1965,7 @@
           },
           "samples": [
             {
-              "seconds": 0.1363450000062585,
+              "seconds": 0.14212500001303852,
               "allocated_objects": 244,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1974,7 +1974,7 @@
               }
             },
             {
-              "seconds": 0.14040899998508394,
+              "seconds": 0.13832600018940866,
               "allocated_objects": 244,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1983,7 +1983,7 @@
               }
             },
             {
-              "seconds": 0.1377210000064224,
+              "seconds": 0.13937700004316866,
               "allocated_objects": 244,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -1992,7 +1992,7 @@
               }
             },
             {
-              "seconds": 0.13787199999205768,
+              "seconds": 0.13802600000053644,
               "allocated_objects": 244,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2001,7 +2001,7 @@
               }
             },
             {
-              "seconds": 0.13957499992102385,
+              "seconds": 0.1380389998666942,
               "allocated_objects": 244,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2018,7 +2018,7 @@
       "mode": "search",
       "implementations": {
         "current": {
-          "seconds": 0.00828800001181662,
+          "seconds": 0.008338999934494495,
           "allocated_objects": 22007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2027,7 +2027,7 @@
           },
           "samples": [
             {
-              "seconds": 0.008718000026419759,
+              "seconds": 0.008307000156491995,
               "allocated_objects": 22007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2036,7 +2036,7 @@
               }
             },
             {
-              "seconds": 0.008157999953255057,
+              "seconds": 0.008470000000670552,
               "allocated_objects": 22007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2045,7 +2045,7 @@
               }
             },
             {
-              "seconds": 0.00828800001181662,
+              "seconds": 0.008552000159397721,
               "allocated_objects": 22007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2054,7 +2054,7 @@
               }
             },
             {
-              "seconds": 0.00839599990285933,
+              "seconds": 0.008056999882683158,
               "allocated_objects": 22007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2063,7 +2063,7 @@
               }
             },
             {
-              "seconds": 0.007898000068962574,
+              "seconds": 0.008338999934494495,
               "allocated_objects": 22007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2074,8 +2074,8 @@
           ]
         },
         "reference": {
-          "seconds": 0.01848899992182851,
-          "allocated_objects": 87014,
+          "seconds": 0.018306000158190727,
+          "allocated_objects": 87019,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -2083,8 +2083,8 @@
           },
           "samples": [
             {
-              "seconds": 0.018395000137388706,
-              "allocated_objects": 87013,
+              "seconds": 0.018551000161096454,
+              "allocated_objects": 87019,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2092,7 +2092,25 @@
               }
             },
             {
-              "seconds": 0.01920600002631545,
+              "seconds": 0.018306000158190727,
+              "allocated_objects": 87019,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.018303999910131097,
+              "allocated_objects": 87019,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.018582999939098954,
               "allocated_objects": 87015,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2101,26 +2119,8 @@
               }
             },
             {
-              "seconds": 0.01848899992182851,
-              "allocated_objects": 87014,
-              "runtime": {
-                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
-                "yjit": false,
-                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
-              }
-            },
-            {
-              "seconds": 0.017687999876216054,
-              "allocated_objects": 87014,
-              "runtime": {
-                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
-                "yjit": false,
-                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
-              }
-            },
-            {
-              "seconds": 0.018632999854162335,
-              "allocated_objects": 87014,
+              "seconds": 0.018296999856829643,
+              "allocated_objects": 87015,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2136,7 +2136,7 @@
       "mode": "compiled",
       "implementations": {
         "current": {
-          "seconds": 0.006271000020205975,
+          "seconds": 0.006405999884009361,
           "allocated_objects": 12007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2145,7 +2145,7 @@
           },
           "samples": [
             {
-              "seconds": 0.006271000020205975,
+              "seconds": 0.006567000178620219,
               "allocated_objects": 12007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2154,7 +2154,7 @@
               }
             },
             {
-              "seconds": 0.006249000085517764,
+              "seconds": 0.0063310000114142895,
               "allocated_objects": 12007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2163,7 +2163,7 @@
               }
             },
             {
-              "seconds": 0.006117000011727214,
+              "seconds": 0.006558999884873629,
               "allocated_objects": 12007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2172,7 +2172,7 @@
               }
             },
             {
-              "seconds": 0.006506000179797411,
+              "seconds": 0.006405999884009361,
               "allocated_objects": 12007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2181,7 +2181,7 @@
               }
             },
             {
-              "seconds": 0.006411000154912472,
+              "seconds": 0.00622999994084239,
               "allocated_objects": 12007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2192,7 +2192,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.0031399999279528856,
+          "seconds": 0.0031949998810887337,
           "allocated_objects": 5007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2201,7 +2201,7 @@
           },
           "samples": [
             {
-              "seconds": 0.0031449999660253525,
+              "seconds": 0.0031479999888688326,
               "allocated_objects": 5007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2210,7 +2210,7 @@
               }
             },
             {
-              "seconds": 0.0031399999279528856,
+              "seconds": 0.003255999879911542,
               "allocated_objects": 5007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2219,7 +2219,7 @@
               }
             },
             {
-              "seconds": 0.0032850001007318497,
+              "seconds": 0.0031949998810887337,
               "allocated_objects": 5007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2228,7 +2228,7 @@
               }
             },
             {
-              "seconds": 0.0031169999856501818,
+              "seconds": 0.003189000068232417,
               "allocated_objects": 5007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2237,7 +2237,7 @@
               }
             },
             {
-              "seconds": 0.003066000062972307,
+              "seconds": 0.0032130000181496143,
               "allocated_objects": 5007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2254,7 +2254,7 @@
       "mode": "churn",
       "implementations": {
         "current": {
-          "seconds": 0.05044399993494153,
+          "seconds": 0.052196000004187226,
           "allocated_objects": 101927,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2263,7 +2263,7 @@
           },
           "samples": [
             {
-              "seconds": 0.05106700002215803,
+              "seconds": 0.0516310001257807,
               "allocated_objects": 101927,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2272,7 +2272,7 @@
               }
             },
             {
-              "seconds": 0.050011000130325556,
+              "seconds": 0.052196000004187226,
               "allocated_objects": 101927,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2281,7 +2281,7 @@
               }
             },
             {
-              "seconds": 0.0489229999948293,
+              "seconds": 0.05122899985872209,
               "allocated_objects": 101927,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2290,7 +2290,7 @@
               }
             },
             {
-              "seconds": 0.05133899999782443,
+              "seconds": 0.05430700001306832,
               "allocated_objects": 101927,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2299,7 +2299,7 @@
               }
             },
             {
-              "seconds": 0.05044399993494153,
+              "seconds": 0.05279999994672835,
               "allocated_objects": 101927,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2310,7 +2310,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.048470999812707305,
+          "seconds": 0.049681999953463674,
           "allocated_objects": 242911,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2319,7 +2319,7 @@
           },
           "samples": [
             {
-              "seconds": 0.04818499996326864,
+              "seconds": 0.04856199980713427,
               "allocated_objects": 242911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2328,7 +2328,7 @@
               }
             },
             {
-              "seconds": 0.04845999996177852,
+              "seconds": 0.049681999953463674,
               "allocated_objects": 242911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2337,7 +2337,7 @@
               }
             },
             {
-              "seconds": 0.048482999904081225,
+              "seconds": 0.05053699994459748,
               "allocated_objects": 242911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2346,7 +2346,7 @@
               }
             },
             {
-              "seconds": 0.049230000004172325,
+              "seconds": 0.049759000074118376,
               "allocated_objects": 242911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2355,7 +2355,7 @@
               }
             },
             {
-              "seconds": 0.048470999812707305,
+              "seconds": 0.04878899990580976,
               "allocated_objects": 242911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2372,8 +2372,8 @@
       "mode": "startup",
       "implementations": {
         "current": {
-          "seconds": 0.1346289999783039,
-          "allocated_objects": 300,
+          "seconds": 0.1358689998742193,
+          "allocated_objects": 306,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -2381,8 +2381,8 @@
           },
           "samples": [
             {
-              "seconds": 0.12962400005199015,
-              "allocated_objects": 300,
+              "seconds": 0.13839500001631677,
+              "allocated_objects": 306,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2390,8 +2390,8 @@
               }
             },
             {
-              "seconds": 0.1325340000912547,
-              "allocated_objects": 300,
+              "seconds": 0.1358689998742193,
+              "allocated_objects": 306,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2399,8 +2399,8 @@
               }
             },
             {
-              "seconds": 0.1346289999783039,
-              "allocated_objects": 300,
+              "seconds": 0.13452600012533367,
+              "allocated_objects": 306,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2408,8 +2408,8 @@
               }
             },
             {
-              "seconds": 0.13911699992604554,
-              "allocated_objects": 300,
+              "seconds": 0.13978799991309643,
+              "allocated_objects": 306,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2417,8 +2417,8 @@
               }
             },
             {
-              "seconds": 0.14421000005677342,
-              "allocated_objects": 300,
+              "seconds": 0.13538300013169646,
+              "allocated_objects": 306,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2428,7 +2428,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.13442700006999075,
+          "seconds": 0.1358849999960512,
           "allocated_objects": 230,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2437,7 +2437,7 @@
           },
           "samples": [
             {
-              "seconds": 0.1303479999769479,
+              "seconds": 0.13797300006262958,
               "allocated_objects": 230,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2446,7 +2446,7 @@
               }
             },
             {
-              "seconds": 0.1325350000988692,
+              "seconds": 0.13884199992753565,
               "allocated_objects": 230,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2455,7 +2455,7 @@
               }
             },
             {
-              "seconds": 0.13442700006999075,
+              "seconds": 0.1350989998318255,
               "allocated_objects": 230,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2464,7 +2464,7 @@
               }
             },
             {
-              "seconds": 0.13493100018240511,
+              "seconds": 0.1358849999960512,
               "allocated_objects": 230,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2473,7 +2473,7 @@
               }
             },
             {
-              "seconds": 0.1414820000063628,
+              "seconds": 0.1334389999974519,
               "allocated_objects": 230,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2490,8 +2490,8 @@
       "mode": "search",
       "implementations": {
         "current": {
-          "seconds": 0.005507000023499131,
-          "allocated_objects": 25007,
+          "seconds": 0.007199999876320362,
+          "allocated_objects": 29007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -2499,8 +2499,8 @@
           },
           "samples": [
             {
-              "seconds": 0.005573000060394406,
-              "allocated_objects": 25007,
+              "seconds": 0.00748499995097518,
+              "allocated_objects": 29007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2508,8 +2508,8 @@
               }
             },
             {
-              "seconds": 0.0054240000899881124,
-              "allocated_objects": 25007,
+              "seconds": 0.007208000170066953,
+              "allocated_objects": 29007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2517,8 +2517,8 @@
               }
             },
             {
-              "seconds": 0.005507000023499131,
-              "allocated_objects": 25007,
+              "seconds": 0.007199999876320362,
+              "allocated_objects": 29007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2526,8 +2526,8 @@
               }
             },
             {
-              "seconds": 0.005911999847739935,
-              "allocated_objects": 25007,
+              "seconds": 0.006858999840915203,
+              "allocated_objects": 29007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2535,8 +2535,8 @@
               }
             },
             {
-              "seconds": 0.005446999799460173,
-              "allocated_objects": 25007,
+              "seconds": 0.006711000110954046,
+              "allocated_objects": 29007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2546,7 +2546,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.017025000182911754,
+          "seconds": 0.01757899997755885,
           "allocated_objects": 102011,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2555,7 +2555,7 @@
           },
           "samples": [
             {
-              "seconds": 0.016500000143423676,
+              "seconds": 0.01962999999523163,
               "allocated_objects": 102011,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2564,7 +2564,7 @@
               }
             },
             {
-              "seconds": 0.01723000011406839,
+              "seconds": 0.01757899997755885,
               "allocated_objects": 102011,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2573,7 +2573,7 @@
               }
             },
             {
-              "seconds": 0.017385999904945493,
+              "seconds": 0.01772599993273616,
               "allocated_objects": 102011,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2582,7 +2582,7 @@
               }
             },
             {
-              "seconds": 0.016796000069007277,
+              "seconds": 0.01739699998870492,
               "allocated_objects": 102011,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2591,7 +2591,7 @@
               }
             },
             {
-              "seconds": 0.017025000182911754,
+              "seconds": 0.017461000010371208,
               "allocated_objects": 102011,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2608,8 +2608,8 @@
       "mode": "compiled",
       "implementations": {
         "current": {
-          "seconds": 0.00355699984356761,
-          "allocated_objects": 15007,
+          "seconds": 0.004022999899461865,
+          "allocated_objects": 19007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -2617,8 +2617,8 @@
           },
           "samples": [
             {
-              "seconds": 0.00355699984356761,
-              "allocated_objects": 15007,
+              "seconds": 0.0039190000388771296,
+              "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2626,8 +2626,8 @@
               }
             },
             {
-              "seconds": 0.003622000105679035,
-              "allocated_objects": 15007,
+              "seconds": 0.004084000131115317,
+              "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2635,8 +2635,8 @@
               }
             },
             {
-              "seconds": 0.003700000001117587,
-              "allocated_objects": 15007,
+              "seconds": 0.004032999975606799,
+              "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2644,8 +2644,8 @@
               }
             },
             {
-              "seconds": 0.003538000164553523,
-              "allocated_objects": 15007,
+              "seconds": 0.003958999877795577,
+              "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2653,8 +2653,8 @@
               }
             },
             {
-              "seconds": 0.0035230000503361225,
-              "allocated_objects": 15007,
+              "seconds": 0.004022999899461865,
+              "allocated_objects": 19007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2664,7 +2664,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.0009690001606941223,
+          "seconds": 0.000969999935477972,
           "allocated_objects": 4007,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2673,7 +2673,7 @@
           },
           "samples": [
             {
-              "seconds": 0.0009690001606941223,
+              "seconds": 0.0009739999659359455,
               "allocated_objects": 4007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2682,7 +2682,7 @@
               }
             },
             {
-              "seconds": 0.0009679999202489853,
+              "seconds": 0.000986000057309866,
               "allocated_objects": 4007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2691,7 +2691,7 @@
               }
             },
             {
-              "seconds": 0.0009720001835376024,
+              "seconds": 0.0009530000388622284,
               "allocated_objects": 4007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2700,7 +2700,7 @@
               }
             },
             {
-              "seconds": 0.0009669999126344919,
+              "seconds": 0.000969999935477972,
               "allocated_objects": 4007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2709,7 +2709,7 @@
               }
             },
             {
-              "seconds": 0.0010200000833719969,
+              "seconds": 0.0009610000997781754,
               "allocated_objects": 4007,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2726,8 +2726,8 @@
       "mode": "churn",
       "implementations": {
         "current": {
-          "seconds": 0.053364000050351024,
-          "allocated_objects": 120911,
+          "seconds": 0.05415999982506037,
+          "allocated_objects": 124911,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
             "yjit": false,
@@ -2735,8 +2735,8 @@
           },
           "samples": [
             {
-              "seconds": 0.053364000050351024,
-              "allocated_objects": 120911,
+              "seconds": 0.05417199991643429,
+              "allocated_objects": 124911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2744,8 +2744,8 @@
               }
             },
             {
-              "seconds": 0.05358500010333955,
-              "allocated_objects": 120911,
+              "seconds": 0.054056999972090125,
+              "allocated_objects": 124911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2753,8 +2753,8 @@
               }
             },
             {
-              "seconds": 0.054986000061035156,
-              "allocated_objects": 120911,
+              "seconds": 0.05374400014989078,
+              "allocated_objects": 124911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2762,8 +2762,8 @@
               }
             },
             {
-              "seconds": 0.05310099991038442,
-              "allocated_objects": 120911,
+              "seconds": 0.05588200013153255,
+              "allocated_objects": 124911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2771,8 +2771,8 @@
               }
             },
             {
-              "seconds": 0.05194499995559454,
-              "allocated_objects": 120911,
+              "seconds": 0.05415999982506037,
+              "allocated_objects": 124911,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
                 "yjit": false,
@@ -2782,7 +2782,7 @@
           ]
         },
         "reference": {
-          "seconds": 0.04823499987833202,
+          "seconds": 0.04882799996994436,
           "allocated_objects": 257907,
           "runtime": {
             "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2791,7 +2791,7 @@
           },
           "samples": [
             {
-              "seconds": 0.0482759999576956,
+              "seconds": 0.048959000036120415,
               "allocated_objects": 257907,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2800,7 +2800,7 @@
               }
             },
             {
-              "seconds": 0.04823499987833202,
+              "seconds": 0.05037200008518994,
               "allocated_objects": 257907,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2809,7 +2809,7 @@
               }
             },
             {
-              "seconds": 0.048146000131964684,
+              "seconds": 0.04817999992519617,
               "allocated_objects": 257907,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2818,7 +2818,7 @@
               }
             },
             {
-              "seconds": 0.04875700012780726,
+              "seconds": 0.04882799996994436,
               "allocated_objects": 257907,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
@@ -2827,7 +2827,7 @@
               }
             },
             {
-              "seconds": 0.04633700009435415,
+              "seconds": 0.04769899998791516,
               "allocated_objects": 257907,
               "runtime": {
                 "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
