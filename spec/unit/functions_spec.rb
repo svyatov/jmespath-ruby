@@ -23,6 +23,15 @@ RSpec.describe "Custom function registries" do
     expect(registry).to be_frozen
   end
 
+  it "passes original values to a built-in override" do
+    value = [1, 2]
+    parent = JMESPath::Functions.default
+    replacement = parent.with("length", signature: [[:array]], override: true) { |argument| argument }
+    expect(replacement.call("length", [value])).to equal(value)
+    expect(parent.call("length", [value])).to eq(2)
+    expect(replacement).to be_frozen
+  end
+
   it "preserves callback failures even when visit errors are disabled" do
     error = JMESPath::Errors::InvalidTypeError.new("callback defect")
     failure = empty.with("explode", signature: []) { raise error }

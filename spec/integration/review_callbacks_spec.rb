@@ -29,10 +29,43 @@ RSpec.describe "Final review callbacks" do
   end
 
   it "propagates validation errors raised by application adapters" do
+    error = nil
+    trace = nil
     adapter = Object.new
-    adapter.define_singleton_method(:to_str) { JMESPath.search("length(@)", 4) }
-    expect { JMESPath.search("length(@)", adapter, disable_visit_errors: true) }
-      .to raise_error(JMESPath::Errors::InvalidTypeError)
+    adapter.define_singleton_method(:to_str) do
+      JMESPath.search("length(@)", 4)
+    rescue JMESPath::Errors::InvalidTypeError => e
+      error = e
+      trace = e.backtrace.dup
+      raise
+    end
+    expect { JMESPath.search("length(@)", adapter, disable_visit_errors: true) }.to(raise_error do |caught|
+      expect(caught).to equal(error)
+      expect(caught.backtrace).to eq(trace)
+    end)
+  end
+
+  it "preserves repeated adapter conversion and its original failure" do
+    [false, true].each do |disabled|
+      calls = 0
+      error = JMESPath::Errors::InvalidTypeError.new("adapter failure")
+      trace = nil
+      adapter = Object.new
+      adapter.define_singleton_method(:to_str) do
+        calls += 1
+        next "abc" if calls == 1
+
+        raise error
+      rescue JMESPath::Errors::InvalidTypeError => e
+        trace = e.backtrace.dup
+        raise
+      end
+      expect { JMESPath.search("length(@)", adapter, disable_visit_errors: disabled) }.to(raise_error do |caught|
+        expect(caught).to equal(error)
+        expect(caught.backtrace).to eq(trace)
+      end)
+      expect(calls).to eq(2)
+    end
   end
 
   it "still suppresses the current built-in validation failure" do
