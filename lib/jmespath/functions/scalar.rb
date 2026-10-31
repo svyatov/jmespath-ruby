@@ -13,60 +13,58 @@ module JMESPath
         "to_number" => [[:any]], "not_null" => [[:any]]
       }.freeze
 
-      class << self
-        def register(registry)
-          SIGNATURES.reduce(registry) do |result, (name, signature)|
-            handler = %w[contains ends_with starts_with].include?(name) ? "#{name}?" : name
-            result.with_builtin(name, signature: signature, variadic: name == "not_null") do |origin, *args|
-              send(handler, *args, origin: origin)
-            end
-          end
+      def self.register(registry)
+        SIGNATURES.reduce(registry) do |result, (name, signature)|
+          handler = %w[contains ends_with starts_with].include?(name) ? "#{name}?" : name
+          result.with_builtin(name, signature: signature, handler: handler.to_sym, variadic: name == "not_null")
         end
+      end
 
-        def abs(value, origin: nil)
-          Coercions.number(value, origin: origin).abs
-        end
+      private
 
-        def ceil(value, origin: nil)
-          Coercions.number(value, origin: origin).ceil
-        end
+      def abs(value)
+        number(value).abs
+      end
 
-        def floor(value, origin: nil)
-          Coercions.number(value, origin: origin).floor
-        end
+      def ceil(value)
+        number(value).ceil
+      end
 
-        def contains?(subject, search, origin: nil)
-          text = DataAccess.string(subject)
-          return text.include?(Coercions.string(search, origin: origin)) if text
+      def floor(value)
+        number(value).floor
+      end
 
-          Coercions.array(subject, origin: origin).any? { |item| Types.equal?(item, search) }
-        end
+      def contains?(subject, search)
+        text = DataAccess.string(subject)
+        return text.include?(string(search)) if text
 
-        def ends_with?(text, suffix, origin: nil)
-          Coercions.string(text, origin: origin).end_with?(Coercions.string(suffix, origin: origin))
-        end
+        array(subject).any? { |item| Types.equal?(item, search) }
+      end
 
-        def starts_with?(text, prefix, origin: nil)
-          Coercions.string(text, origin: origin).start_with?(Coercions.string(prefix, origin: origin))
-        end
+      def ends_with?(text, suffix)
+        string(text).end_with?(string(suffix))
+      end
 
-        def length(value, origin: nil)
-          collection = DataAccess.string(value) || DataAccess.array(value) || Coercions.object(value, origin: origin)
-          collection.length
-        end
+      def starts_with?(text, prefix)
+        string(text).start_with?(string(prefix))
+      end
 
-        def reverse(value, origin: nil)
-          (DataAccess.string(value) || Coercions.array(value, origin: origin)).reverse
-        end
+      def length(value)
+        collection = DataAccess.string(value) || DataAccess.array(value) || object(value)
+        collection.length
+      end
 
-        def type(value, **_options)
-          name = Types.name(value)
-          name.to_s unless name == :unknown
-        end
+      def reverse(value)
+        (DataAccess.string(value) || array(value)).reverse
+      end
 
-        def not_null(*values, **_options)
-          values.find { |value| !value.nil? }
-        end
+      def type(value)
+        name = Types.name(value)
+        name.to_s unless name == :unknown
+      end
+
+      def not_null(*values)
+        values.find { |value| !value.nil? }
       end
     end
   end

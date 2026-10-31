@@ -2,28 +2,30 @@ module JMESPath
   class Functions
     DEFAULT: Functions
     module Coercions
-      def self.reference: (value, ?origin: Object?) -> ExpressionReference
+      def reference: (value) -> ExpressionReference
+      def self.reference: (value) -> ExpressionReference
     end
-    module Collections
+    module Collections : Coercions
       type sort_key = Integer | Float | String
       SIGNATURES: Hash[String, Array[Array[Symbol]]]
       def self.register: (Functions) -> Functions
-      def self.sum: (value, ?origin: Object?) -> value
-      def self.avg: (value, ?origin: Object?) -> Float?
-      def self.min: (value, ?origin: Object?) -> value
-      def self.max: (value, ?origin: Object?) -> value
-      def self.sort: (value, ?origin: Object?) -> Array[value]
-      def self.join: (value, value, ?origin: Object?) -> String
-      def self.keys: (value, ?origin: Object?) -> Array[String]
-      def self.values: (value, ?origin: Object?) -> Array[value]
-      def self.merge: (*value, ?origin: Object?) -> Hash[value, value]
-      def self.sort_key: (value, ?origin: Object?) -> sort_key
-      def self.map: (value, value, ?origin: Object?) -> Array[value]
-      def self.sort_by: (value, value, ?origin: Object?) -> Array[value]
-      def self.min_by: (value, value, ?origin: Object?) -> value
-      def self.max_by: (value, value, ?origin: Object?) -> value
-      def self.keyed: (value, value, ?origin: Object?) -> Array[[sort_key, value]]
-      def self.checked_type: (value, Symbol?, ?origin: Object?) -> Symbol
+      private
+      def sum: (value) -> value
+      def avg: (value) -> Float?
+      def min: (value) -> value
+      def max: (value) -> value
+      def sort: (value) -> Array[value]
+      def join: (value, value) -> String
+      def keys: (value) -> Array[String]
+      def values: (value) -> Array[value]
+      def merge: (*value) -> Hash[value, value]
+      def sort_key: (value) -> sort_key
+      def map: (value, value) -> Array[value]
+      def sort_by: (value, value) -> Array[value]
+      def min_by: (value, value) -> value
+      def max_by: (value, value) -> value
+      def keyed: (value, value) -> Array[[sort_key, value]]
+      def checked_type: (value, Symbol?) -> Symbol
     end
   end
 end

@@ -1,0 +1,12 @@
+module JMESPath
+  class Functions
+    class FunctionCall
+      include Scalar
+      include Collections
+      include Coercions
+      def call: (Definition, String, Array[value], ?disable_visit_errors: bool) -> value
+      private
+      def validation_origin: () -> Object
+    end
+  end
+end

@@ -2,9 +2,8 @@ module JMESPath
   class Functions
     class Definition < Data
       attr_reader signature: Signature
-      attr_reader implementation: ^(*value) -> value
-      attr_reader builtin: bool
-      def self.new: (Signature, ^(*value) -> value, bool) -> instance
+      attr_reader implementation: Symbol | ^(*value) -> value
+      def self.new: (Signature, Symbol | ^(*value) -> value) -> instance
     end
     class Signature
       TYPES: Array[Symbol]
@@ -30,7 +29,7 @@ module JMESPath
       def array_matches?: (value, Symbol) -> bool?
     end
     @definitions: Hash[String, Definition]
-    def with_builtin: (String, signature: Array[Array[Symbol]], ?variadic: bool) { (*value) -> value } -> Functions
+    def with_builtin: (String, signature: Array[Array[Symbol]], handler: Symbol, ?variadic: bool) -> Functions
     private
     def add: (String, Definition, override: bool) -> Functions
   end

@@ -1,28 +1,35 @@
 module JMESPath
   class Functions
-    module Scalar
+    module Scalar : Coercions
       SIGNATURES: Hash[String, Array[Array[Symbol]]]
       NUMBER: Regexp
       def self.register: (Functions) -> Functions
-      def self.abs: (value, ?origin: Object?) -> (Integer | Float)
-      def self.ceil: (value, ?origin: Object?) -> Integer
-      def self.floor: (value, ?origin: Object?) -> Integer
-      def self.contains?: (value, value, ?origin: Object?) -> bool
-      def self.ends_with?: (value, value, ?origin: Object?) -> bool
-      def self.starts_with?: (value, value, ?origin: Object?) -> bool
-      def self.length: (value, ?origin: Object?) -> Integer
-      def self.reverse: (value, ?origin: Object?) -> (String | Array[value])
-      def self.type: (value, ?origin: Object?) -> String?
-      def self.not_null: (*value, ?origin: Object?) -> value
-      def self.to_array: (value, ?origin: Object?) -> Array[value]
-      def self.to_string: (value, ?origin: Object?) -> String
-      def self.to_number: (value, ?origin: Object?) -> value
+      private
+      def abs: (value) -> (Integer | Float)
+      def ceil: (value) -> Integer
+      def floor: (value) -> Integer
+      def contains?: (value, value) -> bool
+      def ends_with?: (value, value) -> bool
+      def starts_with?: (value, value) -> bool
+      def length: (value) -> Integer
+      def reverse: (value) -> (String | Array[value])
+      def type: (value) -> String?
+      def not_null: (*value) -> value
+      def to_array: (value) -> Array[value]
+      def to_string: (value) -> String
+      def to_number: (value) -> value
     end
     module Coercions
-      def self.number: (value, ?origin: Object?) -> (Integer | Float)
-      def self.string: (value, ?origin: Object?) -> String
-      def self.array: (value, ?origin: Object?) -> Array[value]
-      def self.object: (value, ?origin: Object?) -> Hash[value, value]
+      def number: (value) -> (Integer | Float)
+      def string: (value) -> String
+      def array: (value) -> Array[value]
+      def object: (value) -> Hash[value, value]
+      def self.number: (value) -> (Integer | Float)
+      def self.string: (value) -> String
+      def self.array: (value) -> Array[value]
+      def self.object: (value) -> Hash[value, value]
+      private
+      def validation_origin: () -> Object?
     end
   end
 end

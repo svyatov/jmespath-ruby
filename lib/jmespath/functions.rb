@@ -4,7 +4,7 @@ module JMESPath
   # Immutable definitions for functions available to an expression.
   class Functions
     # @api private
-    Definition = Data.define(:signature, :implementation, :builtin)
+    Definition = Data.define(:signature, :implementation)
 
     # Create an empty immutable function registry.
     def initialize
@@ -26,13 +26,13 @@ module JMESPath
     def with(name, signature:, variadic: false, override: false, &block)
       raise ArgumentError, "A function block is required" unless block
 
-      definition = Definition.new(Signature.new(signature, variadic: variadic), block, false)
+      definition = Definition.new(Signature.new(signature, variadic: variadic), block)
       add(name, definition, override: override)
     end
 
     # @api private
-    def with_builtin(name, signature:, variadic: false, &block)
-      definition = Definition.new(Signature.new(signature, variadic: variadic), block, true)
+    def with_builtin(name, signature:, handler:, variadic: false)
+      definition = Definition.new(Signature.new(signature, variadic: variadic), handler)
       add(name, definition, override: false)
     end
 
@@ -46,17 +46,7 @@ module JMESPath
     # @raise [Errors::InvalidArityError] the number of arguments is invalid
     def call(name, arguments, disable_visit_errors: false)
       definition = @definitions.fetch(name) { raise Errors::UnknownFunctionError, "Unknown function: #{name}" }
-      origin = Object.new
-      definition.signature.validate!(arguments, name, origin: origin)
-      if definition.builtin
-        definition.implementation.call(origin, *arguments)
-      else
-        definition.implementation.call(*arguments)
-      end
-    rescue Signature::TypeMismatch, Signature::ArityMismatch => e
-      raise unless disable_visit_errors && e.origin.equal?(origin)
-
-      nil
+      FunctionCall.new.call(definition, name, arguments, disable_visit_errors: disable_visit_errors)
     end
 
     private
