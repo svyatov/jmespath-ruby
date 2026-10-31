@@ -1,0 +1,23 @@
+module JMESPath
+  module DataAccess
+    def self.field: (Object, String) -> Object?
+    def self.array: (Object) -> Array[Object]?
+    def self.object: (Object) -> Hash[Object, Object]?
+    def self.string: (Object) -> String?
+    def self.convert: (Object, Class, Symbol) -> untyped
+  end
+  module Types
+    def self.name: (Object) -> Symbol
+    def self.number?: (Object) -> bool
+    def self.falsey?: (Object) -> bool
+    def self.equal?: (Object, Object) -> bool
+    def self.normalize: (Object, ?Hash[Integer, bool]) -> Object
+    def self.collection_name: (Object) -> Symbol
+    def self.guarded: (Object, Hash[Integer, bool]) { () -> Object } -> Object
+  end
+  class ExpressionReference
+    @block: ^(Object) -> Object
+    def initialize: () { (Object) -> Object } -> void
+    def call: (Object) -> Object
+  end
+end
