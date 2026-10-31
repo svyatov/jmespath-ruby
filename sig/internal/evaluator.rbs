@@ -1,0 +1,26 @@
+module JMESPath
+  class Evaluator
+    HANDLERS: Hash[Symbol, Symbol]
+    COMPARISONS: Hash[Symbol, Symbol]
+    @functions: Functions
+    @disable_visit_errors: bool
+    def initialize: (functions: Functions, ?disable_visit_errors: bool) -> void
+    def evaluate: (AST::Node, value) -> value
+    private
+    def current: (AST::Node, value) -> value
+    def field: (AST::Node, value) -> value
+    def literal: (AST::Node, value) -> value
+    def copy_literal: (value) -> value
+    def index: (AST::Node, value) -> value
+    def group: (AST::Node, value) -> value
+    def sequence: (AST::Node, value) -> value
+    def reference: (AST::Node, value) -> ExpressionReference
+    def function: (AST::Node, value) -> value
+    def boolean: (AST::Node, value) -> value
+    def negation?: (AST::Node, value) -> bool
+    def equality: (AST::Node, value) -> bool
+    def ordering: (AST::Node, value) -> bool?
+    def list: (AST::Node, value) -> Array[value]?
+    def mapping: (AST::Node, value) -> Hash[String, value]?
+  end
+end
