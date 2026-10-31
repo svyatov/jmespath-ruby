@@ -11,13 +11,29 @@ module JMESPath
     def self.number?: (value) -> bool
     def self.falsey?: (value) -> bool
     def self.equal?: (value, value) -> bool
-    def self.normalize: (value, ?Hash[Integer, bool]) -> value
+    def self.normalize: (value) -> value
     def self.collection_name: (value) -> Symbol
-    def self.guarded: (value, Hash[Integer, bool]) { () -> value } -> value
+    def self.matching?: (value, value, Array[Array[value]]) -> bool
+    def self.arrays_match?: (Array[value], value, Array[Array[value]]) -> bool
+    def self.objects_match?: (Hash[value, value], value, Array[Array[value]]) -> bool
   end
   class ExpressionReference
     @block: ^(value) -> value
     def initialize: () { (value) -> value } -> void
     def call: (value) -> value
+  end
+end
+
+module JMESPath
+  class Normalizer
+    @pending: Array[^() -> void]
+    @active: Hash[Integer, bool]
+    def initialize: () -> void
+    def call: (value) -> value
+    private
+    def enqueue: (value) { (value) -> void } -> void
+    def visit: (value) { (value) -> void } -> void
+    def array: (Array[value]) { (value) -> void } -> void
+    def object: (Hash[value, value]) { (value) -> void } -> void
   end
 end

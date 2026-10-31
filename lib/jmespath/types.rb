@@ -25,17 +25,15 @@ module JMESPath
       end
 
       def equal?(left, right)
-        normalize(left) == normalize(right)
+        pending = [[normalize(left), normalize(right)]]
+        while (pair = pending.pop)
+          return false unless matching?(pair.fetch(0), pair.fetch(1), pending)
+        end
+        true
       end
 
-      def normalize(value, active = {})
-        list = DataAccess.array(value)
-        return guarded(value, active) { list.map { |item| normalize(item, active) } } if list
-
-        mapping = DataAccess.object(value)
-        return guarded(value, active) { mapping.transform_values { |item| normalize(item, active) } } if mapping
-
-        DataAccess.string(value) || value
+      def normalize(value)
+        Normalizer.new.call(value)
       end
 
       private
@@ -48,17 +46,30 @@ module JMESPath
         :unknown
       end
 
-      def guarded(value, active)
-        id = value.object_id
-        raise Errors::InvalidValueError, "Cyclic values cannot be compared or serialized" if active[id]
-
-        active[id] = true
-        begin
-          yield
-        ensure
-          active.delete(id)
+      def matching?(left, right, pending)
+        case left
+        when Array then arrays_match?(left, right, pending)
+        when Hash then objects_match?(left, right, pending)
+        else left == right
         end
+      end
+
+      def arrays_match?(left, right, pending)
+        return false unless right.is_a?(Array) && left.length == right.length
+
+        left.each_with_index { |value, index| pending << [value, right[index]] }
+        true
+      end
+
+      def objects_match?(left, right, pending)
+        return false unless right.is_a?(Hash) && left.length == right.length
+        return false unless left.each_key.all? { |key| right.key?(key) }
+
+        left.each { |key, value| pending << [value, right[key]] }
+        true
       end
     end
   end
 end
+
+require_relative "normalizer"
