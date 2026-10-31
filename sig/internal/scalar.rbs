@@ -1,0 +1,28 @@
+module JMESPath
+  class Functions
+    module Scalar
+      SIGNATURES: Hash[String, Array[Array[Symbol]]]
+      NUMBER: Regexp
+      def self.register: (Functions) -> Functions
+      def self.abs: (value) -> (Integer | Float)
+      def self.ceil: (value) -> Integer
+      def self.floor: (value) -> Integer
+      def self.contains?: (value, value) -> bool
+      def self.ends_with?: (value, value) -> bool
+      def self.starts_with?: (value, value) -> bool
+      def self.length: (value) -> Integer
+      def self.reverse: (value) -> (String | Array[value])
+      def self.type: (value) -> String?
+      def self.not_null: (*value) -> value
+      def self.to_array: (value) -> Array[value]
+      def self.to_string: (value) -> String
+      def self.to_number: (value) -> value
+    end
+    module Coercions
+      def self.number: (value) -> (Integer | Float)
+      def self.string: (value) -> String
+      def self.array: (value) -> Array[value]
+      def self.object: (value) -> Hash[value, value]
+    end
+  end
+end
