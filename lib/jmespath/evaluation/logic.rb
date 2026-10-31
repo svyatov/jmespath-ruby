@@ -32,6 +32,10 @@ module JMESPath
       type = Types.name(left)
       return nil unless type == Types.name(right) && %i[number string].include?(type)
 
+      if type == :string
+        left = Functions::Coercions.string(left)
+        right = Functions::Coercions.string(right)
+      end
       left.public_send(COMPARISONS.fetch(node.kind), right)
     end
   end
