@@ -1,0 +1,58 @@
+module JMESPath
+  module Errors
+    class Error < StandardError
+    end
+    class RuntimeError < Error
+    end
+    class SyntaxError < Error
+      attr_reader expression: String
+      attr_reader position: Integer
+      def initialize: (String, ?expression: String, ?position: Integer) -> void
+      def line: () -> Integer
+      def column: () -> Integer
+      private
+      def prefix: () -> String
+    end
+    class InvalidTypeError < RuntimeError
+    end
+    class InvalidValueError < RuntimeError
+    end
+    class InvalidArityError < RuntimeError
+    end
+    class UnknownFunctionError < RuntimeError
+    end
+  end
+
+  class Token < Data
+    attr_reader type: Symbol
+    attr_reader value: json
+    attr_reader start: Integer
+    attr_reader finish: Integer
+    def self.new: (Symbol, json, Integer, Integer) -> instance
+  end
+
+  class Lexer
+    SINGLE: Hash[String, Symbol]
+    DOUBLE: Hash[String, Symbol]
+    WHITESPACE: Array[Integer]
+    @index: Integer
+    @max_depth: Integer
+    attr_reader source: String
+    def initialize: (String, ?max_depth: Integer) -> void
+    def tokens: () -> Array[Token]
+    private
+    def next_token: () -> Token?
+    def skip_whitespace: () -> nil
+    def word_token: (Integer) -> Token
+    def number_token: (Integer) -> Token
+    def operator_token: (Integer) -> Token
+    def quoted_token: (Integer, Integer?) -> Token
+    def scan_quote: (Integer?, Integer) -> void
+    def decode: (String, Integer?) -> json
+    def literal: (String) -> json
+    def identifier_start?: (Integer?) -> bool?
+    def identifier_part?: (Integer?) -> bool?
+    def digit?: (Integer?) -> bool?
+    def syntax!: (String, Integer) -> bot
+  end
+end

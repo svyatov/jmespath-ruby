@@ -1,0 +1,16 @@
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+Layout/LineLength:
+  Max: 120
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*.rb"
+    - "*.gemspec"
+    - "Gemfile"
+Metrics/MethodLength:
+  Max: 20
+Metrics/ClassLength:
+  Max: 150

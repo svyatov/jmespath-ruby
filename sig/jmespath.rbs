@@ -1,0 +1,4 @@
+module JMESPath
+  VERSION: String
+  type json = nil | bool | Integer | Float | String | Array[json] | Hash[String, json]
+end

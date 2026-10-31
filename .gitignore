@@ -1,0 +1,8 @@
+/.bundle/
+/coverage/
+/doc/
+/.yardoc/
+/pkg/
+/vendor/
+/.metrics/
+/.superpowers/
