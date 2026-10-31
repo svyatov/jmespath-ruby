@@ -12,7 +12,7 @@ bundle exec rake audit
 ```
 
 The default task runs RuboCop, RBS validation, Steep, RSpec, fresh coverage, CRAP analysis, and documentation checks.
-Coverage requires 100% lines and at least 95% branches.
+Coverage requires 100% lines and branches.
 Every measurable library method must score at most 10 in coverage-aware CRAP analysis.
 A missing coverage report fails the check.
 Unmeasurable methods are reported for review.

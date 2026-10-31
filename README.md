@@ -90,7 +90,7 @@ bundle exec rake audit
 ```
 
 The default task checks tests, fresh coverage, RuboCop, RBS, Steep, coverage-aware CRAP scores, and documentation.
-The gates require 100% line coverage, at least 95% branch coverage, and a CRAP score at most 10 per measurable library method.
+The gates require 100% line and branch coverage, and a CRAP score at most 10 per measurable library method.
 The audit task separately refreshes the dependency advisory database.
 YARD output is written to `doc/index.html`.
 

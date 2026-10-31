@@ -9,7 +9,7 @@ SimpleCov.start do
   cover "lib/**/*.rb"
   if ENV["COVERAGE"] == "1"
     coverage :line, minimum: 100
-    coverage :branch, minimum: 95
+    coverage :branch, minimum: 100
   end
 end
 
