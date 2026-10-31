@@ -1,0 +1,329 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "LICENSE",
+      "local_path": "LICENSES/python-MIT.txt",
+      "sha256": "6eefacfa4d71b82d08408c751470ac8d9854538da2142cb27be0287fb13d0ab9",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "LICENSE.txt",
+      "local_path": "LICENSES/ruby-Apache-2.0.txt",
+      "sha256": "d3174ad63e721d4c9dccb8ad4320848992d314369bc46319720b5802c9153fe9",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/basic.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/basic.json",
+      "sha256": "e02b094b3de1707a851244e532ced95f128ec4fb815105773d46d9f9cc2ff0b1",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/benchmarks.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/benchmarks.json",
+      "sha256": "d5f08c5fca980f387f083e1652d390e9516339cb3933eb043acbc4f1cbfb3915",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/boolean.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/boolean.json",
+      "sha256": "46066f0fc2b11ddf2595431d7a3b2f2e78951d955ea576a5bca417ddd67603c8",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/current.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/current.json",
+      "sha256": "77bf364258f5fefa80a74a185ff8f926a7d68f911e36bb0b6b4bf2f204c536d0",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/escape.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/escape.json",
+      "sha256": "55b09670b206d2fa89779dd02b5d187812855b109b697224e51f5ed0dd8289d6",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/filters.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/filters.json",
+      "sha256": "f3f8335a45a2eec42cc1990f8fdd141f6042239ee7d21257dcdc9a45ba2d79dc",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/functions.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/functions.json",
+      "sha256": "ddd72be78d426c6f8e3f3e3ef91cf4757280f3e335706f212401a93882ba46f4",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/identifiers.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/identifiers.json",
+      "sha256": "370731bfb3fa63bba058935bdae43c5fb5db7a71200c49a7ed7387f23201beaf",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/indices.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/indices.json",
+      "sha256": "0d534b29a2dbe0446325276e2ac24122b3a497e28bf49db32fc04651ff46e0f8",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/literal.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/literal.json",
+      "sha256": "25c7454b9f10990f840b815ae5a9c6de8164046eaa1d405050b3cd619ff47669",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/multiselect.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/multiselect.json",
+      "sha256": "96b4d0f9be202c207d1689942592675462992dba0c6bcdffefcfb04bc32ef1c9",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/pipe.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/pipe.json",
+      "sha256": "5cc702a91520055bb0c22307d4e3ab496a4d01dca6220eef3533eacb335c1823",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/slice.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/slice.json",
+      "sha256": "423a616e9f54fdf616e7d2e41a2567e46117fb7cdbce8c4ef86d22512ad2dd19",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/syntax.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/syntax.json",
+      "sha256": "501712ded6da60cc18ed99316cbac1c66b389f9d285f2f96bef4afff4a43e43b",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/unicode.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/unicode.json",
+      "sha256": "5a341b0faca2c9151d7ca0cd281c679cd37a399acda700198401454add0d8f86",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/compliance/wildcard.json",
+      "local_path": "spec/fixtures/upstream/python/compliance/wildcard.json",
+      "sha256": "32b2a981b3e380a65a73d4145d4093c684133e697c694ac65e1621b87a852cd7",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.py",
+      "commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+      "source_path": "tests/legacy/literal.json",
+      "local_path": "spec/fixtures/upstream/python/legacy/literal.json",
+      "sha256": "756bf81e7169efef3cccfbfb0af9cec605f9b630624ebaeea59ee0eeeffe83f7",
+      "license": "MIT",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/basic.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/basic.json",
+      "sha256": "e02b094b3de1707a851244e532ced95f128ec4fb815105773d46d9f9cc2ff0b1",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/benchmarks.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/benchmarks.json",
+      "sha256": "35a62ad7e7e465e07d003f3fe204febfbe819a864522c4cb54b5cef311e89fe0",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/boolean.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/boolean.json",
+      "sha256": "1b36f80804603b6ba8bbf2724d372567fdb54f1d4d43569501b333bf8c47941e",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/current.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/current.json",
+      "sha256": "77bf364258f5fefa80a74a185ff8f926a7d68f911e36bb0b6b4bf2f204c536d0",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/escape.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/escape.json",
+      "sha256": "55b09670b206d2fa89779dd02b5d187812855b109b697224e51f5ed0dd8289d6",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/filters.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/filters.json",
+      "sha256": "a356dd6952bf0fd382bd015dc6bb18299431a30a331453f988ca38dc6a4f1b02",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/functions.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/functions.json",
+      "sha256": "0af7ede6700302d53b98161cb4869df3dfe25cfced56ee1b0e466438bdd1a0f4",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/identifiers.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/identifiers.json",
+      "sha256": "370731bfb3fa63bba058935bdae43c5fb5db7a71200c49a7ed7387f23201beaf",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/indices.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/indices.json",
+      "sha256": "0d534b29a2dbe0446325276e2ac24122b3a497e28bf49db32fc04651ff46e0f8",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/literal.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/literal.json",
+      "sha256": "25c7454b9f10990f840b815ae5a9c6de8164046eaa1d405050b3cd619ff47669",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/multiselect.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/multiselect.json",
+      "sha256": "96b4d0f9be202c207d1689942592675462992dba0c6bcdffefcfb04bc32ef1c9",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/pipe.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/pipe.json",
+      "sha256": "5cc702a91520055bb0c22307d4e3ab496a4d01dca6220eef3533eacb335c1823",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/slice.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/slice.json",
+      "sha256": "423a616e9f54fdf616e7d2e41a2567e46117fb7cdbce8c4ef86d22512ad2dd19",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/syntax.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/syntax.json",
+      "sha256": "91f71d310a30f667655018085951867d4e04f226e235cbdb1c7ac98198b04c87",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/unicode.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/unicode.json",
+      "sha256": "5a341b0faca2c9151d7ca0cd281c679cd37a399acda700198401454add0d8f86",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/compliance/wildcard.json",
+      "local_path": "spec/fixtures/upstream/ruby/compliance/wildcard.json",
+      "sha256": "32b2a981b3e380a65a73d4145d4093c684133e697c694ac65e1621b87a852cd7",
+      "license": "Apache-2.0",
+      "modifications": []
+    },
+    {
+      "repository": "https://github.com/jmespath/jmespath.rb",
+      "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+      "source_path": "spec/legacy/literal.json",
+      "local_path": "spec/fixtures/upstream/ruby/legacy/literal.json",
+      "sha256": "1a89ca328ceddaf3945f145a1bca4bf09f0a5f0bb70dbe6a89ce72b8cc8251c6",
+      "license": "Apache-2.0",
+      "modifications": []
+    }
+  ]
+}
