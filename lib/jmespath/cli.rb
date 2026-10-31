@@ -1,0 +1,36 @@
+# frozen_string_literal: true
+
+require_relative "../jmespath"
+
+module JMESPath
+  # Runs one JMESPath query against a JSON document from standard input.
+  module CLI
+    USAGE = "Usage: jmespath EXPRESSION < document.json"
+
+    # @param argv [Array<String>] command-line arguments
+    # @param stdin [IO, StringIO] source JSON stream
+    # @param stdout [IO, StringIO] result stream
+    # @param stderr [IO, StringIO] diagnostic stream
+    # @return [Integer] zero on success, one on input failure, two on usage failure
+    def self.run(argv, stdin: $stdin, stdout: $stdout, stderr: $stderr)
+      return information(argv, stdout) if [%w[--help], %w[-h], %w[--version]].include?(argv)
+
+      unless argv.length == 1
+        stderr.puts(USAGE)
+        return 2
+      end
+      data = JSON.parse(stdin.read.to_s)
+      stdout.puts(JSON.generate(JMESPath.search(argv.fetch(0), data)))
+      0
+    rescue JSON::ParserError, Errors::Error, IOError, SystemCallError => e
+      stderr.puts(e.message)
+      1
+    end
+
+    # @api private
+    def self.information(argv, output)
+      output.puts(argv == ["--version"] ? "jmespath-ruby #{VERSION}" : USAGE)
+      0
+    end
+  end
+end
