@@ -63,6 +63,11 @@ RSpec.describe "JMESPath lexical analysis" do
     }
   end
 
+  it "preserves raw backslashes unless they escape a quote" do
+    text = 92.chr * 2
+    expect(lex("'#{text}'").first.value).to eq(text)
+  end
+
   it "preserves the source string" do
     source = +"foo"
     lex(source)

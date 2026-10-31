@@ -62,7 +62,8 @@ module JMESPath
     def dot_rhs(power)
       return multi_select_list(advance) if peek.type == :lbracket
 
-      syntax!("Expected a field, function, or multiselect after dot") unless %i[identifier lbrace].include?(peek.type)
+      syntax!("Expected a field, function, or multiselect after dot") unless %i[identifier lbrace
+                                                                                star].include?(peek.type)
       expression(power)
     end
   end

@@ -19,6 +19,12 @@ RSpec.describe "Projection evaluation" do
     it("evaluates #{query} on #{data.inspect}") { expect(evaluate(query, data)).to eq(expected) }
   end
 
+  it "nests object wildcards and filters inside projections" do
+    expect(evaluate("*.*", { a: { x: 1 }, b: { y: 2 } })).to eq([[1], [2]])
+    expect(evaluate("[*.*]", [])).to eq([nil])
+    expect(evaluate("*[?[0] == #{96.chr}0#{96.chr}]", { a: [0, 1], b: [2, 3] })).to eq([[], []])
+  end
+
   it "supports wrappers without converting selected elements" do
     child = Hashish.new("x" => 1)
     expect(evaluate("[*]", Arrayish.new([child]))).to eq([child])

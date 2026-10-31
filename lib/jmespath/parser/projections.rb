@@ -6,7 +6,9 @@ module JMESPath
     private
 
     def prefix_bracket(token)
-      return bracket_body(node(:current)) if %i[number colon star].include?(peek.type)
+      if %i[number colon].include?(peek.type) || (peek.type == :star && @tokens.fetch(@index + 1).type == :rbracket)
+        return bracket_body(node(:current))
+      end
 
       multi_select_list(token)
     end
@@ -80,7 +82,7 @@ module JMESPath
 
     def projection_rhs(power)
       return node(:current) if POWER.fetch(peek.type, 0) < 10
-      return expression(power) if peek.type == :lbracket
+      return expression(power) if %i[lbracket filter].include?(peek.type)
       return dot_rhs(power) if peek.type == :dot && advance
 
       syntax!("Invalid projection")

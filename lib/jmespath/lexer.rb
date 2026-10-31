@@ -100,7 +100,7 @@ module JMESPath
 
     def decode(content, quote)
       return JSON.parse("\"#{content}\"") if quote == 34
-      return content.gsub(/\\(['\\])/) { Regexp.last_match(1) } if quote == 39
+      return content.gsub("\\'", "'") if quote == 39
 
       literal(content.gsub("\\#{96.chr}", 96.chr))
     end
