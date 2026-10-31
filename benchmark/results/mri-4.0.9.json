@@ -1,0 +1,2843 @@
+{
+  "iterations": 1000,
+  "rounds": 5,
+  "workload_sha256": "e970e035b16089dec9613f346e0c50a39d716fe08e42998825650ffdc5effacf",
+  "source_sha256": {
+    "current": "f486d7177fa7ffe1e0508612edfd0866521ec0a84d7f4bac9aca020b0e0b0023",
+    "reference": "745a08e1e6fa5134b35b21078893da9ca93adf70b8ae1fd7887c4994f1812ed3"
+  },
+  "measurements": [
+    {
+      "workload": "field",
+      "mode": "startup",
+      "implementations": {
+        "current": {
+          "seconds": 0.13403400010429323,
+          "allocated_objects": 228,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.13403400010429323,
+              "allocated_objects": 228,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13529299991205335,
+              "allocated_objects": 228,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13323999987915158,
+              "allocated_objects": 228,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1330440000165254,
+              "allocated_objects": 228,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13706000009551644,
+              "allocated_objects": 228,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.13386399997398257,
+          "allocated_objects": 206,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.13386399997398257,
+              "allocated_objects": 206,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13461800012737513,
+              "allocated_objects": 206,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13365900004282594,
+              "allocated_objects": 206,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13508399995043874,
+              "allocated_objects": 206,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13183999992907047,
+              "allocated_objects": 206,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "field",
+      "mode": "search",
+      "implementations": {
+        "current": {
+          "seconds": 0.003700000001117587,
+          "allocated_objects": 19007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.003671000013127923,
+              "allocated_objects": 19007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.003700000001117587,
+              "allocated_objects": 19007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0037200001534074545,
+              "allocated_objects": 19007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.00368200009688735,
+              "allocated_objects": 19007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.003780999919399619,
+              "allocated_objects": 19007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.01399499992839992,
+          "allocated_objects": 78012,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.014309999998658895,
+              "allocated_objects": 78011,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.013190000085160136,
+              "allocated_objects": 78012,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.013835000107064843,
+              "allocated_objects": 78012,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.01447700010612607,
+              "allocated_objects": 78012,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.01399499992839992,
+              "allocated_objects": 78012,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "field",
+      "mode": "compiled",
+      "implementations": {
+        "current": {
+          "seconds": 0.001962000038474798,
+          "allocated_objects": 9007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.001955999992787838,
+              "allocated_objects": 9007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0019570000004023314,
+              "allocated_objects": 9007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0020409999415278435,
+              "allocated_objects": 9007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.002167999977245927,
+              "allocated_objects": 9007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.001962000038474798,
+              "allocated_objects": 9007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.0007509998977184296,
+          "allocated_objects": 4007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.0007619999814778566,
+              "allocated_objects": 4007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0007479998748749495,
+              "allocated_objects": 4007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0007509998977184296,
+              "allocated_objects": 4007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0007470001000910997,
+              "allocated_objects": 4007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0007760000880807638,
+              "allocated_objects": 4007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "field",
+      "mode": "churn",
+      "implementations": {
+        "current": {
+          "seconds": 0.04031699988991022,
+          "allocated_objects": 72953,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.04031699988991022,
+              "allocated_objects": 72953,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.04062799992971122,
+              "allocated_objects": 72953,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.03970499988645315,
+              "allocated_objects": 72953,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.03963800007477403,
+              "allocated_objects": 72953,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.04047299991361797,
+              "allocated_objects": 72953,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.04354900005273521,
+          "allocated_objects": 233909,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.04354900005273521,
+              "allocated_objects": 233909,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.04249999998137355,
+              "allocated_objects": 233909,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.04315900010988116,
+              "allocated_objects": 233909,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.04356499994173646,
+              "allocated_objects": 233909,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.044242999982088804,
+              "allocated_objects": 233909,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "projection",
+      "mode": "startup",
+      "implementations": {
+        "current": {
+          "seconds": 0.16074500000104308,
+          "allocated_objects": 232,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.14241000008769333,
+              "allocated_objects": 232,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.22693199990317225,
+              "allocated_objects": 232,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.2688649999909103,
+              "allocated_objects": 232,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.16074500000104308,
+              "allocated_objects": 232,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13079400011338294,
+              "allocated_objects": 232,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.14313900005072355,
+          "allocated_objects": 173,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.14313900005072355,
+              "allocated_objects": 173,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1421660000924021,
+              "allocated_objects": 173,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.18210599990561604,
+              "allocated_objects": 173,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.14773500012233853,
+              "allocated_objects": 173,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1334540001116693,
+              "allocated_objects": 173,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "projection",
+      "mode": "search",
+      "implementations": {
+        "current": {
+          "seconds": 0.034143999917432666,
+          "allocated_objects": 19007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.034336999990046024,
+              "allocated_objects": 19007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.034143999917432666,
+              "allocated_objects": 19007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.03402200015261769,
+              "allocated_objects": 19007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.03381499997340143,
+              "allocated_objects": 19007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.03453600010834634,
+              "allocated_objects": 19007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.02722999989055097,
+          "allocated_objects": 56020,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.02875200007110834,
+              "allocated_objects": 56020,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.02902800007723272,
+              "allocated_objects": 56018,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.027228999882936478,
+              "allocated_objects": 56020,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.02722999989055097,
+              "allocated_objects": 56020,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.02706300001591444,
+              "allocated_objects": 56020,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "projection",
+      "mode": "compiled",
+      "implementations": {
+        "current": {
+          "seconds": 0.03245800011791289,
+          "allocated_objects": 9007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.032091999892145395,
+              "allocated_objects": 9007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.031915999948978424,
+              "allocated_objects": 9007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.03278400003910065,
+              "allocated_objects": 9007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.03249099990352988,
+              "allocated_objects": 9007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.03245800011791289,
+              "allocated_objects": 9007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.017943999962881207,
+          "allocated_objects": 1007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.017780999885872006,
+              "allocated_objects": 1007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.018001999938860536,
+              "allocated_objects": 1007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.01790799992159009,
+              "allocated_objects": 1007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.017945999978110194,
+              "allocated_objects": 1007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.017943999962881207,
+              "allocated_objects": 1007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "projection",
+      "mode": "churn",
+      "implementations": {
+        "current": {
+          "seconds": 0.06906499993056059,
+          "allocated_objects": 70955,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.06880800006911159,
+              "allocated_objects": 70955,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.07129500014707446,
+              "allocated_objects": 70955,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0702690000180155,
+              "allocated_objects": 70955,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.06906499993056059,
+              "allocated_objects": 70955,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0682600000873208,
+              "allocated_objects": 70955,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.05835999990813434,
+          "allocated_objects": 211931,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.05860499991104007,
+              "allocated_objects": 211931,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05690399999730289,
+              "allocated_objects": 211931,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05835999990813434,
+              "allocated_objects": 211931,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05855900002643466,
+              "allocated_objects": 211931,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05764300003647804,
+              "allocated_objects": 211935,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "filter",
+      "mode": "startup",
+      "implementations": {
+        "current": {
+          "seconds": 0.13421500008553267,
+          "allocated_objects": 249,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.13146200007759035,
+              "allocated_objects": 249,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13297099992632866,
+              "allocated_objects": 249,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13421500008553267,
+              "allocated_objects": 249,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1346080000512302,
+              "allocated_objects": 249,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13584100012667477,
+              "allocated_objects": 249,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.13618599995970726,
+          "allocated_objects": 192,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.1310189999639988,
+              "allocated_objects": 192,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13618599995970726,
+              "allocated_objects": 192,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.14005799987353384,
+              "allocated_objects": 192,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1329869998153299,
+              "allocated_objects": 192,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.14528500009328127,
+              "allocated_objects": 192,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "filter",
+      "mode": "search",
+      "implementations": {
+        "current": {
+          "seconds": 0.07708499999716878,
+          "allocated_objects": 20007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.07708499999716878,
+              "allocated_objects": 20007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.07536099990829825,
+              "allocated_objects": 20007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.07614300004206598,
+              "allocated_objects": 20007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.07753599993884563,
+              "allocated_objects": 20007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.07831399980932474,
+              "allocated_objects": 20007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.05117599992081523,
+          "allocated_objects": 63016,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.05149900005199015,
+              "allocated_objects": 63012,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05117599992081523,
+              "allocated_objects": 63013,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05073000001721084,
+              "allocated_objects": 63016,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.051746999844908714,
+              "allocated_objects": 63016,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05037600011564791,
+              "allocated_objects": 63016,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "filter",
+      "mode": "compiled",
+      "implementations": {
+        "current": {
+          "seconds": 0.07400100002996624,
+          "allocated_objects": 10007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.07386799994856119,
+              "allocated_objects": 10007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.08716800017282367,
+              "allocated_objects": 10007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.07547699986025691,
+              "allocated_objects": 10007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.07400100002996624,
+              "allocated_objects": 10007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.07375600002706051,
+              "allocated_objects": 10007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.03988700010813773,
+          "allocated_objects": 1007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.039994000224396586,
+              "allocated_objects": 1007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.04046100005507469,
+              "allocated_objects": 1007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.03988700010813773,
+              "allocated_objects": 1007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.03911300003528595,
+              "allocated_objects": 1007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.03925199992954731,
+              "allocated_objects": 1007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "filter",
+      "mode": "churn",
+      "implementations": {
+        "current": {
+          "seconds": 0.11364100011996925,
+          "allocated_objects": 74952,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.11364100011996925,
+              "allocated_objects": 74952,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.11620499985292554,
+              "allocated_objects": 74952,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1152539998292923,
+              "allocated_objects": 74952,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.11256000003777444,
+              "allocated_objects": 74952,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.11297100014053285,
+              "allocated_objects": 74952,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.08133399998769164,
+          "allocated_objects": 218921,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.08010899997316301,
+              "allocated_objects": 218921,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.08071299991570413,
+              "allocated_objects": 218921,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.08150900015607476,
+              "allocated_objects": 218921,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.08133399998769164,
+              "allocated_objects": 218921,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.08252100017853081,
+              "allocated_objects": 218921,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "sort",
+      "mode": "startup",
+      "implementations": {
+        "current": {
+          "seconds": 0.13389199995435774,
+          "allocated_objects": 654,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.1345669999718666,
+              "allocated_objects": 654,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.12996900011785328,
+              "allocated_objects": 654,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1363330001477152,
+              "allocated_objects": 654,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13300600019283593,
+              "allocated_objects": 654,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13389199995435774,
+              "allocated_objects": 654,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.13653800007887185,
+          "allocated_objects": 441,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.1325740001630038,
+              "allocated_objects": 441,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13653800007887185,
+              "allocated_objects": 441,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13401899999007583,
+              "allocated_objects": 441,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13948799995705485,
+              "allocated_objects": 441,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.14322900003753603,
+              "allocated_objects": 441,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "sort",
+      "mode": "search",
+      "implementations": {
+        "current": {
+          "seconds": 0.11305200005881488,
+          "allocated_objects": 333007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.11533100018277764,
+              "allocated_objects": 333007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.11305200005881488,
+              "allocated_objects": 333007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.11261700000613928,
+              "allocated_objects": 333007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.11513900011777878,
+              "allocated_objects": 333007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.11081799981184304,
+              "allocated_objects": 333007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.1009130000602454,
+          "allocated_objects": 230012,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.09991299989633262,
+              "allocated_objects": 230012,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.10075500002130866,
+              "allocated_objects": 230013,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1011939998716116,
+              "allocated_objects": 230012,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.10113699990324676,
+              "allocated_objects": 230012,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1009130000602454,
+              "allocated_objects": 230012,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "sort",
+      "mode": "compiled",
+      "implementations": {
+        "current": {
+          "seconds": 0.11103700008243322,
+          "allocated_objects": 323007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.10969099984504282,
+              "allocated_objects": 323007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.11082899989560246,
+              "allocated_objects": 323007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.11103700008243322,
+              "allocated_objects": 323007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.11113300011493266,
+              "allocated_objects": 323007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.11274500004947186,
+              "allocated_objects": 323007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.08053699997253716,
+          "allocated_objects": 109007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.07967199990525842,
+              "allocated_objects": 109007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.07986699999310076,
+              "allocated_objects": 109007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.08055599988438189,
+              "allocated_objects": 109007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.14565099985338748,
+              "allocated_objects": 109007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.08053699997253716,
+              "allocated_objects": 109007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "sort",
+      "mode": "churn",
+      "implementations": {
+        "current": {
+          "seconds": 0.1697560001630336,
+          "allocated_objects": 434905,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.1697560001630336,
+              "allocated_objects": 434905,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.16932599991559982,
+              "allocated_objects": 434905,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.17047100001946092,
+              "allocated_objects": 434905,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1689699999988079,
+              "allocated_objects": 434905,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.17110300017520785,
+              "allocated_objects": 434905,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.13676799996756017,
+          "allocated_objects": 385911,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.13676799996756017,
+              "allocated_objects": 385911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.21081000007689,
+              "allocated_objects": 385911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13476200005970895,
+              "allocated_objects": 385911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13268900010734797,
+              "allocated_objects": 385911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1406859999988228,
+              "allocated_objects": 385911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "slice",
+      "mode": "startup",
+      "implementations": {
+        "current": {
+          "seconds": 0.13806600007228553,
+          "allocated_objects": 284,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.1412070000078529,
+              "allocated_objects": 284,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.137845000019297,
+              "allocated_objects": 284,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13882200000807643,
+              "allocated_objects": 284,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13806600007228553,
+              "allocated_objects": 284,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1376219999510795,
+              "allocated_objects": 284,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.13787199999205768,
+          "allocated_objects": 244,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.1363450000062585,
+              "allocated_objects": 244,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.14040899998508394,
+              "allocated_objects": 244,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1377210000064224,
+              "allocated_objects": 244,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13787199999205768,
+              "allocated_objects": 244,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13957499992102385,
+              "allocated_objects": 244,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "slice",
+      "mode": "search",
+      "implementations": {
+        "current": {
+          "seconds": 0.00828800001181662,
+          "allocated_objects": 22007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.008718000026419759,
+              "allocated_objects": 22007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.008157999953255057,
+              "allocated_objects": 22007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.00828800001181662,
+              "allocated_objects": 22007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.00839599990285933,
+              "allocated_objects": 22007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.007898000068962574,
+              "allocated_objects": 22007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.01848899992182851,
+          "allocated_objects": 87014,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.018395000137388706,
+              "allocated_objects": 87013,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.01920600002631545,
+              "allocated_objects": 87015,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.01848899992182851,
+              "allocated_objects": 87014,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.017687999876216054,
+              "allocated_objects": 87014,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.018632999854162335,
+              "allocated_objects": 87014,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "slice",
+      "mode": "compiled",
+      "implementations": {
+        "current": {
+          "seconds": 0.006271000020205975,
+          "allocated_objects": 12007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.006271000020205975,
+              "allocated_objects": 12007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.006249000085517764,
+              "allocated_objects": 12007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.006117000011727214,
+              "allocated_objects": 12007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.006506000179797411,
+              "allocated_objects": 12007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.006411000154912472,
+              "allocated_objects": 12007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.0031399999279528856,
+          "allocated_objects": 5007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.0031449999660253525,
+              "allocated_objects": 5007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0031399999279528856,
+              "allocated_objects": 5007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0032850001007318497,
+              "allocated_objects": 5007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0031169999856501818,
+              "allocated_objects": 5007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.003066000062972307,
+              "allocated_objects": 5007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "slice",
+      "mode": "churn",
+      "implementations": {
+        "current": {
+          "seconds": 0.05044399993494153,
+          "allocated_objects": 101927,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.05106700002215803,
+              "allocated_objects": 101927,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.050011000130325556,
+              "allocated_objects": 101927,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0489229999948293,
+              "allocated_objects": 101927,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05133899999782443,
+              "allocated_objects": 101927,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05044399993494153,
+              "allocated_objects": 101927,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.048470999812707305,
+          "allocated_objects": 242911,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.04818499996326864,
+              "allocated_objects": 242911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.04845999996177852,
+              "allocated_objects": 242911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.048482999904081225,
+              "allocated_objects": 242911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.049230000004172325,
+              "allocated_objects": 242911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.048470999812707305,
+              "allocated_objects": 242911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "unicode",
+      "mode": "startup",
+      "implementations": {
+        "current": {
+          "seconds": 0.1346289999783039,
+          "allocated_objects": 300,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.12962400005199015,
+              "allocated_objects": 300,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1325340000912547,
+              "allocated_objects": 300,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1346289999783039,
+              "allocated_objects": 300,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13911699992604554,
+              "allocated_objects": 300,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.14421000005677342,
+              "allocated_objects": 300,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.13442700006999075,
+          "allocated_objects": 230,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.1303479999769479,
+              "allocated_objects": 230,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1325350000988692,
+              "allocated_objects": 230,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13442700006999075,
+              "allocated_objects": 230,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.13493100018240511,
+              "allocated_objects": 230,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.1414820000063628,
+              "allocated_objects": 230,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "unicode",
+      "mode": "search",
+      "implementations": {
+        "current": {
+          "seconds": 0.005507000023499131,
+          "allocated_objects": 25007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.005573000060394406,
+              "allocated_objects": 25007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0054240000899881124,
+              "allocated_objects": 25007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.005507000023499131,
+              "allocated_objects": 25007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.005911999847739935,
+              "allocated_objects": 25007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.005446999799460173,
+              "allocated_objects": 25007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.017025000182911754,
+          "allocated_objects": 102011,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.016500000143423676,
+              "allocated_objects": 102011,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.01723000011406839,
+              "allocated_objects": 102011,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.017385999904945493,
+              "allocated_objects": 102011,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.016796000069007277,
+              "allocated_objects": 102011,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.017025000182911754,
+              "allocated_objects": 102011,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "unicode",
+      "mode": "compiled",
+      "implementations": {
+        "current": {
+          "seconds": 0.00355699984356761,
+          "allocated_objects": 15007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.00355699984356761,
+              "allocated_objects": 15007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.003622000105679035,
+              "allocated_objects": 15007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.003700000001117587,
+              "allocated_objects": 15007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.003538000164553523,
+              "allocated_objects": 15007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0035230000503361225,
+              "allocated_objects": 15007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.0009690001606941223,
+          "allocated_objects": 4007,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.0009690001606941223,
+              "allocated_objects": 4007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0009679999202489853,
+              "allocated_objects": 4007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0009720001835376024,
+              "allocated_objects": 4007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0009669999126344919,
+              "allocated_objects": 4007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.0010200000833719969,
+              "allocated_objects": 4007,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "unicode",
+      "mode": "churn",
+      "implementations": {
+        "current": {
+          "seconds": 0.053364000050351024,
+          "allocated_objects": 120911,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.053364000050351024,
+              "allocated_objects": 120911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05358500010333955,
+              "allocated_objects": 120911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.054986000061035156,
+              "allocated_objects": 120911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05310099991038442,
+              "allocated_objects": 120911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.05194499995559454,
+              "allocated_objects": 120911,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/Users/leonid/.codex/worktrees/cf4d/jmespath-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        },
+        "reference": {
+          "seconds": 0.04823499987833202,
+          "allocated_objects": 257907,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+          },
+          "samples": [
+            {
+              "seconds": 0.0482759999576956,
+              "allocated_objects": 257907,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.04823499987833202,
+              "allocated_objects": 257907,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.048146000131964684,
+              "allocated_objects": 257907,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.04875700012780726,
+              "allocated_objects": 257907,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            },
+            {
+              "seconds": 0.04633700009435415,
+              "allocated_objects": 257907,
+              "runtime": {
+                "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "yjit": false,
+                "source": "/private/tmp/jmespath-reference-ruby/lib/jmespath.rb"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
