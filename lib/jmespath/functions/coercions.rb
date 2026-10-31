@@ -20,6 +20,12 @@ module JMESPath
           DataAccess.array(value) || raise(Signature::TypeMismatch, "Expected an array")
         end
 
+        def reference(value)
+          return value if value.is_a?(ExpressionReference)
+
+          raise Signature::TypeMismatch, "Expected an expression reference"
+        end
+
         def object(value)
           DataAccess.object(value) || raise(Signature::TypeMismatch, "Expected an object")
         end

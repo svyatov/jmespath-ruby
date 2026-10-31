@@ -1,0 +1,30 @@
+module JMESPath
+  class Functions
+    DEFAULT: Functions
+    def self.default: () -> Functions
+    module Coercions
+      def self.reference: (value) -> ExpressionReference
+    end
+    module Collections
+      type sort_key = Integer | Float | String
+      SIGNATURES: Hash[String, Array[Array[Symbol]]]
+      def self.register: (Functions) -> Functions
+      def self.sum: (value) -> value
+      def self.avg: (value) -> Float?
+      def self.min: (value) -> value
+      def self.max: (value) -> value
+      def self.sort: (value) -> Array[value]
+      def self.join: (value, value) -> String
+      def self.keys: (value) -> Array[String]
+      def self.values: (value) -> Array[value]
+      def self.merge: (*value) -> Hash[value, value]
+      def self.sort_key: (value) -> sort_key
+      def self.map: (value, value) -> Array[value]
+      def self.sort_by: (value, value) -> Array[value]
+      def self.min_by: (value, value) -> value
+      def self.max_by: (value, value) -> value
+      def self.keyed: (value, value) -> Array[[sort_key, value]]
+      def self.checked_type: (value, Symbol?) -> Symbol
+    end
+  end
+end
