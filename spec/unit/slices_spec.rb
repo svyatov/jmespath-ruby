@@ -21,4 +21,9 @@ RSpec.describe "Array slices" do
     expect(evaluate("[:]", {})).to be_nil
     expect(evaluate("[::-1]", [])).to eq([])
   end
+
+  it "rejects a zero step when constructed directly" do
+    expect { JMESPath::Slice.new(start: nil, stop: nil, step: 0) }
+      .to raise_error(JMESPath::Errors::InvalidValueError, "Slice step cannot be zero")
+  end
 end

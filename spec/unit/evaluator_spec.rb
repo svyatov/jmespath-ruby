@@ -42,4 +42,12 @@ RSpec.describe "Expression evaluation" do
     evaluator.evaluate(node, {})["a"][0].replace("changed")
     expect(evaluator.evaluate(node, {})).to eq("a" => ["value"])
   end
+
+  it "rejects an index node with a non-integer position" do
+    current = JMESPath::AST::Node.new(kind: :current)
+    node = JMESPath::AST::Node.new(kind: :index, value: "zero", children: [current])
+    evaluator = JMESPath::Evaluator.new(functions: JMESPath::Functions.new)
+
+    expect { evaluator.evaluate(node, [1]) }.to raise_error(TypeError, "Invalid array index")
+  end
 end
