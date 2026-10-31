@@ -1,6 +1,6 @@
 # Function call validation implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Remove validation-origin forwarding from built-in calculations while preserving observable function behavior.
 
@@ -136,26 +136,26 @@ Use `spec/unit/functions_spec.rb` for any missing override-identity assertion.
 
 **Interface:** Tests consume the public registry and search methods.
 
-- [ ] Record the starting commit and working-tree state before editing.
-- [ ] Extend the adapter reentry test to capture the raised object and its backtrace before propagating it.
-- [ ] Assert that the outer search raises that identical object with the identical captured backtrace. This covers R1 and R2.
-- [ ] Add a stateful string adapter whose first conversion returns a string and whose second conversion raises a captured exception.
-- [ ] Assert that `length(@)` performs both conversions and propagates the second failure, including with suppression enabled. This covers R2.
-- [ ] Add synchronized concurrent calls through one shared registry, mixing suppressible invalid inputs with nested callback failures.
-- [ ] Assert separate results and exact nested exceptions without thread leaks or timing-based sleeps. This covers R3.
-- [ ] Check an overridden built-in receives the original argument object and leaves its parent registry unchanged. Reuse existing coverage if sufficient.
-- [ ] Retain the empty-key, stable-sort, and identity assertions in `spec/unit/collection_functions_spec.rb`. This covers R5.
-- [ ] Run the focused command below. Expect all examples to pass before implementation.
+- [x] Record the starting commit and working-tree state before editing.
+- [x] Extend the adapter reentry test to capture the raised object and its backtrace before propagating it.
+- [x] Assert that the outer search raises that identical object with the identical captured backtrace. This covers R1 and R2.
+- [x] Add a stateful string adapter whose first conversion returns a string and whose second conversion raises a captured exception.
+- [x] Assert that `length(@)` performs both conversions and propagates the second failure, including with suppression enabled. This covers R2.
+- [x] Add synchronized concurrent calls through one shared registry, mixing suppressible invalid inputs with nested callback failures.
+- [x] Assert separate results and exact nested exceptions without thread leaks or timing-based sleeps. This covers R3.
+- [x] Check an overridden built-in receives the original argument object and leaves its parent registry unchanged. Reuse existing coverage if sufficient.
+- [x] Retain the empty-key, stable-sort, and identity assertions in `spec/unit/collection_functions_spec.rb`. This covers R5.
+- [x] Run the focused command below. Expect all examples to pass before implementation.
 
 ```sh
 bundle exec rspec spec/unit/functions_spec.rb spec/unit/signature_spec.rb spec/unit/scalar_functions_spec.rb spec/unit/collection_functions_spec.rb spec/unit/boundaries_spec.rb spec/integration/review_callbacks_spec.rb spec/integration/concurrency_spec.rb
 ```
 
-- [ ] Capture baseline timings and allocations with a temporary standard-library Ruby script outside the repository.
-- [ ] Measure direct scalar calls, `map` over 100 elements, `sort_by` over 100 elements, and a custom callback control.
-- [ ] Check expected results outside timed sections. Use 1,000 warmups and five samples of 10,000 invocations per workload.
-- [ ] Record Ruby version, JIT state, source commit, raw samples, and `GC.stat(:total_allocated_objects)` deltas.
-- [ ] Commit the behavior tests with `test(functions): cover invocation isolation`.
+- [x] Capture baseline timings and allocations with a temporary standard-library Ruby script outside the repository.
+- [x] Measure direct scalar calls, `map` over 100 elements, `sort_by` over 100 elements, and a custom callback control.
+- [x] Check expected results outside timed sections. Use 1,000 warmups and five samples of 10,000 invocations per workload.
+- [x] Record Ruby version, JIT state, source commit, raw samples, and `GC.stat(:total_allocated_objects)` deltas.
+- [x] Commit the behavior tests with `test(functions): cover invocation isolation`.
 
 ### Task 2: Move execution into the private receiver
 
@@ -172,16 +172,16 @@ Modify `sig/internal/functions.rbs`, `sig/internal/scalar.rbs`, and `sig/interna
 
 **Interface:** Implement the Proposed interface section. Preserve `Signature#validate!` and the public registry interface.
 
-- [ ] Add `Functions::FunctionCall` with its single execution entry point and private origin method.
-- [ ] Change Definition and trusted built-in registration to store handler symbols or callback Procs.
-- [ ] Convert calculation methods to private instance methods without changing their algorithms or conversion order.
-- [ ] Make coercion methods usable through both the receiver and their standalone interface.
-- [ ] Delegate `Functions#call` after lookup. Keep unknown-function failures outside suppression.
-- [ ] Add load ordering and internal types for the receiver, implementation union, and instance methods.
-- [ ] Remove obsolete `builtin`, `origin:` forwarding, registration closures, and unused keyword arguments.
-- [ ] Run Task 1's focused command. Expect all examples to pass unchanged.
-- [ ] Inspect the diff for unrelated algorithm changes and accidental public handler exposure.
-- [ ] Commit with `refactor(functions): isolate function call validation`.
+- [x] Add `Functions::FunctionCall` with its single execution entry point and private origin method.
+- [x] Change Definition and trusted built-in registration to store handler symbols or callback Procs.
+- [x] Convert calculation methods to private instance methods without changing their algorithms or conversion order.
+- [x] Make coercion methods usable through both the receiver and their standalone interface.
+- [x] Delegate `Functions#call` after lookup. Keep unknown-function failures outside suppression.
+- [x] Add load ordering and internal types for the receiver, implementation union, and instance methods.
+- [x] Remove obsolete `builtin`, `origin:` forwarding, registration closures, and unused keyword arguments.
+- [x] Run Task 1's focused command. Expect all examples to pass unchanged.
+- [x] Inspect the diff for unrelated algorithm changes and accidental public handler exposure.
+- [x] Commit with `refactor(functions): isolate function call validation`.
 
 Estimated scope: eight library files, four internal signature files, and two or three test files.
 Expect several hundred changed lines because singleton methods and type declarations change together.
@@ -191,15 +191,55 @@ Avoid splitting the switchover into temporarily incompatible interfaces.
 
 **Files:** No additional production changes are expected. Keep measurement artifacts outside the repository.
 
-- [ ] Run `bundle exec rake`. Expect all deterministic checks and full-suite coverage thresholds to pass.
-- [ ] Run `bundle exec rake package:check`. Expect the installed-gem checks to pass with the new internal file packaged.
-- [ ] Repeat baseline measurements in separate Ruby processes for the baseline and changed revisions.
-- [ ] Alternate revision order across five pairs using the same interpreter, inputs, warmup, and iteration counts.
-- [ ] Compare raw timing distributions and allocation deltas. Investigate a consistent slowdown or allocation increase before accepting the design.
-- [ ] Do not claim performance neutrality from replacing one allocation alone. Report measured results and unresolved variance.
-- [ ] Run the affected registry and nested-callback scenarios as QA, then request code review of the complete change.
-- [ ] Confirm that calculations no longer forward validation identity and that the working tree contains only intended changes.
-- [ ] Remove temporary scripts and temporary checkouts after retaining the result summary.
+- [x] Run `bundle exec rake`. Expect all deterministic checks and full-suite coverage thresholds to pass.
+- [x] Run `bundle exec rake package:check`. Expect the installed-gem checks to pass with the new internal file packaged.
+- [x] Repeat baseline measurements in separate Ruby processes for the baseline and changed revisions.
+- [x] Alternate revision order across five pairs using the same interpreter, inputs, warmup, and iteration counts.
+- [x] Compare raw timing distributions and allocation deltas. Investigate a consistent slowdown or allocation increase before accepting the design.
+- [x] Do not claim performance neutrality from replacing one allocation alone. Report measured results and unresolved variance.
+- [x] Run the affected registry and nested-callback scenarios as QA, then request code review of the complete change.
+- [x] Confirm that calculations no longer forward validation identity and that the working tree contains only intended changes.
+- [x] Remove temporary scripts and temporary checkouts after retaining the result summary.
 
 The implementation is complete when behavior, types, coverage, packaging, and the measured performance comparison support the switchover.
 If the receiver fails to reduce internal interface complexity, report that result before expanding the design.
+
+## Implementation evidence
+
+Runtime refactor: `1183348`. Characterization tests: `ab4de7e`.
+`bundle exec rake` passes with 3,951 examples, 100% line coverage, and 100% branch coverage.
+RuboCop, RBS, Steep, documentation checks, and the CRAP threshold pass.
+`bundle exec rake package:check` verifies the installed gem without development dependencies.
+
+Five paired samples used MRI 4.0.9 on arm64 macOS with YJIT disabled.
+Each sample used 1,000 warmup calls and 10,000 measured calls.
+Separate processes alternated baseline and changed revision order.
+The baseline was `4793479`; the changed source matches `1183348` except for equivalent helper-visibility declarations.
+Expected results were checked before and after each workload.
+
+| Workload | Baseline median, ms | Changed median, ms | Baseline allocations | Changed allocations |
+| --- | ---: | ---: | ---: | ---: |
+| Direct scalar call | 9.437 | 8.425 | 60,007 | 40,007 |
+| Map, 100 elements | 390.566 | 379.853 | 160,000 | 140,000 |
+| Sort by key, 100 elements | 1,756.783 | 1,728.564 | 3,230,000 | 3,210,000 |
+| Direct custom callback | 5.450 | 5.619 | 40,000 | 40,000 |
+
+The custom-callback median increased approximately 3.1%, or 17 nanoseconds per call.
+Its allocation count stayed unchanged.
+The extra delegation is a plausible cause; the measurement does not isolate that cost.
+Map and sorting timing ranges overlap, so their speed improvements remain uncertain.
+Allocation reductions are consistent across all samples.
+These measurements describe these workloads only.
+
+Independent QA compared 995 public observations per revision and reported `Passes QA` at `1183348`.
+Results matched after masking only process-specific object addresses.
+QA covered all built-ins, adapters, nested errors, concurrency, overrides, sorting, and exploratory expressions.
+Evidence remains at `/tmp/jmespath-qa.e5PKQp`.
+
+Independent code review reported `Ready to merge` with no Critical or Important findings.
+Minor finding F1 requested exact exception identity assertions for each concurrent worker.
+Commit `f2888e9` completes that planned assertion.
+A disposable mutation that replaced nested exceptions failed the assertion; the implementation passed.
+The complete gate passed again with 3,951 examples and full line and branch coverage.
+Runtime code is unchanged since independent QA and review.
+Local verification used Ruby 4.0.9; Ruby 3.3 and 3.4 were not run in this session.
