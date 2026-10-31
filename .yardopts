@@ -1,0 +1,4 @@
+--markup markdown
+--hide-api private
+--main README.md
+--files docs/guides/search.md,docs/guides/compilation.md,docs/guides/functions.md,docs/guides/errors.md,docs/guides/compatibility.md,docs/guides/performance.md

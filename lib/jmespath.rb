@@ -30,6 +30,14 @@ module JMESPath
     # @param data [Object] Ruby values, Pathname, IO, or StringIO
     # @param options [Hash] positional compatibility options
     # @param keywords [Hash] keyword evaluation options
+    # @option options [Boolean] :cache_expressions (true) reuse cached syntax
+    # @option options [Boolean] :disable_visit_errors (false) suppress argument type and arity failures
+    # @option options [Functions] :functions (Functions.default) registry for this search
+    # @option options [Integer] :max_depth (128) maximum expression nesting
+    # @raise [ArgumentError] options or expression type are invalid
+    # @raise [Errors::Error] the query cannot be parsed or evaluated
+    # @example Project a field from each item
+    #   JMESPath.search("items[*].name", {items: [{name: "Ada"}]}) #=> ["Ada"]
     # @return [Object] the query result, including nil
     def search(expression, data, options = {}, **keywords)
       config = Options.new(options, keywords)
@@ -41,6 +49,10 @@ module JMESPath
     # @param expression [String] query text
     # @param cache_expressions [Boolean] reuse bounded cached syntax
     # @param max_depth [Integer] maximum nesting from 1 through 128
+    # @raise [ArgumentError] expression type or options are invalid
+    # @raise [Errors::SyntaxError] the expression is invalid or exceeds its nesting limit
+    # @example Reuse parsed syntax
+    #   JMESPath.compile("name").search({name: "Ada"}) #=> "Ada"
     # @return [Expression] immutable reusable syntax
     def compile(expression, cache_expressions: true, max_depth: 128)
       raise ArgumentError, "Expression must be a String" unless expression.is_a?(String)

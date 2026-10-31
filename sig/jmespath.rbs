@@ -2,4 +2,53 @@ module JMESPath
   VERSION: String
   type value = Object?
   type json = nil | bool | Integer | Float | String | Array[json] | Hash[String, json]
+
+  def self.search: (String, value, ?Hash[Symbol, value], **value) -> value
+  def self.compile: (String, ?cache_expressions: bool, ?max_depth: Integer) -> Expression
+
+  module Errors
+    class Error < StandardError
+    end
+    class RuntimeError < Error
+    end
+    class SyntaxError < Error
+      attr_reader expression: String
+      attr_reader position: Integer
+      def initialize: (String, ?expression: String, ?position: Integer) -> void
+      def line: () -> Integer
+      def column: () -> Integer
+    end
+    class InvalidTypeError < RuntimeError
+    end
+    class InvalidValueError < RuntimeError
+    end
+    class InvalidArityError < RuntimeError
+    end
+    class UnknownFunctionError < RuntimeError
+    end
+  end
+
+  class Expression
+    attr_reader source: String
+    def search: (value, ?Hash[Symbol, value], **value) -> value
+  end
+
+  class Functions
+    def initialize: () -> void
+    def self.default: () -> Functions
+    def with: (String, signature: Array[Array[Symbol]], ?variadic: bool, ?override: bool) ?{ (*value) -> value } -> Functions
+    def call: (String, Array[value], ?disable_visit_errors: bool) -> value
+  end
+
+  # Input stream protocol used by CLI.run.
+  interface _Reader
+    def read: () -> String?
+  end
+  # Output stream protocol used by CLI.run.
+  interface _Writer
+    def puts: (String) -> void
+  end
+  module CLI
+    def self.run: (Array[String], ?stdin: _Reader, ?stdout: _Writer, ?stderr: _Writer) -> Integer
+  end
 end

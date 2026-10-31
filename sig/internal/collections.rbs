@@ -1,7 +1,6 @@
 module JMESPath
   class Functions
     DEFAULT: Functions
-    def self.default: () -> Functions
     module Coercions
       def self.reference: (value) -> ExpressionReference
     end

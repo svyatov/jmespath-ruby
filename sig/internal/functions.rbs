@@ -21,8 +21,5 @@ module JMESPath
       def array_matches?: (value, Symbol) -> bool?
     end
     @definitions: Hash[String, Definition]
-    def initialize: (?Hash[String, Definition]) -> void
-    def with: (String, signature: Array[Array[Symbol]], ?variadic: bool, ?override: bool) ?{ (*value) -> value } -> Functions
-    def call: (String, Array[value], ?disable_visit_errors: bool) -> value
   end
 end

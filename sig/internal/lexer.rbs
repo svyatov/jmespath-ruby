@@ -1,28 +1,10 @@
 module JMESPath
   module Errors
-    class Error < StandardError
-    end
-    class RuntimeError < Error
-    end
-    class SyntaxError < Error
-      attr_reader expression: String
-      attr_reader position: Integer
-      def initialize: (String, ?expression: String, ?position: Integer) -> void
-      def line: () -> Integer
-      def column: () -> Integer
+    class SyntaxError
       private
       def prefix: () -> String
     end
-    class InvalidTypeError < RuntimeError
-    end
-    class InvalidValueError < RuntimeError
-    end
-    class InvalidArityError < RuntimeError
-    end
-    class UnknownFunctionError < RuntimeError
-    end
   end
-
   class Token < Data
     attr_reader type: Symbol
     attr_reader value: json

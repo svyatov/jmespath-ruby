@@ -1,13 +1,6 @@
 module JMESPath
-  interface _Reader
-    def read: () -> String?
-  end
-  interface _Writer
-    def puts: (String) -> void
-  end
   module CLI
     USAGE: String
-    def self.run: (Array[String], ?stdin: _Reader, ?stdout: _Writer, ?stderr: _Writer) -> Integer
     def self.information: (Array[String], _Writer) -> Integer
   end
 end

@@ -1,7 +1,5 @@
 module JMESPath
   CACHE: Cache
-  def self.search: (String, value, ?Hash[Symbol, value], **value) -> value
-  def self.compile: (String, ?cache_expressions: bool, ?max_depth: Integer) -> Expression
 
   class Options
     KEYS: Array[Symbol]
@@ -22,9 +20,7 @@ module JMESPath
   class Expression
     @root: AST::Node
     @max_depth: Integer
-    attr_reader source: String
     def initialize: (String, AST::Node, ?max_depth: Integer) -> void
-    def search: (value, ?Hash[Symbol, value], **value) -> value
     def evaluate: (value, Options) -> value
   end
   class Cache

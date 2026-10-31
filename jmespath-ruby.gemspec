@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "lib/jmespath/version"
-
 Gem::Specification.new do |spec|
   spec.name = "jmespath-ruby"
-  spec.version = JMESPath::VERSION
+  spec.version = File.read(File.join(__dir__, "lib/jmespath/version.rb"))[/VERSION = "([^"]+)"/, 1]
   spec.authors = ["Leonid Svyatov"]
   spec.summary = "A typed Ruby implementation of the JMESPath query language"
   spec.description = "Search structured Ruby data with reusable JMESPath expressions."
