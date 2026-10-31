@@ -1,0 +1,28 @@
+module JMESPath
+  class Functions
+    class Definition < Data
+      attr_reader signature: Signature
+      attr_reader implementation: ^(*value) -> value
+      def self.new: (Signature, ^(*value) -> value) -> instance
+    end
+    class Signature
+      TYPES: Array[Symbol]
+      @arguments: Array[Array[Symbol]]
+      @variadic: bool
+      class TypeMismatch < Errors::InvalidTypeError
+      end
+      class ArityMismatch < Errors::InvalidArityError
+      end
+      def initialize: (Array[Array[Symbol]], ?variadic: bool) -> void
+      def validate!: (Array[value], String) -> void
+      private
+      def valid_arity?: (Integer) -> bool
+      def matches?: (value, Symbol) -> bool?
+      def array_matches?: (value, Symbol) -> bool?
+    end
+    @definitions: Hash[String, Definition]
+    def initialize: (?Hash[String, Definition]) -> void
+    def with: (String, signature: Array[Array[Symbol]], ?variadic: bool, ?override: bool) ?{ (*value) -> value } -> Functions
+    def call: (String, Array[value], ?disable_visit_errors: bool) -> value
+  end
+end
