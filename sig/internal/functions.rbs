@@ -3,23 +3,34 @@ module JMESPath
     class Definition < Data
       attr_reader signature: Signature
       attr_reader implementation: ^(*value) -> value
-      def self.new: (Signature, ^(*value) -> value) -> instance
+      attr_reader builtin: bool
+      def self.new: (Signature, ^(*value) -> value, bool) -> instance
     end
     class Signature
       TYPES: Array[Symbol]
       @arguments: Array[Array[Symbol]]
       @variadic: bool
+      module FailureOrigin
+        @origin: Object?
+        attr_reader origin: Object?
+        def initialize: (?String?, ?origin: Object?) -> void
+      end
       class TypeMismatch < Errors::InvalidTypeError
+        include FailureOrigin
       end
       class ArityMismatch < Errors::InvalidArityError
+        include FailureOrigin
       end
       def initialize: (Array[Array[Symbol]], ?variadic: bool) -> void
-      def validate!: (Array[value], String) -> void
+      def validate!: (Array[value], String, ?origin: Object?) -> void
       private
       def valid_arity?: (Integer) -> bool
       def matches?: (value, Symbol) -> bool?
       def array_matches?: (value, Symbol) -> bool?
     end
     @definitions: Hash[String, Definition]
+    def with_builtin: (String, signature: Array[Array[Symbol]], ?variadic: bool) { (*value) -> value } -> Functions
+    private
+    def add: (String, Definition, override: bool) -> Functions
   end
 end

@@ -6,10 +6,25 @@ module JMESPath
     class Signature
       TYPES = %i[any null boolean number string array object expref array_number array_string].freeze
 
+      # Identifies the invocation that created a validation failure.
+      module FailureOrigin
+        attr_reader :origin
+
+        def initialize(message = nil, origin: nil)
+          @origin = origin
+          super(message)
+        end
+      end
+
       # An error raised by the library's argument validator.
-      class TypeMismatch < Errors::InvalidTypeError; end
+      class TypeMismatch < Errors::InvalidTypeError
+        include FailureOrigin
+      end
+
       # An error raised by the library's arity validator.
-      class ArityMismatch < Errors::InvalidArityError; end
+      class ArityMismatch < Errors::InvalidArityError
+        include FailureOrigin
+      end
 
       def initialize(arguments, variadic: false)
         unless arguments.all? { |types| !types.empty? && (types - TYPES).empty? }
@@ -22,14 +37,16 @@ module JMESPath
         freeze
       end
 
-      def validate!(values, name)
-        raise ArityMismatch, "Invalid number of arguments for #{name}" unless valid_arity?(values.length)
+      def validate!(values, name, origin: nil)
+        unless valid_arity?(values.length)
+          raise ArityMismatch.new("Invalid number of arguments for #{name}", origin: origin)
+        end
 
         values.each_with_index do |value, index|
           types = @arguments.fetch([index, @arguments.length - 1].min)
           next if types.any? { |type| matches?(value, type) }
 
-          raise TypeMismatch, "Invalid argument #{index + 1} for #{name}: #{Types.name(value)}"
+          raise TypeMismatch.new("Invalid argument #{index + 1} for #{name}: #{Types.name(value)}", origin: origin)
         end
       end
 

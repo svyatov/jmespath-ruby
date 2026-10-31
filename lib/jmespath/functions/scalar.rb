@@ -17,52 +17,54 @@ module JMESPath
         def register(registry)
           SIGNATURES.reduce(registry) do |result, (name, signature)|
             handler = %w[contains ends_with starts_with].include?(name) ? "#{name}?" : name
-            result.with(name, signature: signature, variadic: name == "not_null") { |*args| send(handler, *args) }
+            result.with_builtin(name, signature: signature, variadic: name == "not_null") do |origin, *args|
+              send(handler, *args, origin: origin)
+            end
           end
         end
 
-        def abs(value)
-          Coercions.number(value).abs
+        def abs(value, origin: nil)
+          Coercions.number(value, origin: origin).abs
         end
 
-        def ceil(value)
-          Coercions.number(value).ceil
+        def ceil(value, origin: nil)
+          Coercions.number(value, origin: origin).ceil
         end
 
-        def floor(value)
-          Coercions.number(value).floor
+        def floor(value, origin: nil)
+          Coercions.number(value, origin: origin).floor
         end
 
-        def contains?(subject, search)
+        def contains?(subject, search, origin: nil)
           text = DataAccess.string(subject)
-          return text.include?(Coercions.string(search)) if text
+          return text.include?(Coercions.string(search, origin: origin)) if text
 
-          Coercions.array(subject).any? { |item| Types.equal?(item, search) }
+          Coercions.array(subject, origin: origin).any? { |item| Types.equal?(item, search) }
         end
 
-        def ends_with?(text, suffix)
-          Coercions.string(text).end_with?(Coercions.string(suffix))
+        def ends_with?(text, suffix, origin: nil)
+          Coercions.string(text, origin: origin).end_with?(Coercions.string(suffix, origin: origin))
         end
 
-        def starts_with?(text, prefix)
-          Coercions.string(text).start_with?(Coercions.string(prefix))
+        def starts_with?(text, prefix, origin: nil)
+          Coercions.string(text, origin: origin).start_with?(Coercions.string(prefix, origin: origin))
         end
 
-        def length(value)
-          collection = DataAccess.string(value) || DataAccess.array(value) || Coercions.object(value)
+        def length(value, origin: nil)
+          collection = DataAccess.string(value) || DataAccess.array(value) || Coercions.object(value, origin: origin)
           collection.length
         end
 
-        def reverse(value)
-          (DataAccess.string(value) || Coercions.array(value)).reverse
+        def reverse(value, origin: nil)
+          (DataAccess.string(value) || Coercions.array(value, origin: origin)).reverse
         end
 
-        def type(value)
+        def type(value, **_options)
           name = Types.name(value)
           name.to_s unless name == :unknown
         end
 
-        def not_null(*values)
+        def not_null(*values, **_options)
           values.find { |value| !value.nil? }
         end
       end

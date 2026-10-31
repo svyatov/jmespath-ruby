@@ -4,7 +4,7 @@ module JMESPath
   # Immutable definitions for functions available to an expression.
   class Functions
     # @api private
-    Definition = Data.define(:signature, :implementation)
+    Definition = Data.define(:signature, :implementation, :builtin)
 
     # Create an empty immutable function registry.
     def initialize
@@ -25,13 +25,15 @@ module JMESPath
     # @return [Functions] the extended registry
     def with(name, signature:, variadic: false, override: false, &block)
       raise ArgumentError, "A function block is required" unless block
-      raise ArgumentError, "Invalid function name" unless name.match?(/\A[A-Za-z_][A-Za-z0-9_]*\z/)
-      raise ArgumentError, "Function #{name} is already registered" if @definitions.key?(name) && !override
 
-      definition = Definition.new(Signature.new(signature, variadic: variadic), block)
-      result = dup
-      result.instance_variable_set(:@definitions, @definitions.merge(name.dup.freeze => definition).freeze)
-      result.freeze
+      definition = Definition.new(Signature.new(signature, variadic: variadic), block, false)
+      add(name, definition, override: override)
+    end
+
+    # @api private
+    def with_builtin(name, signature:, variadic: false, &block)
+      definition = Definition.new(Signature.new(signature, variadic: variadic), block, true)
+      add(name, definition, override: false)
     end
 
     # Evaluate a registered function with checked arguments.
@@ -44,12 +46,28 @@ module JMESPath
     # @raise [Errors::InvalidArityError] the number of arguments is invalid
     def call(name, arguments, disable_visit_errors: false)
       definition = @definitions.fetch(name) { raise Errors::UnknownFunctionError, "Unknown function: #{name}" }
-      definition.signature.validate!(arguments, name)
-      definition.implementation.call(*arguments)
-    rescue Signature::TypeMismatch, Signature::ArityMismatch
-      raise unless disable_visit_errors
+      origin = Object.new
+      definition.signature.validate!(arguments, name, origin: origin)
+      if definition.builtin
+        definition.implementation.call(origin, *arguments)
+      else
+        definition.implementation.call(*arguments)
+      end
+    rescue Signature::TypeMismatch, Signature::ArityMismatch => e
+      raise unless disable_visit_errors && e.origin.equal?(origin)
 
       nil
+    end
+
+    private
+
+    def add(name, definition, override:)
+      raise ArgumentError, "Invalid function name" unless name.match?(/\A[A-Za-z_][A-Za-z0-9_]*\z/)
+      raise ArgumentError, "Function #{name} is already registered" if @definitions.key?(name) && !override
+
+      result = dup
+      result.instance_variable_set(:@definitions, @definitions.merge(name.dup.freeze => definition).freeze)
+      result.freeze
     end
   end
 end
