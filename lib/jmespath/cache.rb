@@ -42,11 +42,11 @@ module JMESPath
     end
 
     def evict_for(size)
-      while @entries.length >= @limit || @used + size > @budget
-        entry = @entries.shift
-        break unless entry
+      @entries.each_key do |key|
+        break if @entries.length < @limit && @used + size <= @budget
 
-        @used -= entry.first.first.bytesize
+        @entries.delete(key)
+        @used -= key.first.bytesize
       end
     end
   end
