@@ -17,7 +17,9 @@ GEM
       prism (>= 1.0, < 3)
     csv (3.3.7)
     diff-lcs (1.6.2)
+    ffi (1.17.4-aarch64-linux-gnu)
     ffi (1.17.4-arm64-darwin)
+    ffi (1.17.4-x86_64-linux-gnu)
     fileutils (1.8.1)
     json (3.1.0)
     language_server-protocol (3.17.0.6)
@@ -102,7 +104,9 @@ GEM
     yard (0.9.45)
 
 PLATFORMS
+  aarch64-linux
   arm64-darwin
+  x86_64-linux
 
 DEPENDENCIES
   bundler-audit (~> 0.9.3)
@@ -124,7 +128,9 @@ CHECKSUMS
   crap4ruby (0.2.2) sha256=b7fc1e0cfb60f530e6e97035b340f5ee0ff3d3be0adccd49a2c8ee683b129b01
   csv (3.3.7) sha256=15a3f16f6628da8664d455eb634e7f22031bcf53044923caf56975109e71b9f8
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
+  ffi (1.17.4-aarch64-linux-gnu) sha256=b208f06f91ffd8f5e1193da3cae3d2ccfc27fc36fba577baf698d26d91c080df
   ffi (1.17.4-arm64-darwin) sha256=19071aaf1419251b0a46852abf960e77330a3b334d13a4ab51d58b31a937001b
+  ffi (1.17.4-x86_64-linux-gnu) sha256=9d3db14c2eae074b382fa9c083fe95aec6e0a1451da249eab096c34002bc752d
   fileutils (1.8.1) sha256=2d541a1ee34a9ed5c4f054be8fb819a26b5d654488a31dc8806917cf448b9cc3
   jmespath-ruby (0.1.0)
   json (3.1.0) sha256=3ce7ccf8fde58960177a3a756c31f292a4c1e1dedee884547096a5b0604e3bd8
