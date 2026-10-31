@@ -19,7 +19,8 @@ RSpec.describe "Installed gem artifact" do
     expect(specification.required_ruby_version).to eq(Gem::Requirement.new(">= 3.3"))
     expect(specification.executables.sort).to eq(%w[jmespath jmespath.rb])
     expect(specification.files).to include(
-      "lib/jmespath.rb", "sig/jmespath.rbs", "README.md", "CHANGELOG.md", "VERSIONING.md", "SECURITY.md",
+      "lib/jmespath.rb", "sig/jmespath.rbs", "README.md", "CONTRIBUTING.md", "CHANGELOG.md",
+      "VERSIONING.md", "SECURITY.md",
       "LICENSE", "LICENSES/python-MIT.txt", "LICENSES/ruby-Apache-2.0.txt", "docs/guides/compatibility.md"
     )
     expect(specification.files.grep(%r{\A(?:spec/|coverage/|doc/|sig/internal/|\.git|\.superpowers/)})).to be_empty
