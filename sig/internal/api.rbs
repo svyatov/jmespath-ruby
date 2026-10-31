@@ -1,0 +1,43 @@
+module JMESPath
+  CACHE: Cache
+  def self.search: (String, value, ?Hash[Symbol, value], **value) -> value
+  def self.compile: (String, ?cache_expressions: bool, ?max_depth: Integer) -> Expression
+
+  class Options
+    KEYS: Array[Symbol]
+    attr_reader cache_expressions: bool
+    attr_reader disable_visit_errors: bool
+    attr_reader functions: Functions
+    attr_reader max_depth: Integer
+    def initialize: (?Hash[Symbol, value], ?Hash[Symbol, value], ?default_depth: Integer) -> void
+    private
+    def merge: (Hash[Symbol, value], Hash[Symbol, value]) -> Hash[Symbol, value]
+    def boolean: (value) -> bool
+    def depth: (value) -> Integer
+    def registry: (value) -> Functions
+  end
+  module Input
+    def self.load: (value) -> value
+  end
+  class Expression
+    @root: AST::Node
+    @max_depth: Integer
+    attr_reader source: String
+    def initialize: (String, AST::Node, ?max_depth: Integer) -> void
+    def search: (value, ?Hash[Symbol, value], **value) -> value
+    def evaluate: (value, Options) -> value
+  end
+  class Cache
+    @limit: Integer
+    @budget: Integer
+    @used: Integer
+    @entries: Hash[[String, Integer], Expression]
+    @mutex: Thread::Mutex
+    def initialize: (?limit: Integer, ?bytes: Integer) -> void
+    def fetch: (String, max_depth: Integer) { () -> Expression } -> Expression
+    private
+    def read: ([String, Integer]) -> Expression?
+    def write: ([String, Integer], Expression) -> Integer
+    def evict_for: (Integer) -> void
+  end
+end
