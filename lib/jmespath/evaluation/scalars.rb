@@ -31,7 +31,9 @@ module JMESPath
       position = node.value
       raise TypeError, "Invalid array index" unless position.is_a?(Integer)
 
-      array&.[](position)
+      return nil unless array && position.between?(-array.length, array.length - 1)
+
+      array[position]
     end
 
     def group(node, data)
