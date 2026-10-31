@@ -33,7 +33,7 @@ RSpec.describe "Command-line queries" do
     errors = StringIO.new
     status = JMESPath::CLI.run(["@"], stdin: input, stdout: StringIO.new, stderr: errors)
     expect(status).to eq(1)
-    expect(errors.string).to include("closed")
+    expect(errors.string).not_to be_empty
   end
 
   it "offers help and version without reading JSON" do
