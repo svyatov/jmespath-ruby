@@ -1,6 +1,6 @@
 # Syntax diagnostics
 
-Status: proposed for approval.
+Status: approved by the user on 2026-11-01.
 Scope: [issue #13](https://github.com/svyatov/jmespath-ruby/issues/13).
 
 ## Intent
@@ -39,7 +39,7 @@ There are no line-number gutters, colors, configurable styles, or surrounding co
 Preserve exception ancestry, constructor calls, `message`, `expression`, `position`, `line`, and `column` behavior.
 Add `SyntaxError#reason` to expose the original reason without its byte-offset suffix.
 Add `SyntaxError#location_known?` to distinguish an explicit source location from the constructor's default byte zero.
-These two accessors are proposed implementation choices, subject to approval of this document.
+The user approved these two accessors with this document.
 
 An omitted constructor position keeps the public `position` value zero but marks the location unknown.
 An explicitly supplied zero can identify the beginning of an expression, including an empty expression.
