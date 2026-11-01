@@ -14,9 +14,26 @@ module JMESPath
         "min_by" => [[:array], [:expref]], "max_by" => [[:array], [:expref]]
       }.freeze
 
+      DESCRIPTIONS = {
+        "avg" => "Mean, or null for an empty array.",
+        "sum" => "Sum, including zero for an empty array.",
+        "min" => "Minimum, or null for an empty array.",
+        "max" => "Maximum, or null for an empty array.",
+        "sort" => "Stable sorted array of numbers or strings.",
+        "join" => "Join strings with a separator.",
+        "keys" => "Object keys as strings.",
+        "values" => "Object values.",
+        "merge" => "Merge objects, with later values winning.",
+        "map" => "Map an expression over an array, including null results.",
+        "sort_by" => "Stable array sorted by homogeneous expression results.",
+        "min_by" => "Input element with minimum expression result, or null for an empty array.",
+        "max_by" => "Input element with maximum expression result, or null for an empty array."
+      }.freeze
+
       def self.register(registry)
         SIGNATURES.reduce(registry) do |result, (name, signature)|
-          result.with_builtin(name, signature: signature, handler: name.to_sym, variadic: name == "merge")
+          result.with_builtin(name, signature: signature, handler: name.to_sym,
+                                    description: DESCRIPTIONS.fetch(name), variadic: name == "merge")
         end
       end
 

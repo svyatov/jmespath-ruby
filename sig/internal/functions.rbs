@@ -1,9 +1,15 @@
 module JMESPath
   class Functions
+    class Metadata
+      @variadic: bool
+      def initialize: (String, Array[Array[Symbol]], bool, String?) -> void
+    end
+
     class Definition < Data
       attr_reader signature: Signature
       attr_reader implementation: Symbol | ^(*value) -> value
-      def self.new: (Signature, Symbol | ^(*value) -> value) -> instance
+      attr_reader description: String?
+      def self.new: (Signature, Symbol | ^(*value) -> value, String?) -> instance
     end
     class Signature
       TYPES: Array[Symbol]
@@ -34,7 +40,7 @@ module JMESPath
     @definitions: Hash[String, Definition]
     def definition: (String) -> Definition?
     def call_with_context: (String, Array[value], source_range: Range[Integer], ?disable_visit_errors: bool?) -> value
-    def with_builtin: (String, signature: Array[Array[Symbol]], handler: Symbol, ?variadic: bool) -> Functions
+    def with_builtin: (String, signature: Array[Array[Symbol]], handler: Symbol, description: String, ?variadic: bool) -> Functions
     private
     def invoke: (String, Array[value], disable_visit_errors: bool, ?source_range: Range[Integer]?) -> value
     def add: (String, Definition, override: bool) -> Functions
