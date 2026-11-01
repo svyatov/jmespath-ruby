@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1
+        with:
+          ruby-version: "4.0"
+          bundler-cache: true
+      - name: Check tag and build gem
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          ruby -Ilib -rjmespath/version -e 'abort "Tag does not match gem version" unless ENV.fetch("RELEASE_TAG") == "v#{JMESPath::VERSION}"'
+          bundle exec rake build
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-gem
+          path: pkg/*.gem
+          if-no-files-found: error
+      - name: Configure trusted publishing
+        env:
+          RUBYGEMS_OWNER_ID: "71752"
+        run: ruby script/configure_trusted_publishing.rb
+      - name: Publish to RubyGems
+        run: gem push pkg/jmespath-ruby-*.gem --host https://rubygems.org
