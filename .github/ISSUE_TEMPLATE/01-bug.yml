@@ -1,0 +1,43 @@
+name: Bug report
+description: Report an incorrect query result, error, or installation failure.
+body:
+  - type: markdown
+    attributes:
+      value: Report security vulnerabilities privately using SECURITY.md. Remove private data from reproductions and logs.
+  - type: input
+    id: version
+    attributes:
+      label: Gem version
+      description: Paste the output of `jmespath --version`, or name the commit if using a checkout.
+    validations:
+      required: true
+  - type: input
+    id: runtime
+    attributes:
+      label: Ruby and platform
+      description: Paste `ruby --version`, which includes the Ruby version and platform.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include the query, input, options, and Ruby code or shell command needed to reproduce the problem.
+      render: ruby
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: Describe the expected result and link the relevant documentation or JMESPath specification when possible.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Include the returned value or complete error and backtrace.
+      render: text
+    validations:
+      required: true
