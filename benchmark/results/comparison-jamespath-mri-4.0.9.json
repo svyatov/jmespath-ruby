@@ -1,0 +1,3470 @@
+{
+  "measured_at": "2026-11-01T11:38:46Z",
+  "iterations": 20000,
+  "warmup": 2000,
+  "rounds": 5,
+  "workload_sha256": "fd2ca3fa7e971dbeee0bb9e44c48eacc12f81591fe6510fd07e7af063b2fdbc9",
+  "implementations": {
+    "jmespath-ruby": {
+      "root": "/private/tmp/jmespath-comparison.CWOAI0/worktree",
+      "provider": "jmespath",
+      "version": "0.1.0",
+      "revision": "609c178"
+    },
+    "jamespath": {
+      "root": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1",
+      "provider": "jamespath",
+      "version": "0.5.1"
+    }
+  },
+  "source_sha256": {
+    "jmespath-ruby": "a5c6553e059364fd8aac385ef4470a820eb81512daf9a5f7adbe983fb9499067",
+    "jamespath": "1da5e53cdebaf80c97c791dc9ae18aca36e8092d49d18b4b92da3383ebb57701"
+  },
+  "measurements": [
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "field",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.030534999910742044,
+          "allocated_objects": 60006,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.02953399997204542,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.029394999844953418,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03151000011712313,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.029667000053450465,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "field",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.01179799996316433,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.011617999989539385,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.011750000063329935,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.012291999999433756,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.011839000042527914,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "projection",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.2631029998883605,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.2669780000578612,
+          "allocated_objects": 80006,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.2621599999256432,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.28163999994285405,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.26450100005604327,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "projection",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.24346399982459843,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.2450030001346022,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.2505319998599589,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.2559050000272691,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.24970600008964539,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "filter",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.7673210001084954,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7599699997808784,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7540420000441372,
+          "allocated_objects": 80006,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.8171419999562204,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7700140001252294,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "filter",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.7403979999944568,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7328640001360327,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7280470000114292,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7737839999608696,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7882519999984652,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "sort",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 1.5265490000601858,
+          "allocated_objects": 2240000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 1.5210220001172274,
+          "allocated_objects": 2240000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 1.542147999862209,
+          "allocated_objects": 2240000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 1.6108069999609143,
+          "allocated_objects": 2240006,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 1.6436950000934303,
+          "allocated_objects": 2240000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "sort",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 1.50330700003542,
+          "allocated_objects": 2200000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 1.5208560000173748,
+          "allocated_objects": 2200000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 1.5152010000310838,
+          "allocated_objects": 2200000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 1.5870700001250952,
+          "allocated_objects": 2200000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 1.5084969999734312,
+          "allocated_objects": 2200000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "slice",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.07281200005672872,
+          "allocated_objects": 100000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.07422000006772578,
+          "allocated_objects": 100000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.07273099990561604,
+          "allocated_objects": 100000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.07336200005374849,
+          "allocated_objects": 100000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.08235699986107647,
+          "allocated_objects": 100006,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "slice",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.05246799997985363,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.054145999951288104,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.05275000003166497,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.05485800001770258,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.0674979998730123,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "unicode",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.03184600011445582,
+          "allocated_objects": 100000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03239200008101761,
+          "allocated_objects": 100000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.032152999890968204,
+          "allocated_objects": 100000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03185300016775727,
+          "allocated_objects": 100000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03238899982534349,
+          "allocated_objects": 100000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "unicode",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.013782999943941832,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.013640000019222498,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.013257999904453754,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.013307000044733286,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.013627000153064728,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "single_expression",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.02277499996125698,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.023016000166535378,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.022209999850019813,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.022920999908819795,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.02253100019879639,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "single_expression",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.004928999813273549,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.004996999865397811,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.004663999890908599,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.004750999854877591,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.004810000071302056,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "single_dot_expression",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.027252000058069825,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.027600000146776438,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.026865999912843108,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.027332999976351857,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.027605999959632754,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "single_dot_expression",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.009330000029876828,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.009621000150218606,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.009156999876722693,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.009223999921232462,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.009975999826565385,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "double_dot_expression",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.03058800008147955,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03055400005541742,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.029746999964118004,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.029743000166490674,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03019499988295138,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "double_dot_expression",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.012286999961361289,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.012663000030443072,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.011989000020548701,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.012021000031381845,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.012427999870851636,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "dot_no_match",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.03428100002929568,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03492100001312792,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03414199990220368,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03387099993415177,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03628999995999038,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "dot_no_match",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.01590800005942583,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.016589999897405505,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.015888000139966607,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.01594700012356043,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.016958999913185835,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "deep_nesting_10",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.04599400004372001,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04658599989488721,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.046593999955803156,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04670399986207485,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.047802000073716044,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "deep_nesting_10",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.02729999995790422,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.02749900007620454,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.02716400008648634,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.028532000025734305,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.02809399995021522,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "deep_nesting_50",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.14094799989834428,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.14300199993886054,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.14118299982510507,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.14552200003527105,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.1478120000101626,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "deep_nesting_50",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.11847299989312887,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.12120400019921362,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.1189960001502186,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.12354000005871058,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.1327710000332445,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "deep_nesting_50_pipe",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.14119500014930964,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.14128799992613494,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.1401659999974072,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.1444329998921603,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.15052299993112683,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "deep_nesting_50_pipe",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.11884499993175268,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.12578799994662404,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.11809200001880527,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.12712000007741153,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.11892199981957674,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "deep_nesting_50_index",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.14443999994546175,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.14503599982708693,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.1443160001654178,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.14460799982771277,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.14513399987481534,
+          "allocated_objects": 60000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "deep_nesting_50_index",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.12211399991065264,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.1221580000128597,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.12168699991889298,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.1225019998382777,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.12265400006435812,
+          "allocated_objects": 20000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "multi_wildcard_field",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.050885000033304095,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.049174000043421984,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04987099999561906,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.05067100003361702,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.05014499998651445,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "multi_wildcard_field",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.031918999971821904,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03113300004042685,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03096399991773069,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03213299997150898,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03184999991208315,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "wildcard_with_index",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.04860199987888336,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04782500001601875,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.0473880001809448,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.048494999995455146,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04789200006052852,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "wildcard_with_index",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.029251999920234084,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.02873000013642013,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.028796999948099256,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.029569000005722046,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04018999985419214,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "wildcard_with_field_match",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.04012000001966953,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03938999981619418,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03936699987389147,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04040800011716783,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.05192300002090633,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "wildcard_with_field_match",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.021910000126808882,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.021484000142663717,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.021480000112205744,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.021982999984174967,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.023546000011265278,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "wildcard_with_field_match2",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.042763999896124005,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04232400003820658,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.042058000108227134,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04265399998985231,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.041486999951303005,
+          "allocated_objects": 80000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jmespath-ruby",
+      "workload": "wildcard_with_field_match2",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.02427599998190999,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.023945000022649765,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.023953000083565712,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.02445199992507696,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        },
+        {
+          "seconds": 0.02431600005365908,
+          "allocated_objects": 40000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/worktree/lib/jmespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "field",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.22233300004154444,
+          "allocated_objects": 480006,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.22009199997410178,
+          "allocated_objects": 480000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.21992500009946525,
+          "allocated_objects": 480000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.2220290000550449,
+          "allocated_objects": 480000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.22300300002098083,
+          "allocated_objects": 480000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "field",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.012137000216171145,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.011946000158786774,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.011965999845415354,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.012295000022277236,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.012775999959558249,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "projection",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.7243689999449998,
+          "allocated_objects": 700000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.714517000131309,
+          "allocated_objects": 700006,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7041680000256747,
+          "allocated_objects": 700000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7250119999516755,
+          "allocated_objects": 700000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7599739998113364,
+          "allocated_objects": 700000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "projection",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.4921600001398474,
+          "allocated_objects": 160000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.49966099997982383,
+          "allocated_objects": 160000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.4891310001257807,
+          "allocated_objects": 160000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.5176709999796003,
+          "allocated_objects": 160000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.497929000062868,
+          "allocated_objects": 160000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "filter",
+      "mode": "search",
+      "samples": [
+        {
+          "error": "SyntaxError: unexpected token at pos=6: ?"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=6: ?"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=6: ?"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=6: ?"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=6: ?"
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "filter",
+      "mode": "cached",
+      "samples": [
+        {
+          "error": "SyntaxError: unexpected token at pos=6: ?"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=6: ?"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=6: ?"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=6: ?"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=6: ?"
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "sort",
+      "mode": "search",
+      "samples": [
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "sort",
+      "mode": "cached",
+      "samples": [
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "slice",
+      "mode": "search",
+      "samples": [
+        {
+          "error": "SyntaxError: unexpected token colon(\":\", pos=8)"
+        },
+        {
+          "error": "SyntaxError: unexpected token colon(\":\", pos=8)"
+        },
+        {
+          "error": "SyntaxError: unexpected token colon(\":\", pos=8)"
+        },
+        {
+          "error": "SyntaxError: unexpected token colon(\":\", pos=8)"
+        },
+        {
+          "error": "SyntaxError: unexpected token colon(\":\", pos=8)"
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "slice",
+      "mode": "cached",
+      "samples": [
+        {
+          "error": "SyntaxError: unexpected token colon(\":\", pos=8)"
+        },
+        {
+          "error": "SyntaxError: unexpected token colon(\":\", pos=8)"
+        },
+        {
+          "error": "SyntaxError: unexpected token colon(\":\", pos=8)"
+        },
+        {
+          "error": "SyntaxError: unexpected token colon(\":\", pos=8)"
+        },
+        {
+          "error": "SyntaxError: unexpected token colon(\":\", pos=8)"
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "unicode",
+      "mode": "search",
+      "samples": [
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "unicode",
+      "mode": "cached",
+      "samples": [
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=7: ("
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "single_expression",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.06819100002758205,
+          "allocated_objects": 200000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.06564599997363985,
+          "allocated_objects": 200000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.06398599990643561,
+          "allocated_objects": 200006,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.06434600008651614,
+          "allocated_objects": 200006,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.07638499978929758,
+          "allocated_objects": 200006,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "single_expression",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.005242999875918031,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.005283999955281615,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.005254999967291951,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.005216999910771847,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.008782999822869897,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "single_dot_expression",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.1425000000745058,
+          "allocated_objects": 340000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.14434100012294948,
+          "allocated_objects": 340000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.14129900000989437,
+          "allocated_objects": 340000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.14237900008447468,
+          "allocated_objects": 340000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.1594249999616295,
+          "allocated_objects": 340000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "single_dot_expression",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.008482000092044473,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.00888799992389977,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.008803999982774258,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.008649999974295497,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.00899800006300211,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "double_dot_expression",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.22072599991224706,
+          "allocated_objects": 480000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.21981999999843538,
+          "allocated_objects": 480000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.21883000014349818,
+          "allocated_objects": 480000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.22078499989584088,
+          "allocated_objects": 480000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.22942100022919476,
+          "allocated_objects": 480000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "double_dot_expression",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.011493000201880932,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.011843000072985888,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.011658000061288476,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.012101000174880028,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.012156999902799726,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "dot_no_match",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.3059679998550564,
+          "allocated_objects": 620000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.38050700002349913,
+          "allocated_objects": 620000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.29709300003014505,
+          "allocated_objects": 620000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.2979170000180602,
+          "allocated_objects": 620000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.30156100005842745,
+          "allocated_objects": 620000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "dot_no_match",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.0156719998922199,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.015527999959886074,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.015793000115081668,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.015925999963656068,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.016204999992623925,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "deep_nesting_10",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.7552989998366684,
+          "allocated_objects": 1460000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7524339999072254,
+          "allocated_objects": 1460000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7530179999303073,
+          "allocated_objects": 1460000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7536150000523776,
+          "allocated_objects": 1460000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.7971210000105202,
+          "allocated_objects": 1460000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "deep_nesting_10",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.03412600001320243,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03438599989749491,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03379400004632771,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03444299986585975,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.03515099990181625,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "deep_nesting_50",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 3.8480119998566806,
+          "allocated_objects": 7060000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 3.781658000079915,
+          "allocated_objects": 7060000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 3.792174000060186,
+          "allocated_objects": 7060000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 3.8650970000308007,
+          "allocated_objects": 7060000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 3.9668679998721927,
+          "allocated_objects": 7060000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "deep_nesting_50",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.1628539999946952,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.16171699995175004,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.16151800006628036,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.17070999997667968,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.17272699996829033,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "deep_nesting_50_pipe",
+      "mode": "search",
+      "samples": [
+        {
+          "error": "SyntaxError: unexpected token at pos=3: |"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=3: |"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=3: |"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=3: |"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=3: |"
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "deep_nesting_50_pipe",
+      "mode": "cached",
+      "samples": [
+        {
+          "error": "SyntaxError: unexpected token at pos=3: |"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=3: |"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=3: |"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=3: |"
+        },
+        {
+          "error": "SyntaxError: unexpected token at pos=3: |"
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "deep_nesting_50_index",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 3.7891680002212524,
+          "allocated_objects": 10120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 3.7807190001476556,
+          "allocated_objects": 10120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 3.798576000146568,
+          "allocated_objects": 10120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 4.12646900000982,
+          "allocated_objects": 10120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 3.990358999930322,
+          "allocated_objects": 10120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "deep_nesting_50_index",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.1531490001361817,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.15084900008514524,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.15102099999785423,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.1542479998897761,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.1554330000653863,
+          "allocated_objects": 0,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "multi_wildcard_field",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.4385869998950511,
+          "allocated_objects": 1280000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.42858600011095405,
+          "allocated_objects": 1280000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.4325579998549074,
+          "allocated_objects": 1280000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.4400669999886304,
+          "allocated_objects": 1280000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.47339599998667836,
+          "allocated_objects": 1280000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "multi_wildcard_field",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.07913099997676909,
+          "allocated_objects": 400000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.07891599996946752,
+          "allocated_objects": 400000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.07963000005111098,
+          "allocated_objects": 400000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.08766199997626245,
+          "allocated_objects": 400000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.08393600000999868,
+          "allocated_objects": 400000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "wildcard_with_index",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.41108600003644824,
+          "allocated_objects": 1120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.40794400009326637,
+          "allocated_objects": 1120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.41516900015994906,
+          "allocated_objects": 1120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.4385279999114573,
+          "allocated_objects": 1120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.45115499990060925,
+          "allocated_objects": 1120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "wildcard_with_index",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.058013999834656715,
+          "allocated_objects": 240000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.057456000009551644,
+          "allocated_objects": 240000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.05829400010406971,
+          "allocated_objects": 240000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.07025899994187057,
+          "allocated_objects": 240000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.06062699994072318,
+          "allocated_objects": 240000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "wildcard_with_field_match",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.24691500002518296,
+          "allocated_objects": 660000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.2465500000398606,
+          "allocated_objects": 660000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.24540100013837218,
+          "allocated_objects": 660000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.2506659999489784,
+          "allocated_objects": 660000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.252917000092566,
+          "allocated_objects": 660000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "wildcard_with_field_match",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.04028100008144975,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04037700011394918,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04081499995663762,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.04077600012533367,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.040914000011980534,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "wildcard_with_field_match2",
+      "mode": "search",
+      "samples": [
+        {
+          "seconds": 0.24604399991221726,
+          "allocated_objects": 660000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.24459500005468726,
+          "allocated_objects": 660000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.2455690000206232,
+          "allocated_objects": 660000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.24853399978019297,
+          "allocated_objects": 660000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.27847800008021295,
+          "allocated_objects": 660000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    },
+    {
+      "implementation": "jamespath",
+      "workload": "wildcard_with_field_match2",
+      "mode": "cached",
+      "samples": [
+        {
+          "seconds": 0.04014399996958673,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.039772999938577414,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.039474999997764826,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.039814000017941,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        },
+        {
+          "seconds": 0.039898999966681004,
+          "allocated_objects": 120000,
+          "runtime": {
+            "ruby": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+            "yjit": false,
+            "source": "/private/tmp/jmespath-comparison.CWOAI0/gems/gems/jamespath-0.5.1/lib/jamespath.rb"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,8 @@
 # Performance
 
+For the current comparison across published Ruby implementations, see [implementation comparison](comparison.md).
+The measurements below preserve earlier revisions, private-node diagnostics, and memory experiments against jmespath.rb.
+
 Compile an expression explicitly when evaluating it against many documents.
 The convenience cache avoids parsing repeated queries, while explicit compilation also avoids cache lookup.
 
