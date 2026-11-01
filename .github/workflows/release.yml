@@ -28,6 +28,7 @@ jobs:
       - uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1
         with:
           ruby-version: "4.0.9"
+          bundler: none
           bundler-cache: false
       - name: Build release artifacts
         env:
@@ -65,6 +66,7 @@ jobs:
       - uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1
         with:
           ruby-version: "4.0.9"
+          bundler: none
           bundler-cache: false
       - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
         id: provenance
