@@ -111,7 +111,10 @@ module JMESPath
     private
 
     def invoke(name, arguments, disable_visit_errors:, source_range: nil)
-      definition = @definitions.fetch(name) { raise Errors::UnknownFunctionError, "Unknown function: #{name}" }
+      definition = @definitions.fetch(name) do
+        raise Errors::UnknownFunctionError.new("Unknown function: #{name}", function_name: name,
+                                                                            suggestions: Suggestions.for(name, names))
+      end
       context = ValidationContext.new(name, definition.signature, source_range: source_range)
       invocation = disable_visit_errors ? FunctionCall.new : FunctionCall::STRICT
       invocation.call(definition, name, arguments, disable_visit_errors: disable_visit_errors, context: context)

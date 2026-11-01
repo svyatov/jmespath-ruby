@@ -1,0 +1,13 @@
+module JMESPath
+  class Functions
+    module Suggestions
+      def self.for: (String, Array[String]) -> Array[String]
+      private
+      def self.ranked: (String, String) -> [Integer, String]?
+      def self.distance: (String, String) -> Integer
+      def self.row: (Array[String], Array[String], Integer, Array[Integer], Array[Integer]) -> Array[Integer]
+      def self.substitution: (Array[String], Array[String], Integer, Integer, Array[Integer]) -> Integer
+      def self.swap?: (Array[String], Array[String], Integer, Integer) -> bool
+    end
+  end
+end

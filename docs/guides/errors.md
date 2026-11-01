@@ -134,6 +134,38 @@ Diagnostics preserve adapter conversion order and counts.
 Manually constructed errors can have nil metadata; application exceptions retain their identity, backtrace, and original metadata.
 Custom registry overrides of `Functions#call` retain their dispatch contract and may raise errors without source context.
 
+## Unknown function data
+
+Library-owned `UnknownFunctionError` failures expose `function_name` and `suggestions`.
+The name identifies the missing function; suggestions contain up to three ranked names from the active registry.
+The name, suggestion strings, and suggestions array are immutable copies.
+Use these fields instead of parsing the error message.
+
+Use this Ruby example to inspect a misspelled function:
+
+```ruby
+error = begin
+  JMESPath.search("lenght(name)", {name: "Ada"})
+rescue JMESPath::Errors::UnknownFunctionError => failure
+  failure
+end
+error.function_name #=> "lenght"
+error.suggestions #=> ["length"]
+error.message #=> "Unknown function: lenght. Did you mean length?"
+```
+
+Messages retain `Unknown function: NAME` when no similar names exist.
+Otherwise, they append `. Did you mean NAME1, NAME2?` using the ranked suggestions.
+The CLI prints this message and exits with status 1.
+`Diagnostic.format` accepts syntax errors; unknown-function diagnostics use `error.message`.
+See [matching rules](functions.md#unknown-function-suggestions) for thresholds and ranking.
+
+Lookup remains part of evaluation and follows argument evaluation.
+Unsuppressed argument failures take precedence over a missing outer function, including callback failures when visit errors are disabled.
+Unknown-function failures are not suppressed by `disable_visit_errors`.
+Callback exceptions retain their identity, backtrace, and metadata.
+Manually constructed errors default to a nil `function_name` and empty `suggestions`; positional message construction remains supported.
+
 Invalid JSON streams raise the JSON parser's error class.
 Invalid options raise ArgumentError.
 The CLI translates expected input failures to status 1 and usage failures to status 2.

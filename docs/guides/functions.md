@@ -114,3 +114,21 @@ The returned arrays, records, strings, and nested signature arrays are frozen.
 Registration copies supplied strings and signature arrays without freezing the caller's objects.
 Later registrations or changes to supplied inputs cannot alter earlier snapshots.
 Shared registries support concurrent inspection; object identity across inspection calls is not guaranteed.
+
+## Unknown function suggestions
+
+An unknown function raises `UnknownFunctionError` with up to three similar names from the active registry.
+Candidates include custom functions; overrides appear once.
+Empty registries and unrelated names yield no suggestions.
+Names from other registries are excluded.
+
+Matching is case-sensitive and uses optimal string alignment distance.
+Insertion, deletion, replacement, and an adjacent letter swap each cost one edit.
+The same substring cannot be edited twice, which distinguishes this distance from unrestricted transposition matching.
+The maximum distance is one when the longer name has at most four characters, and two otherwise.
+Candidates are ranked by ascending distance, then ascending lexical order.
+
+Suggestions inspect registered names without executing candidate callbacks.
+Function lookup happens during evaluation, after the arguments have been evaluated.
+Compilation does not reject an unavailable function, and suggestions never correct or execute a query automatically.
+See [unknown function data](errors.md#unknown-function-data) for structured fields and messages.

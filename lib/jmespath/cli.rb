@@ -7,7 +7,8 @@ module JMESPath
   module CLI
     USAGE = "Usage: jmespath EXPRESSION < document.json"
     HELP = "#{USAGE}\n" \
-           "Function arguments and expression-reference results are validated; failures exit with status 1.".freeze
+           "Function arguments and expression-reference results are validated; failures exit with status 1.\n" \
+           "Unknown functions suggest similar registered names.".freeze
 
     # @param argv [Array<String>] command-line arguments
     # @param stdin [IO, StringIO] source JSON stream

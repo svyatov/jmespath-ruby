@@ -37,6 +37,9 @@ module JMESPath
       def initialize: (?String?, ?expected_arity: Integer?, ?actual_arity: Integer?, ?function_name: String?, ?signature: Array[Array[Symbol]]?, ?variadic: bool?, ?source_range: Range[Integer]?) -> void
     end
     class UnknownFunctionError < RuntimeError
+      attr_reader function_name: String?
+      attr_reader suggestions: Array[String]
+      def initialize: (?String?, ?function_name: String?, ?suggestions: Array[String]) -> void
     end
 
     module FunctionFailure
