@@ -110,4 +110,14 @@ RSpec.describe "Benchmark evidence" do
   ensure
     worker&.close
   end
+
+  it "accepts unchanged sources when filesystem traversal order differs" do
+    pattern = File.join(root, "lib/**/*")
+    paths = Dir[pattern]
+    allow(Dir).to receive(:[]).and_call_original
+    allow(Dir).to receive(:[]).with(pattern).and_return(paths, paths.reverse)
+    benchmark = ComparisonRun.new(implementations: { current: { root: root, provider: "jmespath" } },
+                                  iterations: 1, warmup: 1, rounds: 1, only: "field")
+    expect(benchmark.run.fetch(:measurements).length).to eq(2)
+  end
 end

@@ -41,7 +41,9 @@ class ComparisonRun < BenchmarkRun
     @implementations.transform_values do |implementation|
       root = implementation.fetch(:root)
       digest = Digest::SHA256.new
-      Dir[File.join(root, "lib/**/*")].each do |path|
+      # MRI and JRuby return nested glob results in different orders.
+      paths = Dir[File.join(root, "lib/**/*")].sort # rubocop:disable Lint/RedundantDirGlobSort
+      paths.each do |path|
         digest << path.delete_prefix("#{root}/") << File.binread(path) if File.file?(path)
       end
       digest.hexdigest
