@@ -10,6 +10,8 @@
 
 **Spec:** [Approved design](../specs/2026-11-01-function-validation-context-design.md).
 
+**Status:** Implemented and verified on 2026-11-02.
+
 ## Global constraints
 
 - Keep their ancestry, positional message constructors, and error messages compatible.
@@ -61,7 +63,7 @@ Preserve the unrelated untracked `oss-audit-report.md`.
 - `FunctionCall#call(definition, name, arguments, disable_visit_errors: false, context: nil)` keeps the strict receiver stateless.
 - `Functions#call(name, arguments, disable_visit_errors: false)` keeps its public signature.
 
-- [ ] **Step 1: Add unit regressions for public metadata.**
+- [x] **Step 1: Add unit regressions for public metadata.**
 
 For `Functions.default.call("join", [",", [1, 2]])`, assert:
 
@@ -86,12 +88,12 @@ For a zero-argument custom function receiving one argument, assert expected arit
 Assert the positional constructors preserve their messages and return nil for each metadata accessor.
 Assert metadata strings, arrays, nested signature arrays, and any supplied ranges are immutable independent snapshots.
 
-- [ ] **Step 2: Run the regressions before implementation.**
+- [x] **Step 2: Run the regressions before implementation.**
 
 Run `bundle exec rspec spec/unit/function_validation_context_spec.rb`.
 Expected: failures for missing metadata accessors.
 
-- [ ] **Step 3: Implement the public accessors and private context interfaces.**
+- [x] **Step 3: Implement the public accessors and private context interfaces.**
 
 Keep origin matching in `FunctionCall#call` and preserve bare `raise` for ineligible errors.
 Pass context to signature checks without storing it on `FunctionCall::STRICT`.
@@ -100,12 +102,12 @@ Retain the existing matching and actual-type conversion sequence; populate metad
 Keep direct calls to coercion singleton helpers valid without context.
 Update RBS and YARD alongside each interface.
 
-- [ ] **Step 4: Verify direct calls and suppression compatibility.**
+- [x] **Step 4: Verify direct calls and suppression compatibility.**
 
 Run `bundle exec rspec spec/unit/function_validation_context_spec.rb spec/unit/signature_spec.rb spec/unit/functions_spec.rb spec/integration/review_callbacks_spec.rb`.
 Expected: all examples pass, including existing origin and backtrace assertions.
 
-- [ ] **Step 5: Commit only Task 1 files.**
+- [x] **Step 5: Commit only Task 1 files.**
 
 Use `feat(errors): expose structured signature validation data`.
 
@@ -118,7 +120,7 @@ Coercion helpers accept optional `context:` and `position:` keywords and continu
 `checked_type(value, expected, context:)` reports argument 2 with stage `:expression_result`.
 Use Task 1's context error factories and preserve `validation_origin` independently.
 
-- [ ] **Step 1: Add regressions for result constraints and later conversion failures.**
+- [x] **Step 1: Add regressions for result constraints and later conversion failures.**
 
 For each of `sort_by`, `min_by`, and `max_by`, test keys `[false]`, `[1, "x"]`, and `["x", 1]`.
 Assert argument 2, stage `:expression_result`, actual types `:boolean`, `:string`, and `:number`, respectively.
@@ -132,12 +134,12 @@ Retain the existing adapter test whose second conversion raises an application e
 For both library error classes, have custom callbacks raise manually constructed errors and errors from nested searches.
 Assert suppression preserves these callback errors and does not attach outer metadata.
 
-- [ ] **Step 2: Run the added regressions before implementation.**
+- [x] **Step 2: Run the added regressions before implementation.**
 
 Run `bundle exec rspec spec/unit/function_validation_context_spec.rb spec/integration/review_callbacks_spec.rb`.
 Expected: failures for absent built-in metadata; callback compatibility assertions continue to pass.
 
-- [ ] **Step 3: Thread context through handlers and coercion checks.**
+- [x] **Step 3: Thread context through handlers and coercion checks.**
 
 Pass the correct argument position explicitly, including each actual variadic position in `merge`.
 Preserve helper call order within `join`, `contains?`, `length`, and `avg`.
@@ -146,12 +148,12 @@ At coercion failures, classify native primitives directly; use `:unknown` when a
 Preserve singleton coercion errors without context and avoid retaining values in metadata.
 Update every changed built-in signature in RBS, including conversion handlers accepting unused context.
 
-- [ ] **Step 4: Verify built-ins and exception boundaries.**
+- [x] **Step 4: Verify built-ins and exception boundaries.**
 
 Run `bundle exec rspec spec/unit/function_validation_context_spec.rb spec/unit/scalar_functions_spec.rb spec/unit/collection_functions_spec.rb spec/unit/boundaries_spec.rb spec/integration/review_callbacks_spec.rb`.
 Expected: all examples pass with unchanged conversion counts and successful results.
 
-- [ ] **Step 5: Commit only Task 2 files.**
+- [x] **Step 5: Commit only Task 2 files.**
 
 Use `feat(errors): describe built-in validation failures`.
 
@@ -166,7 +168,7 @@ Do not enrich errors from that delegated application code.
 Change `Plan::Builder#function_call` and `#string_function` to accept the function AST node or its source range explicitly.
 The evaluator supplies `(node.start...node.finish)` for each function invocation.
 
-- [ ] **Step 1: Add source-range and execution-boundary regressions.**
+- [x] **Step 1: Add source-range and execution-boundary regressions.**
 
 Run equivalent assertions through a configured compiled plan and a search-time registry override forcing evaluator execution.
 Assert `length(reverse(@))` on numeric input identifies `reverse`, range `7...17`, and argument 1.
@@ -182,12 +184,12 @@ For R4, use synchronized concurrent searches of two compiled expressions sharing
 Assert each error retains its own function, range, signature, and suppression behavior.
 Assert suppressed inner reference failures still yield the established successful outer results, such as `[nil]` from `map`.
 
-- [ ] **Step 2: Run the integration regressions before implementation.**
+- [x] **Step 2: Run the integration regressions before implementation.**
 
 Run `bundle exec rspec spec/integration/function_validation_context_spec.rb spec/integration/configured_queries_spec.rb spec/integration/concurrency_spec.rb`.
 Expected: source-range assertions fail while established dispatch behavior remains covered.
 
-- [ ] **Step 3: Pass AST ranges through all library execution paths.**
+- [x] **Step 3: Pass AST ranges through all library execution paths.**
 
 Route native registry calls through the contextual entry while preserving subclass dispatch.
 Keep optimized successful string calls direct; send their fallback failures through contextual validation.
@@ -195,12 +197,12 @@ Preserve unknown-function timing after argument evaluation.
 Create immutable context per call or reuse immutable compiled context; never mutate shared evaluators or registries.
 Do not catch callback errors to attach ranges.
 
-- [ ] **Step 4: Verify both execution paths and concurrency.**
+- [x] **Step 4: Verify both execution paths and concurrency.**
 
 Run `bundle exec rspec spec/integration/function_validation_context_spec.rb spec/integration/configured_queries_spec.rb spec/integration/concurrency_spec.rb spec/integration/review_callbacks_spec.rb spec/unit/evaluator_spec.rb`.
 Expected: all examples pass, including R1 through R5.
 
-- [ ] **Step 5: Commit only Task 3 files.**
+- [x] **Step 5: Commit only Task 3 files.**
 
 Use `feat(errors): attach function source ranges`.
 
@@ -210,18 +212,18 @@ Use `feat(errors): attach function source ranges`.
 
 **Interfaces:** CLI help explains function validation; error rendering, executable names, options, and exit statuses retain their contracts.
 
-- [ ] **Step 1: Add a failing help regression.**
+- [x] **Step 1: Add a failing help regression.**
 
 Assert `--help` describes function validation and succeeds without reading JSON.
 Assert an invalid `length(@)` invocation still returns status 1, empty stdout, and the original message on stderr.
 Assert usage failures still return status 2.
 
-- [ ] **Step 2: Run CLI regressions before the help change.**
+- [x] **Step 2: Run CLI regressions before the help change.**
 
 Run `bundle exec rspec spec/integration/cli_spec.rb`.
 Expected: the validation-help assertion fails.
 
-- [ ] **Step 3: Document metadata and clarify help.**
+- [x] **Step 3: Document metadata and clarify help.**
 
 Document all accessors, nullable metadata, array unions, variadic arity, expression-result constraints, and exclusive byte ranges.
 Add executable Ruby examples inspecting rescued errors from query evaluation and direct `Functions#call`.
@@ -230,7 +232,7 @@ Explain the `:unknown` fallback and preserve all suppression guarantees.
 Add this help sentence: `Function arguments and expression-reference results are validated; failures exit with status 1.`
 Keep help text separate from the usage string used for invalid command invocations.
 
-- [ ] **Step 4: Run required checks and package verification.**
+- [x] **Step 4: Run required checks and package verification.**
 
 Run `bundle exec rake` and require success, including coverage, CRAP, RuboCop, RBS, Steep, and executable documentation.
 Run `bundle exec rake docs` and require success without YARD warnings.
@@ -240,7 +242,7 @@ Run `git diff --check` and require success.
 Inspect the final diff for imported-fixture changes, extra dependencies, retained argument values, and unrelated edits.
 Only broaden testing when failures or further changes justify it.
 
-- [ ] **Step 5: Commit the documentation and report verified behavior.**
+- [x] **Step 5: Commit the documentation and report verified behavior.**
 
 Use `docs(errors): explain function validation metadata`.
 Report the public Ruby inspection example, the checks actually run, and any remaining limitation.
