@@ -1,6 +1,6 @@
 # Structured function validation errors
 
-Status: proposed for approval.
+Status: approved by the user on 2026-11-01.
 Scope: [issue #14](https://github.com/svyatov/jmespath-ruby/issues/14).
 
 ## Intent and scope
@@ -95,5 +95,5 @@ Update public RBS declarations and YARD documentation with executable examples.
 Run `bundle exec rake` and `bundle exec rake docs`.
 Verify packaged assets if implementation changes the packaged file set.
 
-Accessor names, exclusive byte ranges, and the `:unknown` fallback are proposals in this design, pending approval.
+The user approved the accessor names, exclusive byte ranges, and the `:unknown` fallback with this design.
 Private helper structure, context representation, and file organization remain implementation decisions.
