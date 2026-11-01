@@ -35,6 +35,8 @@ Coverage requires 100% lines and branches.
 Every measurable library method must score at most 10 in coverage-aware CRAP analysis.
 A missing coverage report fails the check.
 Unmeasurable methods are reported for review.
+CI reports existing dependency advisories without blocking unrelated changes.
+Dependency review blocks pull requests that introduce known vulnerabilities.
 
 Run `bundle exec rspec spec/unit/parser_spec.rb` for a focused test cycle.
 Focused RSpec runs collect coverage without enforcing full-suite thresholds.

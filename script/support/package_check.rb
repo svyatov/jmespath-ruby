@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "bundler"
+require "digest"
 require "fileutils"
 require "json"
 require "open3"
@@ -62,6 +63,15 @@ class PackageCheck
       source "https://rubygems.org"
       gem "jmespath-ruby", "= #{specification.version}"
     GEMFILE
+    prepare_lock(directory, artifact, specification)
+  end
+
+  def prepare_lock(directory, artifact, specification)
+    environment = environment_for(directory).merge("BUNDLE_FROZEN" => "false")
+    command(environment, directory, "lock", "--local", "--add-checksums")
+    path = File.join(directory, "Gemfile.lock")
+    checksum = "  #{specification.name} (#{specification.version}) sha256=#{Digest::SHA256.file(artifact).hexdigest}"
+    File.write(path, File.read(path).sub(/^  #{Regexp.escape(specification.name)} \([^\n]+\) sha256=.+$/, checksum))
   end
 
   def environment_for(directory)
@@ -69,7 +79,7 @@ class PackageCheck
       "BUNDLE_GEMFILE" => File.join(directory, "Gemfile"),
       "BUNDLE_PATH" => File.join(directory, "installed"),
       "BUNDLE_APP_CONFIG" => File.join(directory, ".bundle"),
-      "BUNDLE_FROZEN" => "false", "BUNDLE_DEPLOYMENT" => "false",
+      "BUNDLE_FROZEN" => "true", "BUNDLE_DEPLOYMENT" => "false",
       "BUNDLE_WITHOUT" => "", "RUBYOPT" => nil, "RUBYLIB" => nil
     )
   end
