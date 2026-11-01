@@ -32,3 +32,32 @@ RSpec.describe JMESPath::Errors::SyntaxError do
     expect(error.location_known?).to be(true)
   end
 end
+
+RSpec.describe JMESPath::Errors::UnknownFunctionError do
+  it "preserves manual message construction and defaults" do
+    error = described_class.new("manual")
+    expect(error.message).to eq("manual")
+    expect(error.function_name).to be_nil
+    expect(error.suggestions).to eq([])
+    expect(error.suggestions).to be_frozen
+    expect(described_class.new.message).to eq("JMESPath::Errors::UnknownFunctionError")
+    expect(error).to be_a(JMESPath::Errors::RuntimeError)
+    expect(error).to be_a(JMESPath::Errors::Error)
+  end
+
+  it "owns immutable copies without freezing caller values" do
+    name = +"lenght"
+    candidate = +"length"
+    suggestions = [candidate]
+    error = described_class.new("Unknown function: lenght", function_name: name, suggestions: suggestions)
+    name.clear
+    candidate.clear
+    suggestions.clear
+    expect(error.function_name).to eq("lenght")
+    expect(error.function_name).to be_frozen
+    expect(error.suggestions).to eq(["length"])
+    expect(error.suggestions).to be_frozen
+    expect(error.suggestions.first).to be_frozen
+    expect(error.message).to eq("Unknown function: lenght. Did you mean length?")
+  end
+end

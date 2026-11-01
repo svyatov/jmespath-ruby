@@ -145,6 +145,21 @@ module JMESPath
     end
 
     # A function name is not registered.
-    class UnknownFunctionError < RuntimeError; end
+    class UnknownFunctionError < RuntimeError
+      # @return [String, nil] unregistered function identifier
+      attr_reader :function_name
+      # @return [Array<String>] up to three similar names from the active registry
+      attr_reader :suggestions
+
+      # @param message [String, nil] failure message
+      # @param function_name [String, nil] unregistered function identifier
+      # @param suggestions [Array<String>] ranked registered names
+      def initialize(message = nil, function_name: nil, suggestions: [])
+        @function_name = function_name&.dup&.freeze
+        @suggestions = suggestions.map { |name| name.dup.freeze }.freeze
+        message = "#{message}. Did you mean #{@suggestions.join(', ')}?" unless @suggestions.empty?
+        super(message)
+      end
+    end
   end
 end
