@@ -11,6 +11,7 @@ Bound request sizes and runtime resources at the application boundary.
 Run `bundle exec rake audit` to refresh the dependency advisory database and check the lockfile.
 A failed database update fails the audit.
 
-Report security concerns through a private maintainer contact channel.
+Report vulnerabilities privately to [leonid@svyatov.com](mailto:leonid@svyatov.com).
+Leonid Svyatov will respond within 7 days.
+Include the affected version, a minimal reproduction, and the security impact.
 Do not post credentials or private application data in public reports.
-Private repository reporting must be configured before publication.

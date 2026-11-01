@@ -3,6 +3,25 @@
 Use Ruby 3.3 or later.
 Install the locked development bundle with `bundle install`.
 
+Outside contributions are welcome. This guide is the project's contribution standard.
+
+## Submit a change
+
+Fork the repository and create a branch from `main`.
+Use a branch name such as `fix/query-validation` and Conventional Commits for commit messages.
+Keep each pull request focused on one change.
+Open a pull request against `main` describing the problem, the change, and any public API consequences.
+
+New functionality must include tests. Bug fixes must include a regression test that fails before the fix.
+Follow the checks, fixture rules, and documentation requirements in this guide.
+Follow [VERSIONING.md](VERSIONING.md) when changing the public contract.
+Participants must follow the [code of conduct](CODE_OF_CONDUCT.md).
+
+## Decisions and continuity
+
+Leonid Svyatov is the sole maintainer and decides which changes to accept, merge, and release.
+No successor is arranged if he stops maintaining the project.
+
 ## Checks
 
 ```sh
