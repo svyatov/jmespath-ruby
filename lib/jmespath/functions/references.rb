@@ -8,51 +8,56 @@ module JMESPath
 
       private
 
-      def map(expression, value)
-        reference = reference(expression)
-        array(value).map { |item| reference.call(item) }
+      def map(expression, value, context:)
+        reference = reference(expression, context: context, position: 1)
+        array(value, context: context, position: 2).map { |item| reference.call(item) }
       end
 
-      def sort_by(value, expression)
-        reference = reference(expression)
+      def sort_by(value, expression, context:)
+        reference = reference(expression, context: context, position: 2)
         # @type var expected: Symbol?
         expected = nil
         index = 0
-        array(value).sort_by do |item|
+        array(value, context: context, position: 1).sort_by do |item|
           key = reference.call(item)
-          expected = checked_type(key, expected)
+          expected = checked_type(key, expected, context: context)
           index += 1
-          [sort_key(key), index]
+          [sort_key(key, context: context, position: 2, stage: :expression_result), index]
         end
       end
 
-      def min_by(value, expression)
-        keyed(value, expression).min_by(&:first)&.last
+      def min_by(value, expression, context:)
+        keyed(value, expression, context: context).min_by(&:first)&.last
       end
 
-      def max_by(value, expression)
-        keyed(value, expression).max_by(&:first)&.last
+      def max_by(value, expression, context:)
+        keyed(value, expression, context: context).max_by(&:first)&.last
       end
 
-      def keyed(value, expression)
-        reference = reference(expression)
+      def keyed(value, expression, context:)
+        reference = reference(expression, context: context, position: 2)
         # @type var expected: Symbol?
         expected = nil
-        array(value).map do |item|
+        array(value, context: context, position: 1).map do |item|
           key = reference.call(item)
-          expected = checked_type(key, expected)
-          [sort_key(key), item]
+          expected = checked_type(key, expected, context: context)
+          [sort_key(key, context: context, position: 2, stage: :expression_result), item]
         end
       end
 
-      def checked_type(value, expected)
+      def checked_type(value, expected, context:)
         type = Types.name(value)
         unless SORTABLE_TYPES.include?(type)
-          raise Signature::TypeMismatch.new("Expression keys must be numbers or strings", origin: validation_origin)
+          raise context.type_error(
+            "Expression keys must be numbers or strings", position: 2,
+            expected_types: SORTABLE_TYPES, actual_type: type, origin: validation_origin, stage: :expression_result
+          )
         end
         if expected && expected != type
-          raise Signature::TypeMismatch.new("Expression keys must have one type",
-                                            origin: validation_origin)
+          raise context.type_error(
+            "Expression keys must have one type", position: 2,
+            expected_types: [expected], actual_type: type, origin: validation_origin, stage: :expression_result
+          )
         end
 
         type

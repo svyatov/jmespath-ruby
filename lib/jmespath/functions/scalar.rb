@@ -22,48 +22,48 @@ module JMESPath
 
       private
 
-      def abs(value)
-        number(value).abs
+      def abs(value, context:)
+        number(value, context: context, position: 1).abs
       end
 
-      def ceil(value)
-        number(value).ceil
+      def ceil(value, context:)
+        number(value, context: context, position: 1).ceil
       end
 
-      def floor(value)
-        number(value).floor
+      def floor(value, context:)
+        number(value, context: context, position: 1).floor
       end
 
-      def contains?(subject, search)
+      def contains?(subject, search, context:)
         text = DataAccess.string(subject)
-        return text.include?(string(search)) if text
+        return text.include?(string(search, context: context, position: 2)) if text
 
-        array(subject).any? { |item| Types.equal?(item, search) }
+        array(subject, context: context, position: 1).any? { |item| Types.equal?(item, search) }
       end
 
-      def ends_with?(text, suffix)
-        string(text).end_with?(string(suffix))
+      def ends_with?(text, suffix, context:)
+        string(text, context: context, position: 1).end_with?(string(suffix, context: context, position: 2))
       end
 
-      def starts_with?(text, prefix)
-        string(text).start_with?(string(prefix))
+      def starts_with?(text, prefix, context:)
+        string(text, context: context, position: 1).start_with?(string(prefix, context: context, position: 2))
       end
 
-      def length(value)
-        collection = DataAccess.string(value) || DataAccess.array(value) || object(value)
+      def length(value, context:)
+        collection = DataAccess.string(value) || DataAccess.array(value) || object(value, context: context, position: 1)
         collection.length
       end
 
-      def reverse(value)
-        (DataAccess.string(value) || array(value)).reverse
+      def reverse(value, context:)
+        (DataAccess.string(value) || array(value, context: context, position: 1)).reverse
       end
 
-      def type(value)
+      def type(value, **)
         name = Types.name(value)
         name.to_s unless name == :unknown
       end
 
-      def not_null(*values)
+      def not_null(*values, **)
         values.find { |value| !value.nil? }
       end
     end

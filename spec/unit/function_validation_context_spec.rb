@@ -88,4 +88,66 @@ RSpec.describe "Structured function validation" do
     expect([error.function_name, error.signature, *error.signature, error.expected_types,
             error.source_range]).to all(be_frozen)
   end
+
+  %w[sort_by min_by max_by].each do |name|
+    [[[false], :boolean, %i[number string]], [[1, "x"], :string, [:number]],
+     [["x", 1], :number, [:string]]].each do |keys, actual, expected|
+      it "describes #{name} expression results #{keys.inspect}" do
+        reference = JMESPath::ExpressionReference.new { |item| item }
+        error = failure(name, [keys, reference])
+        expect(error.function_name).to eq(name)
+        expect(error.argument_position).to eq(2)
+        expect(error.validation_stage).to eq(:expression_result)
+        expect(error.actual_type).to eq(actual)
+        expect(error.expected_types).to eq(expected)
+        expect(error.signature).to eq([[:array], [:expref]])
+        expect(functions.call(name, [[], reference])).to eq(name == "sort_by" ? [] : nil)
+      end
+    end
+  end
+
+  it "describes a built-in constraint narrower than its signature" do
+    error = failure("contains", ["abc", 4])
+    expect(error.function_name).to eq("contains")
+    expect(error.argument_position).to eq(2)
+    expect(error.expected_types).to eq([:string])
+    expect(error.actual_type).to eq(:number)
+    expect(error.validation_stage).to eq(:argument)
+    expect(error.signature).to eq([%i[array string], [:any]])
+  end
+
+  it "avoids diagnostic conversions when an adapter changes its result" do
+    calls = 0
+    value = Object.new
+    value.define_singleton_method(:to_str) do
+      calls += 1
+      "abc" if calls == 1
+    end
+    error = failure("length", [value])
+    expect(calls).to eq(2)
+    expect(error.function_name).to eq("length")
+    expect(error.argument_position).to eq(1)
+    expect(error.actual_type).to eq(:unknown)
+    expect(error.validation_stage).to eq(:argument)
+  end
+
+  [JMESPath::Errors::InvalidTypeError, JMESPath::Errors::InvalidArityError].each do |klass|
+    it "leaves application #{klass} untouched" do
+      original = klass.new("callback failure")
+      trace = nil
+      registry = functions.with("broken", signature: []) do
+        raise original
+      rescue klass => e
+        trace = e.backtrace.dup
+        raise
+      end
+      [false, true].each do |suppress|
+        expect { registry.call("broken", [], disable_visit_errors: suppress) }.to(raise_error do |error|
+          expect(error).to equal(original)
+          expect(error.backtrace).to eq(trace)
+          expect(error.function_name).to be_nil
+        end)
+      end
+    end
+  end
 end
