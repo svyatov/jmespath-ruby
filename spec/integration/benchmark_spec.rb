@@ -101,4 +101,13 @@ RSpec.describe "Benchmark evidence" do
       worker&.close
     end
   end
+
+  it "reaps a timed-out worker and rejects subsequent requests" do
+    worker = ReferenceWorker.new([RbConfig.ruby, "-e", "$stdin.gets; sleep 60"], timeout: 0.1)
+    expect { worker.request({}) }.to raise_error(RuntimeError, /timed out/)
+    expect { worker.request({}) }.to raise_error(RuntimeError, /unavailable/)
+    expect(worker.close).to be_a(String)
+  ensure
+    worker&.close
+  end
 end
