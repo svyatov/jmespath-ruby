@@ -3,14 +3,20 @@ name: Quality
 on:
   workflow_call:
   push:
+    branches: [main]
   pull_request:
 
 permissions:
   contents: read
 
+concurrency:
+  group: quality-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   quality:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -34,6 +40,7 @@ jobs:
 
   macos:
     runs-on: macos-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -46,6 +53,7 @@ jobs:
 
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
