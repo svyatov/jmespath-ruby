@@ -36,6 +36,14 @@ RSpec.describe "Command-line queries" do
     expect(errors.string).not_to be_empty
   end
 
+  it "reports registered-name suggestions without changing failure status" do
+    expect(cli(["lenght(name)"], '{"name":"Ada"}'))
+      .to eq([1, "", "Unknown function: lenght. Did you mean length?\n"])
+    expect(cli(["zzzzzzzz()"], "{}"))
+      .to eq([1, "", "Unknown function: zzzzzzzz\n"])
+    expect(cli(["--help"], "invalid")[1]).to include("Unknown functions suggest similar registered names")
+  end
+
   it "offers help and version without reading JSON" do
     expect(cli(["--help"], "invalid").first).to eq(0)
     expect(cli(["--version"], "invalid")[1]).to include(JMESPath::VERSION)

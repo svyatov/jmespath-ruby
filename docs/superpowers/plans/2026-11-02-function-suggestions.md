@@ -59,7 +59,7 @@
 - Expose `function_name -> String?` and `suggestions -> Array[String]` as immutable snapshots.
 - Preserve `Functions#call` and `#call_with_context` signatures.
 
-- [ ] **Step 1: Add direct-call regression examples.**
+- [x] **Step 1: Add direct-call regression examples.**
 
 Use `registry.call` failures to assert exact suggestions and messages, including these cases:
 
@@ -85,7 +85,7 @@ Register candidates with blocks that raise if executed. Override `length` and as
 For R5, register a 1,000-character identifier against `abc`; assert no suggestions and no distance invocation.
 Assert a successful registered call never invokes `Suggestions.for`.
 
-- [ ] **Step 2: Add error ownership and compatibility examples.**
+- [x] **Step 2: Add error ownership and compatibility examples.**
 
 Assert `UnknownFunctionError.new("manual").message == "manual"`, nil `function_name`, and frozen empty `suggestions`.
 Also exercise construction without a positional message and preserve the inherited default message when suggestions are absent.
@@ -94,12 +94,12 @@ Assert caller-owned inputs remain mutable.
 Assert exact messages for zero, one, and three suggestions, including punctuation and ranking.
 Assert the error remains a `RuntimeError` and an `Errors::Error`.
 
-- [ ] **Step 3: Run the regression tests before implementation.**
+- [x] **Step 3: Run the regression tests before implementation.**
 
 Run `bundle exec rspec spec/unit/function_suggestions_spec.rb spec/unit/errors_spec.rb`.
 Confirm failures concern missing fields or suggestions, not fixture setup.
 
-- [ ] **Step 4: Implement error data and private matching.**
+- [x] **Step 4: Implement error data and private matching.**
 
 Use three dynamic-programming rows for optimal string alignment, with adjacent swaps costing one edit.
 Reject candidates whose length difference exceeds their threshold before calculating distance.
@@ -110,7 +110,7 @@ Preserve `Unknown function: NAME` without suggestions; append `. Did you mean NA
 Copy and freeze structured data in the error constructor.
 Add public RBS and YARD declarations alongside implementation; add private matcher RBS declarations.
 
-- [ ] **Step 5: Verify direct registry behavior and commit.**
+- [x] **Step 5: Verify direct registry behavior and commit.**
 
 Run the Step 3 command plus `bundle exec rspec spec/unit/functions_spec.rb spec/unit/function_metadata_spec.rb`.
 Run `bundle exec rake types`.
@@ -121,7 +121,7 @@ Commit only Task 1 files with `feat(functions): suggest registered names on look
 
 **Interfaces:** Consume Task 1 error readers and messages through unchanged query and CLI APIs.
 
-- [ ] **Step 1: Add integration tests for registry selection and evaluation order.**
+- [x] **Step 1: Add integration tests for registry selection and evaluation order.**
 
 Run each scenario through configured compiled execution and explicit `Evaluator` execution, using the repository's parser helpers.
 Assert compiling `dobule(@)` succeeds without resolving availability.
@@ -134,19 +134,19 @@ Assert unknown errors remain visible with suppression enabled.
 Verify a registry subclass overriding `call` retains its return value and receives no forced suggestion lookup.
 Preserve a callback-raised `UnknownFunctionError` instance, message, metadata, and backtrace.
 
-- [ ] **Step 2: Add CLI regression tests.**
+- [x] **Step 2: Add CLI regression tests.**
 
 Assert `cli(["lenght(name)"], '{"name":"Ada"}')` returns `[1, "", "Unknown function: lenght. Did you mean length?\n"]`.
 Assert `zzzzzzzz()` retains `Unknown function: zzzzzzzz\n` and exit status 1.
 Assert help mentions suggestions without reading JSON input.
 
-- [ ] **Step 3: Run integration tests and confirm the help assertion fails.**
+- [x] **Step 3: Run integration tests and confirm the help assertion fails.**
 
 Run `bundle exec rspec spec/integration/function_suggestions_spec.rb spec/integration/cli_spec.rb`.
 The query assertions should pass using Task 1; help should fail until updated.
 Investigate any execution-order failure before changing dispatch code.
 
-- [ ] **Step 4: Update help and public documentation.**
+- [x] **Step 4: Update help and public documentation.**
 
 Add a concise help sentence explaining registered-name suggestions for unknown functions.
 Document edit operations, length thresholds, case sensitivity, lexical tie-breaking, and the three-result cap in the functions guide.
@@ -154,15 +154,24 @@ Document immutable `function_name` and `suggestions`, manual construction defaul
 Include executable examples asserting `lenght` yields `["length"]` and the exact message.
 Keep `Diagnostic.format` scoped to syntax errors.
 
-- [ ] **Step 5: Verify the complete change.**
+- [x] **Step 5: Verify the complete change.**
 
 Run `bundle exec rake` and `bundle exec rake docs`; require both to pass.
 Use `Open3.capture3` with the installed Ruby and each repository executable to verify the typo message and status 1.
 Run the repository prose checker on touched documentation and `git diff --check`.
 Review the diff for changed imported fixtures, unrelated files, or public suggestion APIs beyond the approved error fields.
 
-- [ ] **Step 6: Commit documentation and integration coverage.**
+- [x] **Step 6: Commit documentation and integration coverage.**
 
 Commit only Task 2 files with `feat(cli): document unknown function suggestions`.
 Report verified behavior and the command `bundle exec ruby exe/jmespath 'lenght(name)'` with JSON supplied on standard input.
 Remote publication and pull request creation require separate authorization.
+
+## Verification record
+
+Implemented on `feat/function-suggestions`.
+The initial unit regression run failed for missing suggestion data and matching.
+The CLI help regression failed before the help update.
+`bundle exec rake` passed 4,143 examples with 100% line and branch coverage, lint, RBS, Steep, CRAP, and documentation checks.
+`bundle exec rake docs` generated YARD documentation without YARD warnings.
+The prose checker and `git diff --check` passed.
