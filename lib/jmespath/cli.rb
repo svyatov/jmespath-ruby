@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../jmespath"
+require_relative "cli/failure_diagnostic"
 
 module JMESPath
   # Runs one JMESPath query against a JSON document from standard input.
@@ -26,7 +27,7 @@ module JMESPath
       stdout.puts(JSON.generate(JMESPath.search(argv.fetch(0), data)))
       0
     rescue JSON::ParserError, Errors::Error, IOError, SystemCallError => e
-      stderr.puts(e.message)
+      stderr.puts(FailureDiagnostic.format(e, argv.first))
       1
     end
 

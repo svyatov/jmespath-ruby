@@ -51,7 +51,7 @@
 - Add private `type_name(type: Symbol) -> String` and `source_position(error, expression) -> Integer?`.
 - Return UTF-8 without a trailing newline; `CLI.run` owns stderr output and status 1.
 
-- [ ] **Step 1: Add failing CLI examples for query diagnostics.**
+- [x] **Step 1: Add failing CLI examples for query diagnostics.**
 
 Replace the previous type-message assertion with this literal expectation:
 
@@ -75,7 +75,7 @@ Assert `['✓', length(@)]` locates `length` at character column 7 despite its b
 Add multiline positional queries, tabs, and escaped control characters with literal excerpts and caret indentation.
 Keep unknown-function suggestions and `[::0]` message-only output under exact assertions.
 
-- [ ] **Step 2: Add metadata fallback examples through `CLI.run`.**
+- [x] **Step 2: Add metadata fallback examples through `CLI.run`.**
 
 Stub `JMESPath.search` to raise manually constructed type and arity errors.
 Assert absent validation fields retain the escaped original message.
@@ -88,12 +88,12 @@ Validate both range endpoints; a valid start with an invalid finish must omit lo
 Exercise invalid source encoding and verify reason-only UTF-8 output.
 Assert formatting preserves exception metadata and message across repeated runs.
 
-- [ ] **Step 3: Run regression tests before implementation.**
+- [x] **Step 3: Run regression tests before implementation.**
 
 Run `bundle exec rspec spec/integration/cli_spec.rb`.
 Expect failures for missing excerpts and structured details, with valid test setup.
 
-- [ ] **Step 4: Implement the formatter and CLI routing.**
+- [x] **Step 4: Implement the formatter and CLI routing.**
 
 Require the private formatter after loading `jmespath` in `cli.rb`.
 Pass syntax errors directly to the public formatter.
@@ -108,7 +108,7 @@ For message-only diagnostics, omit its position so the public formatter escapes 
 Keep helper bodies private and add matching private RBS declarations.
 Route rescued expected failures through `.format(e, argv.first)` without widening rescue classes.
 
-- [ ] **Step 5: Verify query diagnostics and commit.**
+- [x] **Step 5: Verify query diagnostics and commit.**
 
 Run `bundle exec rspec spec/integration/cli_spec.rb spec/unit/diagnostic_spec.rb`.
 Run `bundle exec rake types`.

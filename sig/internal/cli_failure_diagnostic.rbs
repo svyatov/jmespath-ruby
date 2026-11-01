@@ -1,0 +1,19 @@
+module JMESPath
+  module CLI
+    module FailureDiagnostic
+      def self.format: (StandardError, String?) -> String
+
+      private
+      def self.message: (StandardError) -> String
+      def self.type_message: (Errors::InvalidTypeError) -> String?
+      def self.type_subject: (Errors::InvalidTypeError) -> String?
+      def self.arity_message: (Errors::InvalidArityError) -> String?
+      def self.arity_count: (Integer, bool?) -> String?
+      def self.expected_types: (Array[Symbol]) -> String
+      def self.type_name: (Symbol) -> String
+      def self.source_position: (StandardError, String?) -> Integer?
+      def self.valid_range?: (Range[Integer], String) -> bool
+      def self.valid_bounds?: (Integer, Integer, String) -> bool
+    end
+  end
+end
