@@ -10,6 +10,8 @@ module JMESPath
 
     # A malformed expression with a byte position and readable coordinates.
     class SyntaxError < Error
+      # @return [String] the reason parsing failed, without coordinates
+      attr_reader :reason
       # @return [String] the expression text
       attr_reader :expression
       # @return [Integer] zero-based byte offset
@@ -18,10 +20,17 @@ module JMESPath
       # @param message [String] the reason parsing failed
       # @param expression [String] expression text
       # @param position [Integer] zero-based byte offset
-      def initialize(message, expression: "", position: 0)
+      def initialize(message, expression: "", position: nil)
+        @reason = message.dup.freeze
         @expression = expression.dup.freeze
-        @position = position
-        super("#{message} at byte #{position}")
+        @location_known = !position.nil?
+        @position = position || 0
+        super("#{message} at byte #{@position}")
+      end
+
+      # @return [Boolean] whether the caller supplied a source position
+      def location_known?
+        @location_known
       end
 
       # @return [Integer] one-based line number

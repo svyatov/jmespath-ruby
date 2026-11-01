@@ -12,9 +12,11 @@ module JMESPath
     class RuntimeError < Error
     end
     class SyntaxError < Error
+      attr_reader reason: String
       attr_reader expression: String
       attr_reader position: Integer
       def initialize: (String, ?expression: String, ?position: Integer) -> void
+      def location_known?: () -> bool
       def line: () -> Integer
       def column: () -> Integer
     end
@@ -26,6 +28,10 @@ module JMESPath
     end
     class UnknownFunctionError < RuntimeError
     end
+  end
+
+  module Diagnostic
+    def self.format: (Errors::SyntaxError) -> String
   end
 
   class Expression
