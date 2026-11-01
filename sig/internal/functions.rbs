@@ -12,7 +12,7 @@ module JMESPath
       module FailureOrigin
         @origin: Object?
         attr_reader origin: Object?
-        def initialize: (?String?, ?origin: Object?) -> void
+        def initialize: (?String?, ?origin: Object?, **untyped) -> void
       end
       class TypeMismatch < Errors::InvalidTypeError
         include FailureOrigin
@@ -21,8 +21,11 @@ module JMESPath
         include FailureOrigin
       end
       def initialize: (Array[Array[Symbol]], ?variadic: bool) -> void
-      def validate!: (Array[value], String, ?origin: Object?) -> void
+      attr_reader arguments: Array[Array[Symbol]]
+      def variadic?: () -> bool
+      def validate!: (Array[value], String, ?origin: Object?, ?context: ValidationContext?) -> void
       private
+      def reject_type!: (value, Integer, Array[Symbol], String, Object?, ValidationContext) -> bot
       def valid_definition?: (value) -> bool
       def valid_arity?: (Integer) -> bool
       def matches?: (value, Symbol) -> bool?

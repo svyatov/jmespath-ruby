@@ -5,7 +5,7 @@ module JMESPath
       include Scalar
       include Collections
       include Coercions
-      def call: (Definition, String, Array[value], ?disable_visit_errors: bool) -> value
+      def call: (Definition, String, Array[value], ?disable_visit_errors: bool, ?context: ValidationContext?) -> value
       private
       def validation_origin: () -> Object
     end

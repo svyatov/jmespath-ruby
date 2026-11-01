@@ -10,8 +10,8 @@ module JMESPath
 
       private :number, :string, :array, :reference, :object
 
-      def call(definition, name, arguments, disable_visit_errors: false)
-        definition.signature.validate!(arguments, name, origin: self)
+      def call(definition, name, arguments, disable_visit_errors: false, context: nil)
+        definition.signature.validate!(arguments, name, origin: self, context: context)
         implementation = definition.implementation
         implementation.is_a?(Symbol) ? send(implementation, *arguments) : implementation.call(*arguments)
       rescue Signature::TypeMismatch, Signature::ArityMismatch => e

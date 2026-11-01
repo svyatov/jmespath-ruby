@@ -71,3 +71,4 @@ module JMESPath
 end
 
 require_relative "functions/signature"
+require_relative "functions/validation_context"
