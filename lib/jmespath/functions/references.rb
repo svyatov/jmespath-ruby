@@ -4,6 +4,8 @@ module JMESPath
   class Functions
     # @api private
     module Collections
+      SORTABLE_TYPES = %i[number string].freeze
+
       private
 
       def map(expression, value)
@@ -12,9 +14,16 @@ module JMESPath
       end
 
       def sort_by(value, expression)
-        keyed(value, expression).each_with_index
-                                .sort_by { |pair, index| [pair.first, index] }
-                                .map { |pair, _index| pair.last }
+        reference = reference(expression)
+        # @type var expected: Symbol?
+        expected = nil
+        index = 0
+        array(value).sort_by do |item|
+          key = reference.call(item)
+          expected = checked_type(key, expected)
+          index += 1
+          [sort_key(key), index]
+        end
       end
 
       def min_by(value, expression)
@@ -38,7 +47,7 @@ module JMESPath
 
       def checked_type(value, expected)
         type = Types.name(value)
-        unless %i[number string].include?(type)
+        unless SORTABLE_TYPES.include?(type)
           raise Signature::TypeMismatch.new("Expression keys must be numbers or strings", origin: validation_origin)
         end
         if expected && expected != type

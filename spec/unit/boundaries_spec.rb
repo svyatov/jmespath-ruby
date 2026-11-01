@@ -3,6 +3,7 @@
 RSpec.describe "Validation boundaries" do
   it "rejects non-string expressions and non-hash options" do
     expect { JMESPath.compile(nil) }.to raise_error(ArgumentError)
+    expect { JMESPath.search(nil, {}) }.to raise_error(ArgumentError, "Expression must be a String")
     expect { JMESPath.search("@", {}, nil) }.to raise_error(ArgumentError)
   end
 

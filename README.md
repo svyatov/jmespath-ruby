@@ -49,6 +49,14 @@ Compiled expressions are immutable and safe to share between threads.
 Each search uses separate evaluation state.
 Custom callbacks and input objects remain the caller's responsibility.
 
+Save evaluation options when compiling a query, then use `search` or its `call` alias:
+
+```ruby
+query = JMESPath.compile("length(name)", disable_visit_errors: true)
+query.call({name: "Ada"}) #=> 3
+query.call({name: nil}) #=> nil
+```
+
 ## Custom functions
 
 ```ruby

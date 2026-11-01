@@ -17,6 +17,7 @@ require_relative "jmespath/functions/function_call"
 require_relative "jmespath/options"
 require_relative "jmespath/input"
 require_relative "jmespath/cache"
+require_relative "jmespath/plan"
 require_relative "jmespath/expression"
 
 # Search JSON-compatible Ruby values with JMESPath expressions.
@@ -40,9 +41,15 @@ module JMESPath
     # @example Project a field from each item
     #   JMESPath.search("items[*].name", {items: [{name: "Ada"}]}) #=> ["Ada"]
     # @return [Object] the query result, including nil
-    def search(expression, data, options = {}, **keywords)
-      config = Options.new(options, keywords)
-      compiled = compile(expression, cache_expressions: config.cache_expressions, max_depth: config.max_depth)
+    def search(expression, data, options = Options::EMPTY, **keywords)
+      config = if options.equal?(Options::EMPTY) && keywords.empty?
+                 Options::DEFAULT
+               else
+                 Options.new(options, keywords)
+               end
+      raise ArgumentError, "Expression must be a String" unless expression.is_a?(String)
+
+      compiled = compile_syntax(expression, config.cache_expressions, config.max_depth)
       compiled.evaluate(Input.load(data), config)
     end
 
@@ -50,18 +57,44 @@ module JMESPath
     # @param expression [String] query text
     # @param cache_expressions [Boolean] reuse bounded cached syntax
     # @param max_depth [Integer] maximum nesting from 1 through 128
+    # @param functions [Functions] default registry for searches with this expression
+    # @param disable_visit_errors [Boolean] default suppression of argument type and arity failures
     # @raise [ArgumentError] expression type or options are invalid
     # @raise [Errors::SyntaxError] the expression is invalid or exceeds its nesting limit
     # @example Reuse parsed syntax
     #   JMESPath.compile("name").search({name: "Ada"}) #=> "Ada"
     # @return [Expression] immutable reusable syntax
-    def compile(expression, cache_expressions: true, max_depth: 128)
+    def compile(expression, cache_expressions: true, max_depth: 128,
+                functions: Functions.default, disable_visit_errors: false)
       raise ArgumentError, "Expression must be a String" unless expression.is_a?(String)
 
-      config = Options.new({}, { cache_expressions: cache_expressions, max_depth: max_depth })
+      config = compilation_options(cache_expressions, max_depth, functions, disable_visit_errors)
+      compiled = compile_syntax(expression, cache_expressions, max_depth)
+      config.equal?(Options::DEFAULT) ? compiled : compiled.configured(config)
+    end
+
+    private
+
+    def compile_syntax(expression, cache, depth)
+      if cache
+        CACHE.fetch(expression, max_depth: depth) { |source| build_expression(source, depth) }
+      else
+        build_expression(expression, depth)
+      end
+    end
+
+    def compilation_options(cache, depth, functions, suppress)
+      if cache.equal?(true) && depth.equal?(128) && functions.equal?(Functions.default) && suppress.equal?(false)
+        return Options::DEFAULT
+      end
+
+      Options.new({ cache_expressions: cache, max_depth: depth,
+                    functions: functions, disable_visit_errors: suppress })
+    end
+
+    def build_expression(expression, max_depth)
       source = expression.dup.freeze
-      build = -> { Expression.new(source, Parser.new(source, max_depth: max_depth).parse, max_depth: max_depth) }
-      config.cache_expressions ? CACHE.fetch(source, max_depth: max_depth, &build) : build.call
+      Expression.new(source, Parser.new(source, max_depth: max_depth).parse, max_depth: max_depth)
     end
   end
 end

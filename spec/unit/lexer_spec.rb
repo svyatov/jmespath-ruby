@@ -41,6 +41,12 @@ RSpec.describe "JMESPath lexical analysis" do
     }
   end
 
+  it "skips whitespace runs without changing byte positions" do
+    tokens = lex(" \t\r\nfoo  \t . \nbar \r\n")
+    expect(tokens.map(&:type)).to eq(%i[identifier dot identifier eof])
+    expect(tokens.map(&:start)).to eq([4, 11, 14, 20])
+  end
+
   it "reports unterminated strings" do
     expect { lex("'unfinished") }.to raise_error(JMESPath::Errors::SyntaxError)
   end

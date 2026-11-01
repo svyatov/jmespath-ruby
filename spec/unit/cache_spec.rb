@@ -4,7 +4,7 @@ RSpec.describe "Bounded compilation caching" do
   it "evicts the least recently used entry" do
     cache = JMESPath::Cache.new(limit: 2, bytes: 100)
     calls = 0
-    compile = lambda {
+    compile = lambda { |_source|
       calls += 1
       JMESPath::Expression.new("a", JMESPath::Parser.new("a").parse)
     }
@@ -19,7 +19,7 @@ RSpec.describe "Bounded compilation caching" do
   it "bounds source bytes and bypasses oversized entries" do
     cache = JMESPath::Cache.new(limit: 10, bytes: 2)
     calls = 0
-    compile = lambda {
+    compile = lambda { |_source|
       calls += 1
       JMESPath::Expression.new("a", JMESPath::Parser.new("a").parse)
     }

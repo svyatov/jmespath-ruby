@@ -21,14 +21,17 @@ module JMESPath
       @stop = stop
       @step = step || 1
       raise Errors::InvalidValueError, "Slice step cannot be zero" if @step.zero?
+
+      @forward = @step.positive?
     end
 
     def apply(values)
-      index = bound(@start, values.length, @step.positive? ? 0 : values.length - 1)
-      stop = bound(@stop, values.length, @step.positive? ? values.length : -1)
+      length = values.length
+      index = bound(@start, length, @forward ? 0 : length - 1)
+      stop = bound(@stop, length, @forward ? length : -1)
       # @type var result: Array[value]
       result = []
-      while @step.positive? ? index < stop : index > stop
+      while @forward ? index < stop : index > stop
         result << values[index]
         index += @step
       end
@@ -41,7 +44,7 @@ module JMESPath
       return fallback if value.nil?
 
       index = value.negative? ? value + length : value
-      @step.positive? ? index.clamp(0, length) : index.clamp(-1, length - 1)
+      @forward ? index.clamp(0, length) : index.clamp(-1, length - 1)
     end
   end
 end

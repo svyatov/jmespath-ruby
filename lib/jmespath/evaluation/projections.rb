@@ -18,11 +18,21 @@ module JMESPath
     def filter_projection(node, data)
       values = DataAccess.array(evaluate(node.children.fetch(0), data))
       selected = values&.reject { |value| Types.falsey?(evaluate(node.children.fetch(2), value)) }
-      project(node, selected)
+      return nil unless selected
+
+      child = node.children.fetch(1)
+      selected.map! { |value| evaluate(child, value) }
+      selected.compact!
+      selected
     end
 
     def project(node, values)
-      values&.map { |value| evaluate(node.children.fetch(1), value) }&.compact
+      return nil unless values
+
+      child = node.children.fetch(1)
+      result = values.map { |value| evaluate(child, value) }
+      result.compact!
+      result
     end
 
     def flatten(node, data)

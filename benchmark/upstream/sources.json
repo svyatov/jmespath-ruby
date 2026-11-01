@@ -1,0 +1,38 @@
+[
+  {
+    "repository": "https://github.com/jmespath/jmespath.rb",
+    "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+    "source_path": "benchmark/basic.json",
+    "local_path": "benchmark/upstream/basic.json",
+    "sha256": "c8699776c957f42c8ba752e367e96b30d4cc34b8c3caf7635cae7b510accba27",
+    "license": "Apache-2.0",
+    "modifications": []
+  },
+  {
+    "repository": "https://github.com/jmespath/jmespath.rb",
+    "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+    "source_path": "benchmark/deep_hierarchy.json",
+    "local_path": "benchmark/upstream/deep_hierarchy.json",
+    "sha256": "f659d186438f14a8f104e916f226fb5520087a4350373e22d078ef368590b26f",
+    "license": "Apache-2.0",
+    "modifications": []
+  },
+  {
+    "repository": "https://github.com/jmespath/jmespath.rb",
+    "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+    "source_path": "benchmark/multiwildcard.json",
+    "local_path": "benchmark/upstream/multiwildcard.json",
+    "sha256": "ad2b7bdaa372b43b699f057c505d944ab65e00b093a586b80966a44740da6f2f",
+    "license": "Apache-2.0",
+    "modifications": []
+  },
+  {
+    "repository": "https://github.com/jmespath/jmespath.rb",
+    "commit": "5e86ea7da2e954cc12f5b3a8383a43c0a65acba7",
+    "source_path": "benchmark/wildcardindex.json",
+    "local_path": "benchmark/upstream/wildcardindex.json",
+    "sha256": "99e95560cb94df87f947764c8f6e5080bc5bc35e8c3d0a493381dcd6071468c7",
+    "license": "Apache-2.0",
+    "modifications": []
+  }
+]

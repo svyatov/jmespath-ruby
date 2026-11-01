@@ -1,0 +1,1606 @@
+{
+  "library_revision": "2d061978319b7757443e52c5aba01992ab8c34b0",
+  "source_sha256": {
+    "current": "42da4eb21109113f2b601f20ed99f4e837059308b6f7bd5857067f1e0f586ad7",
+    "reference": "2f34b58022062f5e093f2f999c2a0ed6d41f04a687f85a57eedf6c9e36e88a86"
+  },
+  "environment": "arm64 macOS; no Bundler; YJIT disabled; no RUBY_GC environment settings",
+  "workload": "items[*].price on benchmark/documents.json items",
+  "warmup": 640,
+  "timing": "Full GC before timing; default GC during timing; full GC after timing before retained memory measurement",
+  "baselines": {
+    "3.3.11": {
+      "iterations": 20000,
+      "rounds": 3,
+      "measurements": [
+        {
+          "name": "projection",
+          "origin": "local",
+          "mode": "search",
+          "samples": {
+            "current": [
+              {
+                "seconds": 0.3358209999278188,
+                "allocated": 80007,
+                "retained_bytes": 2006166,
+                "rss_bytes": 20201472,
+                "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                "gc_cycles": 12,
+                "heap_slots": 31822,
+                "heap_live": 23602,
+                "malloc_increase": 266144,
+                "oldmalloc_increase": 495984,
+                "peak_rss_bytes": 20217856
+              },
+              {
+                "seconds": 0.33434299984946847,
+                "allocated": 80007,
+                "retained_bytes": 2001966,
+                "rss_bytes": 20398080,
+                "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                "gc_cycles": 12,
+                "heap_slots": 31820,
+                "heap_live": 23462,
+                "malloc_increase": 233888,
+                "oldmalloc_increase": 468208,
+                "peak_rss_bytes": 20414464
+              },
+              {
+                "seconds": 0.3366079998668283,
+                "allocated": 80007,
+                "retained_bytes": 2005806,
+                "rss_bytes": 20119552,
+                "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                "gc_cycles": 12,
+                "heap_slots": 31817,
+                "heap_live": 23485,
+                "malloc_increase": 239264,
+                "oldmalloc_increase": 472688,
+                "peak_rss_bytes": 20135936
+              }
+            ],
+            "reference": [
+              {
+                "seconds": 0.581474999897182,
+                "allocated": 1240875,
+                "retained_bytes": 2026535,
+                "rss_bytes": 19234816,
+                "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                "gc_cycles": 173,
+                "heap_slots": 31920,
+                "heap_live": 28450,
+                "malloc_increase": 126432,
+                "oldmalloc_increase": 166272,
+                "peak_rss_bytes": 19251200
+              },
+              {
+                "seconds": 0.5718069998547435,
+                "allocated": 1240875,
+                "retained_bytes": 2025191,
+                "rss_bytes": 19070976,
+                "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                "gc_cycles": 173,
+                "heap_slots": 31820,
+                "heap_live": 28449,
+                "malloc_increase": 126432,
+                "oldmalloc_increase": 166272,
+                "peak_rss_bytes": 19087360
+              },
+              {
+                "seconds": 0.5778339998796582,
+                "allocated": 1240529,
+                "retained_bytes": 2026535,
+                "rss_bytes": 19562496,
+                "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                "gc_cycles": 173,
+                "heap_slots": 32223,
+                "heap_live": 28449,
+                "malloc_increase": 127664,
+                "oldmalloc_increase": 166272,
+                "peak_rss_bytes": 19578880
+              }
+            ]
+          },
+          "medians": {
+            "current": {
+              "seconds": 0.3358209999278188,
+              "allocated": 80007,
+              "retained_bytes": 2005806,
+              "rss_bytes": 20201472,
+              "gc_cycles": 12,
+              "heap_slots": 31820,
+              "heap_live": 23485,
+              "malloc_increase": 239264,
+              "oldmalloc_increase": 472688,
+              "peak_rss_bytes": 20217856
+            },
+            "reference": {
+              "seconds": 0.5778339998796582,
+              "allocated": 1240875,
+              "retained_bytes": 2026535,
+              "rss_bytes": 19234816,
+              "gc_cycles": 173,
+              "heap_slots": 31920,
+              "heap_live": 28449,
+              "malloc_increase": 126432,
+              "oldmalloc_increase": 166272,
+              "peak_rss_bytes": 19251200
+            }
+          }
+        }
+      ]
+    },
+    "3.4.9": {
+      "iterations": 20000,
+      "rounds": 3,
+      "measurements": [
+        {
+          "name": "projection",
+          "origin": "local",
+          "mode": "search",
+          "samples": {
+            "current": [
+              {
+                "seconds": 0.35585399996489286,
+                "allocated": 80007,
+                "retained_bytes": 1995341,
+                "rss_bytes": 21970944,
+                "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                "gc_cycles": 8,
+                "heap_slots": 34475,
+                "heap_live": 27485,
+                "malloc_increase": 610208,
+                "oldmalloc_increase": 1590000,
+                "peak_rss_bytes": 21987328
+              },
+              {
+                "seconds": 0.34044299996457994,
+                "allocated": 80007,
+                "retained_bytes": 1995341,
+                "rss_bytes": 21643264,
+                "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                "gc_cycles": 8,
+                "heap_slots": 34478,
+                "heap_live": 27469,
+                "malloc_increase": 606624,
+                "oldmalloc_increase": 1586416,
+                "peak_rss_bytes": 21659648
+              },
+              {
+                "seconds": 0.3398150000721216,
+                "allocated": 80007,
+                "retained_bytes": 1995341,
+                "rss_bytes": 21987328,
+                "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                "gc_cycles": 8,
+                "heap_slots": 34476,
+                "heap_live": 27484,
+                "malloc_increase": 610208,
+                "oldmalloc_increase": 1590000,
+                "peak_rss_bytes": 22003712
+              }
+            ],
+            "reference": [
+              {
+                "seconds": 0.5941589998546988,
+                "allocated": 1240364,
+                "retained_bytes": 2023067,
+                "rss_bytes": 20332544,
+                "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                "gc_cycles": 95,
+                "heap_slots": 36521,
+                "heap_live": 29304,
+                "malloc_increase": 90896,
+                "oldmalloc_increase": 192176,
+                "peak_rss_bytes": 20348928
+              },
+              {
+                "seconds": 0.578434000024572,
+                "allocated": 1240358,
+                "retained_bytes": 2023067,
+                "rss_bytes": 20496384,
+                "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                "gc_cycles": 95,
+                "heap_slots": 36519,
+                "heap_live": 28838,
+                "malloc_increase": 79552,
+                "oldmalloc_increase": 179920,
+                "peak_rss_bytes": 20512768
+              },
+              {
+                "seconds": 0.5768389999866486,
+                "allocated": 1240484,
+                "retained_bytes": 2023099,
+                "rss_bytes": 20430848,
+                "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                "gc_cycles": 95,
+                "heap_slots": 36522,
+                "heap_live": 30780,
+                "malloc_increase": 127664,
+                "oldmalloc_increase": 228192,
+                "peak_rss_bytes": 20447232
+              }
+            ]
+          },
+          "medians": {
+            "current": {
+              "seconds": 0.34044299996457994,
+              "allocated": 80007,
+              "retained_bytes": 1995341,
+              "rss_bytes": 21970944,
+              "gc_cycles": 8,
+              "heap_slots": 34476,
+              "heap_live": 27484,
+              "malloc_increase": 610208,
+              "oldmalloc_increase": 1590000,
+              "peak_rss_bytes": 21987328
+            },
+            "reference": {
+              "seconds": 0.578434000024572,
+              "allocated": 1240364,
+              "retained_bytes": 2023067,
+              "rss_bytes": 20430848,
+              "gc_cycles": 95,
+              "heap_slots": 36521,
+              "heap_live": 29304,
+              "malloc_increase": 90896,
+              "oldmalloc_increase": 192176,
+              "peak_rss_bytes": 20447232
+            }
+          }
+        }
+      ]
+    },
+    "4.0.9": {
+      "iterations": 20000,
+      "rounds": 3,
+      "measurements": [
+        {
+          "name": "projection",
+          "origin": "local",
+          "mode": "search",
+          "samples": {
+            "current": [
+              {
+                "seconds": 0.3661259999498725,
+                "allocated": 80008,
+                "retained_bytes": 1297166,
+                "rss_bytes": 23379968,
+                "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "gc_cycles": 10,
+                "heap_slots": 32938,
+                "heap_live": 26021,
+                "malloc_increase": 358848,
+                "oldmalloc_increase": 358848,
+                "peak_rss_bytes": 23412736
+              },
+              {
+                "seconds": 0.36490499996580184,
+                "allocated": 80008,
+                "retained_bytes": 1297166,
+                "rss_bytes": 23609344,
+                "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "gc_cycles": 10,
+                "heap_slots": 32941,
+                "heap_live": 26001,
+                "malloc_increase": 347680,
+                "oldmalloc_increase": 347680,
+                "peak_rss_bytes": 23642112
+              },
+              {
+                "seconds": 0.39004900003783405,
+                "allocated": 80008,
+                "retained_bytes": 1297166,
+                "rss_bytes": 23494656,
+                "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "gc_cycles": 10,
+                "heap_slots": 32532,
+                "heap_live": 25981,
+                "malloc_increase": 343680,
+                "oldmalloc_increase": 343680,
+                "peak_rss_bytes": 23527424
+              }
+            ],
+            "reference": [
+              {
+                "seconds": 0.6193540000822395,
+                "allocated": 1120493,
+                "retained_bytes": 1319677,
+                "rss_bytes": 22167552,
+                "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "gc_cycles": 96,
+                "heap_slots": 34475,
+                "heap_live": 29042,
+                "malloc_increase": 104064,
+                "oldmalloc_increase": 360904,
+                "peak_rss_bytes": 22200320
+              },
+              {
+                "seconds": 0.5884839999489486,
+                "allocated": 1120493,
+                "retained_bytes": 1319717,
+                "rss_bytes": 22134784,
+                "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "gc_cycles": 96,
+                "heap_slots": 34474,
+                "heap_live": 29043,
+                "malloc_increase": 104064,
+                "oldmalloc_increase": 360904,
+                "peak_rss_bytes": 22167552
+              },
+              {
+                "seconds": 0.5602019999641925,
+                "allocated": 1120493,
+                "retained_bytes": 1319677,
+                "rss_bytes": 22085632,
+                "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                "gc_cycles": 96,
+                "heap_slots": 34469,
+                "heap_live": 29042,
+                "malloc_increase": 98496,
+                "oldmalloc_increase": 360904,
+                "peak_rss_bytes": 22118400
+              }
+            ]
+          },
+          "medians": {
+            "current": {
+              "seconds": 0.3661259999498725,
+              "allocated": 80008,
+              "retained_bytes": 1297166,
+              "rss_bytes": 23494656,
+              "gc_cycles": 10,
+              "heap_slots": 32938,
+              "heap_live": 26001,
+              "malloc_increase": 347680,
+              "oldmalloc_increase": 347680,
+              "peak_rss_bytes": 23527424
+            },
+            "reference": {
+              "seconds": 0.5884839999489486,
+              "allocated": 1120493,
+              "retained_bytes": 1319677,
+              "rss_bytes": 22134784,
+              "gc_cycles": 96,
+              "heap_slots": 34474,
+              "heap_live": 29042,
+              "malloc_increase": 104064,
+              "oldmalloc_increase": 360904,
+              "peak_rss_bytes": 22167552
+            }
+          }
+        }
+      ]
+    }
+  },
+  "experiments": {
+    "array_growth": {
+      "source_sha256": "ccbeb4e4b0d7b49630d61956c84f42de24520b3bba27256b3f4523d53916f2b2",
+      "reports": [
+        {
+          "iterations": 20000,
+          "rounds": 5,
+          "measurements": [
+            {
+              "name": "projection",
+              "origin": "local",
+              "mode": "search",
+              "samples": {
+                "current": [
+                  {
+                    "seconds": 0.39384900010190904,
+                    "allocated": 80007,
+                    "retained_bytes": 2002237,
+                    "rss_bytes": 20611072,
+                    "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                    "gc_cycles": 12,
+                    "heap_slots": 31817,
+                    "heap_live": 23487,
+                    "malloc_increase": 273312,
+                    "oldmalloc_increase": 540912,
+                    "peak_rss_bytes": 20627456
+                  },
+                  {
+                    "seconds": 0.3959939999040216,
+                    "allocated": 80007,
+                    "retained_bytes": 2006077,
+                    "rss_bytes": 20348928,
+                    "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                    "gc_cycles": 12,
+                    "heap_slots": 31818,
+                    "heap_live": 23484,
+                    "malloc_increase": 273312,
+                    "oldmalloc_increase": 539888,
+                    "peak_rss_bytes": 20365312
+                  },
+                  {
+                    "seconds": 0.39595399983227253,
+                    "allocated": 80007,
+                    "retained_bytes": 2003741,
+                    "rss_bytes": 20381696,
+                    "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                    "gc_cycles": 12,
+                    "heap_slots": 32020,
+                    "heap_live": 23484,
+                    "malloc_increase": 279456,
+                    "oldmalloc_increase": 536816,
+                    "peak_rss_bytes": 20398080
+                  },
+                  {
+                    "seconds": 0.39882000000216067,
+                    "allocated": 80007,
+                    "retained_bytes": 2002237,
+                    "rss_bytes": 20824064,
+                    "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                    "gc_cycles": 12,
+                    "heap_slots": 32022,
+                    "heap_live": 23482,
+                    "malloc_increase": 279456,
+                    "oldmalloc_increase": 536816,
+                    "peak_rss_bytes": 20840448
+                  },
+                  {
+                    "seconds": 0.401348999934271,
+                    "allocated": 80007,
+                    "retained_bytes": 2006077,
+                    "rss_bytes": 20807680,
+                    "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                    "gc_cycles": 12,
+                    "heap_slots": 32020,
+                    "heap_live": 23479,
+                    "malloc_increase": 279456,
+                    "oldmalloc_increase": 535792,
+                    "peak_rss_bytes": 20824064
+                  }
+                ],
+                "reference": [
+                  {
+                    "seconds": 0.6424000000115484,
+                    "allocated": 1240875,
+                    "retained_bytes": 2029031,
+                    "rss_bytes": 19415040,
+                    "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                    "gc_cycles": 173,
+                    "heap_slots": 32226,
+                    "heap_live": 28450,
+                    "malloc_increase": 125568,
+                    "oldmalloc_increase": 166272,
+                    "peak_rss_bytes": 19431424
+                  },
+                  {
+                    "seconds": 0.607875999994576,
+                    "allocated": 1240875,
+                    "retained_bytes": 2025191,
+                    "rss_bytes": 19447808,
+                    "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                    "gc_cycles": 173,
+                    "heap_slots": 31818,
+                    "heap_live": 28449,
+                    "malloc_increase": 126432,
+                    "oldmalloc_increase": 166272,
+                    "peak_rss_bytes": 19464192
+                  },
+                  {
+                    "seconds": 0.6285190000198781,
+                    "allocated": 1240875,
+                    "retained_bytes": 2029031,
+                    "rss_bytes": 19185664,
+                    "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                    "gc_cycles": 173,
+                    "heap_slots": 32227,
+                    "heap_live": 28449,
+                    "malloc_increase": 125200,
+                    "oldmalloc_increase": 166272,
+                    "peak_rss_bytes": 19202048
+                  },
+                  {
+                    "seconds": 0.6321280000265688,
+                    "allocated": 1240875,
+                    "retained_bytes": 2029071,
+                    "rss_bytes": 19103744,
+                    "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                    "gc_cycles": 173,
+                    "heap_slots": 32229,
+                    "heap_live": 28451,
+                    "malloc_increase": 125568,
+                    "oldmalloc_increase": 166272,
+                    "peak_rss_bytes": 19120128
+                  },
+                  {
+                    "seconds": 0.6331670000217855,
+                    "allocated": 1240875,
+                    "retained_bytes": 2029031,
+                    "rss_bytes": 19185664,
+                    "runtime": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+                    "gc_cycles": 173,
+                    "heap_slots": 32227,
+                    "heap_live": 28449,
+                    "malloc_increase": 125040,
+                    "oldmalloc_increase": 166272,
+                    "peak_rss_bytes": 19202048
+                  }
+                ]
+              },
+              "medians": {
+                "current": {
+                  "seconds": 0.3959939999040216,
+                  "allocated": 80007,
+                  "retained_bytes": 2003741,
+                  "rss_bytes": 20611072,
+                  "gc_cycles": 12,
+                  "heap_slots": 32020,
+                  "heap_live": 23484,
+                  "malloc_increase": 279456,
+                  "oldmalloc_increase": 536816,
+                  "peak_rss_bytes": 20627456
+                },
+                "reference": {
+                  "seconds": 0.6321280000265688,
+                  "allocated": 1240875,
+                  "retained_bytes": 2029031,
+                  "rss_bytes": 19185664,
+                  "gc_cycles": 173,
+                  "heap_slots": 32227,
+                  "heap_live": 28449,
+                  "malloc_increase": 125568,
+                  "oldmalloc_increase": 166272,
+                  "peak_rss_bytes": 19202048
+                }
+              }
+            }
+          ]
+        },
+        {
+          "iterations": 20000,
+          "rounds": 5,
+          "measurements": [
+            {
+              "name": "projection",
+              "origin": "local",
+              "mode": "search",
+              "samples": {
+                "current": [
+                  {
+                    "seconds": 0.3895090001169592,
+                    "allocated": 80007,
+                    "retained_bytes": 1995612,
+                    "rss_bytes": 22102016,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 8,
+                    "heap_slots": 34476,
+                    "heap_live": 27502,
+                    "malloc_increase": 701344,
+                    "oldmalloc_increase": 1820912,
+                    "peak_rss_bytes": 22118400
+                  },
+                  {
+                    "seconds": 0.3849629999604076,
+                    "allocated": 80007,
+                    "retained_bytes": 1995612,
+                    "rss_bytes": 22134784,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 8,
+                    "heap_slots": 34475,
+                    "heap_live": 27487,
+                    "malloc_increase": 697248,
+                    "oldmalloc_increase": 1816816,
+                    "peak_rss_bytes": 22151168
+                  },
+                  {
+                    "seconds": 0.3840840000193566,
+                    "allocated": 80007,
+                    "retained_bytes": 1995612,
+                    "rss_bytes": 22167552,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 8,
+                    "heap_slots": 34476,
+                    "heap_live": 27487,
+                    "malloc_increase": 697248,
+                    "oldmalloc_increase": 1816816,
+                    "peak_rss_bytes": 22183936
+                  },
+                  {
+                    "seconds": 0.3833910000976175,
+                    "allocated": 80007,
+                    "retained_bytes": 1995612,
+                    "rss_bytes": 21921792,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 8,
+                    "heap_slots": 33658,
+                    "heap_live": 27486,
+                    "malloc_increase": 697248,
+                    "oldmalloc_increase": 1816816,
+                    "peak_rss_bytes": 21938176
+                  },
+                  {
+                    "seconds": 0.3835749998688698,
+                    "allocated": 80007,
+                    "retained_bytes": 1995684,
+                    "rss_bytes": 22347776,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 8,
+                    "heap_slots": 34475,
+                    "heap_live": 27538,
+                    "malloc_increase": 709536,
+                    "oldmalloc_increase": 1829104,
+                    "peak_rss_bytes": 22364160
+                  }
+                ],
+                "reference": [
+                  {
+                    "seconds": 0.5719699999317527,
+                    "allocated": 1240358,
+                    "retained_bytes": 2023067,
+                    "rss_bytes": 20480000,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 95,
+                    "heap_slots": 36519,
+                    "heap_live": 28838,
+                    "malloc_increase": 79552,
+                    "oldmalloc_increase": 179920,
+                    "peak_rss_bytes": 20496384
+                  },
+                  {
+                    "seconds": 0.5696950000710785,
+                    "allocated": 1240484,
+                    "retained_bytes": 2023099,
+                    "rss_bytes": 20332544,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 95,
+                    "heap_slots": 36522,
+                    "heap_live": 30780,
+                    "malloc_increase": 127664,
+                    "oldmalloc_increase": 228192,
+                    "peak_rss_bytes": 20348928
+                  },
+                  {
+                    "seconds": 0.5782379999291152,
+                    "allocated": 1240390,
+                    "retained_bytes": 2023067,
+                    "rss_bytes": 20234240,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 95,
+                    "heap_slots": 36524,
+                    "heap_live": 27849,
+                    "malloc_increase": 54720,
+                    "oldmalloc_increase": 155088,
+                    "peak_rss_bytes": 20250624
+                  },
+                  {
+                    "seconds": 0.5733139999210835,
+                    "allocated": 1240294,
+                    "retained_bytes": 2023067,
+                    "rss_bytes": 20201472,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 95,
+                    "heap_slots": 36524,
+                    "heap_live": 27848,
+                    "malloc_increase": 54720,
+                    "oldmalloc_increase": 155088,
+                    "peak_rss_bytes": 20217856
+                  },
+                  {
+                    "seconds": 0.5734350001439452,
+                    "allocated": 1240358,
+                    "retained_bytes": 2023067,
+                    "rss_bytes": 20348928,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 95,
+                    "heap_slots": 36520,
+                    "heap_live": 28838,
+                    "malloc_increase": 79552,
+                    "oldmalloc_increase": 179920,
+                    "peak_rss_bytes": 20365312
+                  }
+                ]
+              },
+              "medians": {
+                "current": {
+                  "seconds": 0.3840840000193566,
+                  "allocated": 80007,
+                  "retained_bytes": 1995612,
+                  "rss_bytes": 22134784,
+                  "gc_cycles": 8,
+                  "heap_slots": 34475,
+                  "heap_live": 27487,
+                  "malloc_increase": 697248,
+                  "oldmalloc_increase": 1816816,
+                  "peak_rss_bytes": 22151168
+                },
+                "reference": {
+                  "seconds": 0.5733139999210835,
+                  "allocated": 1240358,
+                  "retained_bytes": 2023067,
+                  "rss_bytes": 20332544,
+                  "gc_cycles": 95,
+                  "heap_slots": 36522,
+                  "heap_live": 28838,
+                  "malloc_increase": 79552,
+                  "oldmalloc_increase": 179920,
+                  "peak_rss_bytes": 20348928
+                }
+              }
+            }
+          ]
+        },
+        {
+          "iterations": 20000,
+          "rounds": 5,
+          "measurements": [
+            {
+              "name": "projection",
+              "origin": "local",
+              "mode": "search",
+              "samples": {
+                "current": [
+                  {
+                    "seconds": 0.3855089999269694,
+                    "allocated": 80008,
+                    "retained_bytes": 1297437,
+                    "rss_bytes": 23576576,
+                    "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                    "gc_cycles": 10,
+                    "heap_slots": 32942,
+                    "heap_live": 26043,
+                    "malloc_increase": 411216,
+                    "oldmalloc_increase": 411216,
+                    "peak_rss_bytes": 23609344
+                  },
+                  {
+                    "seconds": 0.3852639999240637,
+                    "allocated": 80008,
+                    "retained_bytes": 1297437,
+                    "rss_bytes": 23543808,
+                    "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                    "gc_cycles": 10,
+                    "heap_slots": 32935,
+                    "heap_live": 26063,
+                    "malloc_increase": 415776,
+                    "oldmalloc_increase": 415776,
+                    "peak_rss_bytes": 23576576
+                  },
+                  {
+                    "seconds": 0.3830150000285357,
+                    "allocated": 80008,
+                    "retained_bytes": 1297437,
+                    "rss_bytes": 23461888,
+                    "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                    "gc_cycles": 10,
+                    "heap_slots": 32943,
+                    "heap_live": 25983,
+                    "malloc_increase": 397536,
+                    "oldmalloc_increase": 397536,
+                    "peak_rss_bytes": 23494656
+                  },
+                  {
+                    "seconds": 0.38181699998676777,
+                    "allocated": 80008,
+                    "retained_bytes": 1297437,
+                    "rss_bytes": 23396352,
+                    "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                    "gc_cycles": 10,
+                    "heap_slots": 32942,
+                    "heap_live": 25983,
+                    "malloc_increase": 397536,
+                    "oldmalloc_increase": 397536,
+                    "peak_rss_bytes": 23429120
+                  },
+                  {
+                    "seconds": 0.390936000039801,
+                    "allocated": 80008,
+                    "retained_bytes": 1297437,
+                    "rss_bytes": 23576576,
+                    "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                    "gc_cycles": 10,
+                    "heap_slots": 32935,
+                    "heap_live": 26023,
+                    "malloc_increase": 406656,
+                    "oldmalloc_increase": 406656,
+                    "peak_rss_bytes": 23609344
+                  }
+                ],
+                "reference": [
+                  {
+                    "seconds": 0.5712480000220239,
+                    "allocated": 1120493,
+                    "retained_bytes": 1319677,
+                    "rss_bytes": 22396928,
+                    "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                    "gc_cycles": 96,
+                    "heap_slots": 34478,
+                    "heap_live": 29042,
+                    "malloc_increase": 104064,
+                    "oldmalloc_increase": 360904,
+                    "peak_rss_bytes": 22429696
+                  },
+                  {
+                    "seconds": 0.5511549999937415,
+                    "allocated": 1120493,
+                    "retained_bytes": 1319677,
+                    "rss_bytes": 22102016,
+                    "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                    "gc_cycles": 96,
+                    "heap_slots": 34473,
+                    "heap_live": 29042,
+                    "malloc_increase": 104064,
+                    "oldmalloc_increase": 360904,
+                    "peak_rss_bytes": 22134784
+                  },
+                  {
+                    "seconds": 0.5478499999735504,
+                    "allocated": 1120493,
+                    "retained_bytes": 1319677,
+                    "rss_bytes": 21905408,
+                    "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                    "gc_cycles": 96,
+                    "heap_slots": 34478,
+                    "heap_live": 29042,
+                    "malloc_increase": 102448,
+                    "oldmalloc_increase": 360904,
+                    "peak_rss_bytes": 21938176
+                  },
+                  {
+                    "seconds": 0.5441269997972995,
+                    "allocated": 1120493,
+                    "retained_bytes": 1319677,
+                    "rss_bytes": 21921792,
+                    "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                    "gc_cycles": 96,
+                    "heap_slots": 34479,
+                    "heap_live": 29042,
+                    "malloc_increase": 102448,
+                    "oldmalloc_increase": 360904,
+                    "peak_rss_bytes": 21954560
+                  },
+                  {
+                    "seconds": 0.548066999996081,
+                    "allocated": 1120493,
+                    "retained_bytes": 1319677,
+                    "rss_bytes": 22069248,
+                    "runtime": "ruby 4.0.9 (2026-10-23 revision 3e93b23afc) +PRISM [arm64-darwin25]",
+                    "gc_cycles": 96,
+                    "heap_slots": 34476,
+                    "heap_live": 29042,
+                    "malloc_increase": 104064,
+                    "oldmalloc_increase": 360904,
+                    "peak_rss_bytes": 22102016
+                  }
+                ]
+              },
+              "medians": {
+                "current": {
+                  "seconds": 0.3852639999240637,
+                  "allocated": 80008,
+                  "retained_bytes": 1297437,
+                  "rss_bytes": 23543808,
+                  "gc_cycles": 10,
+                  "heap_slots": 32942,
+                  "heap_live": 26023,
+                  "malloc_increase": 406656,
+                  "oldmalloc_increase": 406656,
+                  "peak_rss_bytes": 23576576
+                },
+                "reference": {
+                  "seconds": 0.548066999996081,
+                  "allocated": 1120493,
+                  "retained_bytes": 1319677,
+                  "rss_bytes": 22069248,
+                  "gc_cycles": 96,
+                  "heap_slots": 34478,
+                  "heap_live": 29042,
+                  "malloc_increase": 104064,
+                  "oldmalloc_increase": 360904,
+                  "peak_rss_bytes": 22102016
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "cache_eight_entries": {
+      "source_sha256": "1d1a4fb7afc19600a3f78562116657e1ad7fc62543d33a9c1f3bdffa25a3b5d0",
+      "reports": [
+        {
+          "iterations": 2000,
+          "rounds": 5,
+          "measurements": [
+            {
+              "name": "deep_nesting_50",
+              "origin": "deep_hierarchy.json",
+              "mode": "churn",
+              "samples": {
+                "current": [
+                  {
+                    "seconds": 0.5913519999012351,
+                    "allocated": 1718007,
+                    "retained_bytes": 2231140,
+                    "rss_bytes": 24543232,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 41,
+                    "heap_slots": 67598,
+                    "heap_live": 45958,
+                    "malloc_increase": 3632,
+                    "oldmalloc_increase": 5312,
+                    "peak_rss_bytes": 24559616
+                  },
+                  {
+                    "seconds": 0.5909640002064407,
+                    "allocated": 1718007,
+                    "retained_bytes": 2231140,
+                    "rss_bytes": 24215552,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 42,
+                    "heap_slots": 67191,
+                    "heap_live": 55274,
+                    "malloc_increase": 33056,
+                    "oldmalloc_increase": 34736,
+                    "peak_rss_bytes": 24231936
+                  },
+                  {
+                    "seconds": 0.6100260000675917,
+                    "allocated": 1718007,
+                    "retained_bytes": 2231156,
+                    "rss_bytes": 24461312,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 42,
+                    "heap_slots": 67191,
+                    "heap_live": 55051,
+                    "malloc_increase": 32352,
+                    "oldmalloc_increase": 34288,
+                    "peak_rss_bytes": 24477696
+                  },
+                  {
+                    "seconds": 0.5844360000919551,
+                    "allocated": 1718007,
+                    "retained_bytes": 2231140,
+                    "rss_bytes": 24477696,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 42,
+                    "heap_slots": 67190,
+                    "heap_live": 55484,
+                    "malloc_increase": 33888,
+                    "oldmalloc_increase": 35872,
+                    "peak_rss_bytes": 24494080
+                  },
+                  {
+                    "seconds": 0.5846410000231117,
+                    "allocated": 1718007,
+                    "retained_bytes": 2231140,
+                    "rss_bytes": 24199168,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 42,
+                    "heap_slots": 67189,
+                    "heap_live": 55274,
+                    "malloc_increase": 33056,
+                    "oldmalloc_increase": 35056,
+                    "peak_rss_bytes": 24215552
+                  }
+                ],
+                "reference": [
+                  {
+                    "seconds": 1.1793850001413375,
+                    "allocated": 4859407,
+                    "retained_bytes": 2193179,
+                    "rss_bytes": 21577728,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 486,
+                    "heap_slots": 37639,
+                    "heap_live": 26075,
+                    "malloc_increase": 81328,
+                    "oldmalloc_increase": 125776,
+                    "peak_rss_bytes": 21594112
+                  },
+                  {
+                    "seconds": 1.1594050000421703,
+                    "allocated": 4859407,
+                    "retained_bytes": 2193179,
+                    "rss_bytes": 21544960,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 486,
+                    "heap_slots": 37640,
+                    "heap_live": 25461,
+                    "malloc_increase": 74640,
+                    "oldmalloc_increase": 119536,
+                    "peak_rss_bytes": 21561344
+                  },
+                  {
+                    "seconds": 1.1778840001206845,
+                    "allocated": 4859407,
+                    "retained_bytes": 2193163,
+                    "rss_bytes": 21430272,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 486,
+                    "heap_slots": 37640,
+                    "heap_live": 25458,
+                    "malloc_increase": 75088,
+                    "oldmalloc_increase": 119536,
+                    "peak_rss_bytes": 21446656
+                  },
+                  {
+                    "seconds": 1.1571650002151728,
+                    "allocated": 4859407,
+                    "retained_bytes": 2193163,
+                    "rss_bytes": 21168128,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 486,
+                    "heap_slots": 37639,
+                    "heap_live": 25458,
+                    "malloc_increase": 75088,
+                    "oldmalloc_increase": 119536,
+                    "peak_rss_bytes": 21184512
+                  },
+                  {
+                    "seconds": 1.1383759998716414,
+                    "allocated": 4859407,
+                    "retained_bytes": 2193179,
+                    "rss_bytes": 21217280,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 486,
+                    "heap_slots": 37638,
+                    "heap_live": 25461,
+                    "malloc_increase": 75088,
+                    "oldmalloc_increase": 119536,
+                    "peak_rss_bytes": 21233664
+                  }
+                ]
+              },
+              "medians": {
+                "current": {
+                  "seconds": 0.5909640002064407,
+                  "allocated": 1718007,
+                  "retained_bytes": 2231140,
+                  "rss_bytes": 24461312,
+                  "gc_cycles": 42,
+                  "heap_slots": 67191,
+                  "heap_live": 55274,
+                  "malloc_increase": 33056,
+                  "oldmalloc_increase": 34736,
+                  "peak_rss_bytes": 24477696
+                },
+                "reference": {
+                  "seconds": 1.1594050000421703,
+                  "allocated": 4859407,
+                  "retained_bytes": 2193179,
+                  "rss_bytes": 21430272,
+                  "gc_cycles": 486,
+                  "heap_slots": 37639,
+                  "heap_live": 25461,
+                  "malloc_increase": 75088,
+                  "oldmalloc_increase": 119536,
+                  "peak_rss_bytes": 21446656
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "uncached_search": {
+      "source_sha256": "02ae61b3d7917017648c3ca232ba554f13fbc57465e148ac4c3637f57ecafcf4",
+      "reports": [
+        {
+          "iterations": 20000,
+          "rounds": 5,
+          "measurements": [
+            {
+              "name": "projection",
+              "origin": "local",
+              "mode": "search",
+              "samples": {
+                "current": [
+                  {
+                    "seconds": 0.616656000027433,
+                    "allocated": 1180007,
+                    "retained_bytes": 1993513,
+                    "rss_bytes": 20480000,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 79,
+                    "heap_slots": 38156,
+                    "heap_live": 35069,
+                    "malloc_increase": 136096,
+                    "oldmalloc_increase": 246960,
+                    "peak_rss_bytes": 20496384
+                  },
+                  {
+                    "seconds": 0.6189200000371784,
+                    "allocated": 1180007,
+                    "retained_bytes": 1993513,
+                    "rss_bytes": 20447232,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 79,
+                    "heap_slots": 38156,
+                    "heap_live": 35069,
+                    "malloc_increase": 136096,
+                    "oldmalloc_increase": 246960,
+                    "peak_rss_bytes": 20463616
+                  },
+                  {
+                    "seconds": 0.6096479999832809,
+                    "allocated": 1180007,
+                    "retained_bytes": 1993513,
+                    "rss_bytes": 20480000,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 79,
+                    "heap_slots": 38157,
+                    "heap_live": 35451,
+                    "malloc_increase": 143488,
+                    "oldmalloc_increase": 253456,
+                    "peak_rss_bytes": 20496384
+                  },
+                  {
+                    "seconds": 0.63356600003317,
+                    "allocated": 1180007,
+                    "retained_bytes": 1993497,
+                    "rss_bytes": 20627456,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 79,
+                    "heap_slots": 38157,
+                    "heap_live": 35068,
+                    "malloc_increase": 136096,
+                    "oldmalloc_increase": 246960,
+                    "peak_rss_bytes": 20643840
+                  },
+                  {
+                    "seconds": 0.6165350000374019,
+                    "allocated": 1180007,
+                    "retained_bytes": 1993513,
+                    "rss_bytes": 20332544,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 79,
+                    "heap_slots": 38159,
+                    "heap_live": 35069,
+                    "malloc_increase": 136096,
+                    "oldmalloc_increase": 246960,
+                    "peak_rss_bytes": 20348928
+                  }
+                ],
+                "reference": [
+                  {
+                    "seconds": 0.5856129999738187,
+                    "allocated": 1240390,
+                    "retained_bytes": 2023067,
+                    "rss_bytes": 20578304,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 95,
+                    "heap_slots": 36523,
+                    "heap_live": 27848,
+                    "malloc_increase": 54720,
+                    "oldmalloc_increase": 155088,
+                    "peak_rss_bytes": 20594688
+                  },
+                  {
+                    "seconds": 0.5828980000223964,
+                    "allocated": 1240364,
+                    "retained_bytes": 2023067,
+                    "rss_bytes": 20561920,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 95,
+                    "heap_slots": 36522,
+                    "heap_live": 29304,
+                    "malloc_increase": 90896,
+                    "oldmalloc_increase": 192176,
+                    "peak_rss_bytes": 20578304
+                  },
+                  {
+                    "seconds": 0.5847709998488426,
+                    "allocated": 1240358,
+                    "retained_bytes": 2023067,
+                    "rss_bytes": 20398080,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 95,
+                    "heap_slots": 36521,
+                    "heap_live": 28838,
+                    "malloc_increase": 79552,
+                    "oldmalloc_increase": 179920,
+                    "peak_rss_bytes": 20414464
+                  },
+                  {
+                    "seconds": 0.5875170000363141,
+                    "allocated": 1240358,
+                    "retained_bytes": 2023067,
+                    "rss_bytes": 20316160,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 95,
+                    "heap_slots": 36524,
+                    "heap_live": 28838,
+                    "malloc_increase": 79552,
+                    "oldmalloc_increase": 179920,
+                    "peak_rss_bytes": 20332544
+                  },
+                  {
+                    "seconds": 0.5727559998631477,
+                    "allocated": 1240364,
+                    "retained_bytes": 2023083,
+                    "rss_bytes": 20234240,
+                    "runtime": "ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [arm64-darwin23]",
+                    "gc_cycles": 95,
+                    "heap_slots": 36520,
+                    "heap_live": 29305,
+                    "malloc_increase": 90896,
+                    "oldmalloc_increase": 192176,
+                    "peak_rss_bytes": 20250624
+                  }
+                ]
+              },
+              "medians": {
+                "current": {
+                  "seconds": 0.616656000027433,
+                  "allocated": 1180007,
+                  "retained_bytes": 1993513,
+                  "rss_bytes": 20480000,
+                  "gc_cycles": 79,
+                  "heap_slots": 38157,
+                  "heap_live": 35069,
+                  "malloc_increase": 136096,
+                  "oldmalloc_increase": 246960,
+                  "peak_rss_bytes": 20496384
+                },
+                "reference": {
+                  "seconds": 0.5847709998488426,
+                  "allocated": 1240364,
+                  "retained_bytes": 2023067,
+                  "rss_bytes": 20398080,
+                  "gc_cycles": 95,
+                  "heap_slots": 36522,
+                  "heap_live": 28838,
+                  "malloc_increase": 79552,
+                  "oldmalloc_increase": 179920,
+                  "peak_rss_bytes": 20414464
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "native_memory": {
+    "current": {
+      "before": {
+        "phase": "before",
+        "gc": {
+          "count": 5,
+          "time": 3,
+          "marking_time": 3,
+          "sweeping_time": 0,
+          "heap_allocated_pages": 39,
+          "heap_empty_pages": 1,
+          "heap_allocatable_slots": 0,
+          "heap_available_slots": 32531,
+          "heap_live_slots": 21545,
+          "heap_free_slots": 10986,
+          "heap_final_slots": 0,
+          "heap_marked_slots": 21509,
+          "heap_eden_pages": 38,
+          "total_allocated_pages": 39,
+          "total_freed_pages": 0,
+          "total_allocated_objects": 48533,
+          "total_freed_objects": 26988,
+          "malloc_increase_bytes": 0,
+          "malloc_increase_bytes_limit": 16777216,
+          "minor_gc_count": 2,
+          "major_gc_count": 3,
+          "compact_count": 0,
+          "read_barrier_faults": 0,
+          "total_moved_objects": 0,
+          "remembered_wb_unprotected_objects": 0,
+          "remembered_wb_unprotected_objects_limit": 152,
+          "old_objects": 15233,
+          "old_objects_limit": 30466,
+          "oldmalloc_increase_bytes": 0,
+          "oldmalloc_increase_bytes_limit": 16777216
+        },
+        "sizes": {
+          "T_OBJECT": 48312,
+          "T_CLASS": 310128,
+          "T_MODULE": 38664,
+          "T_FLOAT": 200,
+          "T_STRING": 641088,
+          "T_REGEXP": 58167,
+          "T_ARRAY": 160376,
+          "T_HASH": 132192,
+          "T_STRUCT": 1560,
+          "T_BIGNUM": 80,
+          "T_FILE": 864,
+          "T_DATA": 587777,
+          "T_COMPLEX": 80,
+          "T_RATIONAL": 80,
+          "T_SYMBOL": 120,
+          "T_IMEMO": 2058808,
+          "T_ICLASS": 9672,
+          "TOTAL": 4048168
+        },
+        "physical_footprint": "12.3M",
+        "peak_physical_footprint": "12.3M"
+      },
+      "after_loop": {
+        "phase": "after_loop",
+        "gc": {
+          "count": 15,
+          "time": 7,
+          "marking_time": 4,
+          "sweeping_time": 2,
+          "heap_allocated_pages": 39,
+          "heap_empty_pages": 0,
+          "heap_allocatable_slots": 0,
+          "heap_available_slots": 34169,
+          "heap_live_slots": 26446,
+          "heap_free_slots": 7723,
+          "heap_final_slots": 0,
+          "heap_marked_slots": 21585,
+          "heap_eden_pages": 39,
+          "total_allocated_pages": 39,
+          "total_freed_pages": 0,
+          "total_allocated_objects": 128582,
+          "total_freed_objects": 102136,
+          "malloc_increase_bytes": 464704,
+          "malloc_increase_bytes_limit": 16777216,
+          "minor_gc_count": 12,
+          "major_gc_count": 3,
+          "compact_count": 0,
+          "read_barrier_faults": 0,
+          "total_moved_objects": 0,
+          "remembered_wb_unprotected_objects": 0,
+          "remembered_wb_unprotected_objects_limit": 152,
+          "old_objects": 21572,
+          "old_objects_limit": 30466,
+          "oldmalloc_increase_bytes": 464704,
+          "oldmalloc_increase_bytes_limit": 16777216
+        },
+        "sizes": {
+          "T_OBJECT": 48312,
+          "T_CLASS": 310128,
+          "T_MODULE": 38664,
+          "T_FLOAT": 200,
+          "T_STRING": 665088,
+          "T_REGEXP": 58167,
+          "T_ARRAY": 672536,
+          "T_HASH": 225312,
+          "T_STRUCT": 1560,
+          "T_BIGNUM": 80,
+          "T_FILE": 17248,
+          "T_DATA": 589393,
+          "T_COMPLEX": 80,
+          "T_RATIONAL": 80,
+          "T_SYMBOL": 120,
+          "T_IMEMO": 2059536,
+          "T_ICLASS": 9672,
+          "TOTAL": 4696176
+        },
+        "physical_footprint": "13.5M",
+        "peak_physical_footprint": "13.5M"
+      },
+      "after_gc": {
+        "phase": "after_gc",
+        "gc": {
+          "count": 16,
+          "time": 8,
+          "marking_time": 5,
+          "sweeping_time": 3,
+          "heap_allocated_pages": 39,
+          "heap_empty_pages": 1,
+          "heap_allocatable_slots": 0,
+          "heap_available_slots": 32531,
+          "heap_live_slots": 21587,
+          "heap_free_slots": 10944,
+          "heap_final_slots": 0,
+          "heap_marked_slots": 21585,
+          "heap_eden_pages": 38,
+          "total_allocated_pages": 39,
+          "total_freed_pages": 0,
+          "total_allocated_objects": 128591,
+          "total_freed_objects": 107004,
+          "malloc_increase_bytes": 0,
+          "malloc_increase_bytes_limit": 16777216,
+          "minor_gc_count": 12,
+          "major_gc_count": 4,
+          "compact_count": 0,
+          "read_barrier_faults": 0,
+          "total_moved_objects": 0,
+          "remembered_wb_unprotected_objects": 0,
+          "remembered_wb_unprotected_objects_limit": 215,
+          "old_objects": 21572,
+          "old_objects_limit": 43144,
+          "oldmalloc_increase_bytes": 0,
+          "oldmalloc_increase_bytes_limit": 16777216
+        },
+        "sizes": {
+          "T_OBJECT": 48312,
+          "T_CLASS": 310128,
+          "T_MODULE": 38664,
+          "T_FLOAT": 200,
+          "T_STRING": 641808,
+          "T_REGEXP": 58167,
+          "T_ARRAY": 160376,
+          "T_HASH": 132192,
+          "T_STRUCT": 1560,
+          "T_BIGNUM": 80,
+          "T_FILE": 17248,
+          "T_DATA": 589393,
+          "T_COMPLEX": 80,
+          "T_RATIONAL": 80,
+          "T_SYMBOL": 120,
+          "T_IMEMO": 2059576,
+          "T_ICLASS": 9672,
+          "TOTAL": 4067656
+        },
+        "physical_footprint": "13.4M",
+        "peak_physical_footprint": "13.5M"
+      }
+    },
+    "reference": {
+      "before": {
+        "phase": "before",
+        "gc": {
+          "count": 8,
+          "time": 5,
+          "marking_time": 4,
+          "sweeping_time": 1,
+          "heap_allocated_pages": 40,
+          "heap_empty_pages": 2,
+          "heap_allocatable_slots": 0,
+          "heap_available_slots": 32841,
+          "heap_live_slots": 21631,
+          "heap_free_slots": 11210,
+          "heap_final_slots": 0,
+          "heap_marked_slots": 21595,
+          "heap_eden_pages": 38,
+          "total_allocated_pages": 40,
+          "total_freed_pages": 0,
+          "total_allocated_objects": 82069,
+          "total_freed_objects": 60438,
+          "malloc_increase_bytes": 0,
+          "malloc_increase_bytes_limit": 16777216,
+          "minor_gc_count": 5,
+          "major_gc_count": 3,
+          "compact_count": 0,
+          "read_barrier_faults": 0,
+          "total_moved_objects": 0,
+          "remembered_wb_unprotected_objects": 0,
+          "remembered_wb_unprotected_objects_limit": 215,
+          "old_objects": 21582,
+          "old_objects_limit": 43164,
+          "oldmalloc_increase_bytes": 0,
+          "oldmalloc_increase_bytes_limit": 16777216
+        },
+        "sizes": {
+          "T_OBJECT": 46792,
+          "T_CLASS": 336648,
+          "T_MODULE": 39256,
+          "T_FLOAT": 200,
+          "T_STRING": 649186,
+          "T_REGEXP": 57220,
+          "T_ARRAY": 154976,
+          "T_HASH": 132704,
+          "T_STRUCT": 520,
+          "T_BIGNUM": 80,
+          "T_FILE": 864,
+          "T_DATA": 599761,
+          "T_COMPLEX": 80,
+          "T_RATIONAL": 80,
+          "T_SYMBOL": 120,
+          "T_IMEMO": 2078188,
+          "T_ICLASS": 10952,
+          "TOTAL": 4107627
+        },
+        "physical_footprint": "12.4M",
+        "peak_physical_footprint": "12.4M"
+      },
+      "after_loop": {
+        "phase": "after_loop",
+        "gc": {
+          "count": 102,
+          "time": 24,
+          "marking_time": 6,
+          "sweeping_time": 17,
+          "heap_allocated_pages": 40,
+          "heap_empty_pages": 0,
+          "heap_allocatable_slots": 0,
+          "heap_available_slots": 36117,
+          "heap_live_slots": 30981,
+          "heap_free_slots": 5136,
+          "heap_final_slots": 0,
+          "heap_marked_slots": 21690,
+          "heap_eden_pages": 40,
+          "total_allocated_pages": 40,
+          "total_freed_pages": 0,
+          "total_allocated_objects": 1202147,
+          "total_freed_objects": 1171166,
+          "malloc_increase_bytes": 151304,
+          "malloc_increase_bytes_limit": 16777216,
+          "minor_gc_count": 99,
+          "major_gc_count": 3,
+          "compact_count": 0,
+          "read_barrier_faults": 0,
+          "total_moved_objects": 0,
+          "remembered_wb_unprotected_objects": 0,
+          "remembered_wb_unprotected_objects_limit": 215,
+          "old_objects": 21671,
+          "old_objects_limit": 43164,
+          "oldmalloc_increase_bytes": 436696,
+          "oldmalloc_increase_bytes_limit": 16777216
+        },
+        "sizes": {
+          "T_OBJECT": 119952,
+          "T_CLASS": 336648,
+          "T_MODULE": 39256,
+          "T_FLOAT": 200,
+          "T_STRING": 782946,
+          "T_REGEXP": 57220,
+          "T_ARRAY": 472104,
+          "T_HASH": 371744,
+          "T_STRUCT": 93480,
+          "T_BIGNUM": 80,
+          "T_FILE": 17248,
+          "T_DATA": 662465,
+          "T_COMPLEX": 80,
+          "T_RATIONAL": 80,
+          "T_SYMBOL": 200,
+          "T_IMEMO": 2078964,
+          "T_ICLASS": 10952,
+          "TOTAL": 5043619
+        },
+        "physical_footprint": "12.4M",
+        "peak_physical_footprint": "12.4M"
+      },
+      "after_gc": {
+        "phase": "after_gc",
+        "gc": {
+          "count": 103,
+          "time": 25,
+          "marking_time": 7,
+          "sweeping_time": 18,
+          "heap_allocated_pages": 40,
+          "heap_empty_pages": 2,
+          "heap_allocatable_slots": 0,
+          "heap_available_slots": 32841,
+          "heap_live_slots": 21674,
+          "heap_free_slots": 11167,
+          "heap_final_slots": 0,
+          "heap_marked_slots": 21672,
+          "heap_eden_pages": 38,
+          "total_allocated_pages": 40,
+          "total_freed_pages": 0,
+          "total_allocated_objects": 1202156,
+          "total_freed_objects": 1180482,
+          "malloc_increase_bytes": 0,
+          "malloc_increase_bytes_limit": 16777216,
+          "minor_gc_count": 99,
+          "major_gc_count": 4,
+          "compact_count": 0,
+          "read_barrier_faults": 0,
+          "total_moved_objects": 0,
+          "remembered_wb_unprotected_objects": 0,
+          "remembered_wb_unprotected_objects_limit": 216,
+          "old_objects": 21661,
+          "old_objects_limit": 43322,
+          "oldmalloc_increase_bytes": 0,
+          "oldmalloc_increase_bytes_limit": 16777216
+        },
+        "sizes": {
+          "T_OBJECT": 46792,
+          "T_CLASS": 336648,
+          "T_MODULE": 39256,
+          "T_FLOAT": 200,
+          "T_STRING": 649906,
+          "T_REGEXP": 57220,
+          "T_ARRAY": 154976,
+          "T_HASH": 132704,
+          "T_STRUCT": 520,
+          "T_BIGNUM": 80,
+          "T_FILE": 17248,
+          "T_DATA": 601377,
+          "T_COMPLEX": 80,
+          "T_RATIONAL": 80,
+          "T_SYMBOL": 120,
+          "T_IMEMO": 2079004,
+          "T_ICLASS": 10952,
+          "TOTAL": 4127163
+        },
+        "physical_footprint": "12.4M",
+        "peak_physical_footprint": "12.4M"
+      }
+    }
+  }
+}

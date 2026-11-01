@@ -41,7 +41,7 @@ module JMESPath
         end
 
         values.each_with_index do |value, index|
-          types = @arguments.fetch([index, @arguments.length - 1].min)
+          types = @arguments.fetch(index) { @arguments.fetch(-1) }
           next if types.any? { |type| matches?(value, type) }
 
           raise TypeMismatch.new("Invalid argument #{index + 1} for #{name}: #{Types.name(value)}", origin: origin)

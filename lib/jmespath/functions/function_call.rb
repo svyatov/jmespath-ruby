@@ -20,6 +20,8 @@ module JMESPath
         nil
       end
 
+      STRICT = new.freeze
+
       private
 
       def validation_origin

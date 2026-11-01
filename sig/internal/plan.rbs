@@ -1,0 +1,32 @@
+module JMESPath
+  module Plan
+    type operation = (^(value) -> value) | DataAccess::FieldReader
+    BUILDERS: Hash[Symbol, Symbol]
+    def self.build: (AST::Node, ?Options) -> operation
+
+    class Builder
+      @functions: Functions
+      @disable_visit_errors: bool
+      @evaluator: Evaluator
+      def initialize: (Options) -> void
+      def build: (AST::Node) -> operation
+      private
+      def field: (AST::Node) -> operation
+      def current: (AST::Node) -> operation
+      def group: (AST::Node) -> operation
+      def sequence: (AST::Node) -> operation
+      def index: (AST::Node) -> operation
+      def list: (AST::Node) -> operation
+      def projection: (AST::Node) -> operation
+      def value_projection: (AST::Node) -> operation
+      def projector: (AST::Node) -> ^(Array[value]?) -> value
+      def slice: (AST::Node) -> operation
+      def function: (AST::Node) -> operation
+      def native_function?: (String) -> bool
+      def function_call: (String, Array[AST::Node]) -> operation
+      def reference: (AST::Node) -> operation
+      def string_function: (String, operation) -> operation
+      def fallback: (AST::Node) -> operation
+    end
+  end
+end

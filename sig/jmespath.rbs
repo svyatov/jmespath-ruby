@@ -4,7 +4,7 @@ module JMESPath
   type json = nil | bool | Integer | Float | String | Array[json] | Hash[String, json]
 
   def self.search: (String, value, ?Hash[Symbol, value], **value) -> value
-  def self.compile: (String, ?cache_expressions: bool, ?max_depth: Integer) -> Expression
+  def self.compile: (String, ?cache_expressions: bool, ?max_depth: Integer, ?functions: Functions, ?disable_visit_errors: bool) -> Expression
 
   module Errors
     class Error < StandardError
@@ -31,6 +31,7 @@ module JMESPath
   class Expression
     attr_reader source: String
     def search: (value, ?Hash[Symbol, value], **value) -> value
+    alias call search
   end
 
   class Functions

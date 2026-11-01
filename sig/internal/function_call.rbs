@@ -1,6 +1,7 @@
 module JMESPath
   class Functions
     class FunctionCall
+      STRICT: FunctionCall
       include Scalar
       include Collections
       include Coercions

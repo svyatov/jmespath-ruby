@@ -4,7 +4,7 @@ module JMESPath
   # @api private
   class Evaluator
     HANDLERS = {
-      field: :field, current: :current, literal: :literal, index: :index,
+      literal: :literal, index: :index,
       group: :group, subexpression: :sequence, pipe: :sequence,
       and: :boolean, or: :boolean, not: :negation?,
       eq: :equality, ne: :equality, lt: :ordering, lte: :ordering, gt: :ordering, gte: :ordering,
@@ -21,8 +21,11 @@ module JMESPath
     end
 
     def evaluate(node, data)
-      handler = HANDLERS.fetch(node.kind)
-      send(handler, node, data)
+      case node.kind
+      when :field then DataAccess.field(data, node.value.to_s)
+      when :current then data
+      else send(HANDLERS.fetch(node.kind), node, data)
+      end
     end
   end
 end

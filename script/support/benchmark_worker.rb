@@ -6,11 +6,20 @@ require "jmespath"
 # Measures one workload inside the selected implementation's process.
 module BenchmarkWorker
   def self.call(request)
+    require "objspace" if request["memory"]
     operation = operation_for(request)
     expected = request.fetch("expected")
     request.fetch("warmup").times { |index| operation.call(index) }
     verify(operation.call(0), expected) unless request.fetch("warmup").zero?
-    measure(operation, expected, request.fetch("iterations"))
+    result = measure(operation, expected, request.fetch("iterations"))
+    memory_usage(result) if request["memory"]
+    result
+  end
+
+  def self.memory_usage(result)
+    GC.start
+    result[:retained_bytes] = ObjectSpace.memsize_of_all
+    result[:rss_bytes] = Integer(IO.popen(["ps", "-o", "rss=", "-p", Process.pid.to_s], &:read)) * 1024
   end
 
   def self.measure(operation, expected, iterations)
@@ -29,6 +38,8 @@ module BenchmarkWorker
     expression = request.fetch("expression")
     data = request.fetch("given")
     case request.fetch("mode")
+    when "cached"
+      cached_operation(expression, data)
     when "compiled"
       compiled_operation(expression, data)
     when "churn"
@@ -51,6 +62,13 @@ module BenchmarkWorker
       compiled = JMESPath::Parser.new.parse(expression).optimize
       ->(_index) { compiled.visit(data) }
     end
+  end
+
+  def self.cached_operation(expression, data)
+    return compiled_operation(expression, data) if JMESPath.respond_to?(:compile)
+
+    runtime = JMESPath::Runtime.new(cache_expressions: true)
+    ->(_index) { runtime.search(expression, data) }
   end
 
   def self.verify(actual, expected)

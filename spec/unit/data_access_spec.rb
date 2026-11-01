@@ -3,6 +3,16 @@
 require_relative "../support/wrappers"
 
 RSpec.describe "Ruby data access" do
+  it "reuses a frozen field reader with the same key precedence and adapters" do
+    reader = JMESPath::DataAccess::FieldReader.new("x")
+    value = [1]
+    expect(reader).to be_frozen
+    expect(reader.call({ "x" => false, x: 7 })).to be(false)
+    expect(reader.call({ "x" => nil, x: 7 })).to eq(7)
+    expect(reader.call(Hashish.new("x" => value))).to equal(value)
+    expect(reader.call(nil)).to be_nil
+  end
+
   it "prefers false string values but falls back from nil to symbols" do
     expect(JMESPath::DataAccess.field({ "x" => false, x: 7 }, "x")).to be(false)
     expect(JMESPath::DataAccess.field({ "x" => nil, x: 7 }, "x")).to eq(7)

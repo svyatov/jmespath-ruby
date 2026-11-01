@@ -46,7 +46,13 @@ module JMESPath
     # @raise [Errors::InvalidArityError] the number of arguments is invalid
     def call(name, arguments, disable_visit_errors: false)
       definition = @definitions.fetch(name) { raise Errors::UnknownFunctionError, "Unknown function: #{name}" }
-      FunctionCall.new.call(definition, name, arguments, disable_visit_errors: disable_visit_errors)
+      invocation = disable_visit_errors ? FunctionCall.new : FunctionCall::STRICT
+      invocation.call(definition, name, arguments, disable_visit_errors: disable_visit_errors)
+    end
+
+    # @api private
+    def definition(name)
+      @definitions[name]
     end
 
     private

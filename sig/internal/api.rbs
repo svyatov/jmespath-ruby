@@ -1,14 +1,20 @@
 module JMESPath
   CACHE: Cache
+  def self.build_expression: (String, Integer) -> Expression
+  def self.compile_syntax: (String, bool, Integer) -> Expression
+  def self.compilation_options: (bool, Integer, Functions, bool) -> Options
 
   class Options
+    EMPTY: Hash[Symbol, value]
+    DEFAULT: Options
     KEYS: Array[Symbol]
     attr_reader cache_expressions: bool
     attr_reader disable_visit_errors: bool
     attr_reader functions: Functions
     attr_reader max_depth: Integer
-    def initialize: (?Hash[Symbol, value], ?Hash[Symbol, value], ?default_depth: Integer) -> void
+    def initialize: (?Hash[Symbol, value], ?Hash[Symbol, value], ?default_depth: Integer, ?defaults: Options?) -> void
     private
+    def default_value: (Options?, Symbol) -> value
     def merge: (Hash[Symbol, value], Hash[Symbol, value]) -> Hash[Symbol, value]
     def boolean: (value) -> bool
     def depth: (value) -> Integer
@@ -18,10 +24,16 @@ module JMESPath
     def self.load: (value) -> value
   end
   class Expression
+    DEFAULT_EVALUATOR: Evaluator
     @root: AST::Node
+    @plan: Plan::operation
     @max_depth: Integer
-    def initialize: (String, AST::Node, ?max_depth: Integer) -> void
+    @options: Options
+    def initialize: (String, AST::Node, ?max_depth: Integer, ?options: Options) -> void
+    def configured: (Options) -> Expression
     def evaluate: (value, Options) -> value
+    private
+    def configured_for?: (Options) -> bool
   end
   class Cache
     @limit: Integer
@@ -30,7 +42,7 @@ module JMESPath
     @entries: Hash[[String, Integer], Expression]
     @mutex: Thread::Mutex
     def initialize: (?limit: Integer, ?bytes: Integer) -> void
-    def fetch: (String, max_depth: Integer) { () -> Expression } -> Expression
+    def fetch: (String, max_depth: Integer) { (String) -> Expression } -> Expression
     private
     def read: ([String, Integer]) -> Expression?
     def write: ([String, Integer], Expression) -> Integer

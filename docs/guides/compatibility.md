@@ -59,7 +59,7 @@ The maximum supported setting is 128.
 Nested arrays and objects in JSON literals count toward this limit.
 Compiled searches also check literal depth when a caller requests a lower limit.
 Flat field chains use iterative evaluation and do not consume that nesting budget per field.
-The compilation cache holds at most 256 entries and 1,048,576 source bytes.
+The compilation cache holds at most 32 entries and 1,048,576 source bytes.
 Oversized expressions bypass caching without becoming invalid.
 
 ## Verification

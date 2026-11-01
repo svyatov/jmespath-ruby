@@ -1,0 +1,111 @@
+{
+  "workload": "deep_nesting_50",
+  "mode": "compiled",
+  "iterations": 100000,
+  "rounds": 7,
+  "warmup": 640,
+  "samples": {
+    "current": [
+      {
+        "seconds": 0.5338570000603795,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 20283392
+      },
+      {
+        "seconds": 0.5422060000710189,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 19808256
+      },
+      {
+        "seconds": 0.531736999982968,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 20168704
+      },
+      {
+        "seconds": 0.5327329998835921,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 20201472
+      },
+      {
+        "seconds": 0.5551459998823702,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 19759104
+      },
+      {
+        "seconds": 0.5298300001304597,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 19693568
+      },
+      {
+        "seconds": 0.5278219999745488,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 19742720
+      }
+    ],
+    "before": [
+      {
+        "seconds": 0.5367099998984486,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 20234240
+      },
+      {
+        "seconds": 0.5294039999134839,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 19939328
+      },
+      {
+        "seconds": 0.530403999844566,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 19972096
+      },
+      {
+        "seconds": 0.5305999999400228,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 19873792
+      },
+      {
+        "seconds": 0.5365670002065599,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 20217856
+      },
+      {
+        "seconds": 0.5332530001178384,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 20004864
+      },
+      {
+        "seconds": 0.5363870000001043,
+        "allocated_objects": 100006,
+        "ruby": "ruby 3.3.11 (2026-03-26 revision 1f2d15125a) [arm64-darwin23]",
+        "yjit": false,
+        "peak_rss_bytes": 19955712
+      }
+    ]
+  }
+}

@@ -3,16 +3,39 @@
 module JMESPath
   # @api private
   module DataAccess
-    class << self
-      def field(value, name)
-        mapping = object(value)
+    # @api private
+    module FieldLookup
+      def field(value, name = @field_name)
+        mapping = value.is_a?(Hash) ? value : DataAccess.object(value)
         return nil unless mapping
-        return mapping[name] unless mapping[name].nil?
 
-        key = mapping.keys.find { |candidate| candidate.is_a?(Symbol) && candidate.name == name }
-        mapping[key] if key
+        result = mapping[name]
+        return result unless result.nil?
+
+        mapping.each_key do |key|
+          return mapping[key] if key.is_a?(Symbol) && key.name == name
+        end
+        nil
+      end
+    end
+
+    extend FieldLookup
+
+    # @api private
+    class FieldReader
+      include FieldLookup
+
+      def initialize(name)
+        @field_name = name
+        freeze
       end
 
+      alias call field
+
+      private :field
+    end
+
+    class << self
       def array(value)
         convert(value, Array, :to_ary)
       end

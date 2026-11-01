@@ -7,8 +7,6 @@ module JMESPath
     def initialize: (functions: Functions, ?disable_visit_errors: bool) -> void
     def evaluate: (AST::Node, value) -> value
     private
-    def current: (AST::Node, value) -> value
-    def field: (AST::Node, value) -> value
     def literal: (AST::Node, value) -> value
     def copy_literal: (value) -> value
     def index: (AST::Node, value) -> value

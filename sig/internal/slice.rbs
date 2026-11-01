@@ -3,6 +3,7 @@ module JMESPath
     @start: Integer?
     @stop: Integer?
     @step: Integer
+    @forward: bool
     def initialize: (start: Integer?, stop: Integer?, step: Integer?) -> void
     def apply: (Array[value]) -> Array[value]
     private

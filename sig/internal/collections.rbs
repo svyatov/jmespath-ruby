@@ -8,6 +8,7 @@ module JMESPath
     module Collections : Coercions
       type sort_key = Integer | Float | String
       SIGNATURES: Hash[String, Array[Array[Symbol]]]
+      SORTABLE_TYPES: Array[Symbol]
       def self.register: (Functions) -> Functions
       private
       def sum: (value) -> value

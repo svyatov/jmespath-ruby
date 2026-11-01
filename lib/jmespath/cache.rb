@@ -3,7 +3,7 @@
 module JMESPath
   # @api private
   class Cache
-    def initialize(limit: 256, bytes: 1_048_576)
+    def initialize(limit: 32, bytes: 1_048_576)
       raise ArgumentError, "Cache capacities must be positive" unless limit.positive? && bytes.positive?
 
       @limit = limit
@@ -14,14 +14,14 @@ module JMESPath
     end
 
     def fetch(source, max_depth:)
-      return yield if source.bytesize > @budget
+      return yield source if source.bytesize > @budget
 
       # @type var key: [String, Integer]
       key = [source.frozen? ? source : source.dup.freeze, max_depth].freeze
       cached = @mutex.synchronize { read(key) }
       return cached if cached
 
-      value = yield
+      value = yield key.first
       @mutex.synchronize { write(key, value) }
       value
     end

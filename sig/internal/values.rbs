@@ -1,5 +1,16 @@
 module JMESPath
   module DataAccess
+    module FieldLookup
+      @field_name: String
+      def field: (value, ?String) -> value?
+    end
+    extend FieldLookup
+    class FieldReader
+      include FieldLookup
+      @field_name: String
+      def initialize: (String) -> void
+      def call: (value) -> value?
+    end
     def self.field: (value, String) -> value?
     def self.array: (value) -> Array[value]?
     def self.object: (value) -> Hash[value, value]?
@@ -13,6 +24,7 @@ module JMESPath
     def self.equal?: (value, value) -> bool
     def self.normalize: (value) -> value
     def self.collection_name: (value) -> Symbol
+    def self.other_name: (value) -> Symbol
     def self.matching?: (value, value, Array[Array[value]]) -> bool
     def self.arrays_match?: (Array[value], value, Array[Array[value]]) -> bool
     def self.objects_match?: (Hash[value, value], value, Array[Array[value]]) -> bool

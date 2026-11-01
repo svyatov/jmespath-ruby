@@ -5,14 +5,6 @@ module JMESPath
   class Evaluator
     private
 
-    def current(_node, data)
-      data
-    end
-
-    def field(node, data)
-      DataAccess.field(data, node.value.to_s)
-    end
-
     def literal(node, _data)
       copy_literal(node.value)
     end
@@ -41,7 +33,8 @@ module JMESPath
     end
 
     def sequence(node, data)
-      node.children.reduce(data) { |value, child| evaluate(child, value) }
+      node.children.each { |child| data = evaluate(child, data) }
+      data
     end
 
     def reference(node, _data)

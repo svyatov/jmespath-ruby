@@ -29,6 +29,7 @@ module JMESPath
       def array_matches?: (value, Symbol) -> bool?
     end
     @definitions: Hash[String, Definition]
+    def definition: (String) -> Definition?
     def with_builtin: (String, signature: Array[Array[Symbol]], handler: Symbol, ?variadic: bool) -> Functions
     private
     def add: (String, Definition, override: bool) -> Functions

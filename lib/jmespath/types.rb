@@ -5,12 +5,13 @@ module JMESPath
   module Types
     class << self
       def name(value)
-        return :null if value.nil?
-        return :boolean if value.equal?(true) || value.equal?(false)
-        return :number if number?(value)
-        return :expref if value.is_a?(ExpressionReference)
-
-        collection_name(value)
+        case value
+        when Integer then :number
+        when String then :string
+        when NilClass then :null
+        when TrueClass, FalseClass then :boolean
+        else other_name(value)
+        end
       end
 
       def number?(value)
@@ -19,6 +20,7 @@ module JMESPath
 
       def falsey?(value)
         return true if value.nil? || value.equal?(false)
+        return false if value.equal?(true)
 
         collection = DataAccess.string(value) || DataAccess.array(value) || DataAccess.object(value)
         collection ? collection.empty? : false
@@ -37,6 +39,13 @@ module JMESPath
       end
 
       private
+
+      def other_name(value)
+        return :number if number?(value)
+        return :expref if value.is_a?(ExpressionReference)
+
+        collection_name(value)
+      end
 
       def collection_name(value)
         return :string if DataAccess.string(value)

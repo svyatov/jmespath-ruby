@@ -51,7 +51,7 @@ module JMESPath
     end
 
     def skip_whitespace
-      @index += 1
+      @index += 1 while WHITESPACE.include?(source.getbyte(@index))
       nil
     end
 
