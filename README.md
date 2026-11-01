@@ -33,10 +33,10 @@ On MRI 4.0.9, jmespath-ruby beats each competing implementation on every workloa
 
 | Implementation | Version | Correct workloads | jmespath-ruby public-search speedup |
 | --- | --- | ---: | ---: |
-| **jmespath-ruby** | **0.1.0** | **✅ 18/18** | **Baseline** |
-| jmespath (jmespath.rb) | 1.6.2 | ✅ 18/18 | **7.97x** |
-| BurtPath | 1.1.2 | ❌ 15/18 | **9.99x** |
-| Jamespath | 0.5.1 | ❌ 13/18 | **8.07x** |
+| **jmespath-ruby** | **0.1.0** | **18/18** | **Baseline** |
+| jmespath (jmespath.rb) | 1.6.2 | 18/18 | **7.97x** |
+| BurtPath | 1.1.2 | 15/18 | **9.99x** |
+| Jamespath | 0.5.1 | 13/18 | **8.07x** |
 
 Speedups use geometric means of median times across each competitor's correctly evaluated workloads.
 Measurements use five rounds of 20,000 searches on an Apple M1 Pro.
@@ -60,11 +60,11 @@ The [comparison with existing implementations](docs/guides/comparison.md) includ
 
 | Feature | jmespath-ruby | jmespath | BurtPath | Jamespath | jmespath-jruby |
 | --- | --- | --- | --- | --- | --- |
-| Public query compilation | ✅ | ❌ | ❌ | ✅ | ✅ |
-| Documented typed function registry | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Packaged RBS signatures | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Pure Ruby implementation | ✅ | ✅ | ✅ | ✅ | ❌ |
-| Ordinary `JMESPath.search` calls | ✅ | ✅ | ✅ | ❌ | ❌ |
+| Public query compilation | Yes | No | No | Yes | Yes |
+| Documented typed function registry | Yes | No | No | No | No |
+| Packaged RBS signatures | Yes | No | No | No | No |
+| Pure Ruby implementation | Yes | Yes | Yes | Yes | No |
+| Ordinary `JMESPath.search` calls | Yes | Yes | Yes | No | No |
 
 `jmespath` and BurtPath support reuse through private runtime classes.
 The [full comparison](docs/guides/comparison.md) distinguishes those classes from public compilation APIs.

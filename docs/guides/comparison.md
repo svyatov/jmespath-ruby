@@ -29,10 +29,10 @@ A value above 1 favors this library; a value below 1 favors the competitor.
 
 | Implementation | Correct search workloads | Public-search speedup | Search speedup range | Reuse speedup |
 | --- | ---: | ---: | ---: | ---: |
-| **jmespath-ruby 0.1.0** | **✅ 18/18** | **1.00x** | **Baseline** | **1.00x** |
-| jmespath 1.6.2 | ✅ 18/18 | 7.97x | 1.35x to 78.48x | 4.35x |
-| BurtPath 1.1.2 | ❌ 15/18 | 9.99x | 1.74x to 80.59x | 1.04x |
-| Jamespath 0.5.1 | ❌ 13/18 | 8.07x | 2.74x to 26.91x | 1.38x |
+| **jmespath-ruby 0.1.0** | **18/18** | **1.00x** | **Baseline** | **1.00x** |
+| jmespath 1.6.2 | 18/18 | 7.97x | 1.35x to 78.48x | 4.35x |
+| BurtPath 1.1.2 | 15/18 | 9.99x | 1.74x to 80.59x | 1.04x |
+| Jamespath 0.5.1 | 13/18 | 8.07x | 2.74x to 26.91x | 1.38x |
 
 Public search is faster in every mutually passing workload.
 Reuse is not uniformly faster: BurtPath has lower medians in five of 15 shared workloads; Jamespath has lower medians in three of 13.
@@ -53,11 +53,11 @@ They use the same median and geometric-mean calculation as the MRI table, with s
 
 | Implementation | Correct public-search workloads | Correct reuse workloads | Public-search speedup | Reuse speedup |
 | --- | ---: | ---: | ---: | ---: |
-| **jmespath-ruby 0.1.0** | **✅ 18/18** | **✅ 18/18** | **1.00x** | **1.00x** |
-| jmespath 1.6.2 | ✅ 18/18 | ✅ 18/18 | 7.80x | 5.24x |
-| BurtPath 1.1.2 | ❌ 15/18 | ❌ 16/18 | 10.45x | 0.88x |
-| Jamespath 0.5.1 | ❌ 13/18 | ❌ 13/18 | 10.23x | 0.97x |
-| jmespath-jruby 1.0.0.pre0 | ❌ 0/18 | ❌ 0/18 | Unavailable | Unavailable |
+| **jmespath-ruby 0.1.0** | **18/18** | **18/18** | **1.00x** | **1.00x** |
+| jmespath 1.6.2 | 18/18 | 18/18 | 7.80x | 5.24x |
+| BurtPath 1.1.2 | 15/18 | 16/18 | 10.45x | 0.88x |
+| Jamespath 0.5.1 | 13/18 | 13/18 | 10.23x | 0.97x |
+| jmespath-jruby 1.0.0.pre0 | 0/18 | 0/18 | Unavailable | Unavailable |
 
 Public search has lower median times in every mutually passing workload.
 The range against `jmespath` is 1.42x to 87.88x.
@@ -73,11 +73,11 @@ See the [complete JRuby samples](../../benchmark/results/comparison-jruby-10.1.0
 
 | Capability | jmespath-ruby | jmespath | BurtPath | Jamespath | jmespath-jruby |
 | --- | --- | --- | --- | --- | --- |
-| Public query compilation | ✅ `compile` | ❌ Private `Runtime` | ❌ Private `Runtime` | ✅ `compile` | ✅ `compile` |
-| Documented typed function registry | ✅ `Functions#with` | ❌ | ❌ | ❌ | ❌ |
-| Packaged RBS signatures | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Pure Ruby implementation | ✅ | ✅ | ✅ | ✅ | ❌ Java extension |
-| Ordinary `JMESPath.search` calls | ✅ | ✅ Original API | ✅ | ❌ Different module | ❌ Instance API |
+| Public query compilation | Yes `compile` | No Private `Runtime` | No Private `Runtime` | Yes `compile` | Yes `compile` |
+| Documented typed function registry | Yes `Functions#with` | No | No | No | No |
+| Packaged RBS signatures | Yes | No | No | No | No |
+| Pure Ruby implementation | Yes | Yes | Yes | Yes | No Java extension |
+| Ordinary `JMESPath.search` calls | Yes | Yes Original API | Yes | No Different module | No Instance API |
 
 This library's compiled expressions and function registries are immutable.
 Save options at compilation, reuse queries across threads, and extend one registry without changing other callers.
