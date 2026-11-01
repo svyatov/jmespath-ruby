@@ -35,4 +35,13 @@ RSpec.describe "Installed gem artifact" do
     expect(result.fetch("source")).to include("/jmespath-ruby-#{JMESPath::VERSION}/lib/jmespath.rb")
     expect(result.fetch("dependencies").sort).to eq(%w[bundler jmespath-ruby json stringio])
   end
+
+  it "rejects dependency changes after preparing the installation lock" do
+    allow(@checker).to receive(:prepare).and_wrap_original do |prepare, directory, artifact|
+      prepare.call(directory, artifact)
+      File.open(File.join(directory, "Gemfile"), "a") { |file| file.puts('gem "rake"') }
+    end
+
+    expect { @checker.verify(@artifact) }.to raise_error(RuntimeError, /frozen/)
+  end
 end
