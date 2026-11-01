@@ -119,7 +119,7 @@ Commit only Task 1 files with `feat(cli): render located query diagnostics`.
 
 **Interfaces:** Consume Task 1's formatter through unchanged `CLI.run` and both repository executables.
 
-- [ ] **Step 1: Add failing tests for generic JSON errors and help.**
+- [x] **Step 1: Add failing tests for generic JSON errors and help.**
 
 ```ruby
 expect(cli(["@"], '{"private_marker":BROKEN}'))
@@ -137,12 +137,12 @@ For each executable, run syntax, type, arity, unknown-function, invalid-value, m
 Assert exact exit status, empty stdout, expected stderr, and absence of ANSI escapes and backtraces.
 Retain successful Unicode JSON output coverage for both executable names.
 
-- [ ] **Step 2: Confirm failures before changing input diagnostics.**
+- [x] **Step 2: Confirm failures before changing input diagnostics.**
 
 Run `bundle exec rspec spec/integration/cli_spec.rb`.
 Expect generic-JSON and help assertions to fail; query diagnostics from Task 1 must pass.
 
-- [ ] **Step 3: Implement JSON policy and documentation.**
+- [x] **Step 3: Implement JSON policy and documentation.**
 
 Return `Invalid JSON input` from the formatter for `JSON::ParserError` without inspecting its message.
 Add `Query failures include source locations when available.` to CLI help.
@@ -152,15 +152,25 @@ Document runtime carets, expression-result details, metadata fallbacks, Unicode 
 Include shell examples showing stdin JSON, stderr diagnostics, and status 1.
 Preserve the public syntax formatter's accepted error type and executable Ruby examples.
 
-- [ ] **Step 4: Verify the complete change.**
+- [x] **Step 4: Verify the complete change.**
 
 Run `bundle exec rake` and require all checks, including 100% line and branch coverage, to pass.
 Run `bundle exec rake docs` and require successful documentation generation.
 Run the installed repository prose checker on the touched guide, spec, and plan.
 Run `git diff --check` and review the diff for unrelated changes or public API expansion.
 
-- [ ] **Step 5: Commit and report verified behavior.**
+- [x] **Step 5: Commit and report verified behavior.**
 
 Commit only Task 2 files with `feat(cli): protect input diagnostics and document failures`.
 Report the verification results and show `bundle exec ruby exe/jmespath 'length(@)'` with stdin JSON `4`.
 Keep remote publication and pull request creation outside this plan.
+
+## Verification record
+
+Implemented on `feat/cli-diagnostics` using native execution.
+Task 1 regressions failed on missing excerpts and structured messages before implementation.
+Task 2 regressions failed on parser-message disclosure and missing help before implementation.
+`bundle exec rake` passed 4,208 examples with 100% line and branch coverage, lint, types, complexity, and documentation checks.
+`bundle exec rake docs` completed with 100% of public items documented.
+Prose and whitespace checks passed.
+Both executable names passed success, syntax, type, arity, suggestion, invalid-value, malformed-JSON, and usage cases.

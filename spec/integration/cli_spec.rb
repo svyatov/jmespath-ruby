@@ -164,7 +164,75 @@ RSpec.describe "Command-line queries" do
     expect(JMESPath::CLI::FailureDiagnostic.format(error, nil)).to eq("Manual")
   end
 
+  it "excludes document fragments from malformed JSON diagnostics" do
+    expect(cli(["@"], '{"private_marker":BROKEN}')).to eq([1, "", "Invalid JSON input\n"])
+    expect(cli(["items["], '{"private_marker":BROKEN}')).to eq([1, "", "Invalid JSON input\n"])
+  end
+
+  it "explains located query failures in help" do
+    expect(cli(["--help"], "invalid")[1]).to include("Query failures include source locations when available.")
+  end
+
+  [["--help"], ["-h"], ["--version"], [], %w[a b]].each do |arguments|
+    it "does not read stdin for #{arguments.inspect}" do
+      require "jmespath/cli"
+      input = double("unreadable input")
+      output = StringIO.new
+      errors = StringIO.new
+      status = JMESPath::CLI.run(arguments, stdin: input, stdout: output, stderr: errors)
+      if arguments.length == 1
+        expect(status).to eq(0)
+        expect(output.string).not_to be_empty
+        expect(errors.string).to be_empty
+      else
+        expect([status, output.string, errors.string])
+          .to eq([2, "", "Usage: jmespath EXPRESSION < document.json\n"])
+      end
+    end
+  end
+
+  [IOError.new("Read\nfailed\e"), Errno::EIO.new("Read\nfailed\e")].each do |error|
+    it "escapes #{error.class} input failures" do
+      require "jmespath/cli"
+      input = double("failed input")
+      allow(input).to receive(:read).and_raise(error)
+      output = StringIO.new
+      errors = StringIO.new
+      status = JMESPath::CLI.run(["@"], stdin: input, stdout: output, stderr: errors)
+      prefix = error.is_a?(IOError) ? "" : "Input/output error - "
+      expect([status, output.string, errors.string]).to eq([1, "", "#{prefix}Read\\nfailed\\e\n"])
+    end
+  end
+
+  [ArgumentError, RuntimeError].each do |type|
+    it "propagates unrelated #{type} failures" do
+      error = type.new("Application failure")
+      allow(JMESPath).to receive(:search).with("@", {}).and_raise(error)
+      expect { cli(["@"], "{}") }.to(raise_error { |failure| expect(failure).to equal(error) })
+    end
+  end
+
   %w[jmespath jmespath.rb].each do |name|
+    {
+      ["items["] => ["{}", 1, "Expected an array index at line 1, column 7\nitems[\n      ^\n"],
+      ["length(@)"] => ["4", 1,
+                        "Invalid argument 1 for length: expected string, array, or object; received number " \
+                        "at line 1, column 1\nlength(@)\n^\n"],
+      ["length()"] => ["{}", 1, "Invalid number of arguments for length: expected 1; received 0 " \
+                                "at line 1, column 1\nlength()\n^\n"],
+      ["lenght(name)"] => ["{}", 1, "Unknown function: lenght. Did you mean length?\n"],
+      ["[::0]"] => ["[]", 1, "Slice step cannot be zero\n"],
+      ["@"] => ['{"private_marker":BROKEN}', 1, "Invalid JSON input\n"],
+      [] => ["", 2, "Usage: jmespath EXPRESSION < document.json\n"]
+    }.each do |arguments, (input, expected_status, expected_errors)|
+      it "reports #{arguments.inspect} failures through #{name}" do
+        output, errors, status = Open3.capture3(
+          RbConfig.ruby, File.expand_path("../../exe/#{name}", __dir__), *arguments, stdin_data: input
+        )
+        expect([status.exitstatus, output, errors]).to eq([expected_status, "", expected_errors])
+      end
+    end
+
     it "runs the #{name} executable" do
       output, errors, status = Open3.capture3(
         RbConfig.ruby, File.expand_path("../../exe/#{name}", __dir__), "name",

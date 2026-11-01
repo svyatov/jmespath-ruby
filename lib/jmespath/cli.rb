@@ -9,7 +9,8 @@ module JMESPath
     USAGE = "Usage: jmespath EXPRESSION < document.json"
     HELP = "#{USAGE}\n" \
            "Function arguments and expression-reference results are validated; failures exit with status 1.\n" \
-           "Unknown functions suggest similar registered names.".freeze
+           "Unknown functions suggest similar registered names.\n" \
+           "Query failures include source locations when available.".freeze
 
     # @param argv [Array<String>] command-line arguments
     # @param stdin [IO, StringIO] source JSON stream
