@@ -75,8 +75,25 @@ module JMESPath
     end
 
     # A function received an unsupported value type.
+    # @example Inspect a validation failure
+    #   error = begin
+    #     JMESPath.search("length(@)", 4)
+    #   rescue JMESPath::Errors::InvalidTypeError => failure
+    #     failure
+    #   end
+    #   error.expected_types #=> [:string, :array, :object]
+    #   error.argument_position #=> 1
     class InvalidTypeError < RuntimeError
       include FunctionFailure
+
+      # @!attribute [r] function_name
+      #   @return [String, nil] function identifier
+      # @!attribute [r] signature
+      #   @return [Array<Array<Symbol>>, nil] complete declared signature
+      # @!attribute [r] source_range
+      #   @return [Range<Integer>, nil] exclusive byte range of the function call
+      # @!method variadic?
+      #   @return [Boolean, nil] whether the last declared argument repeats
 
       # @return [Integer, nil] one-based actual argument position
       attr_reader :argument_position
@@ -104,6 +121,15 @@ module JMESPath
     # A function received an incorrect number of arguments.
     class InvalidArityError < RuntimeError
       include FunctionFailure
+
+      # @!attribute [r] function_name
+      #   @return [String, nil] function identifier
+      # @!attribute [r] signature
+      #   @return [Array<Array<Symbol>>, nil] complete declared signature
+      # @!attribute [r] source_range
+      #   @return [Range<Integer>, nil] exclusive byte range of the function call
+      # @!method variadic?
+      #   @return [Boolean, nil] whether the last declared argument repeats
 
       # @return [Integer, nil] exact argument count, or minimum when variadic
       attr_reader :expected_arity

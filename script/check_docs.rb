@@ -9,7 +9,7 @@ require_relative "support/doc_examples"
 class DocumentationCheck
   BUILTINS = %w[Array Boolean Class Exception FalseClass Float Hash Integer IO Method Module NilClass
                 Numeric Object Proc Regexp StandardError String StringIO Struct Symbol TrueClass TypeError
-                ArgumentError Pathname].freeze
+                ArgumentError Pathname Range].freeze
 
   def initialize(root)
     @root = File.expand_path(root)

@@ -26,7 +26,7 @@ module JMESPath
       attr_reader expected_types: Array[Symbol]?
       attr_reader actual_type: Symbol?
       attr_reader validation_stage: Symbol?
-      def initialize: (?String?, ?argument_position: Integer?, ?expected_types: Array[Symbol]?, ?actual_type: Symbol?, ?validation_stage: Symbol?, **untyped) -> void
+      def initialize: (?String?, ?argument_position: Integer?, ?expected_types: Array[Symbol]?, ?actual_type: Symbol?, ?validation_stage: Symbol?, ?function_name: String?, ?signature: Array[Array[Symbol]]?, ?variadic: bool?, ?source_range: Range[Integer]?) -> void
     end
     class InvalidValueError < RuntimeError
     end
@@ -34,7 +34,7 @@ module JMESPath
       include FunctionFailure
       attr_reader expected_arity: Integer?
       attr_reader actual_arity: Integer?
-      def initialize: (?String?, ?expected_arity: Integer?, ?actual_arity: Integer?, **untyped) -> void
+      def initialize: (?String?, ?expected_arity: Integer?, ?actual_arity: Integer?, ?function_name: String?, ?signature: Array[Array[Symbol]]?, ?variadic: bool?, ?source_range: Range[Integer]?) -> void
     end
     class UnknownFunctionError < RuntimeError
     end

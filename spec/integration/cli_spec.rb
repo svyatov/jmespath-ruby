@@ -43,6 +43,13 @@ RSpec.describe "Command-line queries" do
     expect(cli(%w[a b], "{}").first).to eq(2)
   end
 
+  it "explains validation in help and preserves failure output" do
+    expect(cli(["--help"],
+               "invalid")[1]).to include("Function arguments and expression-reference results are validated")
+    expect(cli(["length(@)"], "4")).to eq([1, "", "Invalid argument 1 for length: number\n"])
+    expect(cli([], "{}")).to eq([2, "", "Usage: jmespath EXPRESSION < document.json\n"])
+  end
+
   %w[jmespath jmespath.rb].each do |name|
     it "runs the #{name} executable" do
       output, errors, status = Open3.capture3(

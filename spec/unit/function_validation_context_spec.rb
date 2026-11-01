@@ -131,6 +131,13 @@ RSpec.describe "Structured function validation" do
     expect(error.validation_stage).to eq(:argument)
   end
 
+  it "reports a native rejected boolean without including its value" do
+    error = failure("contains", ["abc", false])
+    expect(error.actual_type).to eq(:boolean)
+    expect(error.argument_position).to eq(2)
+    expect(error.expected_types).to eq([:string])
+  end
+
   [JMESPath::Errors::InvalidTypeError, JMESPath::Errors::InvalidArityError].each do |klass|
     it "leaves application #{klass} untouched" do
       original = klass.new("callback failure")
