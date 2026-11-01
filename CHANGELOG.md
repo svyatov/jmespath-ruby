@@ -5,6 +5,18 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) for t
 
 ## [Unreleased]
 
+### Added
+
+- Add `JMESPath::Diagnostic.format` for syntax reasons, source coordinates, query excerpts, and carets.
+- Expose immutable function validation data, including argument positions, expected and actual types, arity, and query byte ranges.
+- Add `Functions#names`, `Functions#metadata`, and optional custom function descriptions for immutable registry inspection.
+- Suggest similar names from the active registry for unknown functions; expose the missing name and ranked suggestions on the error.
+
+### Changed
+
+- Show located CLI syntax, function type, and arity diagnostics; describe validation and suggestions in CLI help.
+- Report malformed CLI input as `Invalid JSON input` without exposing JSON parser messages or document fragments.
+
 ## [0.1.1] - 2026-11-01
 
 ### Changed

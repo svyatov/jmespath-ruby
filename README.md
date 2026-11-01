@@ -33,10 +33,10 @@ On MRI 4.0.9, jmespath-ruby beats each competing implementation on every workloa
 
 | Implementation | Version | Correct workloads | jmespath-ruby public-search speedup |
 | --- | --- | ---: | ---: |
-| **jmespath-ruby** | **0.1.0** | **✅ 18/18** | **Baseline** |
-| jmespath (jmespath.rb) | 1.6.2 | ✅ 18/18 | **7.97x** |
-| BurtPath | 1.1.2 | ❌ 15/18 | **9.99x** |
-| Jamespath | 0.5.1 | ❌ 13/18 | **8.07x** |
+| **jmespath-ruby** | **0.1.0** | **18/18** | **Baseline** |
+| jmespath (jmespath.rb) | 1.6.2 | 18/18 | **7.97x** |
+| BurtPath | 1.1.2 | 15/18 | **9.99x** |
+| Jamespath | 0.5.1 | 13/18 | **8.07x** |
 
 Speedups use geometric means of median times across each competitor's correctly evaluated workloads.
 Measurements use five rounds of 20,000 searches on an Apple M1 Pro.
@@ -60,11 +60,11 @@ The [comparison with existing implementations](docs/guides/comparison.md) includ
 
 | Feature | jmespath-ruby | jmespath | BurtPath | Jamespath | jmespath-jruby |
 | --- | --- | --- | --- | --- | --- |
-| Public query compilation | ✅ | ❌ | ❌ | ✅ | ✅ |
-| Documented typed function registry | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Packaged RBS signatures | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Pure Ruby implementation | ✅ | ✅ | ✅ | ✅ | ❌ |
-| Ordinary `JMESPath.search` calls | ✅ | ✅ | ✅ | ❌ | ❌ |
+| Public query compilation | Yes | No | No | Yes | Yes |
+| Documented typed function registry | Yes | No | No | No | No |
+| Packaged RBS signatures | Yes | No | No | No | No |
+| Pure Ruby implementation | Yes | Yes | Yes | Yes | No |
+| Ordinary `JMESPath.search` calls | Yes | Yes | Yes | No | No |
 
 `jmespath` and BurtPath support reuse through private runtime classes.
 The [full comparison](docs/guides/comparison.md) distinguishes those classes from public compilation APIs.
@@ -144,6 +144,25 @@ Registration returns a separate immutable registry.
 An existing function requires `override: true` to replace it.
 Every argument, including variadic arguments, is validated before the callback runs.
 
+Inspect registered functions in Ruby without executing their callbacks:
+
+```ruby
+JMESPath::Functions.default.names.include?("length") #=> true
+metadata = JMESPath::Functions.default.metadata("length")
+metadata.signature #=> [[:string, :array, :object]]
+metadata.description #=> "Character or element count."
+```
+
+Use `description:` when registering a custom function to include its description in immutable metadata.
+See [registry inspection](docs/guides/functions.md#registry-inspection) for all fields and override behavior.
+
+## Errors and diagnostics
+
+Format syntax failures in Ruby with `JMESPath::Diagnostic.format(error)` to get source coordinates, a query excerpt, and a caret.
+Function type and arity errors expose immutable validation data, including the function name, signature, argument counts or types, and available source ranges.
+Unknown-function errors expose the missing name and up to three suggestions from the active registry.
+See [errors and diagnostics](docs/guides/errors.md) for examples, nullable fields, and source-location limits.
+
 ## Command line
 
 Both `jmespath` and `jmespath.rb` accept an expression and a JSON document on standard input.
@@ -153,7 +172,12 @@ printf '%s\n' '{"user":{"name":"Ada"}}' | jmespath 'user.name'
 ```
 
 The result goes to standard output as JSON.
-Errors go to standard error with a nonzero status.
+Syntax, function type, and arity failures include source coordinates, a query excerpt, and a caret when available.
+Unknown functions suggest similar registered names.
+Malformed JSON input reports `Invalid JSON input` without including document fragments.
+These failures go to standard error and exit with status 1.
+Usage failures exit with status 2; `--help` and `--version` exit with status 0 without reading input.
+See [CLI diagnostics](docs/guides/errors.md#cli-diagnostics) for examples and fallback behavior.
 
 ## Guides
 
