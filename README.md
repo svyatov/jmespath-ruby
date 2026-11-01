@@ -173,6 +173,10 @@ This project is maintained by Leonid Svyatov.
 Use [GitHub issues](https://github.com/svyatov/jmespath-ruby/issues) for questions and defect reports.
 Report vulnerabilities through the private channel in [SECURITY.md](SECURITY.md).
 
+Release assets include the gem, `sbom.cdx.json`, and `SHA256SUMS`.
+Verify a downloaded asset with `gh attestation verify ASSET --repo svyatov/jmespath-ruby --signer-workflow svyatov/jmespath-ruby/.github/workflows/release.yml`.
+Check downloaded files against the manifest with `sha256sum -c SHA256SUMS`.
+
 ## Verify and document
 
 ```sh
