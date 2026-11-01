@@ -52,7 +52,8 @@ LF separates source lines; a carriage return appears as `\r`.
 Caret indentation follows the rendered prefix, including tab expansion and visible escapes.
 Each Unicode code point counts as one column.
 Combining marks, emoji, and wide characters can therefore display differently from the caret's character-based alignment.
-The formatter adds no colors and does not change exception messages or CLI output.
+The formatter adds no colors and preserves exception messages.
+The CLI uses it to render syntax failures.
 
 Runtime failures use the error classes below:
 
@@ -168,4 +169,50 @@ Manually constructed errors default to a nil `function_name` and empty `suggesti
 
 Invalid JSON streams raise the JSON parser's error class.
 Invalid options raise ArgumentError.
-The CLI translates expected input failures to status 1 and usage failures to status 2.
+
+## CLI diagnostics
+
+Both `jmespath` and `jmespath.rb` print expected input and query failures to stderr and exit with status 1.
+Failures before output starts leave stdout empty.
+Successful queries print one JSON result to stdout.
+Usage failures print usage to stderr and exit with status 2 without reading stdin.
+Help and version requests exit with status 0 without reading stdin.
+
+To inspect a function type failure, run this command in a shell:
+
+```sh
+printf '%s\n' '4' | jmespath 'length(@)'
+```
+
+The command exits with status 1 and prints this diagnostic to stderr:
+
+```text
+Invalid argument 1 for length: expected string, array, or object; received number at line 1, column 1
+length(@)
+^
+```
+
+Syntax failures show the reason, coordinates, query line, and caret through `Diagnostic.format`.
+Function type failures report the argument position, expected types, and received type.
+Expression-reference failures identify the rejected expression result and its argument position.
+Arity failures report the expected and received counts, with `at least` marking a variadic minimum.
+
+Type and arity carets identify the start of the failing function call, including nested calls.
+They do not identify the exact invalid argument.
+The CLI uses the formatter's character columns, tab expansion, and visible control escapes.
+Wide characters, emoji, and combining marks can display differently from character-based caret alignment.
+Missing or unusable source ranges omit coordinates, the query line, and the caret.
+Incomplete validation metadata retains the escaped exception message and any usable source location.
+Unknown-function diagnostics retain suggestions; invalid-value failures use message-only diagnostics.
+
+Malformed stdin JSON prints `Invalid JSON input` without parser messages or document fragments.
+For example, run this command in a shell:
+
+```sh
+printf '%s\n' '{"private_marker":BROKEN}' | jmespath '@'
+```
+
+The command prints `Invalid JSON input` to stderr, leaves stdout empty, and exits with status 1.
+Stream and operating-system failures retain escaped messages.
+Diagnostics add no colors, application backtraces, or input-document values.
+Unrelated application exceptions propagate.

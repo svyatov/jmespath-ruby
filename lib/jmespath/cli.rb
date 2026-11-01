@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../jmespath"
+require_relative "cli/failure_diagnostic"
 
 module JMESPath
   # Runs one JMESPath query against a JSON document from standard input.
@@ -8,7 +9,8 @@ module JMESPath
     USAGE = "Usage: jmespath EXPRESSION < document.json"
     HELP = "#{USAGE}\n" \
            "Function arguments and expression-reference results are validated; failures exit with status 1.\n" \
-           "Unknown functions suggest similar registered names.".freeze
+           "Unknown functions suggest similar registered names.\n" \
+           "Query failures include source locations when available.".freeze
 
     # @param argv [Array<String>] command-line arguments
     # @param stdin [IO, StringIO] source JSON stream
@@ -26,7 +28,7 @@ module JMESPath
       stdout.puts(JSON.generate(JMESPath.search(argv.fetch(0), data)))
       0
     rescue JSON::ParserError, Errors::Error, IOError, SystemCallError => e
-      stderr.puts(e.message)
+      stderr.puts(FailureDiagnostic.format(e, argv.first))
       1
     end
 
