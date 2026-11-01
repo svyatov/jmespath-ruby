@@ -6,8 +6,13 @@ Gem::Specification.new do |spec|
   spec.authors = ["Leonid Svyatov"]
   spec.summary = "A typed Ruby implementation of the JMESPath query language"
   spec.description = "Search structured Ruby data with reusable JMESPath expressions."
+  spec.homepage = "https://github.com/svyatov/jmespath-ruby"
   spec.license = "MIT"
   spec.metadata["rubygems_mfa_required"] = "true"
+  spec.metadata["allowed_push_host"] = "https://rubygems.org"
+  spec.metadata["source_code_uri"] = spec.homepage
+  spec.metadata["bug_tracker_uri"] = "#{spec.homepage}/issues"
+  spec.metadata["changelog_uri"] = "#{spec.homepage}/blob/main/CHANGELOG.md"
   spec.required_ruby_version = ">= 3.3"
   spec.files = Dir["lib/**/*.rb", "sig/jmespath.rbs", "exe/*", "README.md", "CONTRIBUTING.md", "CHANGELOG.md",
                    "VERSIONING.md",
