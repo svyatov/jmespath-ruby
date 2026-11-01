@@ -22,6 +22,11 @@ RSpec.describe "Documentation checks" do
     expect(status).to be_success, "#{output}\n#{error}"
   end
 
+  it "accepts the core Range type used by source locations" do
+    output, error, status = check_docs(method_docs: "# @return [Range<Integer>, nil] source range")
+    expect(status).to be_success, "#{output}\n#{error}"
+  end
+
   it "rejects absent return documentation" do
     output, = check_docs(method_docs: "")
     expect(output).to include("return")

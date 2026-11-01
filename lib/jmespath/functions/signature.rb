@@ -10,9 +10,9 @@ module JMESPath
       module FailureOrigin
         attr_reader :origin
 
-        def initialize(message = nil, origin: nil)
+        def initialize(message = nil, origin: nil, **metadata)
           @origin = origin
-          super(message)
+          super(message, **metadata)
         end
       end
 
@@ -26,6 +26,12 @@ module JMESPath
         include FailureOrigin
       end
 
+      attr_reader :arguments
+
+      def variadic?
+        @variadic
+      end
+
       def initialize(arguments, variadic: false)
         raise ArgumentError, "Invalid function signature" unless valid_definition?(arguments)
         raise ArgumentError, "Variadic signatures require an argument" if variadic && arguments.empty?
@@ -35,20 +41,28 @@ module JMESPath
         freeze
       end
 
-      def validate!(values, name, origin: nil)
+      def validate!(values, name, origin: nil, context: nil)
+        context ||= ValidationContext.new(name, self)
         unless valid_arity?(values.length)
-          raise ArityMismatch.new("Invalid number of arguments for #{name}", origin: origin)
+          raise context.arity_error("Invalid number of arguments for #{name}", actual_arity: values.length,
+                                                                               origin: origin)
         end
 
         values.each_with_index do |value, index|
           types = @arguments.fetch(index) { @arguments.fetch(-1) }
           next if types.any? { |type| matches?(value, type) }
 
-          raise TypeMismatch.new("Invalid argument #{index + 1} for #{name}: #{Types.name(value)}", origin: origin)
+          reject_type!(value, index, types, name, origin, context)
         end
       end
 
       private
+
+      def reject_type!(value, index, types, name, origin, context) # rubocop:disable Metrics/ParameterLists
+        actual_type = Types.name(value)
+        raise context.type_error("Invalid argument #{index + 1} for #{name}: #{actual_type}",
+                                 position: index + 1, expected_types: types, actual_type: actual_type, origin: origin)
+      end
 
       def valid_definition?(arguments)
         arguments.is_a?(Array) && arguments.all? do |types|

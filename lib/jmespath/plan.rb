@@ -104,25 +104,26 @@ module JMESPath
 
       def function(node)
         name = node.value.to_s
+        source_range = (node.start...node.finish)
         unless !@disable_visit_errors && %w[length reverse].include?(name) && node.children.length == 1 &&
                native_function?(name)
-          return function_call(name, node.children)
+          return function_call(name, node.children, source_range)
         end
 
-        string_function(name, build(node.children.fetch(0)))
+        string_function(name, build(node.children.fetch(0)), source_range)
       end
 
       def native_function?(name)
         @functions.instance_of?(Functions) && @functions.definition(name).equal?(Functions.default.definition(name))
       end
 
-      def string_function(name, child)
+      def string_function(name, child, source_range)
         lambda do |data|
           value = child.call(data)
           if value.is_a?(String)
             name == "length" ? value.length : value.reverse
           else
-            Functions.default.call(name, [value])
+            Functions.default.call_with_context(name, [value], source_range: source_range)
           end
         end
       end
@@ -132,15 +133,20 @@ module JMESPath
         ->(data) { evaluator.evaluate(node, data) }
       end
 
-      def function_call(name, nodes)
+      def function_call(name, nodes, source_range)
         arguments = nodes.map { |node| build(node) }.freeze
         functions = @functions
         if @disable_visit_errors
           lambda do |data|
-            functions.call(name, arguments.map { |argument| argument.call(data) }, disable_visit_errors: true)
+            functions.call_with_context(name, arguments.map { |argument| argument.call(data) },
+                                        source_range: source_range, disable_visit_errors: true)
           end
         else
-          ->(data) { functions.call(name, arguments.map { |argument| argument.call(data) }) }
+          lambda do |data|
+            functions.call_with_context(name, arguments.map do |argument|
+              argument.call(data)
+            end, source_range: source_range)
+          end
         end
       end
 

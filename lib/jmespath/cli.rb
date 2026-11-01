@@ -6,6 +6,8 @@ module JMESPath
   # Runs one JMESPath query against a JSON document from standard input.
   module CLI
     USAGE = "Usage: jmespath EXPRESSION < document.json"
+    HELP = "#{USAGE}\n" \
+           "Function arguments and expression-reference results are validated; failures exit with status 1.".freeze
 
     # @param argv [Array<String>] command-line arguments
     # @param stdin [IO, StringIO] source JSON stream
@@ -29,7 +31,7 @@ module JMESPath
 
     # @api private
     def self.information(argv, output)
-      output.puts(argv == ["--version"] ? "jmespath-ruby #{VERSION}" : USAGE)
+      output.puts(argv == ["--version"] ? "jmespath-ruby #{VERSION}" : HELP)
       0
     end
   end

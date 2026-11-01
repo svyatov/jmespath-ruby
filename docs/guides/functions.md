@@ -5,6 +5,11 @@ Expression references, written as `&expression`, defer evaluation until a functi
 
 ## Standard functions
 
+Validation failures expose the full signature, rejected type, argument position, and optional source range.
+See [function validation data](errors.md#function-validation-data) for examples and nullable fields.
+Checks inside built-ins can impose narrower constraints than their declared signatures.
+For example, `sort_by`, `min_by`, and `max_by` require expression-reference results to have one consistent number or string type.
+
 | Function | Accepted arguments | Result |
 | --- | --- | --- |
 | `abs` | number | Absolute value |

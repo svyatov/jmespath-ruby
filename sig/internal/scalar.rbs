@@ -5,30 +5,33 @@ module JMESPath
       NUMBER: Regexp
       def self.register: (Functions) -> Functions
       private
-      def abs: (value) -> (Integer | Float)
-      def ceil: (value) -> Integer
-      def floor: (value) -> Integer
-      def contains?: (value, value) -> bool
-      def ends_with?: (value, value) -> bool
-      def starts_with?: (value, value) -> bool
-      def length: (value) -> Integer
-      def reverse: (value) -> (String | Array[value])
-      def type: (value) -> String?
-      def not_null: (*value) -> value
-      def to_array: (value) -> Array[value]
-      def to_string: (value) -> String
-      def to_number: (value) -> value
+      def abs: (value, context: ValidationContext) -> (Integer | Float)
+      def ceil: (value, context: ValidationContext) -> Integer
+      def floor: (value, context: ValidationContext) -> Integer
+      def contains?: (value, value, context: ValidationContext) -> bool
+      def ends_with?: (value, value, context: ValidationContext) -> bool
+      def starts_with?: (value, value, context: ValidationContext) -> bool
+      def length: (value, context: ValidationContext) -> Integer
+      def reverse: (value, context: ValidationContext) -> (String | Array[value])
+      def type: (value, context: ValidationContext) -> String?
+      def not_null: (*value, context: ValidationContext) -> value
+      def to_array: (value, context: ValidationContext) -> Array[value]
+      def to_string: (value, context: ValidationContext) -> String
+      def to_number: (value, context: ValidationContext) -> value
     end
     module Coercions
-      def number: (value) -> (Integer | Float)
-      def string: (value) -> String
-      def array: (value) -> Array[value]
-      def object: (value) -> Hash[value, value]
-      def self.number: (value) -> (Integer | Float)
-      def self.string: (value) -> String
-      def self.array: (value) -> Array[value]
-      def self.object: (value) -> Hash[value, value]
+      def number: (value, ?context: ValidationContext?, ?position: Integer?, ?stage: Symbol) -> (Integer | Float)
+      def string: (value, ?context: ValidationContext?, ?position: Integer?) -> String
+      def array: (value, ?context: ValidationContext?, ?position: Integer?) -> Array[value]
+      def object: (value, ?context: ValidationContext?, ?position: Integer?) -> Hash[value, value]
+      def self.number: (value, ?context: ValidationContext?, ?position: Integer?, ?stage: Symbol) -> (Integer | Float)
+      def self.string: (value, ?context: ValidationContext?, ?position: Integer?) -> String
+      def self.array: (value, ?context: ValidationContext?, ?position: Integer?) -> Array[value]
+      def self.object: (value, ?context: ValidationContext?, ?position: Integer?) -> Hash[value, value]
       private
+      NATIVE_TYPES: Hash[Class, Symbol]
+      def type_failure: (value, String, Array[Symbol], ValidationContext?, Integer?, ?Symbol) -> Signature::TypeMismatch
+      def native_type: (value) -> Symbol
       def validation_origin: () -> Object?
     end
   end

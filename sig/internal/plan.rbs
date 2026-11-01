@@ -23,9 +23,9 @@ module JMESPath
       def slice: (AST::Node) -> operation
       def function: (AST::Node) -> operation
       def native_function?: (String) -> bool
-      def function_call: (String, Array[AST::Node]) -> operation
+      def function_call: (String, Array[AST::Node], Range[Integer]) -> operation
       def reference: (AST::Node) -> operation
-      def string_function: (String, operation) -> operation
+      def string_function: (String, operation, Range[Integer]) -> operation
       def fallback: (AST::Node) -> operation
     end
   end

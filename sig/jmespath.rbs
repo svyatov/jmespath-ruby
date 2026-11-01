@@ -21,12 +21,31 @@ module JMESPath
       def column: () -> Integer
     end
     class InvalidTypeError < RuntimeError
+      include FunctionFailure
+      attr_reader argument_position: Integer?
+      attr_reader expected_types: Array[Symbol]?
+      attr_reader actual_type: Symbol?
+      attr_reader validation_stage: Symbol?
+      def initialize: (?String?, ?argument_position: Integer?, ?expected_types: Array[Symbol]?, ?actual_type: Symbol?, ?validation_stage: Symbol?, ?function_name: String?, ?signature: Array[Array[Symbol]]?, ?variadic: bool?, ?source_range: Range[Integer]?) -> void
     end
     class InvalidValueError < RuntimeError
     end
     class InvalidArityError < RuntimeError
+      include FunctionFailure
+      attr_reader expected_arity: Integer?
+      attr_reader actual_arity: Integer?
+      def initialize: (?String?, ?expected_arity: Integer?, ?actual_arity: Integer?, ?function_name: String?, ?signature: Array[Array[Symbol]]?, ?variadic: bool?, ?source_range: Range[Integer]?) -> void
     end
     class UnknownFunctionError < RuntimeError
+    end
+
+    module FunctionFailure
+      @variadic: bool?
+      attr_reader function_name: String?
+      attr_reader signature: Array[Array[Symbol]]?
+      attr_reader source_range: Range[Integer]?
+      def initialize: (?String?, ?function_name: String?, ?signature: Array[Array[Symbol]]?, ?variadic: bool?, ?source_range: Range[Integer]?) -> void
+      def variadic?: () -> bool?
     end
   end
 

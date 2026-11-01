@@ -2,8 +2,8 @@ module JMESPath
   class Functions
     DEFAULT: Functions
     module Coercions
-      def reference: (value) -> ExpressionReference
-      def self.reference: (value) -> ExpressionReference
+      def reference: (value, ?context: ValidationContext?, ?position: Integer?) -> ExpressionReference
+      def self.reference: (value, ?context: ValidationContext?, ?position: Integer?) -> ExpressionReference
     end
     module Collections : Coercions
       type sort_key = Integer | Float | String
@@ -11,22 +11,22 @@ module JMESPath
       SORTABLE_TYPES: Array[Symbol]
       def self.register: (Functions) -> Functions
       private
-      def sum: (value) -> value
-      def avg: (value) -> Float?
-      def min: (value) -> value
-      def max: (value) -> value
-      def sort: (value) -> Array[value]
-      def join: (value, value) -> String
-      def keys: (value) -> Array[String]
-      def values: (value) -> Array[value]
-      def merge: (*value) -> Hash[value, value]
-      def sort_key: (value) -> sort_key
-      def map: (value, value) -> Array[value]
-      def sort_by: (value, value) -> Array[value]
-      def min_by: (value, value) -> value
-      def max_by: (value, value) -> value
-      def keyed: (value, value) -> Array[[sort_key, value]]
-      def checked_type: (value, Symbol?) -> Symbol
+      def sum: (value, context: ValidationContext) -> value
+      def avg: (value, context: ValidationContext) -> Float?
+      def min: (value, context: ValidationContext) -> value
+      def max: (value, context: ValidationContext) -> value
+      def sort: (value, context: ValidationContext) -> Array[value]
+      def join: (value, value, context: ValidationContext) -> String
+      def keys: (value, context: ValidationContext) -> Array[String]
+      def values: (value, context: ValidationContext) -> Array[value]
+      def merge: (*value, context: ValidationContext) -> Hash[value, value]
+      def sort_key: (value, context: ValidationContext, ?position: Integer, ?stage: Symbol) -> sort_key
+      def map: (value, value, context: ValidationContext) -> Array[value]
+      def sort_by: (value, value, context: ValidationContext) -> Array[value]
+      def min_by: (value, value, context: ValidationContext) -> value
+      def max_by: (value, value, context: ValidationContext) -> value
+      def keyed: (value, value, context: ValidationContext) -> Array[[sort_key, value]]
+      def checked_type: (value, Symbol?, context: ValidationContext) -> Symbol
     end
   end
 end

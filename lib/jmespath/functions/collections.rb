@@ -22,52 +22,59 @@ module JMESPath
 
       private
 
-      def sum(value)
-        array(value).sum { |item| number(item) }
+      def sum(value, context:)
+        element_context = context.array_element(1)
+        array(value, context: context, position: 1).sum { |item| number(item, context: element_context, position: 1) }
       end
 
-      def avg(value)
-        values = array(value)
-        number(sum(value)).fdiv(values.length) unless values.empty?
+      def avg(value, context:)
+        values = array(value, context: context, position: 1)
+        return if values.empty?
+
+        number(sum(value, context: context), context: context.array_element(1), position: 1).fdiv(values.length)
       end
 
-      def min(value)
-        array(value).min_by { |item| sort_key(item) }
+      def min(value, context:)
+        element_context = context.array_element(1)
+        array(value, context: context, position: 1).min_by { |item| sort_key(item, context: element_context) }
       end
 
-      def max(value)
-        array(value).max_by { |item| sort_key(item) }
+      def max(value, context:)
+        element_context = context.array_element(1)
+        array(value, context: context, position: 1).max_by { |item| sort_key(item, context: element_context) }
       end
 
-      def sort(value)
-        array(value).each_with_index.sort_by do |item, index|
-          [sort_key(item), index]
+      def sort(value, context:)
+        element_context = context.array_element(1)
+        array(value, context: context, position: 1).each_with_index.sort_by do |item, index|
+          [sort_key(item, context: element_context), index]
         end.map(&:first)
       end
 
-      def join(separator, value)
-        array(value).map do |item|
-          string(item)
-        end.join(string(separator))
+      def join(separator, value, context:)
+        element_context = context.array_element(2)
+        array(value, context: context, position: 2).map do |item|
+          string(item, context: element_context, position: 2)
+        end.join(string(separator, context: context, position: 1))
       end
 
-      def keys(value)
-        object(value).keys.map(&:to_s)
+      def keys(value, context:)
+        object(value, context: context, position: 1).keys.map(&:to_s)
       end
 
-      def values(value)
-        object(value).values
+      def values(value, context:)
+        object(value, context: context, position: 1).values
       end
 
-      def merge(*values)
+      def merge(*values, context:)
         # @type var result: Hash[value, value]
         result = {}
-        values.each { |value| result.merge!(object(value)) }
+        values.each_with_index { |value, index| result.merge!(object(value, context: context, position: index + 1)) }
         result
       end
 
-      def sort_key(value)
-        DataAccess.string(value) || number(value)
+      def sort_key(value, context:, position: 1, stage: :argument)
+        DataAccess.string(value) || number(value, context: context, position: position, stage: stage)
       end
     end
 

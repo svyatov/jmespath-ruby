@@ -67,6 +67,73 @@ Only library argument-type and arity failures are suppressed by `disable_visit_e
 Syntax, unknown-function, invalid-value, adapter, and callback failures remain visible.
 Missing fields and out-of-range indices normally return nil.
 
+## Function validation data
+
+Library-owned `InvalidTypeError` and `InvalidArityError` failures expose immutable metadata.
+Read these fields directly instead of parsing the message.
+
+| Field | Meaning |
+| --- | --- |
+| `function_name` | Identifier of the failing function |
+| `signature` | Complete declared signature as arrays of accepted type symbols |
+| `variadic?` | Whether the final declared argument repeats |
+| `source_range` | Exclusive range of zero-based byte offsets for the function call, or nil for direct calls |
+
+Use this Ruby example to inspect a type failure:
+
+```ruby
+error = begin
+  JMESPath.search("join(',', names)", {names: [1, 2]})
+rescue JMESPath::Errors::InvalidTypeError => failure
+  failure
+end
+error.function_name #=> "join"
+error.signature #=> [[:string], [:array_string]]
+error.argument_position #=> 2
+error.expected_types #=> [:array_string]
+error.actual_type #=> :array
+error.validation_stage #=> :argument
+error.source_range #=> (0...16)
+```
+
+Type errors expose `argument_position`, `expected_types`, `actual_type`, and `validation_stage`.
+Argument positions start at one, including trailing variadic arguments.
+Type symbols match function registration: `:array_number` and `:array_string` describe homogeneous arrays.
+An accepted-types array describes a union; empty arrays satisfy both homogeneous-array constraints.
+For homogeneous-array element failures, `expected_types` retains the declared array constraint and `actual_type` describes the outer array.
+Metadata includes no element values or indices.
+
+The declared `signature` describes all arguments; `expected_types` describes the specific failing check.
+For example, `contains` accepts any second argument in its signature but requires a string when searching a string.
+`validation_stage` distinguishes an `:argument` failure from an `:expression_result` failure.
+Functions such as `sort_by` require expression results to be numbers or strings of one consistent type.
+After the first valid result, `expected_types` contains only that result's type.
+An error inside a referenced function identifies that inner function and its source range.
+
+Arity errors expose `expected_arity` and `actual_arity`.
+`expected_arity` is exact unless `variadic?` is true, when it is the minimum count.
+Use this Ruby example for a direct call without source context:
+
+```ruby
+error = begin
+  JMESPath::Functions.default.call("merge", [])
+rescue JMESPath::Errors::InvalidArityError => failure
+  failure
+end
+error.function_name #=> "merge"
+error.expected_arity #=> 1
+error.actual_arity #=> 0
+error.variadic? #=> true
+error.source_range #=> nil
+```
+
+Offsets refer to the original query's bytes, including bytes before multibyte characters.
+Metadata contains no argument values or input documents.
+Diagnostics preserve adapter conversion order and counts.
+`actual_type` is `:unknown` when identifying a more specific type would require another adapter conversion.
+Manually constructed errors can have nil metadata; application exceptions retain their identity, backtrace, and original metadata.
+Custom registry overrides of `Functions#call` retain their dispatch contract and may raise errors without source context.
+
 Invalid JSON streams raise the JSON parser's error class.
 Invalid options raise ArgumentError.
 The CLI translates expected input failures to status 1 and usage failures to status 2.

@@ -1,6 +1,7 @@
 module JMESPath
   module CLI
     USAGE: String
+    HELP: String
     def self.information: (Array[String], _Writer) -> Integer
   end
 end
