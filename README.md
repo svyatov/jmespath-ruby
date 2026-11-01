@@ -5,7 +5,21 @@ A pure Ruby implementation of JMESPath for Ruby 3.3 and later.
 Search JSON-compatible values, compile expressions for reuse, and register typed custom functions.
 The package keeps `require "jmespath"` and `JMESPath.search` while using the gem name `jmespath-ruby`.
 
-## Install from this checkout
+## Install
+
+Add the gem to your Gemfile:
+
+```ruby
+gem "jmespath-ruby", "~> 0.1.0"
+```
+
+Or install it directly:
+
+```sh
+gem install jmespath-ruby
+```
+
+### Install from this checkout
 
 ```sh
 bundle install

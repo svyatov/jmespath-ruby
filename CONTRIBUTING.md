@@ -41,3 +41,17 @@ Keep private implementation surfaces marked with `@api private`.
 Use Conventional Commits and focused commits.
 Build and validate an isolated gem before a release.
 Publishing and remote repository operations require separate authorization.
+
+## Release
+
+Update `lib/jmespath/version.rb` and `CHANGELOG.md` together.
+Run `bundle exec rake release:check` before creating a release tag.
+Push a `vVERSION` tag that exactly matches `JMESPath::VERSION`.
+The release workflow runs the full quality matrix, verifies the tag, archives the built gem, and publishes through RubyGems trusted publishing.
+
+The trusted publisher is restricted to `svyatov/jmespath-ruby`, workflow `release.yml`, and GitHub environment `release`.
+The environment accepts release tags matching `v*`.
+The token exchange declares the account's immutable RubyGems owner ID, `71752`, which is required for the first publication.
+No long-lived RubyGems API key is required.
+After publication, create the GitHub release from the archived gem and its matching changelog entry.
+If only GitHub release creation fails, reuse that artifact; do not republish the gem.
