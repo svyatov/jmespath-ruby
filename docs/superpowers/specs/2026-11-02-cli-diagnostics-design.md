@@ -1,6 +1,6 @@
 # Readable CLI diagnostics
 
-Status: awaiting design approval.
+Status: approved by the user on 2026-11-02.
 Scope: [issue #23](https://github.com/svyatov/jmespath-ruby/issues/23).
 
 ## Intent and scope
