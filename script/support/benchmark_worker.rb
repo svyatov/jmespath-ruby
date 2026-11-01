@@ -71,12 +71,16 @@ module BenchmarkWorker
 
   def self.alternate_operation(request, expression, data)
     if PROVIDER == "jamespath"
-      query = request.fetch("mode") == "cached" ? Jamespath.compile(expression) : nil
-      return ->(_index) { query ? query.search(data) : Jamespath.search(expression, data) }
+      return ->(_index) { Jamespath.search(expression, data) } unless request.fetch("mode") == "cached"
+
+      query = Jamespath.compile(expression)
+      return ->(_index) { query.search(data) }
     end
     runtime = JmesPath.new
-    query = request.fetch("mode") == "cached" ? runtime.compile(expression) : nil
-    ->(_index) { (query || runtime.compile(expression)).search(data) }
+    return ->(_index) { runtime.compile(expression).search(data) } unless request.fetch("mode") == "cached"
+
+    query = runtime.compile(expression)
+    ->(_index) { query.search(data) }
   end
 
   def self.churn_operation(expression, data)
