@@ -13,10 +13,27 @@ module JMESPath
         "to_number" => [[:any]], "not_null" => [[:any]]
       }.freeze
 
+      DESCRIPTIONS = {
+        "abs" => "Absolute value.",
+        "ceil" => "Integer rounded upward.",
+        "floor" => "Integer rounded downward.",
+        "contains" => "Test string or array membership.",
+        "ends_with" => "Test whether a string ends with a suffix.",
+        "starts_with" => "Test whether a string starts with a prefix.",
+        "length" => "Character or element count.",
+        "reverse" => "Reverse a string or array.",
+        "type" => "JMESPath type name.",
+        "to_array" => "Wrap a value in an array, preserving arrays.",
+        "to_string" => "String or compact JSON representation.",
+        "to_number" => "Number when convertible, otherwise null.",
+        "not_null" => "First non-null value."
+      }.freeze
+
       def self.register(registry)
         SIGNATURES.reduce(registry) do |result, (name, signature)|
           handler = %w[contains ends_with starts_with].include?(name) ? "#{name}?" : name
-          result.with_builtin(name, signature: signature, handler: handler.to_sym, variadic: name == "not_null")
+          result.with_builtin(name, signature: signature, handler: handler.to_sym,
+                                    description: DESCRIPTIONS.fetch(name), variadic: name == "not_null")
         end
       end
 

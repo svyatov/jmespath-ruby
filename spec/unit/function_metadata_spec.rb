@@ -107,4 +107,35 @@ RSpec.describe "Function metadata" do
     threads.each(&:value)
     expect(snapshot.description).to eq("Shared.")
   end
+
+  it "describes every built-in with a sorted name and a nonempty frozen description" do
+    registry = JMESPath::Functions.default
+    expect(registry.names).to eq(%w[abs avg ceil contains ends_with floor join keys length map max max_by merge
+                                    min min_by not_null reverse sort sort_by starts_with sum to_array to_number
+                                    to_string type values])
+    registry.names.each do |name|
+      metadata = registry.metadata(name)
+      expect(metadata.name).to eq(name)
+      expect(metadata.description).to be_a(String)
+      expect(metadata.description.strip).not_to be_empty
+      expect(metadata.description).to be_frozen
+    end
+    expect(registry.metadata("join").signature).to eq([[:string], [:array_string]])
+    expect(registry.metadata("sort").signature).to eq([%i[array_number array_string]])
+    expect(registry.metadata("merge").variadic?).to be(true)
+    expect(registry.metadata("not_null").variadic?).to be(true)
+    expect(registry.metadata("length").variadic?).to be(false)
+  end
+
+  it "preserves built-in metadata and behavior when a derived registry overrides a built-in" do
+    parent = JMESPath::Functions.default
+    snapshot = parent.metadata("length")
+    derived = parent.with("length", signature: [[:number]], override: true) { |value| value * 2 }
+    expect(derived.metadata("length").description).to be_nil
+    expect(derived.metadata("length").signature).to eq([[:number]])
+    expect(snapshot.description).to eq("Character or element count.")
+    expect(parent.metadata("length").description).to eq("Character or element count.")
+    expect(parent.call("length", ["Ada"])).to eq(3)
+    expect(derived.call("length", [3])).to eq(6)
+  end
 end

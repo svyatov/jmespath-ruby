@@ -57,8 +57,8 @@ module JMESPath
     end
 
     # @api private
-    def with_builtin(name, signature:, handler:, variadic: false)
-      definition = Definition.new(Signature.new(signature, variadic: variadic), handler, nil)
+    def with_builtin(name, signature:, handler:, description:, variadic: false)
+      definition = Definition.new(Signature.new(signature, variadic: variadic), handler, description.dup.freeze)
       add(name, definition, override: false)
     end
 
@@ -76,7 +76,7 @@ module JMESPath
       return unless definition
 
       signature = definition.signature
-      Metadata.new(name, signature.arguments, signature.variadic, definition.description)
+      Metadata.new(name, signature.arguments, signature.variadic?, definition.description)
     end
 
     # Evaluate a registered function with checked arguments.

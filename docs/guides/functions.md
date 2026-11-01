@@ -68,3 +68,49 @@ Registration returns a new frozen registry and leaves the original intact.
 Callbacks receive evaluated Ruby values and may retain selected object identity.
 Return a supported value and avoid mutating shared input.
 Callback exceptions propagate with their original object and backtrace.
+
+## Registry inspection
+
+Use `names` to list functions in the active registry, including custom registrations and overrides.
+Names use ascending, case-sensitive lexical order.
+An empty registry returns an empty array.
+
+Use these calls in Ruby to register a description and inspect the function:
+
+```ruby
+functions = JMESPath::Functions.new.with("double", signature: [[:number]], description: "Double a number.") do |value|
+  value * 2
+end
+functions.names #=> ["double"]
+metadata = functions.metadata("double")
+metadata.name #=> "double"
+metadata.signature #=> [[:number]]
+metadata.variadic? #=> false
+metadata.description #=> "Double a number."
+functions.metadata("missing") #=> nil
+JMESPath::Functions.default.metadata("length").description #=> "Character or element count."
+```
+
+`metadata(name)` returns a `JMESPath::Functions::Metadata` record, or `nil` if the function is absent.
+
+| Field | Meaning |
+| --- | --- |
+| `name` | Function identifier |
+| `signature` | Accepted type symbols for each declared argument |
+| `variadic?` | Whether the final declared argument repeats and remains required |
+| `description` | Optional string, or `nil` when omitted |
+
+Signatures preserve unions and typed arrays such as `[:string, :null]` and `[:array_number]`.
+They describe declared arguments; runtime checks can impose further constraints, such as homogeneous results from a `sort_by` expression.
+Return types are not inferred.
+
+All built-ins have descriptions.
+Custom descriptions accept strings, including empty strings, or `nil`.
+Other values raise `ArgumentError`.
+An override replaces all metadata, so omitting its description yields `nil`.
+
+Inspection does not invoke function implementations.
+The returned arrays, records, strings, and nested signature arrays are frozen.
+Registration copies supplied strings and signature arrays without freezing the caller's objects.
+Later registrations or changes to supplied inputs cannot alter earlier snapshots.
+Shared registries support concurrent inspection; object identity across inspection calls is not guaranteed.
