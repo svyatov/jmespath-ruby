@@ -4,7 +4,31 @@ module JMESPath
   # Immutable definitions for functions available to an expression.
   class Functions
     # @api private
-    Definition = Data.define(:signature, :implementation)
+    Definition = Data.define(:signature, :implementation, :description)
+
+    # Immutable public description of a registered function.
+    class Metadata
+      # @return [String] function identifier
+      attr_reader :name
+      # @return [Array<Array<Symbol>>] accepted types for each declared argument
+      attr_reader :signature
+      # @return [String, nil] optional description
+      attr_reader :description
+
+      # @api private
+      def initialize(name, signature, variadic, description)
+        @name = name.dup.freeze
+        @signature = signature.map { |types| types.dup.freeze }.freeze
+        @variadic = variadic
+        @description = description&.dup&.freeze
+        freeze
+      end
+
+      # @return [Boolean] whether the final required argument repeats
+      def variadic?
+        @variadic
+      end
+    end
 
     # Create an empty immutable function registry.
     def initialize
@@ -19,21 +43,40 @@ module JMESPath
     # @param signature [Array<Array<Symbol>>] accepted types for each argument
     # @param variadic [Boolean] repeat the final argument type
     # @param override [Boolean] explicitly replace a definition
+    # @param description [String, nil] optional description, replaced on override
     # @yieldparam arguments [Object] evaluated arguments
     # @yieldreturn [Object] the function result
     # @raise [ArgumentError] the definition is invalid or duplicates an existing name
     # @return [Functions] the extended registry
-    def with(name, signature:, variadic: false, override: false, &block)
+    def with(name, signature:, variadic: false, override: false, description: nil, &block)
       raise ArgumentError, "A function block is required" unless block
+      raise ArgumentError, "Invalid function description" unless description.nil? || description.is_a?(String)
 
-      definition = Definition.new(Signature.new(signature, variadic: variadic), block)
+      definition = Definition.new(Signature.new(signature, variadic: variadic), block, description&.dup&.freeze)
       add(name, definition, override: override)
     end
 
     # @api private
     def with_builtin(name, signature:, handler:, variadic: false)
-      definition = Definition.new(Signature.new(signature, variadic: variadic), handler)
+      definition = Definition.new(Signature.new(signature, variadic: variadic), handler, nil)
       add(name, definition, override: false)
+    end
+
+    # List names in ascending, case-sensitive lexical order.
+    # @return [Array<String>] frozen names in a frozen array
+    def names
+      @definitions.keys.sort.freeze
+    end
+
+    # Inspect a definition without executing its implementation.
+    # @param name [String] function identifier
+    # @return [Metadata, nil] immutable metadata, or nil if absent
+    def metadata(name)
+      definition = @definitions[name]
+      return unless definition
+
+      signature = definition.signature
+      Metadata.new(name, signature.arguments, signature.variadic, definition.description)
     end
 
     # Evaluate a registered function with checked arguments.

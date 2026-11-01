@@ -60,9 +60,18 @@ module JMESPath
   end
 
   class Functions
+    class Metadata
+      attr_reader name: String
+      attr_reader signature: Array[Array[Symbol]]
+      attr_reader description: String?
+      def variadic?: () -> bool
+    end
+
     def initialize: () -> void
     def self.default: () -> Functions
-    def with: (String, signature: Array[Array[Symbol]], ?variadic: bool, ?override: bool) ?{ (*value) -> value } -> Functions
+    def with: (String, signature: Array[Array[Symbol]], ?variadic: bool, ?override: bool, ?description: String?) ?{ (*value) -> value } -> Functions
+    def names: () -> Array[String]
+    def metadata: (String) -> Metadata?
     def call: (String, Array[value], ?disable_visit_errors: bool) -> value
   end
 

@@ -6,6 +6,8 @@ module JMESPath
     class Signature
       TYPES = %i[any null boolean number string array object expref array_number array_string].freeze
 
+      attr_reader :arguments, :variadic
+
       # Identifies the invocation that created a validation failure.
       module FailureOrigin
         attr_reader :origin

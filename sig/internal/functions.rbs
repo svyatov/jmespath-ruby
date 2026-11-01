@@ -1,14 +1,22 @@
 module JMESPath
   class Functions
+    class Metadata
+      @variadic: bool
+      def initialize: (String, Array[Array[Symbol]], bool, String?) -> void
+    end
+
     class Definition < Data
       attr_reader signature: Signature
       attr_reader implementation: Symbol | ^(*value) -> value
-      def self.new: (Signature, Symbol | ^(*value) -> value) -> instance
+      attr_reader description: String?
+      def self.new: (Signature, Symbol | ^(*value) -> value, String?) -> instance
     end
     class Signature
       TYPES: Array[Symbol]
       @arguments: Array[Array[Symbol]]
       @variadic: bool
+      attr_reader arguments: Array[Array[Symbol]]
+      attr_reader variadic: bool
       module FailureOrigin
         @origin: Object?
         attr_reader origin: Object?
