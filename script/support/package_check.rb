@@ -71,7 +71,8 @@ class PackageCheck
     command(environment, directory, "lock", "--local", "--add-checksums")
     path = File.join(directory, "Gemfile.lock")
     checksum = "  #{specification.name} (#{specification.version}) sha256=#{Digest::SHA256.file(artifact).hexdigest}"
-    File.write(path, File.read(path).sub(/^  #{Regexp.escape(specification.name)} \([^\n]+\) sha256=.+$/, checksum))
+    identity = Regexp.escape("#{specification.name} (#{specification.version})")
+    File.write(path, File.read(path).sub(/^  #{identity}(?: sha256=.+)?$/, checksum))
   end
 
   def environment_for(directory)
