@@ -167,6 +167,8 @@ Review the complete diff against this plan after verification, before proposing 
 ## Implementation evidence
 
 Implemented on `feat/syntax-diagnostics` with MRI 4.0.9.
-The full gate passed with 4,033 examples, 100% line and branch coverage, lint, RBS/Steep, CRAP, and executable documentation.
+The full gate passed with 4,037 examples, 100% line and branch coverage, lint, RBS/Steep, CRAP, and executable documentation.
 YARD generation and offline package installation passed.
 The gem contains the formatter, error metadata, public signatures, and updated errors guide.
+Independent QA found raw controls embedded in JSON parser reasons; shared escaping fixed the failure after four regressions failed first.
+Follow-up QA passed all 76 observations, including control escaping, metadata preservation, encoding conversion, and adjacent behavior.

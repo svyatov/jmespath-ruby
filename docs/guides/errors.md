@@ -46,6 +46,8 @@ Invalid-encoding failures and compiled-expression nesting failures without a pre
 End-of-input failures place the caret after the last character, or on an empty final line after a trailing LF.
 
 The excerpt expands tabs to four-column stops and escapes other C0 controls and DEL.
+The formatted reason uses the same escaping, including visible escapes for embedded line breaks.
+The stored reason and exception message retain their original text.
 LF separates source lines; a carriage return appears as `\r`.
 Caret indentation follows the rendered prefix, including tab expansion and visible escapes.
 Each Unicode code point counts as one column.

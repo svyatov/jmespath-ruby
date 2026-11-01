@@ -87,6 +87,23 @@ RSpec.describe "Syntax diagnostics" do
     expect(result.encoding).to eq(Encoding::UTF_8)
   end
 
+  ["`\"\e\"`", "`{\n\e}`", "`\"\a\"`"].each do |source|
+    it "escapes query controls embedded in the reason for #{source.dump}" do
+      error = syntax_error(source)
+      original = [error.reason, error.message]
+      result = JMESPath::Diagnostic.format(error)
+      expect(result).not_to include("\e", "\a")
+      expect(result.lines.length).to eq(3)
+      expect([error.reason, error.message]).to eq(original)
+    end
+  end
+
+  it "escapes controls in reason-only output" do
+    error = JMESPath::Errors::SyntaxError.new("Bad\nquery\e")
+    expect(JMESPath::Diagnostic.format(error)).to eq("Bad\\nquery\\e")
+    expect(error.reason).to eq("Bad\nquery\e")
+  end
+
   it "locates parser nesting failures at the reported token" do
     error = syntax_error("((@))", max_depth: 1)
     expect(JMESPath::Diagnostic.format(error)).to eq("Expression exceeds nesting limit at line 1, column 3\n((@))\n  ^")

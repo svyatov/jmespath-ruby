@@ -11,7 +11,7 @@ module JMESPath
       #   error = JMESPath::Errors::SyntaxError.new("Bad query", expression: "$", position: 0)
       #   JMESPath::Diagnostic.format(error) #=> "Bad query at line 1, column 1\n$\n^"
       def format(error)
-        reason = error.reason.encode(Encoding::UTF_8, invalid: :replace, undef: :replace)
+        reason = render(error.reason.encode(Encoding::UTF_8, invalid: :replace, undef: :replace))
         parts = source_parts(error)
         return reason unless parts
 
