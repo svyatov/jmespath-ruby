@@ -30,6 +30,10 @@ module JMESPath
     end
   end
 
+  module Diagnostic
+    def self.format: (Errors::SyntaxError) -> String
+  end
+
   class Expression
     attr_reader source: String
     def search: (value, ?Hash[Symbol, value], **value) -> value

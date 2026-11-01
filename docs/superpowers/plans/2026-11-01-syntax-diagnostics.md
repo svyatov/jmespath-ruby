@@ -45,7 +45,7 @@ Require 100% line and branch coverage and CRAP scores at most 10 per measurable 
 
 **Interfaces:** Consume the existing constructor. Produce `SyntaxError#reason -> String` and `SyntaxError#location_known? -> bool`.
 
-- [ ] **Step 1: Add failing metadata regression tests.**
+- [x] **Step 1: Add failing metadata regression tests.**
 
 ```ruby
 it "distinguishes an omitted offset from explicit zero" do
@@ -71,16 +71,16 @@ it "owns the reason and expression independently of caller mutation" do
 end
 ```
 
-- [ ] **Step 2: Run `bundle exec rspec spec/unit/errors_spec.rb`.** Expect failure because the accessors are missing.
-- [ ] **Step 3: Implement the two accessors and constructor provenance.**
+- [x] **Step 2: Run `bundle exec rspec spec/unit/errors_spec.rb`.** Expect failure because the accessors are missing.
+- [x] **Step 3: Implement the two accessors and constructor provenance.**
 
 Use a private omission sentinel for `position:` so explicit zero remains distinct from the omitted default.
 Keep the public default value zero, store an independent frozen reason, and preserve the exception message exactly.
 Update public RBS and YARD declarations without advertising the sentinel as a public value.
 Leave lexer, parser, and compiled-expression call sites unchanged because their explicit and omitted positions encode the required distinction.
 
-- [ ] **Step 4: Run `bundle exec rspec spec/unit/errors_spec.rb spec/unit/lexer_spec.rb spec/unit/parser_spec.rb spec/unit/boundaries_spec.rb`.** Expect zero failures.
-- [ ] **Step 5: Commit only this task's files.** Use `feat(errors): expose syntax diagnostic metadata`.
+- [x] **Step 4: Run `bundle exec rspec spec/unit/errors_spec.rb spec/unit/lexer_spec.rb spec/unit/parser_spec.rb spec/unit/boundaries_spec.rb`.** Expect zero failures.
+- [x] **Step 5: Commit only this task's files.** Use `feat(errors): expose syntax diagnostic metadata`.
 
 ### Task 2: Format diagnostics and document the public contract
 
@@ -89,7 +89,7 @@ Create `sig/internal/diagnostic.rbs` only if private helper declarations are req
 
 **Interfaces:** Consume Task 1's metadata and existing error coordinates. Produce `JMESPath::Diagnostic.format(error: Errors::SyntaxError) -> String`, with a positional Ruby argument.
 
-- [ ] **Step 1: Add failing formatter contract tests.**
+- [x] **Step 1: Add failing formatter contract tests.**
 
 Use a helper that compiles a source and returns the rescued `Errors::SyntaxError`.
 Assert complete output strings with literal expected coordinates and spacing, independent of formatter helpers.
@@ -118,7 +118,7 @@ Add cases with these fixed expectations:
 | `'unfinished` | Unterminated quoted value, line 1, column 1, caret at opening quote |
 | Empty query | Expected an expression, line 1, column 1, empty excerpt, caret at start |
 | `foo\n$` | Unexpected character, line 2, column 1, excerpt `$` |
-| `foo.\n` | Expected an expression, line 2, column 1, empty final excerpt, caret at start |
+| `foo.\n` | Expected a field, function, or multiselect after dot, line 2, column 1, empty final excerpt, caret at start |
 | Repeated tabs before `$` | Each tab advances to the next four-column stop |
 | Combining marks and wide characters before an error | One indentation column per code point |
 | Explicit negative, out-of-range, or split-code-point position | Reason only, without caret or coordinates |
@@ -135,8 +135,8 @@ For R5, call the formatter twice and assert equal output and unchanged error fie
 Assert formatting produces no stdout or stderr output and invokes no `Input.load`, `IO.read`, or `File.read` operation.
 Use a source and synthetic document with different marker strings; verify only the query marker can appear.
 
-- [ ] **Step 2: Run `bundle exec rspec spec/unit/diagnostic_spec.rb`.** Expect failure because `JMESPath::Diagnostic` is missing.
-- [ ] **Step 3: Implement `JMESPath::Diagnostic.format(error)` and load it from `lib/jmespath.rb`.**
+- [x] **Step 2: Run `bundle exec rspec spec/unit/diagnostic_spec.rb`.** Expect failure because `JMESPath::Diagnostic` is missing.
+- [x] **Step 3: Implement `JMESPath::Diagnostic.format(error)` and load it from `lib/jmespath.rb`.**
 
 Validate location provenance, source encoding, byte range, and character boundary before calculating coordinates.
 Interpret byte offsets in the stored source before any UTF-8 conversion.
@@ -146,20 +146,27 @@ Escape C0 controls and DEL, retaining tabs as expanded spaces and LF as the line
 Return UTF-8 with no trailing newline and leave the exception and source untouched.
 Add public RBS and YARD declarations, plus private declarations required by Steep.
 
-- [ ] **Step 4: Run `bundle exec rspec spec/unit/errors_spec.rb spec/unit/diagnostic_spec.rb spec/integration/cli_spec.rb`.** Expect zero failures and unchanged CLI behavior.
-- [ ] **Step 5: Update `docs/guides/errors.md` with an executable formatter example.**
+- [x] **Step 4: Run `bundle exec rspec spec/unit/errors_spec.rb spec/unit/diagnostic_spec.rb spec/integration/cli_spec.rb`.** Expect zero failures and unchanged CLI behavior.
+- [x] **Step 5: Update `docs/guides/errors.md` with an executable formatter example.**
 
 Explain known and unknown locations, byte offsets, code-point columns, four-column tabs, control escaping, and terminal alignment limits.
 Replace the guide's implication that character columns represent terminal display positions.
 Include a YARD example using an explicitly positioned exception and a literal expected diagnostic string.
 
-- [ ] **Step 6: Run `bundle exec rake`.** Expect successful lint, types, specs, 100% line and branch coverage, CRAP, and documentation checks.
-- [ ] **Step 7: Run `bundle exec rake docs`.** Expect YARD generation without warnings.
-- [ ] **Step 8: Run `bundle exec rake package:check`.** Verify the added formatter and declarations are included by the gemspec's path patterns.
-- [ ] **Step 9: Commit only this task's files.** Use `feat(diagnostics): format syntax excerpts and carets`.
+- [x] **Step 6: Run `bundle exec rake`.** Expect successful lint, types, specs, 100% line and branch coverage, CRAP, and documentation checks.
+- [x] **Step 7: Run `bundle exec rake docs`.** Expect YARD generation without warnings.
+- [x] **Step 8: Run `bundle exec rake package:check`.** Verify the added formatter and declarations are included by the gemspec's path patterns.
+- [x] **Step 9: Commit only this task's files.** Use `feat(diagnostics): format syntax excerpts and carets`.
 
 ## Handoff
 
 Recommend native execution because both tasks share one small error contract and the second directly consumes the first.
 Read the approved spec before execution and preserve unrelated untracked files.
 Review the complete diff against this plan after verification, before proposing integration.
+
+## Implementation evidence
+
+Implemented on `feat/syntax-diagnostics` with MRI 4.0.9.
+The full gate passed with 4,033 examples, 100% line and branch coverage, lint, RBS/Steep, CRAP, and executable documentation.
+YARD generation and offline package installation passed.
+The gem contains the formatter, error metadata, public signatures, and updated errors guide.
