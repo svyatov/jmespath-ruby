@@ -3,5 +3,5 @@
 # Queries JSON-compatible Ruby values using JMESPath expressions.
 module JMESPath
   # The semantic version of this implementation.
-  VERSION = "0.1.0"
+  VERSION = "0.1.1"
 end

@@ -44,4 +44,17 @@ RSpec.describe "Installed gem artifact" do
 
     expect { @checker.verify(@artifact) }.to raise_error(RuntimeError, /frozen/)
   end
+
+  it "fills an empty build checksum before the frozen installation" do
+    allow(@checker).to receive(:command).and_wrap_original do |command, environment, directory, *arguments, **options|
+      output = command.call(environment, directory, *arguments, **options)
+      if arguments.first == "lock"
+        path = File.join(directory, "Gemfile.lock")
+        File.write(path, File.read(path).sub(/(  jmespath-ruby \([^\n]+\)) sha256=.+$/, '\1'))
+      end
+      output
+    end
+
+    expect(@checker.verify(@artifact).fetch("version")).to eq(JMESPath::VERSION)
+  end
 end
