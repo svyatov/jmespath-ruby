@@ -1,0 +1,20 @@
+{
+  "checked_on": "2026-11-01",
+  "environment": {"cpu":"Apple M1 Pro", "os":"arm64 macOS", "mri":"4.0.9", "mri_json":"3.1.0", "jruby":"10.1.0.0", "jruby_json":"2.18.0", "java":"Temurin 21.0.11+10-LTS"},
+  "harness_revisions": {"comparison-mri-4.0.9.json":"2991e75147751e37055870d910076bc45b12b05a", "comparison-jamespath-mri-4.0.9.json":"eab842567b787df96ead5a2583496bb84659b5b2", "comparison-jruby-10.1.0.0.json":"eab842567b787df96ead5a2583496bb84659b5b2"},
+  "fingerprint_note": "Historical reports use each runtime's glob traversal order. MRI and JRuby hashes differ for identical library bytes. The current harness sorts paths explicitly; use the recorded harness revisions to reproduce historical fingerprints.",
+  "discovery": ["https://rubygems.org/api/v1/search.json?query=jmespath", "https://github.com/jmespath/jmespath.rb"],
+  "packages": [
+    {"name":"jmespath", "version":"1.6.2", "upstream":"https://github.com/jmespath/jmespath.rb", "sha256":"238d774a58723d6c090494c8879b5e9918c19485f7e840f2c1c7532cf84ebcb1"},
+    {"name":"burtpath", "version":"1.1.2", "upstream":"https://github.com/burtcorp/burtpath", "sha256":"f6162df2b7f5a2f30822dfdf777b613357549764dbc81c776dc4755755df2518"},
+    {"name":"jamespath", "version":"0.5.1", "upstream":"https://github.com/lsegal/jamespath", "sha256":"b0a7b856fd40897e86797a4f3c072658b1c0e03dedf84ea0ac9e263130aa352a"},
+    {"name":"jmespath-jruby", "version":"1.0.0.pre0", "upstream":"https://github.com/burtcorp/jmespath-jruby", "sha256":"4fc1c903403ac63f7a20ad38cecf049b45dcfcdc7b752358909448a018eb17fa"}
+  ],
+  "excluded": [
+    {"name":"jmespath.rb", "version":"9001.0", "reason":"Empty name-protection gem, not an implementation"},
+    {"name":"stack_master_json_parameter_store", "version":"0.1.1", "reason":"Application using JMESPath, not an implementation"},
+    {"name":"mruby-jmespath", "reason":"Targets mruby and has no RubyGems release in the search results"}
+  ],
+  "loading": "Published gem contents loaded directly with -I in isolated processes; dependency activation bypassed. BurtPath declares json ~> 1.8; these source comparisons use the interpreter's installed JSON. No claim of normal Bundler installability is made for BurtPath on Ruby 4.",
+  "current": {"name":"jmespath-ruby", "version":"0.1.0", "revision":"609c178dfe3be49e13c64ae1b49790570c9fec37", "note":"Checkout library source; full source hash in each report"}
+}

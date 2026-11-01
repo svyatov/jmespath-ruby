@@ -6,15 +6,22 @@ require "io/wait"
 
 # Owns an isolated process speaking one JSON request and response per line.
 class ReferenceWorker
-  def initialize(command)
+  def initialize(command, timeout: 10)
+    @timeout = timeout
     @input, @output, error, @wait = Open3.popen3(*command)
     @errors = Thread.new { error.read }
   end
 
   def request(payload)
+    raise "Reference process unavailable" if @closed
+
     @input.puts(JSON.generate(payload))
     @input.flush
-    raise "Reference process timed out" unless @output.wait_readable(10)
+    unless @output.wait_readable(@timeout)
+      terminate
+      close
+      raise "Reference process timed out"
+    end
 
     line = @output.gets
     raise "Reference process exited without a response" unless line
@@ -23,9 +30,23 @@ class ReferenceWorker
   end
 
   def close
+    return @diagnostics if @closed
+
     @input.close unless @input.closed?
-    @wait.value
+    terminate unless @wait.join(1)
     @output.close
-    @errors.value
+    @diagnostics = @errors.value
+    @closed = true
+    @diagnostics
+  end
+
+  private
+
+  def terminate
+    Process.kill("TERM", @wait.pid)
+    Process.kill("KILL", @wait.pid) unless @wait.join(1)
+    @wait.value
+  rescue Errno::ESRCH
+    @wait.value
   end
 end

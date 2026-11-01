@@ -1,9 +1,53 @@
 # jmespath-ruby
 
-A pure Ruby implementation of JMESPath for Ruby 3.3 and later.
+Search JSON and Ruby data with reusable queries and typed custom functions.
 
-Search JSON-compatible values, compile expressions for reuse, and register typed custom functions.
-The package keeps `require "jmespath"` and `JMESPath.search` while using the gem name `jmespath-ruby`.
+A pure Ruby, drop-in replacement for [jmespath.rb](https://github.com/jmespath/jmespath.rb)'s documented `JMESPath.search` API on Ruby 3.3 and later.
+Replace the gem, keep `require "jmespath"` and your ordinary search calls, then compile frequently used queries for reuse.
+See [migration limits](#replace-jmespathrb) for dependency names and deliberate behavior corrections.
+
+## Performance
+
+**Fastest public search in every matching MRI benchmark case.**
+On MRI 4.0.9, jmespath-ruby beats each competing implementation on every workload that both return correctly.
+
+| Implementation | Version | Correct workloads | jmespath-ruby public-search speedup |
+| --- | --- | ---: | ---: |
+| **jmespath-ruby** | **0.1.0** | **✅ 18/18** | **Baseline** |
+| jmespath (jmespath.rb) | 1.6.2 | ✅ 18/18 | **7.97x** |
+| BurtPath | 1.1.2 | ❌ 15/18 | **9.99x** |
+| Jamespath | 0.5.1 | ❌ 13/18 | **8.07x** |
+
+Speedups use geometric means of median times across each competitor's correctly evaluated workloads.
+Measurements use five rounds of 20,000 searches on an Apple M1 Pro.
+The suite includes all 12 upstream benchmark cases and six supplemental cases.
+Results vary by workload: **1.35x to 78.48x faster than jmespath 1.6.2** in this run.
+
+Query reuse has different results: BurtPath's private cached runtime is faster in five workloads, and Jamespath has three lower medians.
+The [full comparison](docs/guides/comparison.md) includes those results, JRuby, failures, methodology, and raw samples.
+The JRuby-only `jmespath-jruby` 1.0.0.pre0 fails on the tested JRuby 10.1 runtime; its results are recorded separately.
+
+## Why choose jmespath-ruby?
+
+- **Reuse work across searches.** Compile once, save query options, and share immutable expressions across threads.
+- **Add functions without global patches.** Typed, immutable registries validate arguments before your callback runs.
+- **Type-check integrations.** The gem ships RBS signatures for its public API.
+- **Use Ruby data directly.** Search string-keyed or symbol-keyed hashes, Structs, arrays, JSON streams, and Pathname inputs.
+- **Control query growth.** The synchronized cache holds at most 32 queries and 1 MiB of source text; expression nesting has an explicit limit.
+
+Both Ruby and Python upstream compliance corpora run in the test suite, alongside Ruby-specific input and error checks.
+The [comparison with existing implementations](docs/guides/comparison.md) includes exact versions, rejected workloads, and reproducible measurements.
+
+| Feature | jmespath-ruby | jmespath | BurtPath | Jamespath | jmespath-jruby |
+| --- | --- | --- | --- | --- | --- |
+| Public query compilation | ✅ | ❌ | ❌ | ✅ | ✅ |
+| Documented typed function registry | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Packaged RBS signatures | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Pure Ruby implementation | ✅ | ✅ | ✅ | ✅ | ❌ |
+| Ordinary `JMESPath.search` calls | ✅ | ✅ | ✅ | ❌ | ❌ |
+
+`jmespath` and BurtPath support reuse through private runtime classes.
+The [full comparison](docs/guides/comparison.md) distinguishes those classes from public compilation APIs.
 
 ## Install
 
@@ -19,22 +63,28 @@ Or install it directly:
 gem install jmespath-ruby
 ```
 
-### Install from this checkout
+## Replace jmespath.rb
 
-```sh
-bundle install
-bundle exec rake build
-gem install ./pkg/jmespath-ruby-0.1.0.gem
+The official jmespath.rb project publishes the gem named `jmespath`.
+Replace that Gemfile entry:
+
+```diff
+-gem "jmespath"
++gem "jmespath-ruby", "~> 0.1.0"
 ```
 
-For a local Bundler application:
+Run `bundle install`. Your ordinary calls stay the same:
 
 ```ruby
-gem "jmespath-ruby", path: "/path/to/jmespath-ruby"
+require "jmespath"
+JMESPath.search("user.name", {user: {name: "Ada"}}) #=> "Ada"
 ```
 
 Use one provider per bundle.
-A dependency on the package named `jmespath` needs its own dependency change; this gem cannot satisfy that name automatically.
+A third-party dependency that requires the package named `jmespath` needs a dependency change; Bundler cannot substitute `jmespath-ruby` automatically.
+Private parser/runtime classes and exact error messages are outside the replacement contract.
+Validation is stricter for invalid function arguments, and empty `min_by`/`max_by` results return nil.
+See [compatibility and deliberate corrections](docs/guides/compatibility.md) before migrating.
 
 ## Search
 
@@ -101,6 +151,7 @@ Errors go to standard error with a nonzero status.
 - [Errors and limits](docs/guides/errors.md)
 - [Compatibility and migration](docs/guides/compatibility.md)
 - [Performance measurements](docs/guides/performance.md)
+- [Comparison with other implementations](docs/guides/comparison.md)
 - [Development](CONTRIBUTING.md)
 
 ## Verify and document

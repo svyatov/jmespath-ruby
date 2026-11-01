@@ -1,19 +1,33 @@
 # frozen_string_literal: true
 
 require "json"
-require "jmespath"
+provider = ARGV.fetch(0, "jmespath")
+require "jruby" if provider == "jmespath-jruby"
+require(provider == "jamespath" ? "jamespath" : "jmespath")
 
 # Measures one workload inside the selected implementation's process.
 module BenchmarkWorker
+  PROVIDER = ARGV.fetch(0, "jmespath")
+  ERRORS = [StandardError, SyntaxError].tap do |errors|
+    errors << Java::JavaLang::LinkageError if defined?(JRUBY_VERSION)
+  end.freeze
+
   def self.call(request)
     require "objspace" if request["memory"]
     operation = operation_for(request)
     expected = request.fetch("expected")
-    request.fetch("warmup").times { |index| operation.call(index) }
-    verify(operation.call(0), expected) unless request.fetch("warmup").zero?
+    warm(operation, expected, request.fetch("warmup"))
     result = measure(operation, expected, request.fetch("iterations"))
     memory_usage(result) if request["memory"]
     result
+  end
+
+  def self.warm(operation, expected, iterations)
+    return if iterations.zero?
+
+    verify(operation.call(0), expected)
+    iterations.times { |index| operation.call(index) }
+    verify(operation.call(0), expected)
   end
 
   def self.memory_usage(result)
@@ -25,18 +39,24 @@ module BenchmarkWorker
   def self.measure(operation, expected, iterations)
     GC.start
     result = nil
-    before = GC.stat(:total_allocated_objects)
+    before = allocation_count
     started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     iterations.times { |index| result = operation.call(index) }
     seconds = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started
-    allocations = GC.stat(:total_allocated_objects) - before
+    allocations = allocation_count - before if before
     verify(result, expected)
     { seconds: seconds, allocated_objects: allocations, runtime: runtime }
+  end
+
+  def self.allocation_count
+    GC.stat(:total_allocated_objects) unless defined?(JRUBY_VERSION)
   end
 
   def self.operation_for(request)
     expression = request.fetch("expression")
     data = request.fetch("given")
+    return alternate_operation(request, expression, data) if %w[jamespath jmespath-jruby].include?(PROVIDER)
+
     case request.fetch("mode")
     when "cached"
       cached_operation(expression, data)
@@ -47,6 +67,20 @@ module BenchmarkWorker
     else
       ->(_index) { JMESPath.search(expression, data) }
     end
+  end
+
+  def self.alternate_operation(request, expression, data)
+    if PROVIDER == "jamespath"
+      return ->(_index) { Jamespath.search(expression, data) } unless request.fetch("mode") == "cached"
+
+      query = Jamespath.compile(expression)
+      return ->(_index) { query.search(data) }
+    end
+    runtime = JmesPath.new
+    return ->(_index) { runtime.compile(expression).search(data) } unless request.fetch("mode") == "cached"
+
+    query = runtime.compile(expression)
+    ->(_index) { query.search(data) }
   end
 
   def self.churn_operation(expression, data)
@@ -77,14 +111,14 @@ module BenchmarkWorker
 
   def self.runtime
     { ruby: RUBY_DESCRIPTION, yjit: defined?(RubyVM::YJIT) && RubyVM::YJIT.enabled?,
-      source: $LOADED_FEATURES.find { |path| path.end_with?("/jmespath.rb") } }
+      source: $LOADED_FEATURES.find { |path| path.end_with?("/jmespath.rb", "/jamespath.rb") } }
   end
 end
 
 $stdin.each_line do |line|
   result = begin
     BenchmarkWorker.call(JSON.parse(line))
-  rescue StandardError => e
+  rescue *BenchmarkWorker::ERRORS => e
     { error: "#{e.class}: #{e.message}" }
   end
   puts JSON.generate(result)
