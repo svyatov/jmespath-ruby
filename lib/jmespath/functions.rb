@@ -45,9 +45,16 @@ module JMESPath
     # @raise [Errors::InvalidTypeError] argument types are incompatible
     # @raise [Errors::InvalidArityError] the number of arguments is invalid
     def call(name, arguments, disable_visit_errors: false)
-      definition = @definitions.fetch(name) { raise Errors::UnknownFunctionError, "Unknown function: #{name}" }
-      invocation = disable_visit_errors ? FunctionCall.new : FunctionCall::STRICT
-      invocation.call(definition, name, arguments, disable_visit_errors: disable_visit_errors)
+      invoke(name, arguments, disable_visit_errors: disable_visit_errors)
+    end
+
+    # @api private
+    def call_with_context(name, arguments, source_range:, disable_visit_errors: false)
+      unless method(:call).owner.equal?(Functions)
+        return disable_visit_errors ? call(name, arguments, disable_visit_errors: true) : call(name, arguments)
+      end
+
+      invoke(name, arguments, source_range: source_range, disable_visit_errors: disable_visit_errors)
     end
 
     # @api private
@@ -56,6 +63,13 @@ module JMESPath
     end
 
     private
+
+    def invoke(name, arguments, disable_visit_errors:, source_range: nil)
+      definition = @definitions.fetch(name) { raise Errors::UnknownFunctionError, "Unknown function: #{name}" }
+      context = ValidationContext.new(name, definition.signature, source_range: source_range)
+      invocation = disable_visit_errors ? FunctionCall.new : FunctionCall::STRICT
+      invocation.call(definition, name, arguments, disable_visit_errors: disable_visit_errors, context: context)
+    end
 
     def add(name, definition, override:)
       unless name.is_a?(String) && name.match?(/\A[A-Za-z_][A-Za-z0-9_]*\z/)

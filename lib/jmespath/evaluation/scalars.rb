@@ -43,7 +43,8 @@ module JMESPath
 
     def function(node, data)
       arguments = node.children.map { |child| evaluate(child, data) }
-      @functions.call(node.value.to_s, arguments, disable_visit_errors: @disable_visit_errors)
+      @functions.call_with_context(node.value.to_s, arguments, source_range: node.start...node.finish,
+                                                               disable_visit_errors: @disable_visit_errors)
     end
   end
 end
