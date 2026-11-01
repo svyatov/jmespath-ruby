@@ -2,9 +2,29 @@
 
 Search JSON and Ruby data with reusable queries and typed custom functions.
 
-A pure Ruby, drop-in replacement for [jmespath.rb](https://github.com/jmespath/jmespath.rb)'s documented `JMESPath.search` API on Ruby 3.3 and later.
-Replace the gem, keep `require "jmespath"` and your ordinary search calls, then compile frequently used queries for reuse.
-See [migration limits](#replace-jmespathrb) for dependency names and deliberate behavior corrections.
+- Runs on Ruby 3.3 and later with a pure Ruby implementation.
+- Replaces [jmespath.rb](https://github.com/jmespath/jmespath.rb)'s documented `JMESPath.search` API; see the [migration limits](#replace-jmespathrb).
+- Reuses compiled queries and supports typed custom functions.
+- Measured 7.97x geometric-mean public-search speedup over jmespath 1.6.2 on MRI 4.0.9; see the [benchmark results](docs/guides/comparison.md).
+
+## Install
+
+In your Ruby project, add the gem with Bundler. Run `bundle init` first if the project has no Gemfile.
+
+```sh
+bundle add jmespath-ruby --version "~> 0.1.0"
+```
+
+Save this Ruby example as `example.rb`:
+
+```ruby
+require "jmespath"
+
+data = {user: {name: "Ada"}}
+JMESPath.search("user.name", data) #=> "Ada"
+```
+
+Run it with `bundle exec ruby example.rb`. The final expression returns `"Ada"`.
 
 ## Performance
 
@@ -49,20 +69,6 @@ The [comparison with existing implementations](docs/guides/comparison.md) includ
 `jmespath` and BurtPath support reuse through private runtime classes.
 The [full comparison](docs/guides/comparison.md) distinguishes those classes from public compilation APIs.
 
-## Install
-
-Add the gem to your Gemfile:
-
-```ruby
-gem "jmespath-ruby", "~> 0.1.0"
-```
-
-Or install it directly:
-
-```sh
-gem install jmespath-ruby
-```
-
 ## Replace jmespath.rb
 
 The official jmespath.rb project publishes the gem named `jmespath`.
@@ -73,7 +79,7 @@ Replace that Gemfile entry:
 +gem "jmespath-ruby", "~> 0.1.0"
 ```
 
-Run `bundle install`. Your ordinary calls stay the same:
+Run `bundle install`. Your Ruby code keeps the same entry points:
 
 ```ruby
 require "jmespath"
@@ -87,6 +93,8 @@ Validation is stricter for invalid function arguments, and empty `min_by`/`max_b
 See [compatibility and deliberate corrections](docs/guides/compatibility.md) before migrating.
 
 ## Search
+
+Use `JMESPath.search` in Ruby code to evaluate a query:
 
 ```ruby
 require "jmespath"
@@ -103,6 +111,8 @@ The library preserves selected input objects and does not mutate the input.
 
 ## Compile once
 
+Use `JMESPath.compile` in Ruby code to reuse a parsed expression:
+
 ```ruby
 expression = JMESPath.compile("user.name")
 expression.search({user: {name: "Ada"}}) #=> "Ada"
@@ -113,7 +123,7 @@ Compiled expressions are immutable and safe to share between threads.
 Each search uses separate evaluation state.
 Custom callbacks and input objects remain the caller's responsibility.
 
-Save evaluation options when compiling a query, then use `search` or its `call` alias:
+In Ruby code, save evaluation options when compiling a query, then use `search` or its `call` alias:
 
 ```ruby
 query = JMESPath.compile("length(name)", disable_visit_errors: true)
@@ -122,6 +132,8 @@ query.call({name: nil}) #=> nil
 ```
 
 ## Custom functions
+
+Create a function registry in Ruby code and pass it to `JMESPath.search`:
 
 ```ruby
 functions = JMESPath::Functions.default.with("double", signature: [[:number]]) { |number| number * 2 }
@@ -153,6 +165,13 @@ Errors go to standard error with a nonzero status.
 - [Performance measurements](docs/guides/performance.md)
 - [Comparison with other implementations](docs/guides/comparison.md)
 - [Development](CONTRIBUTING.md)
+- [Changelog](CHANGELOG.md)
+
+## Help and maintenance
+
+This project is maintained by Leonid Svyatov.
+Use [GitHub issues](https://github.com/svyatov/jmespath-ruby/issues) for questions and defect reports.
+Report vulnerabilities through the private channel in [SECURITY.md](SECURITY.md).
 
 ## Verify and document
 
