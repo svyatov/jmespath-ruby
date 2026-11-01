@@ -33,7 +33,7 @@ module JMESPath
     end
     @definitions: Hash[String, Definition]
     def definition: (String) -> Definition?
-    def call_with_context: (String, Array[value], source_range: Range[Integer], ?disable_visit_errors: bool) -> value
+    def call_with_context: (String, Array[value], source_range: Range[Integer], ?disable_visit_errors: bool?) -> value
     def with_builtin: (String, signature: Array[Array[Symbol]], handler: Symbol, ?variadic: bool) -> Functions
     private
     def invoke: (String, Array[value], disable_visit_errors: bool, ?source_range: Range[Integer]?) -> value

@@ -91,7 +91,8 @@ RSpec.describe "Structured function validation" do
 
   %w[sort_by min_by max_by].each do |name|
     [[[false], :boolean, %i[number string]], [[1, "x"], :string, [:number]],
-     [["x", 1], :number, [:string]]].each do |keys, actual, expected|
+     [["x", 1], :number, [:string]], [[1, false], :boolean, [:number]],
+     [["x", false], :boolean, [:string]]].each do |keys, actual, expected|
       it "describes #{name} expression results #{keys.inspect}" do
         reference = JMESPath::ExpressionReference.new { |item| item }
         error = failure(name, [keys, reference])
@@ -103,6 +104,47 @@ RSpec.describe "Structured function validation" do
         expect(error.signature).to eq([[:array], [:expref]])
         expect(functions.call(name, [[], reference])).to eq(name == "sort_by" ? [] : nil)
       end
+    end
+    it "preserves the observed string constraint during #{name} conversion" do
+      calls = 0
+      value = Object.new
+      value.define_singleton_method(:to_str) do
+        calls += 1
+        "key" if calls == 1
+      end
+      reference = JMESPath::ExpressionReference.new { |item| item }
+      error = failure(name, [[value], reference])
+      expect(error.expected_types).to eq([:string])
+      expect(error.actual_type).to eq(:unknown)
+      expect(error.validation_stage).to eq(:expression_result)
+      expect(error.argument_position).to eq(2)
+      expect(calls).to eq(2)
+    end
+  end
+
+  %w[sum avg min max sort join].each do |name|
+    it "reports the outer array constraint for later #{name} element failures" do
+      calls = 0
+      value = Object.new
+      value.define_singleton_method(:to_ary) do
+        calls += 1
+        next [false] unless calls == 1
+
+        name == "join" ? ["ok"] : [1]
+      end
+      error = failure(name, name == "join" ? [",", value] : [value])
+      types = if name == "join"
+                [:array_string]
+              elsif %w[sum avg].include?(name)
+                [:array_number]
+              else
+                %i[array_number array_string]
+              end
+      expect(error.expected_types).to eq(types)
+      expect(error.actual_type).to eq(:array)
+      expect(error.argument_position).to eq(name == "join" ? 2 : 1)
+      expect(error.validation_stage).to eq(:argument)
+      expect(calls).to eq(name == "avg" ? 3 : 2)
     end
   end
 

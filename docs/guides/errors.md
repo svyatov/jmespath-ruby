@@ -100,7 +100,8 @@ Type errors expose `argument_position`, `expected_types`, `actual_type`, and `va
 Argument positions start at one, including trailing variadic arguments.
 Type symbols match function registration: `:array_number` and `:array_string` describe homogeneous arrays.
 An accepted-types array describes a union; empty arrays satisfy both homogeneous-array constraints.
-For typed-array signature failures, `actual_type` describes the outer array, without element values or indices.
+For homogeneous-array element failures, `expected_types` retains the declared array constraint and `actual_type` describes the outer array.
+Metadata includes no element values or indices.
 
 The declared `signature` describes all arguments; `expected_types` describes the specific failing check.
 For example, `contains` accepts any second argument in its signature but requires a string when searching a string.

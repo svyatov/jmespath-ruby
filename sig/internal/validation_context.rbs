@@ -4,9 +4,13 @@ module JMESPath
       @name: String
       @signature: Signature
       @source_range: Range[Integer]?
-      def initialize: (String, Signature, ?source_range: Range[Integer]?) -> void
+      @expected_types: Array[Symbol]?
+      @actual_type: Symbol?
+      def initialize: (String, Signature, ?source_range: Range[Integer]?, ?expected_types: Array[Symbol]?, ?actual_type: Symbol?) -> void
       def type_error: (String, position: Integer?, expected_types: Array[Symbol], actual_type: Symbol, origin: Object?, ?stage: Symbol) -> Signature::TypeMismatch
       def arity_error: (String, actual_arity: Integer, origin: Object?) -> Signature::ArityMismatch
+      def array_element: (Integer) -> ValidationContext
+      def with_types: (Array[Symbol], ?actual_type: Symbol?) -> ValidationContext
       private
       def metadata: () -> { function_name: String, signature: Array[Array[Symbol]], variadic: bool, source_range: Range[Integer]? }
     end

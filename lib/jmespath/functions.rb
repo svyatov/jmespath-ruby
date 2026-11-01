@@ -49,12 +49,15 @@ module JMESPath
     end
 
     # @api private
-    def call_with_context(name, arguments, source_range:, disable_visit_errors: false)
+    def call_with_context(name, arguments, source_range:, disable_visit_errors: nil)
+      # Preserve compiled keyword omission separately from the evaluator's explicit false.
       unless method(:call).owner.equal?(Functions)
-        return disable_visit_errors ? call(name, arguments, disable_visit_errors: true) : call(name, arguments)
+        return call(name, arguments) if disable_visit_errors.nil?
+
+        return call(name, arguments, disable_visit_errors: disable_visit_errors)
       end
 
-      invoke(name, arguments, source_range: source_range, disable_visit_errors: disable_visit_errors)
+      invoke(name, arguments, source_range: source_range, disable_visit_errors: !!disable_visit_errors)
     end
 
     # @api private

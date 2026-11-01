@@ -23,31 +23,38 @@ module JMESPath
       private
 
       def sum(value, context:)
-        array(value, context: context, position: 1).sum { |item| number(item, context: context, position: 1) }
+        element_context = context.array_element(1)
+        array(value, context: context, position: 1).sum { |item| number(item, context: element_context, position: 1) }
       end
 
       def avg(value, context:)
         values = array(value, context: context, position: 1)
-        number(sum(value, context: context), context: context, position: 1).fdiv(values.length) unless values.empty?
+        return if values.empty?
+
+        number(sum(value, context: context), context: context.array_element(1), position: 1).fdiv(values.length)
       end
 
       def min(value, context:)
-        array(value, context: context, position: 1).min_by { |item| sort_key(item, context: context) }
+        element_context = context.array_element(1)
+        array(value, context: context, position: 1).min_by { |item| sort_key(item, context: element_context) }
       end
 
       def max(value, context:)
-        array(value, context: context, position: 1).max_by { |item| sort_key(item, context: context) }
+        element_context = context.array_element(1)
+        array(value, context: context, position: 1).max_by { |item| sort_key(item, context: element_context) }
       end
 
       def sort(value, context:)
+        element_context = context.array_element(1)
         array(value, context: context, position: 1).each_with_index.sort_by do |item, index|
-          [sort_key(item, context: context), index]
+          [sort_key(item, context: element_context), index]
         end.map(&:first)
       end
 
       def join(separator, value, context:)
+        element_context = context.array_element(2)
         array(value, context: context, position: 2).map do |item|
-          string(item, context: context, position: 2)
+          string(item, context: element_context, position: 2)
         end.join(string(separator, context: context, position: 1))
       end
 

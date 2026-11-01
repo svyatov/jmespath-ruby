@@ -11,6 +11,14 @@ RSpec.describe "Function validation source context" do
   end
 
   %i[compiled evaluator].each do |mode|
+    %w[sort_by min_by max_by].each do |name|
+      it "narrows #{name} result constraints after the first key through #{mode}" do
+        error = query_failure("#{name}(@, &@)", [1, false], registry, mode)
+        expect(error.expected_types).to eq([:number])
+        expect(error.actual_type).to eq(:boolean)
+        expect(error.validation_stage).to eq(:expression_result)
+      end
+    end
     it "identifies nested failures through #{mode}" do
       error = query_failure("length(reverse(@))", 4, registry, mode)
       expect(error.function_name).to eq("reverse")
@@ -64,6 +72,21 @@ RSpec.describe "Function validation source context" do
       expect(error.function_name).to eq("reverse")
       expect(error.source_range).to eq(0...10)
     end
+  end
+
+  it "preserves evaluator false and compiled omission for subclass dispatch" do
+    registry_class = Class.new(JMESPath::Functions) do
+      def call(name, arguments, disable_visit_errors: true)
+        super
+      end
+    end
+    functions = registry_class.new.with("custom", signature: [[:number]]) { |value| value }
+    expect { JMESPath.search("custom(@)", "bad", functions: functions, disable_visit_errors: false) }
+      .to raise_error(JMESPath::Errors::InvalidTypeError)
+    expression = JMESPath.compile("custom(@)")
+    expect { expression.call("bad", functions: functions, disable_visit_errors: false) }
+      .to raise_error(JMESPath::Errors::InvalidTypeError)
+    expect(JMESPath.compile("custom(@)", functions: functions).call("bad")).to be_nil
   end
 
   [["length(@)", 0...9, 3], ["reverse(@)", 0...10, "cba"]].each do |source, range, result|

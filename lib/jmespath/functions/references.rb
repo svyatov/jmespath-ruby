@@ -17,12 +17,17 @@ module JMESPath
         reference = reference(expression, context: context, position: 2)
         # @type var expected: Symbol?
         expected = nil
+        # @type var result_context: ValidationContext?
+        result_context = nil
         index = 0
         array(value, context: context, position: 1).sort_by do |item|
           key = reference.call(item)
-          expected = checked_type(key, expected, context: context)
+          type = checked_type(key, expected, context: context)
+          expected = type
+          key_context = result_context || context.with_types([type])
+          result_context = key_context
           index += 1
-          [sort_key(key, context: context, position: 2, stage: :expression_result), index]
+          [sort_key(key, context: key_context, position: 2, stage: :expression_result), index]
         end
       end
 
@@ -38,10 +43,15 @@ module JMESPath
         reference = reference(expression, context: context, position: 2)
         # @type var expected: Symbol?
         expected = nil
+        # @type var result_context: ValidationContext?
+        result_context = nil
         array(value, context: context, position: 1).map do |item|
           key = reference.call(item)
-          expected = checked_type(key, expected, context: context)
-          [sort_key(key, context: context, position: 2, stage: :expression_result), item]
+          type = checked_type(key, expected, context: context)
+          expected = type
+          key_context = result_context || context.with_types([type])
+          result_context = key_context
+          [sort_key(key, context: key_context, position: 2, stage: :expression_result), item]
         end
       end
 
@@ -50,7 +60,7 @@ module JMESPath
         unless SORTABLE_TYPES.include?(type)
           raise context.type_error(
             "Expression keys must be numbers or strings",
-            position: 2, expected_types: SORTABLE_TYPES, actual_type: type,
+            position: 2, expected_types: expected ? [expected] : SORTABLE_TYPES, actual_type: type,
             origin: validation_origin, stage: :expression_result
           )
         end
