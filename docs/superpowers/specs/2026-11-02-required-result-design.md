@@ -1,6 +1,6 @@
 # Required query results
 
-Status: awaiting design approval. The user selected O1 and A1.
+Status: approved by the user on 2026-11-02. The user selected O1 and A1.
 Scope: [issue #29](https://github.com/svyatov/jmespath-ruby/issues/29).
 
 ## Intent and boundaries
@@ -42,7 +42,7 @@ Keep the nil check within `fetch`; do not modify the evaluator, compiled plan, o
 Use the frozen source string for the error's expression text.
 The proposed error initializer accepts `expression:` and supplies the fixed message.
 The initializer freezes an independent copy of supplied text, matching the syntax error convention.
-These initializer details are builder proposals for approval with this design.
+The user approved these initializer details with this design.
 
 Update RBS with a non-null `Object` return type for `fetch` and the error's public constructor and attribute.
 Add YARD documentation, a README example, and guidance in the compilation and errors guides.
