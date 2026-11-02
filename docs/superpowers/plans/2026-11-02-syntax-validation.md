@@ -119,7 +119,7 @@ Use `feat(validation): add immutable syntax diagnostics`.
 **Files:**
 
 - Modify `lib/jmespath/cli.rb` and `sig/internal/cli.rbs` for any private helper declarations.
-- Modify `spec/integration/cli_spec.rb`, `docs/guides/errors.md`, and `README.md`.
+- Modify `spec/integration/cli_spec.rb`, `docs/guides/errors.md`, `README.md`, and `CHANGELOG.md`.
 - Modify `script/support/package_check.rb` and `spec/packaging/gem_spec.rb` to exercise validation from the installed artifact.
 
 **Interfaces:**
@@ -128,7 +128,7 @@ Use `feat(validation): add immutable syntax diagnostics`.
 - Extend `CLI.run(argv, stdin:, stdout:, stderr:) -> Integer` with `--validate EXPRESSION`.
 - Both executables already delegate to `CLI.run`; preserve their entry points.
 
-- [ ] **Step 1: Add failing CLI tests and update usage expectations.**
+- [x] **Step 1: Add failing CLI tests and update usage expectations.**
 
 Use an unreadable stdin double for these cases:
 
@@ -156,12 +156,12 @@ Add executable cases for missing and excess validation arguments, with status 2 
 In the packaging spec, assert the artifact includes `lib/jmespath/syntax_diagnostic.rb`.
 Assert package verification returns `validation: []` and `syntax_failure: "Expected rbracket, received eof"` as string-keyed JSON fields.
 
-- [ ] **Step 2: Run the failing CLI tests.**
+- [x] **Step 2: Run the failing CLI tests.**
 
 Run `bundle exec rspec spec/integration/cli_spec.rb spec/packaging/gem_spec.rb`.
 Expected: validation fails under the search-only dispatcher; changed usage expectations also fail.
 
-- [ ] **Step 3: Implement CLI dispatch and document use.**
+- [x] **Step 3: Implement CLI dispatch and document use.**
 
 Recognize a leading `--validate` before informational dispatch and the JSON read.
 Require exactly two arguments for validation and pass the second token unchanged as query text.
@@ -170,18 +170,19 @@ Return usage status 2 for missing or excess arguments without reading stdin.
 Preserve search behavior and update help with the syntax-only limitation and stdin independence.
 Add the standalone shell command `jmespath --validate 'items[*].name'` to the README and errors guide.
 Document empty success output, syntax failure output, and statuses 0, 1, and 2.
+Record both public interfaces under the changelog's Unreleased heading.
 Keep JSON output, stdin query input, and CLI depth configuration outside scope.
 Extend `PackageCheck::SMOKE` with valid-query validation and the reason from validating `items[?active`.
 Include these as `validation` and `syntax_failure` fields in its JSON result.
 
-- [ ] **Step 4: Verify CLI behavior and complete required checks.**
+- [x] **Step 4: Verify CLI behavior and complete required checks.**
 
 Run `bundle exec rspec spec/integration/cli_spec.rb spec/unit/syntax_validation_spec.rb spec/unit/diagnostic_spec.rb`.
 Run `bundle exec rake`, then `bundle exec rake docs`.
 Run `bundle exec rake package:check` to verify the added library file in an offline gem installation.
 Expected: zero failures, full line and branch coverage, valid types, generated docs, and successful package verification.
 
-- [ ] **Step 5: Commit only Task 2 files.**
+- [x] **Step 5: Commit only Task 2 files.**
 
 Use `feat(cli): validate queries without reading stdin`.
 Report Ruby and shell examples with verification evidence; leave release and remote operations outside this plan.

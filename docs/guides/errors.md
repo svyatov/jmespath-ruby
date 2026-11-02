@@ -212,6 +212,21 @@ Successful queries print one JSON result to stdout.
 Usage failures print usage to stderr and exit with status 2 without reading stdin.
 Help and version requests exit with status 0 without reading stdin.
 
+Both executables also support validation without reading stdin.
+Run this command in a shell:
+
+```sh
+jmespath --validate 'items[*].name'
+```
+
+Valid syntax leaves both output streams empty and exits with status 0.
+Unknown functions remain valid syntax; function availability and runtime types require evaluation.
+For invalid syntax, the command prints a formatted diagnostic to stderr and exits with status 1.
+Parser value failures, including a zero slice step, also exit with status 1.
+Missing or excess validation arguments print usage to stderr and exit with status 2.
+Every validation outcome leaves stdout empty and does not read stdin.
+The token after `--validate` is query text, even when it resembles a flag.
+
 To inspect a function type failure, run this command in a shell:
 
 ```sh

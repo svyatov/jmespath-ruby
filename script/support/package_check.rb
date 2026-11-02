@@ -20,6 +20,8 @@ class PackageCheck
     raise "Missing public signatures" unless File.file?(File.join(installed, "sig/jmespath.rbs"))
     puts JSON.generate(version: JMESPath::VERSION,
                        search: JMESPath.search("people[*].name", {"people" => [{"name" => "Ada"}]}),
+                       validation: JMESPath.validate("people[*].name"),
+                       syntax_failure: JMESPath.validate("items[?active").fetch(0).reason,
                        source: source, dependencies: Bundler.load.specs.map(&:name))
   RUBY
 
