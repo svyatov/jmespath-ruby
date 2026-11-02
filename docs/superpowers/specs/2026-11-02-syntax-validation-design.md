@@ -1,6 +1,6 @@
 # Syntax validation
 
-Status: proposed for approval.
+Status: approved by the user on 2026-11-02.
 Scope: [issue #28](https://github.com/svyatov/jmespath-ruby/issues/28).
 
 ## Intent and scope
