@@ -1,6 +1,6 @@
 # Compiled query inspection
 
-Status: proposed for user approval.
+Status: approved by the user on 2026-11-02.
 Scope: [issue #15](https://github.com/svyatov/jmespath-ruby/issues/15).
 
 ## Intent and scope
