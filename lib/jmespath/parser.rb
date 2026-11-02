@@ -65,10 +65,10 @@ module JMESPath
       node(kind, nil, children)
     end
 
-    def node(kind, value = nil, children = [], start: nil)
+    def node(kind, value = nil, children = [], start: nil, synthetic: false)
       result = AST::Node.new(
         kind: kind, value: value, children: children,
-        start: start || children.first&.start || previous.start, finish: previous.finish
+        start: start || children.first&.start || previous.start, finish: previous.finish, synthetic: synthetic
       )
       syntax!("Expression exceeds nesting limit") if result.depth > @max_depth
       result

@@ -7,7 +7,7 @@ module JMESPath
 
     def prefix_bracket(token)
       if %i[number colon].include?(peek.type) || (peek.type == :star && @tokens.fetch(@index + 1).type == :rbracket)
-        return bracket_body(node(:current))
+        return bracket_body(node(:current, synthetic: true))
       end
 
       multi_select_list(token)
@@ -58,11 +58,11 @@ module JMESPath
     end
 
     def prefix_star(_token)
-      node(:value_projection, nil, [node(:current), projection_rhs(20)])
+      node(:value_projection, nil, [node(:current, synthetic: true), projection_rhs(20)])
     end
 
     def prefix_flatten(token)
-      infix_flatten(node(:current), token)
+      infix_flatten(node(:current, synthetic: true), token)
     end
 
     def infix_flatten(left, _token)
@@ -71,7 +71,7 @@ module JMESPath
     end
 
     def prefix_filter(token)
-      infix_filter(node(:current), token)
+      infix_filter(node(:current, synthetic: true), token)
     end
 
     def infix_filter(left, _token)
@@ -81,7 +81,7 @@ module JMESPath
     end
 
     def projection_rhs(power)
-      return node(:current) if POWER.fetch(peek.type, 0) < 10
+      return node(:current, synthetic: true) if POWER.fetch(peek.type, 0) < 10
       return expression(power) if %i[lbracket filter].include?(peek.type)
       return dot_rhs(power) if peek.type == :dot && advance
 
