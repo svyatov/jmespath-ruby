@@ -45,7 +45,7 @@ Produce `Errors::NullResultError < Errors::RuntimeError`, with `initialize(expre
 The initializer stores an independent frozen copy and sets the fixed message.
 The RBS method returns `Object`; the constructor takes `expression: String` and the attribute returns `String`.
 
-- [ ] **Step 1: Add failing error and public regression tests.**
+- [x] **Step 1: Add failing error and public regression tests.**
 
 Create `spec/integration/required_result_spec.rb` and extend `spec/unit/errors_spec.rb`.
 Use the following assertions as the core tests:
@@ -81,30 +81,30 @@ Add individually named examples covering the following exact contracts:
 | Propagates other failures | Invalid JSON, unknown functions, invalid slice steps, invalid options, and nesting-limit failures retain their search error classes |
 | Preserves nullable entry points | `query.search({})` and `query.call({})` still return nil |
 
-- [ ] **Step 2: Confirm the tests fail for missing interfaces.**
+- [x] **Step 2: Confirm the tests fail for missing interfaces.**
 
 Run `bundle exec rspec spec/unit/errors_spec.rb spec/integration/required_result_spec.rb`.
 Expected: failures naming the missing `NullResultError` or `fetch`, with no unrelated setup failures.
 
-- [ ] **Step 3: Implement the public error, wrapper, and signatures.**
+- [x] **Step 3: Implement the public error, wrapper, and signatures.**
 
 Add the interfaces above to `lib/jmespath/errors.rb`, `lib/jmespath/expression.rb`, and `sig/jmespath.rbs`.
 Forward all arguments directly to `search`, check `nil?`, and preserve the successful result.
 Add YARD parameter, return, exception, and executable-example documentation for both public interfaces.
 Keep the evaluator, compiled plan, and suppression implementation unchanged.
 
-- [ ] **Step 4: Verify the focused regression suite.**
+- [x] **Step 4: Verify the focused regression suite.**
 
 Run `bundle exec rspec spec/unit/errors_spec.rb spec/integration/required_result_spec.rb spec/integration/configured_queries_spec.rb spec/integration/compilation_spec.rb`.
 Expected: all examples pass.
 
-- [ ] **Step 5: Document required-result behavior.**
+- [x] **Step 5: Document required-result behavior.**
 
 Add a successful `fetch` example to `README.md` and executable success and failure examples to the compilation guide.
 Add the error to the errors guide, including its expression attribute and suppression behavior.
 Explain that false and empty values succeed and that missing and explicit null receive the same error.
 
-- [ ] **Step 6: Run the full gates.**
+- [x] **Step 6: Run the full gates.**
 
 Run `env RUBOCOP_CACHE_ROOT=/private/tmp/jmespath-rubocop-cache bundle exec rake`.
 Expected: lint, RBS, Steep, all specs, 100% line and branch coverage, CRAP, and executable documentation checks pass.
@@ -112,15 +112,27 @@ Run `bundle exec rake docs`.
 Expected: YARD completes without warnings.
 Run `git diff --check` and inspect the diff for unrelated edits and fixture changes.
 
-- [ ] **Step 7: Commit the tested feature.**
+- [x] **Step 7: Commit the tested feature.**
 
 Stage only the eight implementation, test, signature, and guide files in the file structure table.
 Commit with `feat(expression): require non-null results with fetch`.
 Keep plan progress updates explicit and preserve unrelated work.
 
-- [ ] **Step 8: Verify behavior and review the completed change.**
+- [x] **Step 8: Verify behavior and review the completed change.**
 
 Exercise successful false and missing-field cases through `bundle exec ruby -Ilib -rjmespath`.
 Expected: false returns unchanged; missing data raises `NullResultError` containing the query text.
 Use an independent reviewer to check the final diff against the spec, especially R1 through R5.
 Resolve verified findings and rerun affected checks before reporting completion.
+
+## Execution results
+
+Implemented in `538dcf8` using native execution in the current checkout, as selected by the user.
+The failing regression run reported 15 missing-interface failures; all 45 focused examples passed after implementation.
+The full `bundle exec rake` gate passed with 100% line and branch coverage.
+`bundle exec rake docs` passed with 100% public documentation.
+Ruby 4.0 emitted the pre-existing YARD `irb/notifier` dependency warning.
+Independent public API QA passed 12 scenario groups and 23 exploratory actions with empty stderr.
+The independent final review found no critical, important, or minor issues in `9dfb476..538dcf8`.
+No implementation deviations or deferred findings remain.
+The user confirmed that their removal of the unrelated audit report was intentional.
