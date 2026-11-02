@@ -177,11 +177,19 @@ The home-path regressions failed before correction and passed afterward; the ful
 A focused independent QA follow-up passed ten checks, including accepted arguments and the actual selected HOME or literal paths.
 Its evidence is `/private/tmp/jmespath-completion-qa-home.hhn9f1/report.md`.
 
-### Deferred minor findings
+### F2 and F3 follow-up
 
-F2: Quoted option names and delimiters, ANSI-C quoted filename prefixes, and quoted literal tildes in Zsh equals values need further normalization.
-F3: Bash completion inside a word can return no candidates.
-These do not change query execution; they limit completion in those inputs.
+F2: Both shells now normalize quoted option names, delimiters, and ANSI-C filename prefixes.
+Zsh preserves quoted literal tildes in equals values and continues through their directories.
+Whole-assignment quotes preserve option text, apostrophes, and literal home references.
+Bash follows ANSI-C null termination and preserves invalid hexadecimal escapes without diagnostics.
+F3: Bash now matches filename prefixes before the cursor and preserves native Readline insertion behavior.
+Readline can repeat existing trailing text; the same input reproduces this with Bash's built-in filename completion.
+The 22 focused regressions passed, including exact accepted arguments for open and closed ANSI-C quotes and repeated directory completion.
+The follow-up full gate passed 6685 examples with 100% line and branch coverage.
+Independent Bash review verified the full-assignment and ANSI-C edge cases.
+Final terminal evidence is `/private/tmp/jmespath-followup/final-qa.json`.
+Zsh retains native whole-word matching when `COMPLETE_IN_WORD` is unset; the cursor driver now uses explicit Emacs bindings.
 
 ### Review rulings
 
@@ -189,5 +197,3 @@ D1: Retain the approved exclusions for Fish, expression completion, and conflict
 Cost: those features remain unavailable.
 D2: Keep arbitrary shell substitution evaluation outside completion; safely expand only supported HOME references.
 Cost: other constructed path prefixes may remain incomplete.
-D3: Record Zsh mid-word completion as unverified because the review harness could not drive that cursor position.
-Cost: that editing flow retains a verification gap.

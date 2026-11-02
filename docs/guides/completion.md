@@ -18,6 +18,8 @@ It requires no completion framework.
 Unquoted `~/`, `$HOME/`, and `${HOME}/` prefixes use your home directory.
 Quoted or escaped tildes remain literal, with `./` added when necessary to preserve the selected path.
 Bash completion leaves named-user prefixes such as `~other/` unchanged.
+Completion inside a word follows Readline's insertion rules, which can repeat existing trailing text.
+Move the cursor to the word's end to avoid that behavior.
 
 ## Zsh setup
 
