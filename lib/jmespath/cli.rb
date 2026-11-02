@@ -3,13 +3,14 @@
 require_relative "../jmespath"
 require_relative "cli/failure_diagnostic"
 require_relative "cli/arguments"
+require_relative "cli/function_listing"
 
 module JMESPath
-  # Executes document or JSON Lines queries, or validates query syntax.
+  # Executes queries, validates syntax, or lists built-in functions.
   module CLI
     USAGE = "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
             "(EXPRESSION | --query-file PATH)\n       " \
-            "jmespath --validate (EXPRESSION | --query-file PATH)"
+            "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions"
     HELP = "#{USAGE}\n" \
            "Read one UTF-8 JSON document from --file PATH, or stdin when omitted.\n" \
            "Supply one query as EXPRESSION or --query-file PATH, read as UTF-8 without trimming.\n" \
@@ -32,7 +33,11 @@ module JMESPath
            "Use --validate to check syntax only, without reading stdin; unknown functions remain valid.\n" \
            "Validate saved queries with --validate --query-file PATH; --file is unavailable during validation.\n" \
            "The two-argument form --validate EXPRESSION always treats EXPRESSION as query text.\n" \
-           "Validation exits with status 0 for valid syntax, 1 for query failures, and 2 for usage failures.".freeze
+           "Validation exits with status 0 for valid syntax, 1 for query failures, and 2 for usage failures.\n" \
+           "Use standalone --functions to list built-in signatures and descriptions without reading stdin.\n" \
+           "The --functions flag cannot be repeated or combined with queries, paths, modes, or information flags.\n" \
+           "Listing exits with status 0 on success, 1 for output failures, and 2 for usage failures.\n" \
+           "#{FunctionListing::LEGEND}".freeze
 
     # @param argv [Array<String>] command-line arguments
     # @param stdin [IO, StringIO] source stream: read for documents, gets for JSON Lines
@@ -41,7 +46,7 @@ module JMESPath
     # @return [Integer] zero on success, one on input failure, two on usage failure
     def self.run(argv, stdin: $stdin, stdout: $stdout, stderr: $stderr)
       return validation(argv, stderr) if literal_validation?(argv)
-      return information(argv, stdout) if [%w[--help], %w[-h], %w[--version]].include?(argv)
+      return information(argv, stdout) if [%w[--help], %w[-h], %w[--version], %w[--functions]].include?(argv)
 
       expression, path, query_path, validate, pretty, raw_output, json_lines = parse_arguments(argv)
       expression = read_query(expression, query_path)
@@ -126,6 +131,11 @@ module JMESPath
 
     # @api private
     def self.information(argv, output)
+      if argv == ["--functions"]
+        output.puts(FunctionListing.render(Functions.default))
+        return 0
+      end
+
       output.puts(argv == ["--version"] ? "jmespath-ruby #{VERSION}" : HELP)
       0
     end

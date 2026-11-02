@@ -45,6 +45,39 @@ JMESPath.search("sort_by(@, &age)[*].name", [{name: "Lin", age: 20}, {name: "Ada
 JMESPath.search("avg(@)", [1, 2, 3]) #=> 2.0
 ```
 
+## Command-line reference
+
+Run either executable from the shell to list built-in signatures and descriptions without reading stdin:
+
+```sh
+jmespath --functions
+jmespath.rb --functions
+```
+
+Each built-in appears once in alphabetical order, using public function metadata.
+For example, the listing includes these entries:
+
+```text
+join(string, array<string>) Join strings with a separator.
+length(string|array|object) Character or element count.
+map(expref, array) Map an expression over an array, including null results.
+merge(object...) Merge objects, with later values winning.
+sort(array<number>|array<string>) Stable sorted array of numbers or strings.
+```
+
+`A|B` accepts either type; `any` accepts any value.
+`array<T>` requires every element to have type `T`, while `array` accepts elements of any type.
+Thus `array<number>|array<string>` accepts a homogeneous array, including an empty array.
+`expref` denotes an expression reference written as `&expression`.
+The final `...` marks a required argument that repeats, so `merge(object...)` needs at least one object.
+The listing includes a notation legend and describes declared types; runtime checks can impose narrower constraints.
+Return types are not inferred.
+
+Use `--functions` alone, without queries, paths, other modes, repeated flags, or values.
+The exact two-argument form `--validate --functions` validates the literal query text under the validation rules.
+Listing returns status 0 with empty stderr; output failures return status 1.
+Usage failures return status 2 with empty stdout and usage guidance on stderr, before accessing input.
+
 ## Custom signatures
 
 Start with `Functions.default` to retain the built-ins, or `Functions.new` for an empty registry.

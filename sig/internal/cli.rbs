@@ -1,5 +1,13 @@
 module JMESPath
   module CLI
+    module FunctionListing
+      LEGEND: String
+      def self.render: (Functions) -> String
+      def self.signature: (Functions::Metadata) -> String
+      def self.argument: (Array[Symbol], bool) -> String
+      def self.type_name: (Symbol) -> String
+    end
+
     class ArgumentParser < ::OptionParser
       def permute: (Array[String]) -> Array[String]
       private
