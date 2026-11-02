@@ -43,6 +43,9 @@ RSpec.describe "Compiled query inspection" do
     '"a\"b"' => ["field", { name: 'a"b' }, []],
     "@" => ["current", {}, []],
     "'hello'" => ["literal", { value: "hello" }, []],
+    "`1.5`" => ["literal", { value: 1.5 }, []],
+    "`1e400`" => ["literal", { value: Float::INFINITY }, []],
+    "`-1e400`" => ["literal", { value: -Float::INFINITY }, []],
     "`{\"key\":[1,true,null]}`" => ["literal", { value: { "key" => [1, true, nil] } }, []],
     "(@)" => ["group", {}, ["expression"]],
     "a.b.c" => ["subexpression", {}, %w[step step step]],
@@ -138,6 +141,17 @@ RSpec.describe "Compiled query inspection" do
     expect(result.fetch("root").fetch("children").first.fetch("node").fetch("source_range")).to be_nil
     expect(JSON.parse(JSON.generate(JMESPath.compile("user.name").explain)))
       .to eq(JSON.parse(JSON.generate(field_chain)))
+  end
+
+  it "preserves nested non-finite literals and their evaluation behavior" do
+    query = JMESPath.compile('`{"values":[1e400,-1e400]}`')
+    expected = { "values" => [Float::INFINITY, -Float::INFINITY] }
+    explanation = query.explain
+    expect(explanation.fetch(:root).fetch(:details)).to eq(value: expected)
+    expect(query.search(nil)).to eq(expected)
+    expect_frozen(explanation)
+    expect { JSON.generate(explanation, max_nesting: false) }.to raise_error(JSON::GeneratorError)
+    expect(query.search(nil)).to eq(expected)
   end
 
   it "isolates repeated, configured, uncached, and concurrent inspections" do

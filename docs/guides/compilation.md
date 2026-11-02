@@ -55,7 +55,7 @@ Empty details are represented by `{}`.
 | --- | --- | --- |
 | `field` | `name: String` | None |
 | `current` | Empty | None |
-| `literal` | `value: JSON value` | None |
+| `literal` | `value: decoded Ruby value` | None |
 | `group` | Empty | `expression` |
 | `subexpression` | Empty | Repeated `step` |
 | `pipe` | Empty | Repeated `step` |
@@ -127,7 +127,10 @@ Implicit `current` operations have nil ranges; an explicit `@` has its token ran
 Every non-nil range stays within the source and ends on UTF-8 character boundaries.
 Line and column fields are omitted; derive them using the [syntax diagnostic conventions](errors.md).
 
-`JSON.generate(explanation)` serializes directly, with string keys and JSON values.
+For finite numeric values, `JSON.generate(explanation)` serializes directly, with string keys and JSON values.
+Numeric overflow literals preserve their decoded non-finite Ruby floats, including values inside literal arrays and objects.
+Strict JSON cannot represent these values; generation raises `JSON::GeneratorError`, even with `max_nesting: false`.
+Inspection preserves those values and compilation behavior without substituting strings or nulls.
 Deep explanation trees can exceed JSON's default nesting limit before reaching the query's supported depth limit.
 Use `JSON.generate(explanation, max_nesting: false)` for these trees.
 Use the corresponding option when parsing the serialized explanation.
@@ -144,6 +147,14 @@ This Ruby example serializes an explanation with nested groups:
 explanation = JMESPath.compile("(" * 128 + "@" + ")" * 128).explain
 serialized = JSON.generate(explanation, max_nesting: false)
 JSON.parse(serialized, max_nesting: false)["root"]["operation"] #=> "group"
+```
+
+This Ruby example inspects an overflow literal without serializing it:
+
+```ruby
+query = JMESPath.compile("`1e400`")
+query.explain[:root][:details][:value].infinite? #=> 1
+query.search(nil).infinite? #=> 1
 ```
 
 ## Saved options
