@@ -42,6 +42,42 @@ RSpec.describe "JMESPath grammar" do
     expect(node.children).to be_frozen
   end
 
+  it "distinguishes explicit current expressions from implicit identities" do
+    explicit = parse("@")
+    expect(explicit.synthetic?).to be(false)
+    expect([explicit.start, explicit.finish]).to eq([0, 1])
+
+    ["[0]", "*", "[]", "[::]", "[?active]", "items[*]"].each do |source|
+      pending = [parse(source)]
+      identities = []
+      until pending.empty?
+        node = pending.shift
+        identities << node if node.kind == :current
+        pending.concat(node.children)
+      end
+      expect(identities).not_to be_empty
+      expect(identities).to all(be_synthetic)
+    end
+    expect(parse("items[*].length(@)").children.last.children.first).not_to be_synthetic
+  end
+
+  {
+    "[0]" => [0, 3], "items[*]" => [0, 8], "(@)" => [0, 3],
+    "!active" => [0, 7], "&name" => [0, 5], "items[].name" => [0, 12]
+  }.each do |source, bounds|
+    it "retains complete explicit bounds for #{source}" do
+      node = parse(source)
+      expect(node).not_to be_synthetic
+      expect([node.start, node.finish]).to eq(bounds)
+    end
+  end
+
+  it "locates a hash entry from its key through its value" do
+    entry = parse("{key: value}").children.first
+    expect([entry.start, entry.finish]).to eq([1, 11])
+    expect(entry).not_to be_synthetic
+  end
+
   [
     "@", "*", "foo.*.bar", "foo[*].bar", "foo[]", "[]", "foo[1]", "[-1]",
     "[::]", "foo[::-1]", "[a,b]", "{x:a,y:b}", "(a)", "!foo", "a == b",

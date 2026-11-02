@@ -7,8 +7,10 @@ module JMESPath
       attr_reader start: Integer
       attr_reader finish: Integer
       attr_reader depth: Integer
-      def self.new: (kind: Symbol, ?value: value, ?children: Array[Node], ?start: Integer, ?finish: Integer) -> instance
-      def initialize: (kind: Symbol, ?value: value, ?children: Array[Node], ?start: Integer, ?finish: Integer) -> void
+      @synthetic: bool
+      def synthetic?: () -> bool
+      def self.new: (kind: Symbol, ?value: value, ?children: Array[Node], ?start: Integer, ?finish: Integer, ?synthetic: bool) -> instance
+      def initialize: (kind: Symbol, ?value: value, ?children: Array[Node], ?start: Integer, ?finish: Integer, ?synthetic: bool) -> void
       def self.immutable: (value) -> value
       def self.literal_depth: (value) -> Integer
     end
@@ -28,7 +30,7 @@ module JMESPath
     def expression: (?Integer) -> AST::Node
     def infix: (AST::Node, Token) -> AST::Node
     def sequence: (Symbol, AST::Node, AST::Node) -> AST::Node
-    def node: (Symbol, ?value, ?Array[AST::Node], ?start: Integer?) -> AST::Node
+    def node: (Symbol, ?value, ?Array[AST::Node], ?start: Integer?, ?synthetic: bool) -> AST::Node
     def peek: () -> Token
     def previous: () -> Token
     def advance: () -> Token

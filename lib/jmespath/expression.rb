@@ -35,6 +35,14 @@ module JMESPath
     # @return [Object] the query result, including nil
     alias call search
 
+    # Explain query structure without evaluating input or resolving functions.
+    # @return [Hash] deeply frozen source text and logical operation tree
+    # @example Inspect a field chain
+    #   JMESPath.compile("user.name").explain[:root][:operation] #=> "subexpression"
+    def explain
+      Explanation.build(source, @root)
+    end
+
     # @api private
     def configured(options)
       return self if options.functions.equal?(Functions.default) && !options.disable_visit_errors
