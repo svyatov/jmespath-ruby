@@ -1,6 +1,6 @@
 # CLI shell completion
 
-Status: proposed for user approval.
+Status: approved by the user on 2026-11-02.
 Scope: [issue #27](https://github.com/svyatov/jmespath-ruby/issues/27).
 
 ## Intent and boundaries
