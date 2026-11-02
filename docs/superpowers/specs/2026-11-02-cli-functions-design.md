@@ -1,6 +1,6 @@
 # CLI function listing
 
-Status: proposed for approval.
+Status: approved by the user on 2026-11-02.
 Scope: [issue #26](https://github.com/svyatov/jmespath-ruby/issues/26).
 
 ## Intent and boundaries
@@ -20,7 +20,7 @@ That issue completes option names and filenames; it does not consume this listin
 | O2: Signature and description on separate lines | Separates long descriptions | Doubles the number of lines | Not selected |
 
 The user selected O1.
-The exact notation and argument rules below are proposals for approval.
+The user approved the notation and argument rules below.
 
 ## Listing format
 
