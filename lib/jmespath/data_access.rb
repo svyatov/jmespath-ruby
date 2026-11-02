@@ -9,13 +9,15 @@ module JMESPath
         mapping = value.is_a?(Hash) ? value : DataAccess.object(value)
         return nil unless mapping
 
-        result = mapping[name]
-        return result unless result.nil?
+        FailureCapture.application do
+          result = mapping[name]
+          return result unless result.nil?
 
-        mapping.each_key do |key|
-          return mapping[key] if key.is_a?(Symbol) && key.name == name
+          mapping.each_key do |key|
+            return mapping[key] if key.is_a?(Symbol) && key.name == name
+          end
+          nil
         end
-        nil
       end
     end
 

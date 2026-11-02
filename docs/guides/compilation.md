@@ -13,6 +13,28 @@ The expression owns a frozen copy of the query text.
 Changing the caller's original string does not change the compiled expression.
 Mutable literal results are copied for each evaluation.
 
+## Failure results
+
+`Expression#try_search` reuses compiled syntax and saved evaluation options, with per-call overrides handled independently.
+Calls return separate frozen results and isolate capture state across nested calls, threads, and fibers.
+The returned value or error retains its identity and independent mutability.
+See [search results](search.md#search-results) for the result fields.
+
+A custom function can handle an inner query failure explicitly:
+
+```ruby
+inner = JMESPath.compile("length(@)")
+functions = JMESPath::Functions.default.with("checked", signature: [[:any]]) do |value|
+  result = inner.try_search(value)
+  result.success? ? result.value : "invalid"
+end
+outer = JMESPath.compile("checked(@)", functions: functions)
+outer.try_search(4).value #=> "invalid"
+outer.try_search([1, 2]).value #=> 2
+```
+
+An exception escaping the custom function propagates from the outer call, even when it came from an inner query.
+
 ## Required results
 
 Call `Expression#fetch` when a Ruby caller requires a non-null final result.

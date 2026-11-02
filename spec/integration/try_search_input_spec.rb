@@ -134,4 +134,26 @@ RSpec.describe "Non-raising search input" do
   it "preserves ordinary string inputs" do
     expect(JMESPath.compile("@").try_search("{invalid").value).to eq("{invalid")
   end
+
+  it "propagates an invalid path conversion without opening a file" do
+    input = Pathname.new("unused")
+    input.define_singleton_method(:to_path) { nil }
+    expect { JMESPath.compile("@").try_search(input) }.to raise_error(TypeError)
+  end
+
+  it "does not invoke application reflection overrides when inspecting a stream" do
+    input = StringIO.new("[]")
+    input.define_singleton_method(:method) { |*_args| raise "application reflection invoked" }
+    expect(JMESPath.compile("@").try_search(input).value).to eq([])
+  end
+
+  it "propagates a read override installed on the native stream class" do
+    original = StringIO.instance_method(:read)
+    error = IOError.new("application read")
+    StringIO.define_method(:read) { raise error }
+    expect { JMESPath.compile("@").try_search(StringIO.new("[]")) }
+      .to(raise_error { |caught| expect(caught).to equal(error) })
+  ensure
+    StringIO.define_method(:read, original)
+  end
 end

@@ -12,6 +12,34 @@ SyntaxError derives from that base; evaluation errors derive from RuntimeError.
 | `UnknownFunctionError` | Function absent from the supplied registry |
 | `NullResultError` | `Expression#fetch` received a null final result |
 
+## Failure results
+
+`Expression#try_search` returns library-owned evaluation, JSON parsing, and native input I/O failures in a `JMESPath::SearchResult`.
+Its `error` reader contains the original exception; `value` is nil and `success?` is false.
+Successful null results have `success?` true and `error` nil.
+Compilation happens before this method and can still raise syntax errors.
+A valid per-call nesting limit that rejects the compiled expression produces a failure result.
+
+```ruby
+query = JMESPath.compile("length(@)")
+query.try_search(4).error.function_name #=> "length"
+query.try_search(4, disable_visit_errors: true).success? #=> true
+query.try_search(4, disable_visit_errors: true).value #=> nil
+JMESPath.compile("@").try_search(StringIO.new("invalid")).error.is_a?(JSON::ParserError) #=> true
+```
+
+Invalid options raise `ArgumentError` before reading input.
+Suppressed type and arity failures remain successful null results; unknown-function failures remain failures.
+Caller-owned streams remain open, and library-opened files close after input processing.
+Failures from native reads are captured; exceptions from application overrides of input methods propagate.
+
+Exceptions escaping custom functions, registry overrides, and application conversions propagate unchanged, including JSON and library error classes.
+This includes failures from ordinary queries called inside application code.
+Use an inner `try_search` to handle those failures explicitly, as shown in [compiled result handling](compilation.md#failure-results).
+Ordinary `search`, `call`, `fetch`, and CLI error handling retain their contracts.
+
+## Syntax diagnostics
+
 SyntaxError exposes the expression, a zero-based byte position, and one-based line and character column.
 Character columns count Unicode code points, independently of byte offsets and terminal display widths.
 

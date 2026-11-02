@@ -1,5 +1,11 @@
 module JMESPath
   class Functions
+    class JSONValue
+      @value: untyped
+      def self.wrap: (value) -> value
+      def initialize: (untyped) -> void
+      def to_json: (untyped) -> String
+    end
     module Scalar : Coercions
       SIGNATURES: Hash[String, Array[Array[Symbol]]]
       DESCRIPTIONS: Hash[String, String]
@@ -18,6 +24,7 @@ module JMESPath
       def not_null: (*value, context: ValidationContext) -> value
       def to_array: (value, context: ValidationContext) -> Array[value]
       def to_string: (value, context: ValidationContext) -> String
+      def normalize_json: (value) -> value
       def to_number: (value, context: ValidationContext) -> value
     end
     module Coercions

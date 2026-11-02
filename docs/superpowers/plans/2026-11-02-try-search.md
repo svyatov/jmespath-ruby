@@ -68,7 +68,7 @@
 - Add private `FailureCapture.run { value } -> SearchResult`, `FailureCapture.owned(error) -> error`, and `FailureCapture.application { value } -> value`.
 - Add private `FailureCapture.excluded?(error) -> bool` for rescue handlers that could replace application exceptions.
 
-- [ ] **Step 1: Write success and option regressions in `spec/integration/try_search_spec.rb`.**
+- [x] **Step 1: Write success and option regressions in `spec/integration/try_search_spec.rb`.**
 
 Include named examples with these assertions:
 
@@ -97,12 +97,12 @@ Add a numeric success case and compare positional and keyword options with ordin
 For unknown options, conflicting options, invalid booleans, invalid registries, invalid depth, and non-Hash positional options, assert `ArgumentError` before input access.
 Use a `StringIO` whose `read` raises if invoked to prove validation order.
 
-- [ ] **Step 2: Run the regressions before implementation.**
+- [x] **Step 2: Run the regressions before implementation.**
 
 Run `bundle exec rspec spec/integration/try_search_spec.rb`.
 Expect failures for missing `try_search`, not invalid test setup.
 
-- [ ] **Step 3: Implement result construction, scoped capture, and successful evaluation.**
+- [x] **Step 3: Implement result construction, scoped capture, and successful evaluation.**
 
 Create the two library files and their require entries.
 Store contexts with `Thread.current[key]`, which is fiber-local; use identity hashes for owned and excluded exceptions.
@@ -118,7 +118,7 @@ Avoid calling `search` with reconstructed options that would change the selected
 Keep `search`, `call`, `fetch`, and `trace` behavior unchanged.
 Add public types and private helper signatures with implementation.
 
-- [ ] **Step 4: Verify the public value contract and commit.**
+- [x] **Step 4: Verify the public value contract and commit.**
 
 Run `bundle exec rspec spec/integration/try_search_spec.rb spec/integration/configured_queries_spec.rb spec/integration/required_result_spec.rb`.
 Run `bundle exec rake types`; expect all examples and type checks to pass.
@@ -128,7 +128,7 @@ Commit only Task 1 files with `feat(search): add immutable try_search results`.
 
 **Interfaces:** Consume the result readers and private capture helpers from Task 1. Preserve all function and conversion signatures.
 
-- [ ] **Step 1: Add evaluation and application-provenance regressions.**
+- [x] **Step 1: Add evaluation and application-provenance regressions.**
 
 Use a configured expression for the compiled path and a different per-call registry for the evaluator path.
 Test `length(@)` on `4`, `length()`, `missing()`, cyclic normalization through `to_string(@)`, and rejected `sort_by` expression results.
@@ -145,12 +145,12 @@ Compare stateful conversion call counts and order against ordinary `search`; do 
 Test a registry subclass overriding `call`, including its compiled keyword omission and evaluator's explicit false.
 Assert callback and registry overrides execute once, with the same argument order as `search`.
 
-- [ ] **Step 2: Run evaluation regressions before ownership changes.**
+- [x] **Step 2: Run evaluation regressions before ownership changes.**
 
 Run `bundle exec rspec spec/integration/try_search_spec.rb`.
 Expect library-failure assertions to fail because those errors are not yet recorded as owned.
 
-- [ ] **Step 3: Instrument actual evaluation failure sites and application calls.**
+- [x] **Step 3: Instrument actual evaluation failure sites and application calls.**
 
 Use `raise FailureCapture.owned(error)` at the actual library raise sites listed in the file map.
 Record failures where signature checks, coercions, expression-result checks, unknown lookup, cycle detection, and expression depth reject evaluation.
@@ -163,7 +163,7 @@ Preserve `FunctionCall` origin-based suppression; do not replace it with capture
 Verify optimized `length` and `reverse` fallbacks still enter instrumented validation.
 Update private RBS only for helpers whose signatures change.
 
-- [ ] **Step 4: Verify evaluation compatibility and commit.**
+- [x] **Step 4: Verify evaluation compatibility and commit.**
 
 Run `bundle exec rspec spec/integration/try_search_spec.rb spec/integration/review_callbacks_spec.rb spec/integration/function_validation_context_spec.rb spec/integration/review_cycles_spec.rb spec/unit/data_access_spec.rb`.
 Run `bundle exec rake types`; expect passing examples and types.
@@ -173,7 +173,7 @@ Commit only Task 2 files with `feat(search): capture owned evaluation failures`.
 
 **Interfaces:** Preserve `Input.load(data) -> value`; use Task 1 capture helpers only around eligible native operations and parser calls.
 
-- [ ] **Step 1: Write input ownership and resource regressions in `spec/integration/try_search_input_spec.rb`.**
+- [x] **Step 1: Write input ownership and resource regressions in `spec/integration/try_search_input_spec.rb`.**
 
 Assert malformed JSON from `StringIO`, an open file, and `Pathname` produces failure results containing `JSON::ParserError`.
 Assert a missing `Pathname` produces `Errno::ENOENT` and closed native `IO` and `StringIO` produce `IOError` failure results.
@@ -186,12 +186,12 @@ Assert those exceptions propagate unchanged and `read` runs once.
 Test overridden `Pathname#to_path`, stream result `to_s`, and nested queries inside those methods as application conversions.
 Assert a plain string remains an ordinary Ruby input value rather than being parsed as JSON.
 
-- [ ] **Step 2: Run input regressions before implementation.**
+- [x] **Step 2: Run input regressions before implementation.**
 
 Run `bundle exec rspec spec/integration/try_search_input_spec.rb`.
 Expect native input failure assertions to fail because input errors are not yet recorded as owned.
 
-- [ ] **Step 3: Add narrow native-operation ownership in `lib/jmespath/input.rb`.**
+- [x] **Step 3: Add narrow native-operation ownership in `lib/jmespath/input.rb`.**
 
 Separate path conversion, stream reading, stream result conversion, and JSON parsing sufficiently to identify their error origins.
 Treat application method overrides as excluded calls while retaining native method dispatch and existing inputs.
@@ -202,7 +202,7 @@ Protect application conversion errors from enclosing I/O and parser rescues with
 Avoid new rescue behavior or capture allocations when no context is active.
 Update `sig/internal/api.rbs` for any private input helpers.
 
-- [ ] **Step 4: Verify input compatibility and commit.**
+- [x] **Step 4: Verify input compatibility and commit.**
 
 Run `bundle exec rspec spec/integration/try_search_input_spec.rb spec/integration/try_search_spec.rb spec/integration/search_spec.rb spec/integration/cli_file_spec.rb spec/integration/cli_json_lines_spec.rb`.
 Run `bundle exec rake types`; expect passing examples and types.
@@ -212,7 +212,7 @@ Commit only Task 3 files with `feat(search): capture native input failures`.
 
 **Interfaces:** Consume the complete `Expression#try_search` contract from Tasks 1 through 3. Add no public methods.
 
-- [ ] **Step 1: Add context regressions in `spec/integration/try_search_context_spec.rb`.**
+- [x] **Step 1: Add context regressions in `spec/integration/try_search_context_spec.rb`.**
 
 Test a callback that invokes failing ordinary `JMESPath.search`; assert the outer `try_search` propagates the inner exception unchanged.
 Test a callback that handles an inner `try_search` failure and returns a value; assert outer success.
@@ -229,13 +229,13 @@ Use distinct exceptions overriding `==`, `eql?`, and `hash`; assert identity-bas
 Re-raise a prior failure result's error inside application code in a later call; assert propagation.
 Verify a callback that rescues an application failure can return normally, allowing a later owned failure to be captured.
 
-- [ ] **Step 2: Run context regressions and resolve contract failures.**
+- [x] **Step 2: Run context regressions and resolve contract failures.**
 
 Run `bundle exec rspec spec/integration/try_search_context_spec.rb spec/integration/try_search_spec.rb spec/integration/try_search_input_spec.rb`.
 Expect all examples to pass; fix any provenance or restoration failure before documentation.
 Keep fixes within A1 and the approved public contract.
 
-- [ ] **Step 3: Document results, ownership, and nested calls.**
+- [x] **Step 3: Document results, ownership, and nested calls.**
 
 Add YARD for `try_search` and all public result readers, including successful null, false, and failure examples.
 Update the search, error, and compilation guides with executable examples showing `success?`, `value`, and `error`.
@@ -244,7 +244,7 @@ State the native input policy, callback propagation rule, suppressed-null behavi
 Show an inner `try_search` handled inside a callback without implying that outer capture swallows callback exceptions.
 Review CLI help; the Ruby-only method needs no new flag, result mode, or unrelated help edit.
 
-- [ ] **Step 4: Run complete verification and exercise the public interface.**
+- [x] **Step 4: Run complete verification and exercise the public interface.**
 
 Run `env RUBOCOP_CACHE_ROOT=/private/tmp/jmespath-rubocop-cache bundle exec rake`.
 Require passing lint, RBS, Steep, RSpec, 100% line and branch coverage, complexity analysis, and executable documentation checks.
@@ -256,8 +256,25 @@ Review the diff for unrelated edits, imported fixture changes, dependencies, and
 Run `bundle exec rake package:check`; require a valid isolated gem and successful packaged examples.
 Confirm the gem includes both additional runtime files through the gemspec's `lib/**/*.rb` pattern.
 
-- [ ] **Step 5: Commit context coverage and documentation.**
+- [x] **Step 5: Commit context coverage and documentation.**
 
 Commit only Task 4 files with `feat(search): document try_search failure ownership`.
 Record actual verification results without claiming CI or publication evidence.
 Remote publication and pull request creation require separate authorization.
+
+## Verification record
+
+Implemented on `feat/try-search` in `/private/tmp/jmespath-try-search`.
+Result, evaluation, input, and provenance regressions failed before their respective implementation changes.
+Private capture helpers moved from Task 1 to Task 2 to accompany their first consumers.
+The depth-limit regression uses `length(a.b)` because `a.b` remains valid at depth 1.
+Exploratory checks added excluded Hash lookup callbacks, JSON serialization hooks, and ordinary public evaluation entry points.
+Native stream inspection bypasses application reflection overrides and identifies Ruby replacements of native read methods.
+Each ownership correction has a regression observed failing before the fix.
+
+`bundle exec rake` passes 6,603 examples with 100% line and branch coverage, lint, RBS, Steep, complexity analysis, and executable documentation.
+`bundle exec rake docs` and `bundle exec rake package:check` pass.
+The artifact includes the result, capture, and serializer helper files.
+Public API QA passes on Ruby 4.0.9 and Ruby 3.3.11, both using JSON 3.1.0.
+Ruby 4.0 emits the installed YARD dependency's `irb/notifier` default-gem warning; YARD reports no documentation failures.
+The prose checker and `git diff --check` pass.

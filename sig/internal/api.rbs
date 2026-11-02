@@ -25,6 +25,7 @@ module JMESPath
     def self.captured_load: (value) -> value
     def self.load_file: (Pathname) -> value
     def self.read: (IO | StringIO) -> untyped
+    def self.native_read?: (IO | StringIO) -> bool
     def self.parse: (untyped) -> value
   end
   class Expression

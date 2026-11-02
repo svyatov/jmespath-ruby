@@ -88,7 +88,7 @@ module JMESPath
     # @raise [Errors::InvalidTypeError] argument types are incompatible
     # @raise [Errors::InvalidArityError] the number of arguments is invalid
     def call(name, arguments, disable_visit_errors: false)
-      invoke(name, arguments, disable_visit_errors: disable_visit_errors)
+      FailureCapture.application { invoke(name, arguments, disable_visit_errors: disable_visit_errors) }
     end
 
     # @api private

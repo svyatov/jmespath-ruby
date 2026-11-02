@@ -37,11 +37,16 @@ module JMESPath
     end
 
     def self.read(data)
-      return FailureCapture.application { data.read } unless [IO, StringIO].include?(data.method(:read).owner)
+      return FailureCapture.application { data.read } unless native_read?(data)
 
       data.read
     rescue IOError, SystemCallError => e
       raise FailureCapture.owned(e)
+    end
+
+    def self.native_read?(data)
+      reader = Kernel.instance_method(:method).bind_call(data, :read)
+      [IO, StringIO].include?(reader.owner) && reader.source_location.nil?
     end
 
     def self.parse(text)

@@ -51,15 +51,17 @@ module JMESPath
     #   JMESPath.search("items[*].name", {items: [{name: "Ada"}]}) #=> ["Ada"]
     # @return [Object] the query result, including nil
     def search(expression, data, options = Options::EMPTY, **keywords)
-      config = if options.equal?(Options::EMPTY) && keywords.empty?
-                 Options::DEFAULT
-               else
-                 Options.new(options, keywords)
-               end
-      raise ArgumentError, "Expression must be a String" unless expression.is_a?(String)
+      FailureCapture.application do
+        config = if options.equal?(Options::EMPTY) && keywords.empty?
+                   Options::DEFAULT
+                 else
+                   Options.new(options, keywords)
+                 end
+        raise ArgumentError, "Expression must be a String" unless expression.is_a?(String)
 
-      compiled = compile_syntax(expression, config.cache_expressions, config.max_depth)
-      compiled.evaluate(Input.load(data), config)
+        compiled = compile_syntax(expression, config.cache_expressions, config.max_depth)
+        compiled.evaluate(Input.load(data), config)
+      end
     end
 
     # Parse an expression for repeated searches.

@@ -3,9 +3,10 @@
 module JMESPath
   # @api private
   class Normalizer
-    def initialize
+    def initialize(&scalar)
       @pending = []
       @active = {}
+      @scalar = scalar
     end
 
     def call(value)
@@ -26,11 +27,17 @@ module JMESPath
 
     def visit(value, &assign)
       collection = DataAccess.array(value) || DataAccess.object(value)
-      return assign.call(DataAccess.string(value) || value) unless collection
+      return assign.call(scalar(value)) unless collection
 
       id = activate(value)
       @pending << -> { @active.delete(id) }
       collection.is_a?(Array) ? array(collection, &assign) : object(collection, &assign)
+    end
+
+    def scalar(value)
+      value = DataAccess.string(value) || value
+      transform = @scalar
+      transform ? transform.call(value) : value
     end
 
     def activate(value)
