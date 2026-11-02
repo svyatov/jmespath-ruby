@@ -123,6 +123,14 @@ Compiled expressions are immutable and safe to share between threads.
 Each search uses separate evaluation state.
 Custom callbacks and input objects remain the caller's responsibility.
 
+In Ruby code, inspect the query without evaluating input or resolving function names:
+
+```ruby
+JMESPath.compile("user.name").explain[:root][:operation] #=> "subexpression"
+```
+
+See [query inspection](docs/guides/compilation.md#query-inspection) for the immutable tree format, operation IDs, and source ranges.
+
 In Ruby code, save evaluation options when compiling a query, then use `search` or its `call` alias:
 
 ```ruby

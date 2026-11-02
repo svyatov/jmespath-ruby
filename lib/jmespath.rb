@@ -20,6 +20,7 @@ require_relative "jmespath/options"
 require_relative "jmespath/input"
 require_relative "jmespath/cache"
 require_relative "jmespath/plan"
+require_relative "jmespath/explanation"
 require_relative "jmespath/expression"
 
 # Search JSON-compatible Ruby values with JMESPath expressions.

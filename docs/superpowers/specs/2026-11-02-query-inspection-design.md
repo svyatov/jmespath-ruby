@@ -65,6 +65,8 @@ Each child entry has exactly two keys: `:role` and `:node`.
 Keys use symbols; operation names and child roles use strings.
 Decoded field names, function names, and literal values remain ordinary Ruby values.
 `JSON.generate(explanation)` produces a representation with string keys and JSON values, without custom serialization methods.
+Deep trees require `max_nesting: false` during JSON generation and parsing because JSON's default nesting limit is lower.
+This serialization clarification was identified during implementation QA; it preserves the approved tree format and query depth limit.
 
 Freeze every nested hash, array, and string, including literal values and literal object keys.
 The result must contain no parser objects, execution objects, registry objects, or callbacks.
