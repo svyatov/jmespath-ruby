@@ -1,5 +1,34 @@
 module JMESPath
   module CLI
+    interface _Flushable
+      def flush: () -> untyped
+    end
+    interface _TerminalReader
+      def tty?: () -> bool
+    end
+    interface _PromptWriter
+      def print: (String) -> void
+      def flush: () -> untyped
+    end
+    class InteractiveSession
+      HELP: String
+      @data: value
+      @input: _LineReader
+      @output: _Writer
+      @errors: _Writer
+      @writing_errors: bool
+      def initialize: (value, input: _LineReader, output: _Writer, errors: _Writer) -> void
+      def run: () -> Integer
+      private
+      def process?: (String) -> bool
+      def command?: (String, String) -> bool
+      def evaluate: (String) -> String?
+      def write_result: (String) -> void
+      def diagnostic: (String) -> void
+      def prompt: () -> void
+      def flush: (_Writer) -> void
+      def report_stream_failure: (StandardError) -> void
+    end
     module FunctionListing
       LEGEND: String
       def self.render: (Functions) -> String
@@ -17,10 +46,14 @@ module JMESPath
     USAGE: String
     HELP: String
     def self.literal_validation?: (Array[String]) -> bool
-    def self.parse_arguments: (Array[String]) -> [String?, String?, String?, bool, bool, bool, bool]
+    def self.parse_arguments: (Array[String]) -> [String?, String?, String?, bool, bool, bool, bool, bool]
     def self.argument_parser: (Hash[String, String]) -> ArgumentParser
     def self.check_sources: (Array[String], Hash[String, String]) -> void
     def self.check_modes: (Hash[String, String]) -> void
+    def self.check_interactive: (Array[String], Hash[String, String]) -> void
+    def self.interactive_session: (String?, _Reader | _LineReader, _Writer, _Writer) -> Integer
+    def self.query: (Array[String], _Reader | _LineReader, _Writer, _Writer) -> Integer
+    def self.failure: (StandardError, String?, _Writer) -> Integer
     def self.read_query: (String?, String?) -> String
     def self.read_document: (String?, _Reader) -> value
     def self.execute: (String, value, _Writer, bool, bool) -> Integer

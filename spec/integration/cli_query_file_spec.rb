@@ -34,7 +34,8 @@ RSpec.describe "Command-line query files" do
   def usage
     "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
       "(EXPRESSION | --query-file PATH)\n       " \
-      "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n"
+      "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n       " \
+      "jmespath --interactive --file PATH\n"
   end
 
   it "reads query files with stdin or either document option order" do

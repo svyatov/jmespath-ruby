@@ -35,7 +35,8 @@ RSpec.describe "Command-line pretty output" do
   def usage
     "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
       "(EXPRESSION | --query-file PATH)\n       " \
-      "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n"
+      "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n       " \
+      "jmespath --interactive --file PATH\n"
   end
 
   {

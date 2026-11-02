@@ -4,43 +4,14 @@ require_relative "../jmespath"
 require_relative "cli/failure_diagnostic"
 require_relative "cli/arguments"
 require_relative "cli/function_listing"
+require_relative "cli/interactive_session"
+require_relative "cli/help"
 
 module JMESPath
   # Executes queries, validates syntax, or lists built-in functions.
   module CLI
-    USAGE = "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
-            "(EXPRESSION | --query-file PATH)\n       " \
-            "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions"
-    HELP = "#{USAGE}\n" \
-           "Read one UTF-8 JSON document from --file PATH, or stdin when omitted.\n" \
-           "Supply one query as EXPRESSION or --query-file PATH, read as UTF-8 without trimming.\n" \
-           "Options may precede or follow EXPRESSION; -- ends option parsing.\n" \
-           "Quote spaces: --file 'my document.json'. Use --file=--document.json for option-like names.\n" \
-           "Paths are literal: --file - reads the file named -.\n" \
-           "Query paths follow the same rules: --query-file - reads the query file named -.\n" \
-           "Output is compact JSON by default; --pretty uses two-space indentation and a final newline.\n" \
-           "Use --raw-output for literal string results; other results remain compact JSON.\n" \
-           "Raw strings retain all their newlines and receive one additional output newline.\n" \
-           "Output flags cannot be repeated or combined with each other or --validate.\n" \
-           "Use --json-lines for one JSON record per physical input line and one compact result per record.\n" \
-           "JSON Lines compiles once before input; empty input succeeds with a valid query.\n" \
-           "Blank records are invalid; failures report the input line, retain earlier output, and exit 1.\n" \
-           "Memory follows the current record and result; output uses normal buffering.\n" \
-           "The --json-lines flag cannot be repeated or combined with --pretty, --raw-output, or --validate.\n" \
-           "Function arguments and expression-reference results are validated; failures exit with status 1.\n" \
-           "Unknown functions suggest similar registered names.\n" \
-           "Query failures include source locations when available.\n" \
-           "Use --validate to check syntax only, without reading stdin; unknown functions remain valid.\n" \
-           "Validate saved queries with --validate --query-file PATH; --file is unavailable during validation.\n" \
-           "The two-argument form --validate EXPRESSION always treats EXPRESSION as query text.\n" \
-           "Validation exits with status 0 for valid syntax, 1 for query failures, and 2 for usage failures.\n" \
-           "Use standalone --functions to list built-in signatures and descriptions without reading stdin.\n" \
-           "The --functions flag cannot be repeated or combined with queries, paths, modes, or information flags.\n" \
-           "Listing exits with status 0 on success, 1 for output failures, and 2 for usage failures.\n" \
-           "#{FunctionListing::LEGEND}".freeze
-
     # @param argv [Array<String>] command-line arguments
-    # @param stdin [IO, StringIO] source stream: read for documents, gets for JSON Lines
+    # @param stdin [IO, StringIO] read for documents, gets for JSON Lines or interactive queries; optional tty?
     # @param stdout [IO, StringIO] result stream
     # @param stderr [IO, StringIO] diagnostic stream
     # @return [Integer] zero on success, one on input failure, two on usage failure
@@ -48,7 +19,19 @@ module JMESPath
       return validation(argv, stderr) if literal_validation?(argv)
       return information(argv, stdout) if [%w[--help], %w[-h], %w[--version], %w[--functions]].include?(argv)
 
-      expression, path, query_path, validate, pretty, raw_output, json_lines = parse_arguments(argv)
+      query(argv, stdin, stdout, stderr)
+    rescue OptionParser::ParseError
+      stderr.puts(USAGE)
+      2
+    rescue JSON::ParserError, Errors::Error, IOError, SystemCallError => e
+      failure(e, nil, stderr)
+    end
+
+    # @api private
+    def self.query(argv, stdin, stdout, stderr)
+      expression, path, query_path, validate, pretty, raw_output, json_lines, interactive = parse_arguments(argv)
+      return interactive_session(path, stdin, stdout, stderr) if interactive
+
       expression = read_query(expression, query_path)
       return validation(["--validate", expression], stderr) if validate
       if json_lines
@@ -58,12 +41,23 @@ module JMESPath
 
       # @type var stdin: _Reader
       execute(expression, read_document(path, stdin), stdout, pretty, raw_output)
-    rescue OptionParser::ParseError
-      stderr.puts(USAGE)
-      2
-    rescue JSON::ParserError, Errors::Error, IOError, SystemCallError => e
-      stderr.puts(FailureDiagnostic.format(e, expression))
+    rescue JSON::ParserError, Errors::Error => e
+      failure(e, expression, stderr)
+    end
+
+    # @api private
+    def self.failure(error, expression, errors)
+      errors.puts(FailureDiagnostic.format(error, expression))
       1
+    rescue IOError, SystemCallError
+      1
+    end
+
+    # @api private
+    def self.interactive_session(path, input, output, errors)
+      # @type var input: _Reader & _LineReader
+      data = read_document(path, input)
+      InteractiveSession.new(data, input: input, output: output, errors: errors).run
     end
 
     # @api private

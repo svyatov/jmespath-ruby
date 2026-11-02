@@ -242,7 +242,8 @@ Invalid options raise ArgumentError.
 
 ## CLI diagnostics
 
-Both `jmespath` and `jmespath.rb` print expected input and query failures to stderr and exit with status 1.
+Both `jmespath` and `jmespath.rb` print expected input and query failures to stderr.
+Noninteractive queries exit with status 1 on these failures; interactive sessions recover from query failures as described below.
 Failures before output starts leave stdout empty.
 Successful document queries print one JSON result to stdout.
 With `--raw-output`, string results print without JSON quotes or escape encoding; other types retain compact JSON encoding.
@@ -300,6 +301,33 @@ Owned files close after processing succeeds or fails; caller-owned streams remai
 Injected input needs `gets` for JSON Lines and `read` for document mode; injected output needs only `puts`.
 Repeated flags or combinations with `--pretty`, `--raw-output`, or validation fail with status 2 before input access.
 The exact two-argument invocation `--validate --json-lines` validates literal query text.
+
+### Interactive sessions
+
+Use `jmespath --interactive --file document.json` to load a document once and enter successive UTF-8 queries through stdin.
+The file closes before the session reads commands.
+Prompts appear only for terminal stdin, including when stderr is redirected.
+Help, prompts, and diagnostics use stderr; successful results use compact JSON on stdout with one final newline.
+Results and diagnostics are flushed when supported; terminal prompts always flush before input reads.
+
+Syntax failures retain query excerpts and carets; type, arity, and unknown-function failures retain their diagnostic context.
+Each failure omits its result and permits the next query.
+An invalid UTF-8 line or unknown colon command also produces a recoverable diagnostic.
+Empty lines and lines containing only spaces or tabs are ignored; LF, CRLF, and a final unterminated query are accepted.
+`:help` prints instructions, while `:quit` and EOF return status 0, including after recovered failures.
+Earlier output remains available if a later stream failure terminates the session with status 1.
+
+Missing, unreadable, or malformed documents terminate startup with status 1 before commands or prompts.
+Malformed JSON reports `Invalid JSON input` without exposing document contents.
+Input and output stream failures terminate with status 1; failed diagnostic writes are not retried.
+Missing `--file`, repeated flags, queries in arguments, and combinations with `--query-file` or other modes return usage status 2.
+Information flags must remain standalone.
+The exact two-argument form `--validate --interactive` still validates the literal query `--interactive`.
+
+Injected readers require `gets`; readers without `tty?` receive no prompts.
+Output and diagnostic streams require `puts` and may support `flush`.
+Terminal prompts additionally require `print` and `flush` on the diagnostic stream.
+Caller-owned streams remain open after success or failure.
 
 ### Saved queries
 

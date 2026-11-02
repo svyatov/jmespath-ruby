@@ -120,11 +120,13 @@ module JMESPath
   interface _Reader
     def read: () -> String?
   end
-  # Input stream protocol for CLI.run in JSON Lines mode.
+  # Input stream protocol for CLI.run in JSON Lines and interactive modes.
+  # Interactive readers may expose tty?; only terminal input receives prompts.
   interface _LineReader
     def gets: () -> String?
   end
-  # Output stream protocol used by CLI.run.
+  # Output stream protocol used by CLI.run. Interactive mode uses optional flush.
+  # Terminal prompts require print and flush on the diagnostic stream.
   interface _Writer
     def puts: (String) -> void
   end

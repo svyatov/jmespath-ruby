@@ -286,6 +286,34 @@ Owned files close after processing; caller-owned streams remain open.
 Injected `CLI.run` input needs `gets` for JSON Lines or `read` for document mode; output needs only `puts`.
 Repeated `--json-lines` flags and combinations with `--pretty`, `--raw-output`, or validation are usage failures.
 
+Start a session against one loaded document:
+
+```sh
+jmespath --interactive --file document.json
+```
+
+Enter one UTF-8 query per line; empty lines and lines containing only spaces or tabs are ignored.
+Use `:help` for session instructions and `:quit` to finish, or end input with EOF.
+Queries accept LF, CRLF, and a final line without a newline.
+Each successful query prints compact JSON and a final newline to stdout, then flushes when the stream supports it.
+Prompts appear only when stdin is a terminal; prompts, help, and diagnostics use stderr.
+The document loads once and its file closes before the first prompt or command read.
+
+Queries can also come from a pipe without prompts:
+
+```sh
+printf 'user.name\nlength(user.name)\n' | jmespath --interactive --file document.json
+```
+
+Query errors, unknown commands, and invalid UTF-8 query lines produce diagnostics and allow the session to continue.
+Failed queries produce no JSON result; successful results remain available.
+EOF and `:quit` return status 0 even after query failures.
+Document and stream failures terminate with status 1; usage failures return status 2.
+Interactive mode requires `--file PATH` and rejects positional queries, `--query-file`, other modes, information flags, and repeated flags.
+Readers supplied to `CLI.run` need `gets`; `tty?` is optional and absent detection means no prompts.
+Writers need `puts`; `flush` is optional except for terminal prompts, whose diagnostic stream needs both `print` and `flush`.
+Caller-owned streams remain open; history, completion, multiline editing, and document reloads are unavailable.
+
 Validate syntax without providing a JSON document by running this shell command:
 
 ```sh
