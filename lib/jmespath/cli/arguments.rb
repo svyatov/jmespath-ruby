@@ -12,18 +12,25 @@ module JMESPath
 
     # @api private
     def self.parse_arguments(argv)
-      return [argv.fetch(0), nil, nil, false, false, false, false] if argv.one? && !argv.fetch(0).start_with?("-")
+      if argv.one? && !argv.fetch(0).start_with?("-")
+        return [argv.fetch(0), nil, nil, false, false, false, false, false]
+      end
 
       paths = {} # : Hash[String, String]
       arguments = argument_parser(paths).permute(argv)
       check_sources(arguments, paths)
 
       [arguments.first, paths["file"], paths["query-file"], paths.key?("validate"), paths.key?("pretty"),
-       paths.key?("raw-output"), paths.key?("json-lines")]
+       paths.key?("raw-output"), paths.key?("json-lines"), paths.key?("interactive")]
     end
 
     # @api private
     def self.check_sources(arguments, paths)
+      if paths.key?("interactive")
+        check_interactive(arguments, paths)
+        return check_modes(paths)
+      end
+
       sources = arguments.length + (paths.key?("query-file") ? 1 : 0)
       raise OptionParser::InvalidArgument, "expected one query source" unless sources == 1
 
@@ -32,12 +39,19 @@ module JMESPath
 
     # @api private
     def self.check_modes(paths)
-      modes = paths.keys & %w[validate pretty raw-output json-lines]
+      modes = paths.keys & %w[validate pretty raw-output json-lines interactive]
       raise OptionParser::InvalidArgument, "conflicting modes" if modes.length > 1
       return unless paths.key?("validate")
       return if paths.key?("query-file") && !paths.key?("file")
 
       raise OptionParser::InvalidArgument, "validation requires a query file"
+    end
+
+    # @api private
+    def self.check_interactive(arguments, paths)
+      return if arguments.empty? && paths.key?("file") && !paths.key?("query-file")
+
+      raise OptionParser::InvalidArgument, "interactive mode requires only a document file"
     end
 
     # @api private
@@ -53,7 +67,7 @@ module JMESPath
             paths[name] = value
           end
         end
-        %w[validate pretty raw-output json-lines].each do |name|
+        %w[validate pretty raw-output json-lines interactive].each do |name|
           options.on("--#{name}") do
             raise OptionParser::InvalidOption, "--#{name} repeated" if paths.key?(name)
 
