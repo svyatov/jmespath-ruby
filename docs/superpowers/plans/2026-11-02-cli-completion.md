@@ -191,6 +191,15 @@ Independent Bash review verified the full-assignment and ANSI-C edge cases.
 Final terminal evidence is `/private/tmp/jmespath-followup/final-qa.json`.
 Zsh retains native whole-word matching when `COMPLETE_IN_WORD` is unset; the cursor driver now uses explicit Emacs bindings.
 
+### Current-main integration
+
+Rebased onto `984d5e0`, which adds interactive sessions and moves CLI help into a separate module.
+The completion guide link now resides in that help module.
+Both shells offer the newly implemented `--interactive` option.
+The four option-surface regressions failed before adding that option, then passed in the complete gate.
+The integrated gate passed 6761 examples with 1894 covered lines and 713 covered branches, both 100%.
+`bundle exec rake docs`, shell syntax checks, prose checks, and whitespace checks passed.
+
 ### Review rulings
 
 D1: Retain the approved exclusions for Fish, expression completion, and conflict filtering.

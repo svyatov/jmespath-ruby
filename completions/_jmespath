@@ -35,7 +35,7 @@ elif [[ $option == --file || $option == --query-file ]]; then
   fi
 elif [[ $PREFIX == -* ]]; then
   compadd -- -h --help --version --functions --file --query-file \
-    --validate --pretty --raw-output --json-lines
+    --validate --pretty --raw-output --json-lines --interactive
 fi
 
 if ((literal_path)); then

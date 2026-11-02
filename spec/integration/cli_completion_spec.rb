@@ -7,7 +7,7 @@ require_relative "../support/shell_completion"
 RSpec.describe "Shell completion" do
   let(:root) { File.expand_path("../..", __dir__) }
   let(:options) do
-    %w[-h --help --version --functions --file --query-file --validate --pretty --raw-output --json-lines]
+    %w[-h --help --version --functions --file --query-file --validate --pretty --raw-output --json-lines --interactive]
   end
 
   around do |example|

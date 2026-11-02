@@ -167,7 +167,7 @@ _jmespath_completion() {
   elif [[ $current == -* ]]; then
     while IFS= read -r candidate; do
       COMPREPLY[${#COMPREPLY[@]}]=$candidate
-    done < <(compgen -W '-h --help --version --functions --file --query-file --validate --pretty --raw-output --json-lines' -- "$current")
+    done < <(compgen -W '-h --help --version --functions --file --query-file --validate --pretty --raw-output --json-lines --interactive' -- "$current")
   fi
 }
 
