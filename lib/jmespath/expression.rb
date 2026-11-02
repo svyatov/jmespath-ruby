@@ -35,6 +35,21 @@ module JMESPath
     # @return [Object] the query result, including nil
     alias call search
 
+    # Search input and require a non-null result.
+    # @param data [Object] the same input forms accepted by {#search}
+    # @param options [Hash] positional evaluation options
+    # @param keywords [Hash] keyword evaluation options
+    # @return [Object] the query result, excluding nil
+    # @raise [Errors::NullResultError] evaluation returned nil
+    # @example Require a user's name
+    #   JMESPath.compile("user.name").fetch({user: {name: "Ada"}}) #=> "Ada"
+    def fetch(data, options = Options::EMPTY, **keywords)
+      value = search(data, options, **keywords)
+      raise Errors::NullResultError.new(expression: source) if value.nil?
+
+      value
+    end
+
     # Explain query structure without evaluating input or resolving functions.
     # @return [Hash] deeply frozen source text and logical operation tree
     # @example Inspect a field chain

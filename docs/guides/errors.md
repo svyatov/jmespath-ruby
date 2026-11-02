@@ -10,6 +10,7 @@ SyntaxError derives from that base; evaluation errors derive from RuntimeError.
 | `InvalidArityError` | Incorrect number of function arguments |
 | `InvalidValueError` | Invalid slice step or cyclic value during structural processing |
 | `UnknownFunctionError` | Function absent from the supplied registry |
+| `NullResultError` | `Expression#fetch` received a null final result |
 
 SyntaxError exposes the expression, a zero-based byte position, and one-based line and character column.
 Character columns count Unicode code points, independently of byte offsets and terminal display widths.
@@ -67,6 +68,13 @@ JMESPath.search("length(@)", 7, disable_visit_errors: true) #=> nil
 Only library argument-type and arity failures are suppressed by `disable_visit_errors`.
 Syntax, unknown-function, invalid-value, adapter, and callback failures remain visible.
 Missing fields and out-of-range indices normally return nil.
+
+`Expression#fetch` raises `NullResultError` for a nil final result, including explicit null and suppressed validation failures.
+The error derives from `RuntimeError`, exposes frozen query text through `expression`, and has the message `Expression returned null`.
+It retains no input document and does not distinguish missing fields from explicit null.
+Non-nil values, including false and empty collections, succeed.
+Other evaluation and application exceptions propagate unchanged.
+See [required results](compilation.md#required-results) for executable Ruby examples.
 
 ## Syntax validation
 

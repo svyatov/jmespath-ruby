@@ -13,6 +13,31 @@ The expression owns a frozen copy of the query text.
 Changing the caller's original string does not change the compiled expression.
 Mutable literal results are copied for each evaluation.
 
+## Required results
+
+Call `Expression#fetch` when a Ruby caller requires a non-null final result.
+It accepts the same inputs, positional options, and keyword options as `search`, including saved defaults and per-call overrides.
+Each call evaluates once and returns any non-nil result unchanged, preserving selected object identity and mutability.
+False, zero, empty strings, empty arrays, and empty hashes succeed.
+
+Use these calls in Ruby code:
+
+```ruby
+query = JMESPath.compile("user.name")
+query.fetch({user: {name: "Ada"}}) #=> "Ada"
+query.fetch({user: {name: false}}) #=> false
+query.fetch({}) # raises JMESPath::Errors::NullResultError
+query.fetch({user: {name: nil}}) # raises JMESPath::Errors::NullResultError
+```
+
+Missing fields, explicit null, and out-of-range indexes produce the same error.
+Only the final result must be non-null; intermediate null values can be replaced by the query.
+With `disable_visit_errors: true`, suppressed type or arity failures producing nil also raise `NullResultError`.
+Other failures propagate unchanged.
+The error exposes frozen query text through `expression` and uses the message `Expression returned null`.
+It contains no input document or explanation of the null result.
+Nullable `search` and `call` behavior is unchanged.
+
 ## Query inspection
 
 Call `Expression#explain` to inspect query structure without providing input data.
