@@ -38,6 +38,7 @@
 | --- | --- |
 | `lib/jmespath/cli.rb` | Option parsing, file ownership, diagnostic expression, usage, help, and YARD |
 | `sig/internal/cli.rbs` | Private helper declarations |
+| `Steepfile` | Load the standard-library OptionParser signatures |
 | `spec/integration/cli_file_spec.rb` | File input, argument rules, ownership, and both executable names |
 | `spec/integration/cli_spec.rb` | Update literal usage expectations while preserving stdin and diagnostic regressions |
 | `README.md` | File selection and shell argument examples |
@@ -55,7 +56,7 @@
 - Preserve `CLI.information(argv, output) -> Integer` for standalone informational calls.
 - Mark added helpers `@api private` and declare them in `sig/internal/cli.rbs`.
 
-- [ ] **Step 1: Write failing tests for the public CLI contract.**
+- [x] **Step 1: Write failing tests for the public CLI contract.**
 
 Create `spec/integration/cli_file_spec.rb` using real temporary directories and files.
 Define `run_cli(arguments, input:)` to return `[status, stdout.string, stderr.string]` through `CLI.run`.
@@ -81,7 +82,7 @@ Test `--` without a query and arguments following `--` as ordinary positional va
 Test R3 with valid JSON and an empty expression; malformed JSON must still produce `Invalid JSON input\n` first.
 Assert the original positional stdin invocation still returns `[0, "2\n", ""]` for `foo.bar` and `{"foo":{"bar":2}}`.
 
-- [ ] **Step 2: Write failing tests for file failures and ownership.**
+- [x] **Step 2: Write failing tests for file failures and ownership.**
 
 Cover missing paths and `Errno::EACCES`; simulate permissions when the process bypasses filesystem permissions.
 Cover `IOError` and `SystemCallError` raised by an opened file's `read` method.
@@ -98,12 +99,12 @@ Use `items[` to require `Expected an array index at line 1, column 7\nitems[\n  
 Use `['✓', length(@)]` with JSON `4` to require character column 7 and six spaces before the caret.
 Retain unknown-function suggestions and verify all diagnostic cases with file options both before and after the query.
 
-- [ ] **Step 3: Confirm regression failures.**
+- [x] **Step 3: Confirm regression failures.**
 
 Run `bundle exec rspec spec/integration/cli_file_spec.rb spec/integration/cli_spec.rb`.
 Require failures caused by absent file support, with valid test setup and unchanged stdin examples passing.
 
-- [ ] **Step 4: Implement option parsing and input ownership.**
+- [x] **Step 4: Implement option parsing and input ownership.**
 
 Require `optparse` in `lib/jmespath/cli.rb` without changing gem dependencies.
 Keep the standalone informational fast path before parsing.
@@ -121,7 +122,7 @@ Handle option errors separately with status 2 and usage on stderr.
 Propagate unrelated exceptions without broadening the rescue list.
 Update internal RBS declarations and the CLI module's YARD description for both input sources.
 
-- [ ] **Step 5: Add executable regression tests and document file input.**
+- [x] **Step 5: Add executable regression tests and document file input.**
 
 For both executable names, use `Open3.capture3` with a valid UTF-8 file and deliberately invalid stdin.
 Assert `[status.exitstatus, output, errors]` equals `[0, "\"café\"\n", ""]`.
@@ -134,7 +135,7 @@ Update the README command-line section with the approved shell examples.
 Document file errors, closure, and unchanged query diagnostics in the errors guide.
 Keep help's validation, suggestion, and source-location descriptions.
 
-- [ ] **Step 6: Verify the complete change.**
+- [x] **Step 6: Verify the complete change.**
 
 Run `bundle exec rspec spec/integration/cli_file_spec.rb spec/integration/cli_spec.rb` and require all examples to pass.
 Run `bundle exec rake` and require lint, types, tests, coverage, complexity, and documentation checks to pass.
@@ -143,9 +144,23 @@ Run `bundle exec rake package:check` to verify packaged CLI assets, including fi
 Run the installed prose checker on touched Markdown files and require zero findings.
 Run `git diff --check` and review only the task's files for compatibility and unrelated changes.
 
-- [ ] **Step 7: Commit the complete feature.**
+- [x] **Step 7: Commit the complete feature.**
 
 Stage only files from the file map.
 Commit with `feat(cli): read JSON from explicit files` after required checks pass.
 Report observed behavior and show `bundle exec ruby exe/jmespath --file document.json 'user.name'` with a matching example document.
 Keep remote operations, publication, and unrelated CLI features outside this plan.
+
+## Verification record
+
+Native execution uses `feat/cli-file-input` in the user's selected checkout.
+The initial regression run failed 31 file-input examples while all 73 stdin examples passed.
+The CLI regression suite passed 121 examples after implementation.
+`bundle exec rake` passed 4,257 examples with 100% line and branch coverage, lint, types, complexity, and documentation checks.
+`bundle exec rake docs` completed with 100% of public items documented.
+`bundle exec rake package:check` verified an offline production-only installation and both executables.
+Prose and whitespace checks passed.
+
+The positional-query fast path preserves the invalid-encoding regression that OptionParser rejects before query evaluation.
+OptionParser's nonmutating `permute` copies arguments internally and accepts trailing options regardless of `POSIXLY_CORRECT`.
+Exact option matching prevents undeclared short aliases; explicit rejection handlers suppress automatic help, version, and completion process exits.

@@ -57,7 +57,7 @@ RSpec.describe "Command-line queries" do
     expected = "Invalid argument 1 for length: expected string, array, or object; received number " \
                "at line 1, column 1\nlength(@)\n^\n"
     expect(cli(["length(@)"], "4")).to eq([1, "", expected])
-    expect(cli([], "{}")).to eq([2, "", "Usage: jmespath EXPRESSION < document.json\n"])
+    expect(cli([], "{}")).to eq([2, "", "Usage: jmespath [--file PATH] EXPRESSION\n"])
   end
 
   {
@@ -186,7 +186,7 @@ RSpec.describe "Command-line queries" do
         expect(errors.string).to be_empty
       else
         expect([status, output.string, errors.string])
-          .to eq([2, "", "Usage: jmespath EXPRESSION < document.json\n"])
+          .to eq([2, "", "Usage: jmespath [--file PATH] EXPRESSION\n"])
       end
     end
   end
@@ -223,7 +223,7 @@ RSpec.describe "Command-line queries" do
       ["lenght(name)"] => ["{}", 1, "Unknown function: lenght. Did you mean length?\n"],
       ["[::0]"] => ["[]", 1, "Slice step cannot be zero\n"],
       ["@"] => ['{"private_marker":BROKEN}', 1, "Invalid JSON input\n"],
-      [] => ["", 2, "Usage: jmespath EXPRESSION < document.json\n"]
+      [] => ["", 2, "Usage: jmespath [--file PATH] EXPRESSION\n"]
     }.each do |arguments, (input, expected_status, expected_errors)|
       it "reports #{arguments.inspect} failures through #{name}" do
         output, errors, status = Open3.capture3(

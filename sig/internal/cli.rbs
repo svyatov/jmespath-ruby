@@ -2,6 +2,8 @@ module JMESPath
   module CLI
     USAGE: String
     HELP: String
+    def self.parse_arguments: (Array[String]) -> [String, String?]
+    def self.read_document: (String?, _Reader) -> value
     def self.information: (Array[String], _Writer) -> Integer
   end
 end
