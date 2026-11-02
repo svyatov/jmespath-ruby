@@ -28,9 +28,7 @@ module JMESPath
     end
 
     def self.load_file(data)
-      path = FailureCapture.application { data.to_path }
-      raise TypeError, "to_path must return String" unless path.is_a?(String)
-
+      path = FailureCapture.application { File.path(data) }
       File.open(path, "r", encoding: "UTF-8") { |file| parse(read(file)) }
     rescue IOError, SystemCallError => e
       raise FailureCapture.owned(e)

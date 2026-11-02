@@ -156,4 +156,24 @@ RSpec.describe "Non-raising search input" do
   ensure
     StringIO.define_method(:read, original)
   end
+
+  it "preserves native path coercion through to_path and to_str once" do
+    calls = []
+    Tempfile.create("try-search") do |file|
+      file.write("[1]")
+      file.flush
+      adapter = Object.new
+      adapter.define_singleton_method(:to_str) do
+        calls << :string
+        file.path
+      end
+      path = Pathname.new("unused")
+      path.define_singleton_method(:to_path) do
+        calls << :path
+        adapter
+      end
+      expect(JMESPath.compile("@").try_search(path).value).to eq([1])
+      expect(calls).to eq(%i[path string])
+    end
+  end
 end

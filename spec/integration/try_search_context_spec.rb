@@ -293,4 +293,80 @@ RSpec.describe "Non-raising search context" do
       expect_clean_scope
     end
   end
+
+  it "propagates a Hash key conversion nesting error" do
+    error = JSON::NestingError.new("application key")
+    key = Object.new
+    key.define_singleton_method(:to_s) { raise error }
+    expect { JMESPath.compile("to_string(@)").try_search({ key => 1 }) }
+      .to(raise_error { |caught| expect(caught).to equal(error) })
+  end
+
+  it "propagates a collection override nesting error during normalization" do
+    error = JSON::NestingError.new("application collection")
+    value = [1]
+    value.define_singleton_method(:length) { raise error }
+    expect { JMESPath.compile("to_string(@)").try_search(value) }
+      .to(raise_error { |caught| expect(caught).to equal(error) })
+  end
+
+  it "preserves key conversion and serializer order without repeated callbacks" do
+    events = []
+    keys = %w[first second].map do |name|
+      Object.new.tap do |key|
+        key.define_singleton_method(:to_s) do
+          events << "#{name}_key"
+          name
+        end
+      end
+    end
+    values = [1, 2].map do |number|
+      Object.new.tap do |value|
+        value.define_singleton_method(:to_json) do |_state|
+          events << "value_#{number}"
+          number.to_s
+        end
+      end
+    end
+    input = { keys[0] => values[0], keys[1] => values[1], plain: false, "text" => nil }
+    expect(JMESPath.compile("to_string(@)").try_search(input).value)
+      .to eq('{"first":1,"second":2,"plain":false,"text":null}')
+    expect(events).to eq(%w[first_key value_1 second_key value_2 first_key second_key])
+  end
+
+  it "preserves string subclass key conversions and serializers" do
+    error = JSON::NestingError.new("application string")
+    key = Class.new(String) do
+      define_method(:to_s) { raise error }
+    end.new("key")
+    expect { JMESPath.compile("to_string(@)").try_search({ key => 1 }) }
+      .to(raise_error { |caught| expect(caught).to equal(error) })
+    value = Class.new(String) do
+      define_method(:to_json) { |_state| raise error }
+    end.new("value")
+    expect { JMESPath.compile("to_string(@)").try_search([value]) }
+      .to(raise_error { |caught| expect(caught).to equal(error) })
+  end
+
+  it "preserves native fallback without dispatching a returned string serializer" do
+    text = "fallback".dup
+    text.define_singleton_method(:to_json) { |*_args| raise "extra serializer invoked" }
+    value = Object.new
+    value.singleton_class.undef_method(:to_json)
+    value.define_singleton_method(:to_s) { text }
+    expect(JMESPath.compile("to_string(@)").try_search(value).value).to eq('"fallback"')
+  end
+
+  it "does not repeat discovery of a missing serializer" do
+    calls = []
+    value = Object.new
+    value.singleton_class.undef_method(:to_json)
+    value.define_singleton_method(:respond_to?) do |name, *arguments|
+      calls << name if name == :to_json
+      super(name, *arguments)
+    end
+    value.define_singleton_method(:to_s) { "fallback" }
+    expect(JMESPath.compile("to_string(@)").try_search(value).value).to eq('"fallback"')
+    expect(calls).to eq([:to_json])
+  end
 end

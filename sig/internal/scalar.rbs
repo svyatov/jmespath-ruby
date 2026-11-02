@@ -3,8 +3,15 @@ module JMESPath
     class JSONValue
       @value: untyped
       def self.wrap: (value) -> value
+      def self.key: (value) -> value
       def initialize: (untyped) -> void
       def to_json: (untyped) -> String
+      def to_s: () -> String
+    end
+    class JSONKey < String
+      @value: String
+      def initialize: (String) -> void
+      def to_s: () -> String
     end
     module Scalar : Coercions
       SIGNATURES: Hash[String, Array[Array[Symbol]]]
@@ -25,6 +32,7 @@ module JMESPath
       def to_array: (value, context: ValidationContext) -> Array[value]
       def to_string: (value, context: ValidationContext) -> String
       def normalize_json: (value) -> value
+      def generate_json: (value) -> String
       def to_number: (value, context: ValidationContext) -> value
     end
     module Coercions

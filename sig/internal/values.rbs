@@ -41,7 +41,8 @@ module JMESPath
     @pending: Array[^() -> void]
     @active: Hash[Integer, bool]
     @scalar: (^(value) -> value)?
-    def initialize: () ?{ (value) -> value } -> void
+    @key: (^(value) -> value)?
+    def initialize: (?key: (^(value) -> value)?) ?{ (value) -> value } -> void
     def call: (value) -> value
     private
     def enqueue: (value) { (value) -> void } -> void

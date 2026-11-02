@@ -13,7 +13,15 @@ module JMESPath
       end
 
       def to_string(value, **)
-        DataAccess.string(value) || JSON.generate(normalize_json(value))
+        DataAccess.string(value) || generate_json(normalize_json(value))
+      rescue JSON::NestingError
+        raise if FailureCapture.active?
+
+        raise Errors::InvalidValueError, "Value is too deeply nested to serialize"
+      end
+
+      def generate_json(value)
+        JSON.generate(value)
       rescue JSON::NestingError => e
         raise if FailureCapture.excluded?(e)
 
@@ -23,7 +31,7 @@ module JMESPath
       def normalize_json(value)
         return Types.normalize(value) unless FailureCapture.active?
 
-        Normalizer.new { |scalar| JSONValue.wrap(scalar) }.call(value)
+        Normalizer.new(key: ->(key) { JSONValue.key(key) }) { |scalar| JSONValue.wrap(scalar) }.call(value)
       end
 
       def to_number(value, **)

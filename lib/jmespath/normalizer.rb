@@ -3,10 +3,11 @@
 module JMESPath
   # @api private
   class Normalizer
-    def initialize(&scalar)
+    def initialize(key: nil, &scalar)
       @pending = []
       @active = {}
       @scalar = scalar
+      @key = key
     end
 
     def call(value)
@@ -61,6 +62,8 @@ module JMESPath
       # @type var result: Hash[value, value]
       result = values.transform_values { nil }
       yield result
+      transform = @key
+      @pending << -> { result.transform_keys!(&transform) } if transform
       values.to_a.reverse_each { |key, value| enqueue(value) { |entry| result[key] = entry } }
     end
   end

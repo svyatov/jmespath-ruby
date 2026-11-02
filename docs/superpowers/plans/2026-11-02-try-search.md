@@ -272,9 +272,18 @@ Exploratory checks added excluded Hash lookup callbacks, JSON serialization hook
 Native stream inspection bypasses application reflection overrides and identifies Ruby replacements of native read methods.
 Each ownership correction has a regression observed failing before the fix.
 
-`bundle exec rake` passes 6,603 examples with 100% line and branch coverage, lint, RBS, Steep, complexity analysis, and executable documentation.
+`bundle exec rake` passes 6,610 examples with 100% line and branch coverage, lint, RBS, Steep, complexity analysis, and executable documentation.
 `bundle exec rake docs` and `bundle exec rake package:check` pass.
 The artifact includes the result, capture, and serializer helper files.
 Public API QA passes on Ruby 4.0.9 and Ruby 3.3.11, both using JSON 3.1.0.
+The corrected public flows also pass on Ruby 3.3.11 with JSON 2.7.2.
 Ruby 4.0 emits the installed YARD dependency's `irb/notifier` default-gem warning; YARD reports no documentation failures.
 The prose checker and `git diff --check` pass.
+
+A fresh reviewer identified serialization provenance, native path coercion, and fallback output defects.
+All three received failing regressions before correction; no findings were deferred.
+The output-changing finding was regraded from Minor to Important and fixed in the same pass.
+Guarded Hash keys preserve key conversion and serialization order.
+The native generation rescue excludes normalization failures while ordinary search retains its compatibility behavior.
+`File.path` preserves chained path coercion; native string generation preserves JSON fallback without an extra serializer callback.
+The correction pass passed the complete gate, documentation generation, package verification, and public API QA.
