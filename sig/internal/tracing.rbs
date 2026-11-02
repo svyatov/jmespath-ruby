@@ -1,0 +1,24 @@
+module JMESPath
+  module Tracing
+    class Collector
+      @ids: Hash[AST::Node, Integer]
+      @limit: Integer
+      @events: Array[trace_event]
+      @contexts: Hash[Thread, Array[trace_context]]
+      @references: Hash[Integer, Integer]
+      @truncated: bool
+      @closed: bool
+      @mutex: Mutex
+      def initialize: (root: AST::Node, limit: Integer) -> void
+      def operation_id: (AST::Node) -> Integer
+      def within: (AST::Node, Integer) { () -> value } -> value
+      def reference: (AST::Node) { () -> value } -> value
+      def emit: (String, AST::Node, ?Hash[Symbol, String]) -> void
+      def finish: (value) -> trace_report
+      def close: () -> void
+      private
+      def index: (AST::Node) -> void
+      def clear: () -> void
+    end
+  end
+end

@@ -1,4 +1,7 @@
 module JMESPath
+  type trace_context = { operation_id: Integer, index: Integer }
+  type trace_event = { type: String, operation_id: Integer, context: Array[trace_context], details: Hash[Symbol, json] }
+  type trace_report = { value: value, events: Array[trace_event], truncated: bool }
   VERSION: String
   type value = Object?
   type json = nil | bool | Integer | Float | String | Array[json] | Hash[String, json]

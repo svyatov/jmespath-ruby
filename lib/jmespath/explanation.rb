@@ -12,6 +12,12 @@ module JMESPath
       comparison: %w[left right].freeze, multi_select_list: "element", multi_select_hash: "entry", entry: "expression"
     }.freeze
 
+    def self.syntax_children(syntax)
+      return syntax.children unless syntax.kind == :filter_projection
+
+      [syntax.children.fetch(0), syntax.children.fetch(2), syntax.children.fetch(1)]
+    end
+
     def self.build(source, root)
       # @type var result: explanation
       result = { source: source.encode(Encoding::UTF_8).freeze, root: new.node(root) }
@@ -74,9 +80,7 @@ module JMESPath
     end
 
     def syntax_children(syntax)
-      return syntax.children unless syntax.kind == :filter_projection
-
-      [syntax.children.fetch(0), syntax.children.fetch(2), syntax.children.fetch(1)]
+      self.class.syntax_children(syntax)
     end
 
     def snapshot(value)
