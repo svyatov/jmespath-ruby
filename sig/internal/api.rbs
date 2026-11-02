@@ -22,6 +22,10 @@ module JMESPath
   end
   module Input
     def self.load: (value) -> value
+    def self.captured_load: (value) -> value
+    def self.load_file: (Pathname) -> value
+    def self.read: (IO | StringIO) -> untyped
+    def self.parse: (untyped) -> value
   end
   class Expression
     DEFAULT_EVALUATOR: Evaluator

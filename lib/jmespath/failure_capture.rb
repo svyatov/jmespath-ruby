@@ -38,6 +38,10 @@ module JMESPath
       error
     end
 
+    def self.active?
+      !Thread.current[KEY].nil?
+    end
+
     def self.application
       context = Thread.current[KEY]
       return yield unless context

@@ -7,6 +7,7 @@ module JMESPath
     def result: () { () -> value } -> SearchResult
     def self.run: () { () -> value } -> SearchResult
     def self.owned: [E < StandardError] (E) -> E
+    def self.active?: () -> bool
     def self.application: [V] () { () -> V } -> V
     def self.excluded?: (StandardError) -> bool
   end
