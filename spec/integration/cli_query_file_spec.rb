@@ -32,7 +32,7 @@ RSpec.describe "Command-line query files" do
   end
 
   def usage
-    "Usage: jmespath [--file PATH] (EXPRESSION | --query-file PATH)\n       " \
+    "Usage: jmespath [--pretty] [--file PATH] (EXPRESSION | --query-file PATH)\n       " \
       "jmespath --validate (EXPRESSION | --query-file PATH)\n"
   end
 

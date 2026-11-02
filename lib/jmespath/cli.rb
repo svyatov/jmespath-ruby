@@ -5,7 +5,7 @@ require_relative "cli/failure_diagnostic"
 require "optparse"
 
 module JMESPath
-  # Executes or validates positional queries or UTF-8 query files.
+  # Executes queries as compact or pretty JSON, or validates query syntax.
   module CLI
     # Avoid require_exact, which breaks equals values and delimiters on Ruby 3.3.
     # @api private
@@ -20,7 +20,7 @@ module JMESPath
       end
     end
 
-    USAGE = "Usage: jmespath [--file PATH] (EXPRESSION | --query-file PATH)\n       " \
+    USAGE = "Usage: jmespath [--pretty] [--file PATH] (EXPRESSION | --query-file PATH)\n       " \
             "jmespath --validate (EXPRESSION | --query-file PATH)"
     HELP = "#{USAGE}\n" \
            "Read one UTF-8 JSON document from --file PATH, or stdin when omitted.\n" \
@@ -29,6 +29,8 @@ module JMESPath
            "Quote spaces: --file 'my document.json'. Use --file=--document.json for option-like names.\n" \
            "Paths are literal: --file - reads the file named -.\n" \
            "Query paths follow the same rules: --query-file - reads the query file named -.\n" \
+           "Output is compact JSON by default; --pretty uses two-space indentation and a final newline.\n" \
+           "The --pretty flag cannot be repeated or combined with --validate.\n" \
            "Function arguments and expression-reference results are validated; failures exit with status 1.\n" \
            "Unknown functions suggest similar registered names.\n" \
            "Query failures include source locations when available.\n" \
@@ -46,11 +48,11 @@ module JMESPath
       return validation(argv, stderr) if argv.first == "--validate" && argv.length == 2
       return information(argv, stdout) if [%w[--help], %w[-h], %w[--version]].include?(argv)
 
-      expression, path, query_path, validate = parse_arguments(argv)
+      expression, path, query_path, validate, pretty = parse_arguments(argv)
       expression = read_query(expression, query_path)
       return validation(["--validate", expression], stderr) if validate
 
-      execute(expression, path, stdin, stdout)
+      execute(expression, path, stdin, stdout, pretty)
     rescue OptionParser::ParseError
       stderr.puts(USAGE)
       2
@@ -61,13 +63,13 @@ module JMESPath
 
     # @api private
     def self.parse_arguments(argv)
-      return [argv.fetch(0), nil, nil, false] if argv.one? && !argv.fetch(0).start_with?("-")
+      return [argv.fetch(0), nil, nil, false, false] if argv.one? && !argv.fetch(0).start_with?("-")
 
       paths = {} # : Hash[String, String]
       arguments = argument_parser(paths).permute(argv)
       check_sources(arguments, paths)
 
-      [arguments.first, paths["file"], paths["query-file"], paths.key?("validate")]
+      [arguments.first, paths["file"], paths["query-file"], paths.key?("validate"), paths.key?("pretty")]
     end
 
     # @api private
@@ -75,7 +77,7 @@ module JMESPath
       sources = arguments.length + (paths.key?("query-file") ? 1 : 0)
       raise OptionParser::InvalidArgument, "expected one query source" unless sources == 1
       return unless paths.key?("validate")
-      return if paths.key?("query-file") && !paths.key?("file")
+      return if paths.key?("query-file") && !paths.key?("file") && !paths.key?("pretty")
 
       raise OptionParser::InvalidArgument, "validation requires a query file"
     end
@@ -93,10 +95,12 @@ module JMESPath
             paths[name] = value
           end
         end
-        options.on("--validate") do
-          raise OptionParser::InvalidOption, "--validate repeated" if paths.key?("validate")
+        %w[validate pretty].each do |name|
+          options.on("--#{name}") do
+            raise OptionParser::InvalidOption, "--#{name} repeated" if paths.key?(name)
 
-          paths["validate"] = ""
+            paths[name] = ""
+          end
         end
       end
     end
@@ -116,9 +120,10 @@ module JMESPath
     end
 
     # @api private
-    def self.execute(expression, path, stdin, stdout)
+    def self.execute(expression, path, stdin, stdout, pretty)
       data = read_document(path, stdin)
-      stdout.puts(JSON.generate(JMESPath.search(expression, data)))
+      result = JMESPath.search(expression, data)
+      stdout.puts(pretty ? JSON.pretty_generate(result) : JSON.generate(result))
       0
     end
 
