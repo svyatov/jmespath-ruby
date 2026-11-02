@@ -1,0 +1,5 @@
+module JMESPath
+  class SearchResult
+    def initialize: (value: value, error: StandardError?) -> void
+  end
+end

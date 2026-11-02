@@ -35,6 +35,25 @@ module JMESPath
     # @return [Object] the query result, including nil
     alias call search
 
+    # Search input and return its value or a library-owned failure.
+    # @param data [Object] the same input forms accepted by {#search}
+    # @param options [Hash] positional evaluation options
+    # @param keywords [Hash] keyword evaluation options
+    # @return [SearchResult] frozen outcome retaining the original value or error
+    # @raise [ArgumentError] evaluation options are invalid
+    # @example Distinguish successful null from failure
+    #   JMESPath.compile("missing").try_search({}).success? #=> true
+    def try_search(data, options = Options::EMPTY, **keywords)
+      fast = options.equal?(Options::EMPTY) && keywords.empty?
+      config = fast ? @options : Options.new(options, keywords, default_depth: @max_depth, defaults: @options)
+      value = if fast
+                @plan.call(data.is_a?(Hash) ? data : Input.load(data))
+              else
+                evaluate(Input.load(data), config)
+              end
+      SearchResult.new(value: value, error: nil)
+    end
+
     # Search input and require a non-null result.
     # @param data [Object] the same input forms accepted by {#search}
     # @param options [Hash] positional evaluation options
