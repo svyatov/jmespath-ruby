@@ -163,7 +163,11 @@ _jmespath_completion() {
       for candidate in "$current"*; do printf '%s\0' "$candidate"; done
     )
     # Enable Readline filename quoting only for paths, including on Bash 3.2.
-    compgen -f -- "$current" >/dev/null || :
+    if type compopt >/dev/null 2>&1; then
+      compopt -o filenames
+    else
+      compgen -f -- "$current" >/dev/null || :
+    fi
   elif [[ $current == -* ]]; then
     while IFS= read -r candidate; do
       COMPREPLY[${#COMPREPLY[@]}]=$candidate
