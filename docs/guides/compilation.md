@@ -157,6 +157,125 @@ query.explain[:root][:details][:value].infinite? #=> 1
 query.search(nil).infinite? #=> 1
 ```
 
+## Evaluation tracing
+
+Call `Expression#trace` to evaluate once and explain null fields, filter exclusions, and omitted projection results.
+It accepts the same input forms and evaluation options as `search`, including saved defaults and per-call overrides.
+The keyword `limit:` sets a positive Integer event limit, defaulting to 1,000.
+Invalid limits raise `ArgumentError` before consuming input; positional `:limit` is not an evaluation option.
+
+This Ruby example traces a projection while retaining false values:
+
+```ruby
+query = JMESPath.compile("items[*].name")
+report = query.trace({items: [{name: "Ada"}, {}, {name: false}]})
+report[:value] #=> ["Ada", false]
+report[:events].map { |event| event[:type] } #=> ["field_null", "projection_omission"]
+report[:events].first[:context] #=> [{operation_id: 0, index: 1}]
+report[:truncated] #=> false
+```
+
+### Report and event format
+
+The frozen report has exactly three keys:
+
+| Key | Value |
+| --- | --- |
+| `:value` | The ordinary query result, including nil or false |
+| `:events` | A deeply frozen array of diagnostic events |
+| `:truncated` | True when a diagnostic event was discarded because the limit was reached |
+
+The result retains ordinary mutability and selected input object identity.
+Freezing the report does not freeze its `:value`.
+Diagnostics contain no input objects, intermediate query values, or document snapshots.
+
+Every event has exactly four keys:
+
+| Key | Value |
+| --- | --- |
+| `:type` | A string from the event table below |
+| `:operation_id` | The responsible operation's ID in `query.explain` |
+| `:context` | An ordered array of enclosing iteration frames |
+| `:details` | A hash of event-specific details |
+
+Event and detail keys are symbols; type and reason values are strings.
+
+| Type | Responsible operation | Details |
+| --- | --- | --- |
+| `field_null` | The field access returning nil | `name: String` and `reason: String` |
+| `filter_exclusion` | The filter rejecting an item | Empty hash |
+| `projection_omission` | The projection omitting a nil result | Empty hash |
+
+Field reasons are `missing`, `null`, `non_object`, and `unknown`.
+`missing` means lookup established absence under string-key and symbol-key fallback rules.
+`null` means lookup established an explicitly present nil under those rules.
+`non_object` means ordinary conversion produced no object.
+`unknown` means classification would require additional observable operations.
+Custom lookup methods and identity-based hashes receive conservative `unknown` classifications.
+Tracing adds no conversions, application callbacks, or application-observable field lookups to refine a reason.
+
+This Ruby example finds the source of an omission through its operation ID:
+
+```ruby
+query = JMESPath.compile("items[*].name")
+report = query.trace({items: [{}]})
+event = report[:events].last
+query.explain[:root][:id] == event[:operation_id] #=> true
+query.explain[:root][:source_range] #=> [0, 13]
+```
+
+Successful fields, retained values, out-of-range indexes, and unvisited branches produce no diagnostics.
+Tracing explains the three event types above; it does not explain every possible nil result.
+Field events precede any exclusion or omission they cause.
+Filters evaluate all conditions before projecting selected items.
+
+### Local item context
+
+Each context frame has exactly `:operation_id` and `:index`.
+Frames run from the outermost iteration to the innermost.
+Indexes are zero-based positions in the immediate array or object-values sequence.
+Filter projections retain original input indexes, including gaps left by rejected items.
+An exclusion or omission includes the frame of its affected item.
+Events outside iteration have an empty context.
+
+Object projections use ordinal values positions without extra key enumeration.
+Pipes, slicing, flattening, and functions can establish local sequences.
+Context does not provide object keys or paths back through transformations to the original document.
+
+Expression-reference frames identify the reference operation and its zero-based invocation count within that trace call.
+The count describes callback invocation order, not positions in a function's input.
+Synchronous reference calls retain enclosing iteration frames.
+Concurrent reference calls keep separate thread contexts; application scheduling determines event order.
+References saved by callbacks remain callable after tracing finishes, with collection closed.
+
+### Limits, errors, and isolation
+
+Tracing retains the first `limit` diagnostic events in observed evaluation order.
+Exactly `limit` events leave `:truncated` false; the next diagnostic sets it to true.
+Truncation adds no sentinel event.
+Evaluation continues normally after the limit, preserving callback counts, order, and the complete result.
+
+This Ruby example limits diagnostics without changing the result:
+
+```ruby
+query = JMESPath.compile("items[*].name")
+limited = query.trace({items: [{}, {name: false}]}, limit: 1)
+limited[:value] #=> [false]
+limited[:events].length #=> 1
+limited[:truncated] #=> true
+```
+
+The limit bounds retained diagnostics, not evaluation memory.
+The operation map uses memory proportional to query size; retained events contain copies of their enclosing frames.
+Filters retain selected original indexes until projection finishes.
+Collection avoids further event snapshots after truncation.
+
+Trace state is separate for each call, including concurrent calls and nested calls from callbacks.
+Ordinary search builds no trace collector or operation map.
+Tracing propagates original evaluation and input exceptions without attaching a report or retrying evaluation.
+Suppression retains its ordinary behavior; a suppressed nil result can produce a downstream omission.
+There is no dedicated validation-failure event, automatic logging, module-level trace method, or CLI trace flag.
+
 ## Saved options
 
 Pass `functions:` and `disable_visit_errors:` to `compile` to save defaults for repeated searches.

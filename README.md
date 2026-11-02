@@ -131,6 +131,17 @@ JMESPath.compile("user.name").explain[:root][:operation] #=> "subexpression"
 
 See [query inspection](docs/guides/compilation.md#query-inspection) for the immutable tree format, operation IDs, and source ranges.
 
+In Ruby code, trace omissions during one evaluation with a bounded event limit:
+
+```ruby
+query = JMESPath.compile("items[*].name")
+report = query.trace({items: [{name: "Ada"}, {}, {name: false}]}, limit: 100)
+report[:value] #=> ["Ada", false]
+report[:events].map { |event| event[:type] } #=> ["field_null", "projection_omission"]
+```
+
+See [evaluation tracing](docs/guides/compilation.md#evaluation-tracing) for event types, local item indexes, and truncation.
+
 In Ruby code, save evaluation options when compiling a query, then use `search` or its `call` alias:
 
 ```ruby
