@@ -94,6 +94,16 @@ See [compatibility and deliberate corrections](docs/guides/compatibility.md) bef
 
 ## Search
 
+Use `Expression#fetch` when a Ruby caller requires a non-null result:
+
+```ruby
+JMESPath.compile("user.name").fetch({user: {name: "Ada"}}) #=> "Ada"
+```
+
+Null results raise `JMESPath::Errors::NullResultError`, whose `expression` attribute contains the query text.
+False, zero, and empty values succeed.
+See [required query results](docs/guides/compilation.md#required-results) for options and suppression behavior.
+
 Use `JMESPath.search` in Ruby code to evaluate a query:
 
 ```ruby

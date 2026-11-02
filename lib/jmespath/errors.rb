@@ -8,6 +8,20 @@ module JMESPath
     # A runtime evaluation failure.
     class RuntimeError < Error; end
 
+    # A required query result is null.
+    class NullResultError < RuntimeError
+      # @return [String] the frozen query text
+      attr_reader :expression
+
+      # @param expression [String] the query that returned null
+      # @example Inspect a failed requirement
+      #   JMESPath::Errors::NullResultError.new(expression: "user.name").expression #=> "user.name"
+      def initialize(expression:)
+        @expression = expression.dup.freeze
+        super("Expression returned null")
+      end
+    end
+
     # A malformed expression with a byte position and readable coordinates.
     class SyntaxError < Error
       # @return [String] the reason parsing failed, without coordinates

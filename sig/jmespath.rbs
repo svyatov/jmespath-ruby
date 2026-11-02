@@ -35,6 +35,10 @@ module JMESPath
     end
     class RuntimeError < Error
     end
+    class NullResultError < RuntimeError
+      attr_reader expression: String
+      def initialize: (expression: String) -> void
+    end
     class SyntaxError < Error
       attr_reader reason: String
       attr_reader expression: String
@@ -83,6 +87,7 @@ module JMESPath
   class Expression
     attr_reader source: String
     def search: (value, ?Hash[Symbol, value], **value) -> value
+    def fetch: (value, ?Hash[Symbol, value], **value) -> Object
     def trace: (value, ?Hash[Symbol, value], ?limit: Integer, **value) -> trace_report
     alias call search
     def explain: () -> explanation

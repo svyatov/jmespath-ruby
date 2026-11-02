@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+RSpec.describe "Null result errors" do
+  it "owns immutable query text independently of caller mutation" do
+    source = +"user.name"
+    error = JMESPath::Errors::NullResultError.new(expression: source)
+    expect(source).not_to be_frozen
+    source.clear
+    expect(error.expression).to eq("user.name")
+    expect(error.expression).to be_frozen
+    expect(error.message).to eq("Expression returned null")
+    expect(error).to be_a(JMESPath::Errors::RuntimeError)
+    expect(error).to be_a(JMESPath::Errors::Error)
+  end
+end
+
 RSpec.describe JMESPath::Errors::SyntaxError do
   it "distinguishes an omitted offset from explicit zero" do
     unknown = described_class.new("Bad query")
