@@ -105,7 +105,7 @@ module JMESPath
     def self.read_query(expression, path)
       return expression || "" unless path
 
-      File.open(path, "rb:UTF-8", &:read)
+      File.open(path, "rb:UTF-8:-", &:read)
     end
 
     # @api private

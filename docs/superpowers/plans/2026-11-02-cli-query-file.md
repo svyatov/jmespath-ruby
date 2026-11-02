@@ -147,7 +147,7 @@ Native execution uses the current checkout on `feat/cli-file-input`, as delegate
 The baseline CLI suite passed 145 examples.
 The initial query-file regression run failed 20 examples while 146 passed.
 After implementation, the three CLI spec files passed 177 examples.
-The complete `bundle exec rake` run passed 6,336 examples with 100% line and branch coverage.
+The final `bundle exec rake` run passed 6,338 examples with 100% line and branch coverage.
 Lint, RBS, Steep, complexity, and documentation checks passed.
 `bundle exec rake docs` generated documentation with 100% of public items documented.
 `bundle exec rake package:check` passed the offline installation and executable checks.
@@ -156,3 +156,12 @@ Prose and whitespace checks passed.
 Argument parsing now rejects malformed validation usage before calling the private validation handler.
 Removing that handler's unreachable argument-count guard restores full coverage and preserves public behavior.
 Direct misuse of the private handler can raise `IndexError`.
+
+Independent QA passed 212 checks, including Ruby 3.3.11, both executables, ownership, and input ordering.
+The final code review found one Important issue: Ruby's default internal encoding could transcode query files during reading.
+Two regressions reproduced an uncaught conversion error and missing Unicode source coordinates.
+The fix explicitly disables internal conversion with `rb:UTF-8:-`.
+Both regressions passed after the fix.
+Targeted follow-up QA passed 44 checks across Ruby 3.3.11 and 4.0.9 with US-ASCII and UTF-16LE internal defaults.
+The review found no Critical or Minor issues and declined no behaviors for judgment.
+The complete suite and offline package checks passed after the encoding fix.

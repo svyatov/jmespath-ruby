@@ -25,8 +25,8 @@ RSpec.describe "Command-line query files" do
   end
 
   def run_cli(arguments, input: double("unused stdin"))
-    output = StringIO.new
-    errors = StringIO.new
+    output = StringIO.new.set_encoding(Encoding::UTF_8)
+    errors = StringIO.new.set_encoding(Encoding::UTF_8)
     status = JMESPath::CLI.run(arguments, stdin: input, stdout: output, stderr: errors)
     [status, output.string, errors.string]
   end
@@ -153,6 +153,27 @@ RSpec.describe "Command-line query files" do
     end
   end
 
+  [Encoding::US_ASCII, Encoding::UTF_16LE].each do |encoding|
+    it "preserves UTF-8 source when default internal encoding is #{encoding}" do
+      File.binwrite(query_path, "['café', length(@)]\n")
+      previous = Encoding.default_internal
+      Encoding.default_internal = encoding
+      expect(run_cli(["--query-file", query_path], input: StringIO.new("4")))
+        .to eq([1, "", "Invalid argument 1 for length: expected string, array, or object; received number " \
+                       "at line 1, column 10\n['café', length(@)]\n         ^\n"])
+      expect(run_cli(["--validate", "--query-file", query_path])).to eq([0, "", ""])
+      expect(run_cli(["--query-file", query_path], input: StringIO.new("BROKEN")))
+        .to eq([1, "", "Invalid JSON input\n"])
+      File.binwrite(query_path, "\xFF".b)
+      expect(run_cli(["--query-file", query_path], input: StringIO.new("BROKEN")))
+        .to eq([1, "", "Invalid JSON input\n"])
+      expect(run_cli(["--validate", "--query-file", query_path]))
+        .to eq([1, "", "Expression has invalid encoding\n"])
+    ensure
+      Encoding.default_internal = previous
+    end
+  end
+
   it "closes the query before opening the document and propagates evaluation errors" do
     opened = nil
     allow(File).to receive(:open).and_wrap_original do |call, path, *args, &block|
@@ -186,7 +207,7 @@ RSpec.describe "Command-line query files" do
 
   it "reports permission failures before accessing document input" do
     allow(File).to receive(:open).and_call_original
-    allow(File).to receive(:open).with(query_path, "rb:UTF-8").and_raise(Errno::EACCES, query_path)
+    allow(File).to receive(:open).with(query_path, "rb:UTF-8:-").and_raise(Errno::EACCES, query_path)
     expect(File).not_to receive(:open).with(document_path, anything)
     status, output, errors = run_cli(["--query-file", query_path, "--file", document_path])
     expect([status, output]).to eq([1, ""])
@@ -198,7 +219,7 @@ RSpec.describe "Command-line query files" do
     it "closes the owned query file after #{failure&.class || 'success'}" do
       opened = nil
       allow(File).to receive(:open).and_call_original
-      allow(File).to receive(:open).with(query_path, "rb:UTF-8").and_wrap_original do |call, *args, &block|
+      allow(File).to receive(:open).with(query_path, "rb:UTF-8:-").and_wrap_original do |call, *args, &block|
         call.call(*args) do |file|
           opened = file
           allow(file).to receive(:read).and_raise(failure) if failure
