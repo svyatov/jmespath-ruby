@@ -198,6 +198,7 @@ jmespath --file - 'user.name'
 jmespath --file document.json -- 'user.name'
 jmespath --query-file query.jmespath < document.json
 jmespath --query-file query.jmespath --file document.json
+jmespath --pretty 'items' < document.json
 ```
 
 Files are read as UTF-8 and closed after parsing, before query evaluation.
@@ -216,7 +217,12 @@ Missing or unreadable query files leave document input untouched.
 After reading the query, execution parses JSON before compiling the expression.
 Query paths follow the document path rules: `--query-file -` reads a literal file named `-`.
 
-The result goes to standard output as JSON.
+The result goes to standard output as compact JSON followed by a newline.
+Use `--pretty` for JSON with two-space indentation and one final newline.
+Both formats support objects, arrays, strings, numbers, booleans, and null, with Unicode preserved.
+Pretty output works with positional or file queries and either document source.
+Repeated `--pretty` options are usage failures.
+Pretty formatting preserves stderr diagnostics, source coordinates, and exit statuses; failures before output starts leave stdout empty.
 Syntax, function type, and arity failures include source coordinates, a query excerpt, and a caret when available.
 Unknown functions suggest similar registered names.
 Malformed JSON input reports `Invalid JSON input` without including document fragments.
@@ -233,7 +239,9 @@ jmespath --query-file query.jmespath --validate
 
 Both executables support `--validate EXPRESSION` without reading standard input.
 File validation also leaves stdin untouched and rejects document options such as `--file`.
+Combining `--pretty` with validation is a usage failure, rejected before opening input files or reading stdin.
 The exact two-argument form `--validate EXPRESSION` always treats the second argument as query text, including flag-like text.
+Thus `jmespath --validate --pretty` validates the literal expression `--pretty`.
 Valid syntax produces no output and exits with status 0.
 Query failures print a diagnostic to standard error and exit with status 1; incorrect usage exits with status 2.
 Validation does not check function availability or runtime argument types.

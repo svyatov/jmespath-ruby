@@ -48,12 +48,12 @@ Extend private `CLI.execute(expression, path, stdin, stdout, pretty) -> Integer`
 Keep the parser's string-valued hash, using presence of the `pretty` key to represent the flag.
 Retain all other helper signatures and both executable entry points.
 
-- [ ] **Step 1: Verify the CLI baseline.**
+- [x] **Step 1: Verify the CLI baseline.**
 
 Run `bundle exec rspec spec/integration/cli_spec.rb spec/integration/cli_file_spec.rb spec/integration/cli_query_file_spec.rb`.
 Require zero failures before modifying behavior.
 
-- [ ] **Step 2: Add failing formatting and argument regressions.**
+- [x] **Step 2: Add failing formatting and argument regressions.**
 
 Create `spec/integration/cli_pretty_spec.rb` using the temporary-directory and UTF-8 StringIO patterns from `cli_query_file_spec.rb`.
 Define `run_cli(arguments, input:)` to return `[status, stdout, stderr]` and an independent literal `usage` helper.
@@ -93,7 +93,7 @@ Also include `--pretty --validate @` and `--pretty -- @ extra`.
 Make `File.open` raise on access and supply an unreadable stdin double in these examples.
 For R2, assert `--validate --pretty` returns `[1, "", "Expected a digit at line 1, column 1\n--pretty\n^\n"]` without input access.
 
-- [ ] **Step 3: Add failing diagnostic and executable regressions.**
+- [x] **Step 3: Add failing diagnostic and executable regressions.**
 
 The example `preserves complete failure results` asserts literal `[1, "", diagnostic]` triples for compact and pretty invocations.
 Reuse the independent expected diagnostics in `cli_spec.rb` for `items[`, `length(@)`, `length()`, `lenght(@)`, and `[::0]`.
@@ -108,12 +108,12 @@ Also assert exact syntax and type diagnostics, malformed JSON failure, and statu
 Use `Open3.popen3` with the timeout and cleanup pattern from `cli_query_file_spec.rb` for the conflict.
 Assert process completion while stdin remains open and stdout remains empty.
 
-- [ ] **Step 4: Run the CLI regressions and confirm feature failures.**
+- [x] **Step 4: Run the CLI regressions and confirm feature failures.**
 
 Run `bundle exec rspec spec/integration/cli_pretty_spec.rb spec/integration/cli_spec.rb spec/integration/cli_file_spec.rb spec/integration/cli_query_file_spec.rb`.
 Expect failures because `--pretty` is unrecognized and usage lacks the flag, not because the test setup fails.
 
-- [ ] **Step 5: Implement the flag and update private types.**
+- [x] **Step 5: Implement the flag and update private types.**
 
 In `CLI.argument_parser`, register only `--pretty`, reject repeats, and store presence in the parser hash.
 In `CLI.check_sources`, reject pretty validation before returning from the valid query-file validation branch.
@@ -124,11 +124,11 @@ Keep exception handling and document/query read order unchanged.
 Add `[--pretty]` to the execution usage line and explain two-space output, compact defaults, repetition, and validation rejection in help.
 Update `sig/internal/cli.rbs` and affected YARD descriptions without adding a public Ruby option.
 
-- [ ] **Step 6: Run the CLI regressions and confirm zero failures.**
+- [x] **Step 6: Run the CLI regressions and confirm zero failures.**
 
 Run the Step 4 command and require zero failures.
 
-- [ ] **Step 7: Document the output contract.**
+- [x] **Step 7: Document the output contract.**
 
 Add a `--pretty 'items'` shell example to the README command-line section.
 Describe the compact default, two-space indentation, JSON scalar output, final newline, and supported input sources.
@@ -137,15 +137,24 @@ State that the exact two-argument `--validate --pretty` invocation still validat
 State that pretty formatting preserves stderr diagnostics, failure statuses, and empty stdout before output starts.
 Do not advertise raw output or JSON Lines support.
 
-- [ ] **Step 8: Run the required checks.**
+- [x] **Step 8: Run the required checks.**
 
 Run `bundle exec rake` and require a successful exit, including full coverage and type checks.
 Run `bundle exec rake docs` and require a successful exit.
 Run the repository prose checker on changed Markdown files and `git diff --check`; require no findings.
 Review the final diff against the approved design and keep unrelated files unstaged.
 
-- [ ] **Step 9: Commit the complete feature.**
+- [x] **Step 9: Commit the complete feature.**
 
 Stage only the files in the file map and this plan's completed checkboxes.
 Use `feat(cli): add pretty JSON output` as the commit subject.
 Do not push, open a PR, close the issue, or publish without separate authorization.
+
+## Verification results
+
+The baseline CLI suite passed 179 examples.
+The extended suite failed before implementation because `--pretty` was unrecognized and usage lacked the flag.
+The full `bundle exec rake` check passed 6,372 examples with 100% line and branch coverage.
+Lint, RBS validation, Steep, coverage-aware complexity, and documentation checks passed.
+`bundle exec rake docs` passed with 100% documented public interfaces.
+Independent QA passed 200 subprocess checks across both executable names.

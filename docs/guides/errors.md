@@ -209,6 +209,10 @@ Invalid options raise ArgumentError.
 Both `jmespath` and `jmespath.rb` print expected input and query failures to stderr and exit with status 1.
 Failures before output starts leave stdout empty.
 Successful queries print one JSON result to stdout.
+Output is compact by default; `--pretty` selects two-space indentation with one final newline.
+Both formats emit valid JSON, including scalar results and Unicode text.
+Pretty formatting preserves all diagnostics, source coordinates, exit statuses, and empty stdout on failures before output starts.
+Repeated `--pretty` options produce usage failures.
 Usage failures print usage to stderr and exit with status 2 without reading stdin.
 Help and version requests exit with status 0 without reading stdin.
 With `--file PATH`, usage failures and informational requests do not open the document.
@@ -229,6 +233,7 @@ To execute a saved query, run this command in a shell:
 
 ```sh
 jmespath --query-file query.jmespath --file document.json
+jmespath --pretty --query-file query.jmespath --file document.json
 ```
 
 To query a UTF-8 document file, run this command in a shell:
@@ -254,6 +259,8 @@ Every validation outcome leaves stdout empty and does not read stdin.
 In the exact two-argument form `--validate EXPRESSION`, the second argument is query text, even when it resembles a flag.
 Thus `--validate --query-file` validates the literal expression `--query-file`.
 File validation also accepts `--query-file PATH --validate` and rejects `--file`.
+Combining `--pretty` with validation produces a usage failure before opening input files or reading stdin.
+The exact two-argument call `--validate --pretty` validates the literal expression `--pretty`.
 
 To inspect a function type failure, run this command in a shell:
 
