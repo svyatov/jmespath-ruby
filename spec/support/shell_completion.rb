@@ -11,7 +11,7 @@ module ShellCompletion
     definition=$(declare -f _jmespath_completion)
     eval "${definition/_jmespath_completion/_probe_original}"
     _jmespath_completion() {
-      _probe_original
+      _probe_original "$@"
       printf '%s\0' "${COMPREPLY[@]}" > "$PROBE_CANDIDATES"
     }
     _probe_capture() {

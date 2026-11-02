@@ -30,6 +30,7 @@ RSpec.describe "Shell completion" do
 
       %w[jmespath jmespath.rb].each do |command|
         it "offers every supported option for #{command} before and after queries" do
+          Dir.mkdir("--query-file")
           ["#{command} -", "#{command} '@' -", "#{command} --pretty -"].each do |line|
             expect(ShellCompletion.candidates(shell: shell, root: root, line: line).sort).to eq(options.sort)
           end
@@ -71,6 +72,39 @@ RSpec.describe "Shell completion" do
           expect(Shellwords.split(result)).to eq([command, "--file", "my directory/document.json"])
           result = complete(line: "#{command} --file 'my directory/doc")
           expect(Shellwords.split(result)).to eq([command, "--file", "my directory/document.json"])
+        end
+
+        it "preserves option assignments inside literal paths for #{command}" do
+          File.write("--file=document.json", "not read")
+          %w[--file --query-file].each do |option|
+            [" ", "="].each do |separator|
+              result = complete(line: "#{command} #{option}#{separator}--file=doc")
+              expected = if separator == "="
+                           [command, "#{option}=--file=document.json"]
+                         else
+                           [command, option, "--file=document.json"]
+                         end
+              expect(Shellwords.split(result)).to eq(expected)
+            end
+          end
+        end
+
+        it "resumes option completion after a literal equals path for #{command}" do
+          File.write("=", "not read")
+          expect(complete(line: "#{command} --file = --que")).to eq("#{command} --file = --query-file ")
+        end
+
+        it "preserves unescaped equals boundaries in filenames for #{command}" do
+          ["eq=value.json", "odd' space=value.json"].each do |name|
+            File.write(name, "not read")
+            prefix = "#{Shellwords.escape(name.split('=').first)}="
+            [" ", "="].each do |separator|
+              result = complete(line: "#{command} --file#{separator}#{prefix}")
+              expected = separator == "=" ? [command, "--file=#{name}"] : [command, "--file", name]
+              expect(Shellwords.split(result)).to eq(expected)
+            end
+            File.unlink(name)
+          end
         end
       end
 
