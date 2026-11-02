@@ -7,6 +7,19 @@ require "optparse"
 module JMESPath
   # Queries a JSON document from stdin or a UTF-8 file, or validates query syntax alone.
   module CLI
+    # Avoid require_exact, which breaks equals values and delimiters on Ruby 3.3.
+    # @api private
+    class ArgumentParser < OptionParser
+      private
+
+      def complete(kind, name, *)
+        switch = search(kind, name)
+        raise InvalidOption, name unless switch
+
+        [switch, name]
+      end
+    end
+
     USAGE = "Usage: jmespath [--file PATH] EXPRESSION\n       jmespath --validate EXPRESSION"
     HELP = "#{USAGE}\n" \
            "Read one UTF-8 JSON document from --file PATH, or stdin when omitted.\n" \
@@ -45,8 +58,7 @@ module JMESPath
       return [argv.fetch(0), nil] if argv.one? && !argv.fetch(0).start_with?("-")
 
       path = nil
-      arguments = OptionParser.new do |options|
-        options.require_exact = true
+      arguments = ArgumentParser.new do |options|
         options.on("-h", "--help", "--version", "--*-completion-bash", "--*-completion-zsh") do
           raise OptionParser::InvalidOption, "unsupported option combination"
         end

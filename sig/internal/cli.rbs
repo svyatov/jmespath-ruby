@@ -1,5 +1,10 @@
 module JMESPath
   module CLI
+    class ArgumentParser < ::OptionParser
+      private
+      def complete: (Symbol, String, *untyped) -> [OptionParser::Switch, String]
+    end
+
     USAGE: String
     HELP: String
     def self.parse_arguments: (Array[String]) -> [String, String?]

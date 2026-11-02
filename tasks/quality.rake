@@ -7,7 +7,7 @@ end
 
 desc "Check RBS signatures and implementation types"
 task :types do
-  sh "bundle", "exec", "rbs", "-I", "sig", "validate"
+  sh "bundle", "exec", "rbs", "-I", "sig", "-r", "optparse", "validate"
   sh "bundle", "exec", "steep", "check"
 end
 

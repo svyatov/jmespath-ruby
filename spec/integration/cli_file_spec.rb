@@ -92,6 +92,7 @@ RSpec.describe "Command-line document files" do
   [[], ["--unknown"], ["--file"], ["--file", "PATH"], ["--"], ["--", "@", "extra"],
    ["--file", "PATH", "--file", "PATH", "@"], ["--file", "PATH", "@", "extra"],
    ["--", "--file", "PATH", "@"], ["-f", "PATH", "@"],
+   ["--f", "PATH", "@"], ["--fi=PATH", "@"], ["--fil", "PATH", "@"],
    ["--*-completion-bash", "@"], ["--*-completion-zsh", "@"]].each do |arguments|
     it "rejects malformed arguments #{arguments.inspect} without accessing input" do
       allow(File).to receive(:open).and_raise("must not open a file")
