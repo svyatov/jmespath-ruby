@@ -199,6 +199,7 @@ jmespath --file document.json -- 'user.name'
 jmespath --query-file query.jmespath < document.json
 jmespath --query-file query.jmespath --file document.json
 jmespath --pretty 'items' < document.json
+jmespath --raw-output 'user.name' < document.json
 ```
 
 Files are read as UTF-8 and closed after parsing, before query evaluation.
@@ -223,6 +224,12 @@ Both formats support objects, arrays, strings, numbers, booleans, and null, with
 Pretty output works with positional or file queries and either document source.
 Repeated `--pretty` options are usage failures.
 Pretty formatting preserves stderr diagnostics, source coordinates, and exit statuses; failures before output starts leave stdout empty.
+Use `--raw-output` to print string results without JSON quotes or escape encoding.
+Other result types retain compact JSON encoding.
+Raw output appends one newline and preserves every embedded and trailing newline in the result.
+An empty string produces one newline; a string ending with one newline produces two.
+Repeated `--raw-output` options and combinations with `--pretty` are usage failures.
+Raw output preserves stderr diagnostics, source coordinates, and exit statuses; failures before output starts leave stdout empty.
 Syntax, function type, and arity failures include source coordinates, a query excerpt, and a caret when available.
 Unknown functions suggest similar registered names.
 Malformed JSON input reports `Invalid JSON input` without including document fragments.
@@ -240,8 +247,10 @@ jmespath --query-file query.jmespath --validate
 Both executables support `--validate EXPRESSION` without reading standard input.
 File validation also leaves stdin untouched and rejects document options such as `--file`.
 Combining `--pretty` with validation is a usage failure, rejected before opening input files or reading stdin.
+Combining `--raw-output` with validation follows the same rule.
 The exact two-argument form `--validate EXPRESSION` always treats the second argument as query text, including flag-like text.
 Thus `jmespath --validate --pretty` validates the literal expression `--pretty`.
+Likewise, `jmespath --validate --raw-output` validates the literal expression `--raw-output`.
 Valid syntax produces no output and exits with status 0.
 Query failures print a diagnostic to standard error and exit with status 1; incorrect usage exits with status 2.
 Validation does not check function availability or runtime argument types.

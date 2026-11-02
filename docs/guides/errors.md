@@ -209,6 +209,11 @@ Invalid options raise ArgumentError.
 Both `jmespath` and `jmespath.rb` print expected input and query failures to stderr and exit with status 1.
 Failures before output starts leave stdout empty.
 Successful queries print one JSON result to stdout.
+With `--raw-output`, string results print without JSON quotes or escape encoding; other types retain compact JSON encoding.
+Raw output appends one newline while preserving every embedded and trailing newline in the string.
+An empty string produces one newline; a string ending with one newline produces two.
+Raw output preserves diagnostics, source coordinates, failure statuses, and empty stdout on failures before output starts.
+Repeated `--raw-output` options and combinations with `--pretty` produce usage failures before accessing input.
 Output is compact by default; `--pretty` selects two-space indentation with one final newline.
 Both formats emit valid JSON, including scalar results and Unicode text.
 Pretty formatting preserves all diagnostics, source coordinates, exit statuses, and empty stdout on failures before output starts.
@@ -260,7 +265,9 @@ In the exact two-argument form `--validate EXPRESSION`, the second argument is q
 Thus `--validate --query-file` validates the literal expression `--query-file`.
 File validation also accepts `--query-file PATH --validate` and rejects `--file`.
 Combining `--pretty` with validation produces a usage failure before opening input files or reading stdin.
+Combining `--raw-output` with validation follows the same rule.
 The exact two-argument call `--validate --pretty` validates the literal expression `--pretty`.
+Likewise, `--validate --raw-output` validates the literal expression `--raw-output`.
 
 To inspect a function type failure, run this command in a shell:
 
