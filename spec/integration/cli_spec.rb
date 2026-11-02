@@ -3,8 +3,13 @@
 require "open3"
 require "rbconfig"
 require "stringio"
+require "timeout"
 
 RSpec.describe "Command-line queries" do
+  def usage
+    "Usage: jmespath EXPRESSION < document.json\n       jmespath --validate EXPRESSION\n"
+  end
+
   def cli(arguments, input)
     require "jmespath/cli"
     output = StringIO.new
@@ -57,7 +62,7 @@ RSpec.describe "Command-line queries" do
     expected = "Invalid argument 1 for length: expected string, array, or object; received number " \
                "at line 1, column 1\nlength(@)\n^\n"
     expect(cli(["length(@)"], "4")).to eq([1, "", expected])
-    expect(cli([], "{}")).to eq([2, "", "Usage: jmespath EXPRESSION < document.json\n"])
+    expect(cli([], "{}")).to eq([2, "", usage])
   end
 
   {
@@ -186,7 +191,7 @@ RSpec.describe "Command-line queries" do
         expect(errors.string).to be_empty
       else
         expect([status, output.string, errors.string])
-          .to eq([2, "", "Usage: jmespath EXPRESSION < document.json\n"])
+          .to eq([2, "", usage])
       end
     end
   end
@@ -212,6 +217,48 @@ RSpec.describe "Command-line queries" do
     end
   end
 
+  {
+    ["--validate", "unknown()"] => [0, ""],
+    ["--validate", "length()"] => [0, ""],
+    ["--validate", "items[*].name"] => [0, ""],
+    ["--validate", "items[?active"] => [1, "Expected rbracket, received eof at line 1, column 14\n" \
+                                           "items[?active\n             ^\n"],
+    ["--validate", ""] => [1, "Expected an expression at line 1, column 1\n\n^\n"],
+    ["--validate", "--help"] => [1, "Expected a digit at line 1, column 1\n--help\n^\n"],
+    ["--validate", "--version"] => [1, "Expected a digit at line 1, column 1\n--version\n^\n"],
+    ["--validate", "[::0]"] => [1, "Slice step cannot be zero\n"]
+  }.each do |arguments, (expected_status, expected_errors)|
+    it "validates #{arguments.last.inspect} without reading stdin" do
+      require "jmespath/cli"
+      output = StringIO.new
+      errors = StringIO.new
+      status = JMESPath::CLI.run(arguments, stdin: double("unreadable stdin"), stdout: output, stderr: errors)
+      expect([status, output.string, errors.string]).to eq([expected_status, "", expected_errors])
+    end
+  end
+
+  [["--validate"], ["--validate", "@", "extra"]].each do |arguments|
+    it "rejects invalid validation usage #{arguments.inspect} without reading stdin" do
+      require "jmespath/cli"
+      output = StringIO.new
+      errors = StringIO.new
+      status = JMESPath::CLI.run(arguments, stdin: double("unreadable stdin"), stdout: output, stderr: errors)
+      expect([status, output.string, errors.string]).to eq([2, "", usage])
+    end
+  end
+
+  it "documents syntax-only validation, stdin independence, and statuses" do
+    help = cli(["--help"], "invalid")[1]
+    expect(help).to include("--validate EXPRESSION", "without reading stdin", "syntax only",
+                            "0 for valid syntax", "1 for query failures", "2 for usage failures")
+  end
+
+  it "propagates unrelated exceptions during validation" do
+    failure = RuntimeError.new("Validation defect")
+    allow(JMESPath).to receive(:validate).with("@").and_raise(failure)
+    expect { cli(["--validate", "@"], "invalid") }.to(raise_error { |error| expect(error).to equal(failure) })
+  end
+
   %w[jmespath jmespath.rb].each do |name|
     {
       ["items["] => ["{}", 1, "Expected an array index at line 1, column 7\nitems[\n      ^\n"],
@@ -223,7 +270,7 @@ RSpec.describe "Command-line queries" do
       ["lenght(name)"] => ["{}", 1, "Unknown function: lenght. Did you mean length?\n"],
       ["[::0]"] => ["[]", 1, "Slice step cannot be zero\n"],
       ["@"] => ['{"private_marker":BROKEN}', 1, "Invalid JSON input\n"],
-      [] => ["", 2, "Usage: jmespath EXPRESSION < document.json\n"]
+      [] => ["", 2, "Usage: jmespath EXPRESSION < document.json\n       jmespath --validate EXPRESSION\n"]
     }.each do |arguments, (input, expected_status, expected_errors)|
       it "reports #{arguments.inspect} failures through #{name}" do
         output, errors, status = Open3.capture3(
@@ -241,6 +288,36 @@ RSpec.describe "Command-line queries" do
       expect(status).to be_success
       expect(output).to eq("\"café\"\n")
       expect(errors).to be_empty
+    end
+
+    {
+      "unknown()" => [0, ""],
+      "items[?active" => [1, "Expected rbracket, received eof at line 1, column 14\n" \
+                             "items[?active\n             ^\n"]
+    }.each do |query, (expected_status, expected_errors)|
+      it "validates #{query.inspect} through #{name} while stdin remains open" do
+        Open3.popen3(RbConfig.ruby, File.expand_path("../../exe/#{name}", __dir__), "--validate", query) do |
+          input, output, errors, waiter
+        |
+          status = Timeout.timeout(5) { waiter.value }
+          expect(input).not_to be_closed
+          expect([status.exitstatus, output.read, errors.read]).to eq([expected_status, "", expected_errors])
+        ensure
+          if waiter.alive?
+            Process.kill("KILL", waiter.pid)
+            waiter.value
+          end
+        end
+      end
+    end
+
+    [["--validate"], ["--validate", "@", "extra"]].each do |arguments|
+      it "rejects #{arguments.inspect} through #{name}" do
+        output, errors, status = Open3.capture3(
+          RbConfig.ruby, File.expand_path("../../exe/#{name}", __dir__), *arguments, stdin_data: "invalid JSON"
+        )
+        expect([status.exitstatus, output, errors]).to eq([2, "", usage])
+      end
     end
   end
 end

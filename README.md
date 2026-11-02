@@ -196,6 +196,18 @@ Unknown functions suggest similar registered names.
 Malformed JSON input reports `Invalid JSON input` without including document fragments.
 These failures go to standard error and exit with status 1.
 Usage failures exit with status 2; `--help` and `--version` exit with status 0 without reading input.
+
+Validate syntax without providing a JSON document by running this shell command:
+
+```sh
+jmespath --validate 'items[*].name'
+```
+
+Both executables support `--validate EXPRESSION` without reading standard input.
+Valid syntax produces no output and exits with status 0.
+Query failures print a diagnostic to standard error and exit with status 1; incorrect usage exits with status 2.
+Validation does not check function availability or runtime argument types.
+The Ruby interface is `JMESPath.validate(expression, max_depth: 128)`.
 See [CLI diagnostics](docs/guides/errors.md#cli-diagnostics) for examples and fallback behavior.
 
 ## Guides

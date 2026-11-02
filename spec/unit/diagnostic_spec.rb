@@ -25,6 +25,10 @@ RSpec.describe "Syntax diagnostics" do
     it "formats #{source.inspect}" do
       expect(JMESPath::Diagnostic.format(syntax_error(source))).to eq(expected)
     end
+
+    it "formats a validation diagnostic for #{source.inspect}" do
+      expect(JMESPath::Diagnostic.format(JMESPath.validate(source).fetch(0))).to eq(expected)
+    end
   end
 
   {

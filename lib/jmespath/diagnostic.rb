@@ -5,7 +5,7 @@ module JMESPath
   module Diagnostic
     class << self
       # Format a syntax failure without reading data or printing output.
-      # @param error [Errors::SyntaxError] the syntax failure
+      # @param error [Errors::SyntaxError, SyntaxDiagnostic] the syntax failure
       # @return [String] UTF-8 diagnostic without a trailing newline
       # @example Format a located failure
       #   error = JMESPath::Errors::SyntaxError.new("Bad query", expression: "$", position: 0)
@@ -30,9 +30,10 @@ module JMESPath
 
       def source_parts(error)
         source = error.expression
-        return unless error.location_known? && error.position.between?(0, source.bytesize)
+        position = error.position
+        return unless position&.between?(0, source.bytesize) && error.location_known?
 
-        prefix = source.byteslice(0, error.position).to_s
+        prefix = source.byteslice(0, position).to_s
         return unless source.valid_encoding? && prefix.valid_encoding?
 
         [source.encode(Encoding::UTF_8), prefix.encode(Encoding::UTF_8)]

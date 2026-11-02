@@ -68,6 +68,40 @@ Only library argument-type and arity failures are suppressed by `disable_visit_e
 Syntax, unknown-function, invalid-value, adapter, and callback failures remain visible.
 Missing fields and out-of-range indices normally return nil.
 
+## Syntax validation
+
+Use `JMESPath.validate` in Ruby to check syntax without an input document:
+
+```ruby
+JMESPath.validate("items[*].name") #=> []
+diagnostics = JMESPath.validate("items[?active")
+failure = diagnostics.fetch(0)
+failure.reason #=> "Expected rbracket, received eof"
+failure.expression #=> "items[?active"
+failure.position #=> 13
+failure.line #=> 1
+failure.column #=> 14
+failure.location_known? #=> true
+JMESPath::Diagnostic.format(failure) #=> "Expected rbracket, received eof at line 1, column 14\nitems[?active\n             ^"
+```
+
+The result is a frozen array containing zero or one immutable `JMESPath::SyntaxDiagnostic` record.
+Parsing stops at the first syntax failure.
+Records contain frozen copies of the reason and expression, without an exception or backtrace.
+Source text and coordinates match compilation errors, including the lexer's conversion to UTF-8.
+Positions are zero-based byte offsets; lines and Unicode character columns are one-based.
+For unknown locations, `position`, `line`, and `column` are nil, and `location_known?` is false.
+Invalid encodings produce an unlocated diagnostic with an empty stored expression.
+The formatter accepts both records and syntax errors and applies the same excerpt and caret rules.
+
+Validation neither evaluates data nor invokes callbacks, checks function availability, builds execution plans, or uses the compilation cache.
+Unknown functions, incorrect argument counts, and unsupported runtime argument types remain valid syntax.
+Validation cannot establish whether a query will succeed for a function registry or input document.
+Parser failures other than `SyntaxError` propagate, including `InvalidValueError` for a zero slice step, matching compilation.
+
+The only option is `max_depth:`, an Integer from 1 through 128, defaulting to 128.
+Invalid expression types, depth values, and unsupported keywords raise `ArgumentError` before parsing.
+
 ## Function validation data
 
 Library-owned `InvalidTypeError` and `InvalidArityError` failures expose immutable metadata.
@@ -177,6 +211,21 @@ Failures before output starts leave stdout empty.
 Successful queries print one JSON result to stdout.
 Usage failures print usage to stderr and exit with status 2 without reading stdin.
 Help and version requests exit with status 0 without reading stdin.
+
+Both executables also support validation without reading stdin.
+Run this command in a shell:
+
+```sh
+jmespath --validate 'items[*].name'
+```
+
+Valid syntax leaves both output streams empty and exits with status 0.
+Unknown functions remain valid syntax; function availability and runtime types require evaluation.
+For invalid syntax, the command prints a formatted diagnostic to stderr and exits with status 1.
+Parser value failures, including a zero slice step, also exit with status 1.
+Missing or excess validation arguments print usage to stderr and exit with status 2.
+Every validation outcome leaves stdout empty and does not read stdin.
+The token after `--validate` is query text, even when it resembles a flag.
 
 To inspect a function type failure, run this command in a shell:
 

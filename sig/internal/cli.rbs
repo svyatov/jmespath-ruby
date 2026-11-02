@@ -2,6 +2,8 @@ module JMESPath
   module CLI
     USAGE: String
     HELP: String
+    def self.query: (String, _Reader, _Writer) -> Integer
+    def self.validation: (Array[String], _Writer) -> Integer
     def self.information: (Array[String], _Writer) -> Integer
   end
 end
