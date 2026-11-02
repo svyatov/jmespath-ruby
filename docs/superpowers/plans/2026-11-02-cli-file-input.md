@@ -164,3 +164,9 @@ Prose and whitespace checks passed.
 The positional-query fast path preserves the invalid-encoding regression that OptionParser rejects before query evaluation.
 OptionParser's nonmutating `permute` copies arguments internally and accepts trailing options regardless of `POSIXLY_CORRECT`.
 Exact option matching prevents undeclared short aliases; explicit rejection handlers suppress automatic help, version, and completion process exits.
+Independent QA passed 158 executable runs plus public-interface ownership and failure probes.
+The final independent review found no Critical, Important, or Minor issues and verified R1 through R5.
+Runtime verification used Ruby 4.0.9; other Ruby versions and operating systems were not exercised locally.
+
+The reviewer excluded programmatic paths containing NUL bytes because operating-system command-line arguments cannot contain NUL.
+These malformed programmatic paths retain Ruby's `ArgumentError`; callers of `CLI.run` must handle that exception themselves.
