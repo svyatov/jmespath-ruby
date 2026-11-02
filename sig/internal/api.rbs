@@ -27,12 +27,14 @@ module JMESPath
     DEFAULT_EVALUATOR: Evaluator
     @root: AST::Node
     @plan: Plan::operation
+    @native_functions: Array[AST::Node]?
     @max_depth: Integer
     @options: Options
     def initialize: (String, AST::Node, ?max_depth: Integer, ?options: Options) -> void
     def configured: (Options) -> Expression
     def evaluate: (value, Options) -> value
     private
+    def trace_input: (value, bool) -> value
     def trace_value: (value, Options, Tracing::Collector) -> value
     def configured_for?: (Options) -> bool
   end

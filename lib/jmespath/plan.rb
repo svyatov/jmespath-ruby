@@ -12,12 +12,20 @@ module JMESPath
     }.freeze
 
     def self.build(node, options = Options::DEFAULT)
-      Builder.new(options).build(node)
+      builder = Builder.new(options)
+      operation = builder.build(node)
+      native_functions = builder.native_functions&.freeze
+      builder.freeze
+      yield native_functions
+      operation
     end
 
     # @api private
     class Builder
+      attr_reader :native_functions
+
       def initialize(options)
+        @native_functions = nil
         @functions = options.functions
         @disable_visit_errors = options.disable_visit_errors
         @evaluator = if @functions.equal?(Functions.default) && !@disable_visit_errors
@@ -25,7 +33,6 @@ module JMESPath
                      else
                        Evaluator.new(functions: @functions, disable_visit_errors: @disable_visit_errors)
                      end
-        freeze
       end
 
       def build(node)
@@ -110,6 +117,14 @@ module JMESPath
           return function_call(name, node.children, source_range)
         end
 
+        build_native_string(node, name, source_range)
+      end
+
+      def build_native_string(node, name, source_range)
+        # @type var native_functions: Array[AST::Node]
+        native_functions = @native_functions || []
+        native_functions << node
+        @native_functions = native_functions
         string_function(name, build(node.children.fetch(0)), source_range)
       end
 

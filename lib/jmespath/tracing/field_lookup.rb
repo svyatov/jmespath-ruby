@@ -8,13 +8,13 @@ module JMESPath
         mapping = value.is_a?(Hash) ? value : DataAccess.object(value)
         return [nil, "non_object"] unless mapping
 
-        result = mapping[name]
-        return [result, nil] unless result.nil?
+        initial = mapping[name]
+        return [initial, nil] unless initial.nil?
 
         result, reason = fallback(mapping, name)
-        return [result, nil] unless result.nil?
+        return [result, nil] unless nil.equal?(result)
 
-        [nil, native_lookup?(mapping) ? reason : "unknown"]
+        [nil, classify(mapping, initial, reason)]
       end
 
       def self.fallback(mapping, name)
@@ -29,7 +29,15 @@ module JMESPath
         [nil, present ? "null" : "missing"]
       end
 
+      def self.classify(mapping, initial, reason)
+        nil.equal?(initial) && native_lookup?(mapping) ? reason : "unknown"
+      end
+
       def self.native_lookup?(mapping)
+        # A Struct can return a duck mapping; avoid invoking its own type predicate.
+        # rubocop:disable-next Style/CaseEquality
+        return false unless Hash === mapping
+
         return false if Hash.instance_method(:compare_by_identity?).bind_call(mapping)
 
         %i[[] each_key].all? do |name|

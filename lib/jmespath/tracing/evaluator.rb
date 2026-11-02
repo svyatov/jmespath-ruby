@@ -4,13 +4,14 @@ module JMESPath
   module Tracing
     # @api private
     class Evaluator < JMESPath::Evaluator
-      def initialize(functions:, collector:, root:, planned:, disable_visit_errors: false)
+      def initialize(config:, collector:, root:, planned:, native_functions:)
         @collector = collector
+        @native_functions = planned ? native_functions : nil
         @compiled_functions = {} # : Hash[AST::Node, bool]
                               .compare_by_identity
         index_plan(root) if planned
         @compiled_functions.freeze
-        super(functions: functions, disable_visit_errors: disable_visit_errors)
+        super(functions: config.functions, disable_visit_errors: config.disable_visit_errors)
       end
 
       def evaluate(node, data)
@@ -34,7 +35,17 @@ module JMESPath
         return super unless @compiled_functions.key?(node) && !@disable_visit_errors
 
         arguments = node.children.map { |child| evaluate(child, data) }
+        return native_string(node, arguments.fetch(0)) if @native_functions&.include?(node)
+
         @functions.call_with_context(node.value.to_s, arguments, source_range: node.start...node.finish)
+      end
+
+      def native_string(node, value)
+        if value.is_a?(String)
+          node.value == "length" ? value.length : value.reverse
+        else
+          Functions.default.call_with_context(node.value.to_s, [value], source_range: node.start...node.finish)
+        end
       end
 
       def reference(node, _data)
@@ -59,7 +70,7 @@ module JMESPath
       def project_item(node, child, value, index)
         @collector.within(node, index) do
           result = evaluate(child, value)
-          @collector.emit("projection_omission", node) if result.nil?
+          @collector.emit("projection_omission", node) if nil.equal?(result)
           result
         end
       end

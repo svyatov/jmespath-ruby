@@ -3,14 +3,17 @@ module JMESPath
     module FieldLookup
       def self.call: (value, String) -> [value, String?]
       def self.fallback: (Hash[untyped, value], String) -> [value, String]
-      def self.native_lookup?: (Hash[untyped, value]) -> bool
+      def self.native_lookup?: (untyped) -> bool
+      def self.classify: (untyped, value, String) -> String
     end
     class Evaluator < JMESPath::Evaluator
       @collector: Collector
+      @native_functions: Array[AST::Node]?
       @compiled_functions: Hash[AST::Node, bool]
-      def initialize: (functions: Functions, collector: Collector, root: AST::Node, planned: bool, ?disable_visit_errors: bool) -> void
+      def initialize: (config: Options, collector: Collector, root: AST::Node, planned: bool, native_functions: Array[AST::Node]?) -> void
       def evaluate: (AST::Node, value) -> value
       private
+      def native_string: (AST::Node, value) -> value
       def index_plan: (AST::Node) -> void
       def project_item: (AST::Node, AST::Node, value, Integer) -> value
       def filter_rejected?: (AST::Node, value, Integer) -> value

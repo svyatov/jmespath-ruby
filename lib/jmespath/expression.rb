@@ -12,7 +12,7 @@ module JMESPath
       @source = source.dup.freeze
       @root = root
       @options = options
-      @plan = Plan.build(root, options)
+      @plan = Plan.build(root, options) { |native_functions| @native_functions = native_functions }
       @max_depth = max_depth
       freeze
     end
@@ -55,9 +55,10 @@ module JMESPath
     def trace(data, options = Options::EMPTY, limit: 1000, **keywords)
       raise ArgumentError, "limit must be a positive Integer" unless limit.is_a?(Integer) && limit.positive?
 
-      config = Options.new(options, keywords, default_depth: @max_depth, defaults: @options)
+      fast = options.equal?(Options::EMPTY) && keywords.empty?
+      config = fast ? @options : Options.new(options, keywords, default_depth: @max_depth, defaults: @options)
       collector = Tracing::Collector.new(root: @root, limit: limit)
-      collector.finish(trace_value(Input.load(data), config, collector))
+      collector.finish(trace_value(trace_input(data, fast), config, collector))
     ensure
       collector&.close
     end
@@ -83,14 +84,19 @@ module JMESPath
 
     private
 
+    def trace_input(data, fast)
+      return data if fast && data.is_a?(Hash)
+
+      Input.load(data)
+    end
+
     def trace_value(data, config, collector)
       if @root.depth > config.max_depth
         raise Errors::SyntaxError.new("Expression exceeds nesting limit", expression: source)
       end
 
-      evaluator = Tracing::Evaluator.new(functions: config.functions, collector: collector, root: @root,
-                                         planned: configured_for?(config),
-                                         disable_visit_errors: config.disable_visit_errors)
+      evaluator = Tracing::Evaluator.new(config: config, collector: collector, root: @root,
+                                         planned: configured_for?(config), native_functions: @native_functions)
       evaluator.evaluate(@root, data)
     end
 
