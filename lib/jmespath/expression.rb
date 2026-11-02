@@ -43,6 +43,25 @@ module JMESPath
       Explanation.build(source, @root)
     end
 
+    # Evaluate once with bounded diagnostics for null fields and omitted items.
+    # @param data [Object] the same input forms accepted by {#search}
+    # @param options [Hash] positional evaluation options
+    # @param limit [Integer] positive maximum number of retained events
+    # @param keywords [Hash] keyword evaluation options
+    # @return [Hash] frozen report with value, events, and truncated
+    # @raise [ArgumentError] limit or evaluation options are invalid
+    # @example Trace a missing field
+    #   JMESPath.compile("name").trace({})[:events].first[:type] #=> "field_null"
+    def trace(data, options = Options::EMPTY, limit: 1000, **keywords)
+      raise ArgumentError, "limit must be a positive Integer" unless limit.is_a?(Integer) && limit.positive?
+
+      config = Options.new(options, keywords, default_depth: @max_depth, defaults: @options)
+      collector = Tracing::Collector.new(root: @root, limit: limit)
+      collector.finish(trace_value(Input.load(data), config, collector))
+    ensure
+      collector&.close
+    end
+
     # @api private
     def configured(options)
       return self if options.functions.equal?(Functions.default) && !options.disable_visit_errors
@@ -63,6 +82,16 @@ module JMESPath
     end
 
     private
+
+    def trace_value(data, config, collector)
+      if @root.depth > config.max_depth
+        raise Errors::SyntaxError.new("Expression exceeds nesting limit", expression: source)
+      end
+
+      evaluator = Tracing::Evaluator.new(functions: config.functions, collector: collector,
+                                         disable_visit_errors: config.disable_visit_errors)
+      evaluator.evaluate(@root, data)
+    end
 
     def configured_for?(config)
       config.functions.equal?(@options.functions) && config.disable_visit_errors == @options.disable_visit_errors

@@ -72,6 +72,7 @@ module JMESPath
   class Expression
     attr_reader source: String
     def search: (value, ?Hash[Symbol, value], **value) -> value
+    def trace: (value, ?Hash[Symbol, value], ?limit: Integer, **value) -> trace_report
     alias call search
     def explain: () -> explanation
   end

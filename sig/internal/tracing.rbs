@@ -1,5 +1,15 @@
 module JMESPath
   module Tracing
+    module FieldLookup
+      def self.call: (value, String) -> [value, String?]
+      def self.fallback: (Hash[untyped, value], String) -> [value, String]
+      def self.native_lookup?: (Hash[untyped, value]) -> bool
+    end
+    class Evaluator < JMESPath::Evaluator
+      @collector: Collector
+      def initialize: (functions: Functions, collector: Collector, ?disable_visit_errors: bool) -> void
+      def evaluate: (AST::Node, value) -> value
+    end
     class Collector
       @ids: Hash[AST::Node, Integer]
       @limit: Integer

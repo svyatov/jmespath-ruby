@@ -33,6 +33,7 @@ module JMESPath
     def configured: (Options) -> Expression
     def evaluate: (value, Options) -> value
     private
+    def trace_value: (value, Options, Tracing::Collector) -> value
     def configured_for?: (Options) -> bool
   end
   class Cache
