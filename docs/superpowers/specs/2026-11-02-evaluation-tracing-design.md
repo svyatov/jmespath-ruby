@@ -1,6 +1,6 @@
 # Evaluation tracing
 
-Status: proposed for user approval.
+Status: approved by the user on 2026-11-02.
 Scope: [issue #16](https://github.com/svyatov/jmespath-ruby/issues/16).
 Prerequisite: query inspection, merged in PR #38.
 
