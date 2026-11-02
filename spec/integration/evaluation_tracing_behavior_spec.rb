@@ -217,4 +217,12 @@ RSpec.describe "Tracing behavior parity" do
     expect(query.trace(inputs.last)[:value]).to eq(query.search(inputs.first))
     expect(logs).to eq([[Symbol], [Symbol]])
   end
+
+  it "classifies identity-based hash lookup conservatively" do
+    data = {}.compare_by_identity
+    data[+"x"] = nil
+    query = JMESPath.compile("x")
+    expect(query.search(data)).to be_nil
+    expect(query.trace(data)[:events].first[:details][:reason]).to eq("unknown")
+  end
 end

@@ -30,6 +30,8 @@ module JMESPath
       end
 
       def self.native_lookup?(mapping)
+        return false if Hash.instance_method(:compare_by_identity?).bind_call(mapping)
+
         %i[[] each_key].all? do |name|
           Object.instance_method(:method).bind_call(mapping, name).owner == Hash
         end
