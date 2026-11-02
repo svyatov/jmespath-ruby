@@ -1,7 +1,20 @@
 module JMESPath
+  type trace_context = { operation_id: Integer, index: Integer }
+  type trace_event = { type: String, operation_id: Integer, context: Array[trace_context], details: Hash[Symbol, json] }
+  type trace_report = { value: value, events: Array[trace_event], truncated: bool }
   VERSION: String
   type value = Object?
   type json = nil | bool | Integer | Float | String | Array[json] | Hash[String, json]
+  type explanation_details = Hash[Symbol, json]
+  type explanation_child = { role: String, node: explanation_node }
+  type explanation_node = {
+    id: Integer,
+    operation: String,
+    source_range: [Integer, Integer]?,
+    details: explanation_details,
+    children: Array[explanation_child]
+  }
+  type explanation = { source: String, root: explanation_node }
 
   def self.search: (String, value, ?Hash[Symbol, value], **value) -> value
   def self.compile: (String, ?cache_expressions: bool, ?max_depth: Integer, ?functions: Functions, ?disable_visit_errors: bool) -> Expression
@@ -70,7 +83,9 @@ module JMESPath
   class Expression
     attr_reader source: String
     def search: (value, ?Hash[Symbol, value], **value) -> value
+    def trace: (value, ?Hash[Symbol, value], ?limit: Integer, **value) -> trace_report
     alias call search
+    def explain: () -> explanation
   end
 
   class Functions
