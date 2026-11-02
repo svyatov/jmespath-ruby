@@ -50,6 +50,12 @@ jobs:
           ruby-version: "4.0"
           bundler-cache: true
       - run: bundle exec rake package:check
+      - name: Check shell completion
+        run: >-
+          bundle exec rspec
+          spec/integration/cli_completion_spec.rb
+          spec/integration/cli_completion_quoting_spec.rb
+          spec/packaging/gem_spec.rb
 
   audit:
     runs-on: ubuntu-latest

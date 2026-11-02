@@ -196,6 +196,7 @@ See [errors and diagnostics](docs/guides/errors.md) for examples, nullable field
 
 Both `jmespath` and `jmespath.rb` accept an expression and a JSON document from stdin or `--file PATH`.
 Use `--query-file PATH` to read the expression from a UTF-8 file.
+See [shell completion](docs/guides/completion.md) for manual Bash and Zsh setup for both executable names.
 
 ```sh
 printf '%s\n' '{"user":{"name":"Ada"}}' | jmespath 'user.name'

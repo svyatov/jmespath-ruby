@@ -1,0 +1,50 @@
+#compdef jmespath jmespath.rb
+local index expecting_path=0 literal_path=0 value raw option candidate suffix
+local -a paths
+for ((index = 2; index < CURRENT; index++)); do
+  if ((expecting_path)); then expecting_path=0; continue; fi
+  case ${(Q)words[index]} in
+    --file|--query-file) expecting_path=1 ;;
+    --) return ;;
+  esac
+done
+option=${(Q)${PREFIX%%=*}}
+if ((expecting_path)); then
+  if [[ $compstate[quoting] == dollars ]]; then
+    raw=$words[CURRENT]
+    value=${(Q)raw}
+    [[ $value == "$raw" ]] && value=${(Q)${:-"$raw'"}}
+    literal_path=1
+  else
+    _files
+  fi
+elif [[ $option == --file || $option == --query-file ]]; then
+  compset -P "${PREFIX%%=*}="
+  raw=${words[CURRENT]#*=}
+  if [[ $raw == \$\'* ]]; then
+    value=${(Q)raw}
+    [[ $value == "$raw" ]] && value=${(Q)${:-"$raw'"}}
+    literal_path=1
+  elif [[ $PREFIX == *\$\'* || $raw == \'* || $raw == '"~'* || $raw == '\~'* ]]; then
+    value=${(Q)PREFIX}
+    literal_path=1
+  elif [[ $compstate[quoting] == single || $compstate[quoting] == double ]]; then
+    _files -S ''
+  else
+    _files
+  fi
+elif [[ $PREFIX == -* ]]; then
+  compadd -- -h --help --version --functions --file --query-file \
+    --validate --pretty --raw-output --json-lines --interactive
+fi
+
+if ((literal_path)); then
+  paths=( "$value"*(NM) )
+  for candidate in "${paths[@]}"; do
+    suffix=
+    if [[ $compstate[quoting] == dollars && -z $QISUFFIX && ! -d $candidate ]]; then
+      suffix="'"
+    fi
+    compadd -U -i "$IPREFIX" -S "$suffix" -f -- "$candidate"
+  done
+fi

@@ -38,6 +38,6 @@ module JMESPath
            "Use standalone --functions to list built-in signatures and descriptions without reading stdin.\n" \
            "The --functions flag cannot be repeated or combined with queries, paths, modes, or information flags.\n" \
            "Listing exits with status 0 on success, 1 for output failures, and 2 for usage failures.\n" \
-           "#{FunctionListing::LEGEND}".freeze
+           "Manual Bash and Zsh completion: docs/guides/completion.md.\n#{FunctionListing::LEGEND}".freeze
   end
 end

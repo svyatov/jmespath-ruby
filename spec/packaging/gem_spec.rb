@@ -2,7 +2,9 @@
 
 require "tmpdir"
 require "rubygems/package"
+require "shellwords"
 require_relative "../../script/support/package_check"
+require_relative "../support/shell_completion"
 
 RSpec.describe "Installed gem artifact" do
   before(:context) do
@@ -37,6 +39,37 @@ RSpec.describe "Installed gem artifact" do
     expect(result.fetch("syntax_failure")).to eq("Expected rbracket, received eof")
     expect(result.fetch("source")).to include("/jmespath-ruby-#{JMESPath::VERSION}/lib/jmespath.rb")
     expect(result.fetch("dependencies").sort).to eq(%w[bundler jmespath-ruby json stringio])
+  end
+
+  it "ships shell definitions and their manual installation guide" do
+    expect(Gem::Package.new(@artifact).spec.files).to include(
+      "completions/jmespath.bash", "completions/_jmespath", "docs/guides/completion.md"
+    )
+  end
+
+  %w[bash zsh].each do |shell|
+    it "completes from the extracted gem in #{shell} without CLI executables" do
+      skip "#{shell} is unavailable" unless system(shell, "--version", out: File::NULL, err: File::NULL)
+
+      original_path = ENV.fetch("PATH")
+      ENV["PATH"] = "/usr/bin:/bin"
+      Dir.mktmpdir("jmespath-extracted", @directory) do |root|
+        Gem::Package.new(@artifact).extract_files(root)
+        Dir.mktmpdir("jmespath-paths") do |fixtures|
+          Dir.chdir(fixtures) do
+            File.write("my document.json", "not read")
+            %w[jmespath jmespath.rb].each do |command|
+              line = ShellCompletion.complete(shell: shell, root: root, line: "#{command} --que")
+              expect(line).to eq("#{command} --query-file ")
+              line = ShellCompletion.complete(shell: shell, root: root, line: "#{command} --file=my")
+              expect(Shellwords.split(line)).to eq([command, "--file=my document.json"])
+            end
+          end
+        end
+      end
+    ensure
+      ENV["PATH"] = original_path if original_path
+    end
   end
 
   it "rejects dependency changes after preparing the installation lock" do
