@@ -75,4 +75,15 @@ RSpec.describe "Traced evaluation" do
     reader.close
     expect { query.trace(reader) }.to raise_error(IOError)
   end
+
+  it "uses a default limit of 1000 and distinguishes exact capacity" do
+    query = JMESPath.compile("items[*].name")
+    exact = query.trace({ items: Array.new(500) { {} } })
+    expect(exact[:events].length).to eq(1000)
+    expect(exact[:truncated]).to be(false)
+    exceeded = query.trace({ items: Array.new(501) { {} } })
+    expect(exceeded[:events].length).to eq(1000)
+    expect(exceeded[:truncated]).to be(true)
+    expect(exceeded[:value]).to eq([])
+  end
 end

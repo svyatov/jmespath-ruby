@@ -4,8 +4,12 @@ module JMESPath
   module Tracing
     # @api private
     class Evaluator < JMESPath::Evaluator
-      def initialize(functions:, collector:, disable_visit_errors: false)
+      def initialize(functions:, collector:, root:, planned:, disable_visit_errors: false)
         @collector = collector
+        @compiled_functions = {} # : Hash[AST::Node, bool]
+                              .compare_by_identity
+        index_plan(root) if planned
+        @compiled_functions.freeze
         super(functions: functions, disable_visit_errors: disable_visit_errors)
       end
 
@@ -18,6 +22,26 @@ module JMESPath
       end
 
       private
+
+      def index_plan(node)
+        return unless Plan::BUILDERS.key?(node.kind)
+
+        @compiled_functions[node] = true if node.kind == :function
+        node.children.each { |child| index_plan(child) }
+      end
+
+      def function(node, data)
+        return super unless @compiled_functions.key?(node) && !@disable_visit_errors
+
+        arguments = node.children.map { |child| evaluate(child, data) }
+        @functions.call_with_context(node.value.to_s, arguments, source_range: node.start...node.finish)
+      end
+
+      def reference(node, _data)
+        ExpressionReference.new do |value|
+          @collector.reference(node) { evaluate(node.children.fetch(0), value) }
+        end
+      end
 
       def project(node, values)
         return nil unless values

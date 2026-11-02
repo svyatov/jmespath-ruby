@@ -88,7 +88,8 @@ module JMESPath
         raise Errors::SyntaxError.new("Expression exceeds nesting limit", expression: source)
       end
 
-      evaluator = Tracing::Evaluator.new(functions: config.functions, collector: collector,
+      evaluator = Tracing::Evaluator.new(functions: config.functions, collector: collector, root: @root,
+                                         planned: configured_for?(config),
                                          disable_visit_errors: config.disable_visit_errors)
       evaluator.evaluate(@root, data)
     end

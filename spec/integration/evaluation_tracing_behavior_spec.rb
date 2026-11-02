@@ -91,4 +91,130 @@ RSpec.describe "Tracing behavior parity" do
       expect(report).to eq(value: input, events: [], truncated: false)
     end
   end
+
+  it "preserves application exception identity and backtraces under suppression" do
+    [RuntimeError, JMESPath::Errors::InvalidTypeError, JSON::ParserError].each do |type|
+      [false, true].each do |suppressed|
+        error = type.new("application failure")
+        original_backtrace = nil
+        callback = lambda do
+          raise error
+        rescue type => e
+          original_backtrace = e.backtrace.dup
+          raise
+        end
+        functions = JMESPath::Functions.default.with("fail", signature: [], &callback)
+        expect { JMESPath.compile("fail()", functions: functions).trace(nil, disable_visit_errors: suppressed) }
+          .to(raise_error do |caught|
+            expect(caught).to equal(error)
+            expect(caught.backtrace).to eq(original_backtrace)
+          end)
+        adapter = Object.new
+        adapter.define_singleton_method(:to_hash, &callback)
+        expect { JMESPath.compile("missing").trace(adapter, disable_visit_errors: suppressed) }
+          .to(raise_error do |caught|
+            expect(caught).to equal(error)
+            expect(caught.backtrace).to eq(original_backtrace)
+          end)
+      end
+    end
+  end
+
+  it "preserves nested validation ownership and actual suppression" do
+    error = nil
+    functions = JMESPath::Functions.default.with("nested", signature: []) do
+      JMESPath.search("length(@)", 4)
+    rescue JMESPath::Errors::InvalidTypeError => e
+      error = e
+      raise
+    end
+    expect { JMESPath.compile("map(&nested(), @)", functions: functions).trace([1], disable_visit_errors: true) }
+      .to(raise_error { |caught| expect(caught).to equal(error) })
+    report = JMESPath.compile("items[*].length(@)", disable_visit_errors: true).trace({ items: [4, "a"] })
+    expect(report[:value]).to eq([1])
+    expect(report[:events].map { |event| event[:type] }).to eq(["projection_omission"])
+  end
+
+  it "matches built-in reference evaluation and input selection identity" do
+    data = [{ key: 2 }, { key: 1 }]
+    ["sort_by(@, &key)", "min_by(@, &key)", "max_by(@, &key)", "map(&key, @)"].each do |source|
+      query = JMESPath.compile(source)
+      expect(query.trace(data)[:value]).to eq(query.search(data))
+    end
+    expect(JMESPath.compile("min_by(@, &key)").trace(data)[:value]).to equal(data.last)
+    report = JMESPath.compile("map(&missing, @)").trace(data)
+    expect(report[:events].map { |event| event[:context] })
+      .to eq([[{ operation_id: 1, index: 0 }], [{ operation_id: 1, index: 1 }]])
+  end
+
+  it "preserves conversion counts and calls to overridden built-ins" do
+    ["length(@)", "reverse(@)"].each do |source|
+      counts = []
+      inputs = 2.times.map do
+        log = []
+        counts << log
+        Object.new.tap do |input|
+          input.define_singleton_method(:to_str) do
+            log << :to_str
+            "abc"
+          end
+        end
+      end
+      query = JMESPath.compile(source)
+      expect(query.trace(inputs.last)[:value]).to eq(query.search(inputs.first))
+      expect(counts.last).to eq(counts.first)
+      functions = JMESPath::Functions.default.with(source.split("(").first, signature: [[:any]],
+                                                                            override: true) do |input|
+        input
+      end
+      expect(query.trace(inputs.first, functions: functions)[:value]).to equal(inputs.first)
+    end
+  end
+
+  it "preserves keyword omission for custom registry call overrides" do
+    type = Class.new(JMESPath::Functions) do
+      def call(_name, _arguments)
+        7
+      end
+    end
+    functions = type.new
+    query = JMESPath.compile("custom()", functions: functions)
+    expect(query.search(nil)).to eq(7)
+    expect(query.trace(nil)[:value]).to eq(7)
+  end
+
+  it "matches compiled and fallback keyword forwarding with registry overrides" do
+    type = Class.new(JMESPath::Functions) do
+      def call(_name, _arguments, **keywords)
+        keywords
+      end
+    end
+    functions = type.new
+    ["custom()", "[custom()]", "custom() || @"].each do |source|
+      query = JMESPath.compile(source, functions: functions)
+      expect(query.trace(nil)[:value]).to eq(query.search(nil))
+      expect(query.trace(nil, disable_visit_errors: true)[:value])
+        .to eq(query.search(nil, disable_visit_errors: true))
+    end
+    query = JMESPath.compile("custom()")
+    expect(query.trace(nil, functions: functions)[:value]).to eq(query.search(nil, functions: functions))
+  end
+
+  it "adds no key predicate or equality callbacks during presence classification" do
+    logs = []
+    inputs = 2.times.map do
+      log = []
+      logs << log
+      key = Object.new
+      key.define_singleton_method(:is_a?) do |type|
+        log << type
+        false
+      end
+      key.define_singleton_method(:==) { |_other| raise "extra equality" }
+      { key => nil }
+    end
+    query = JMESPath.compile("x")
+    expect(query.trace(inputs.last)[:value]).to eq(query.search(inputs.first))
+    expect(logs).to eq([[Symbol], [Symbol]])
+  end
 end

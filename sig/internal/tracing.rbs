@@ -7,9 +7,11 @@ module JMESPath
     end
     class Evaluator < JMESPath::Evaluator
       @collector: Collector
-      def initialize: (functions: Functions, collector: Collector, ?disable_visit_errors: bool) -> void
+      @compiled_functions: Hash[AST::Node, bool]
+      def initialize: (functions: Functions, collector: Collector, root: AST::Node, planned: bool, ?disable_visit_errors: bool) -> void
       def evaluate: (AST::Node, value) -> value
       private
+      def index_plan: (AST::Node) -> void
       def project_item: (AST::Node, AST::Node, value, Integer) -> value
       def filter_rejected?: (AST::Node, value, Integer) -> value
       def project_selected: (AST::Node, Array[value], Array[Integer]) -> Array[value]
