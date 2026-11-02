@@ -1,6 +1,6 @@
 # Explicit JSON file input
 
-Status: proposed for approval.
+Status: approved by the user on 2026-11-02.
 Scope: [issue #17](https://github.com/svyatov/jmespath-ruby/issues/17).
 
 ## Intent and scope
@@ -35,7 +35,7 @@ jmespath --file - 'user.name'
 jmespath --file document.json -- 'user.name'
 ```
 
-Proposed defaults allow options before or after the query and accept both separated and equals forms.
+Options may precede or follow the query, using separated or equals forms.
 Use shell quoting for spaces and the equals form or a relative path for option-like filenames.
 The `--` delimiter ends option parsing; exactly one expression must remain.
 An empty expression remains an expression and follows normal query error handling.
@@ -47,7 +47,7 @@ Preserve standalone `--help`, `-h`, and `--version` with status 0 and no input a
 Reject combinations of informational flags with query arguments or file options as usage failures.
 Add no short alias for `--file`.
 
-These argument rules are implementation proposals for approval, except the user's literal-path decision.
+The user approved these argument rules with this design.
 
 ## Input ownership and evaluation
 
