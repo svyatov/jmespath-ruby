@@ -1,0 +1,23 @@
+#compdef jmespath jmespath.rb
+
+local index expecting_path=0
+for ((index = 2; index < CURRENT; index++)); do
+  if ((expecting_path)); then
+    expecting_path=0
+    continue
+  fi
+  case $words[index] in
+    --file|--query-file) expecting_path=1 ;;
+    --) return ;;
+  esac
+done
+
+if ((expecting_path)); then
+  _files
+elif [[ $PREFIX == --file=* || $PREFIX == --query-file=* ]]; then
+  compset -P "${PREFIX%%=*}="
+  _files
+elif [[ $PREFIX == -* ]]; then
+  compadd -- -h --help --version --functions --file --query-file \
+    --validate --pretty --raw-output --json-lines
+fi

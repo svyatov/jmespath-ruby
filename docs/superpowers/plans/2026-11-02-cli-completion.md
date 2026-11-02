@@ -1,6 +1,6 @@
 # CLI shell completion implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Package manually installed Bash and Zsh completion for options and filesystem paths through both CLI names.
 
@@ -54,7 +54,7 @@ It also exposes `ShellCompletion.candidates(shell:, root:, line:) -> Array[Strin
 `root` identifies the directory containing `completions/`; probe working directories contain test fixtures.
 Use real interactive completion for quoting and word-boundary tests; test registration separately in clean shell sessions.
 
-- [ ] **Step 1: Write failing shell regressions.**
+- [x] **Step 1: Write failing shell regressions.**
 
 Create the helper with `Open3`, `PTY`, `Timeout`, and temporary directories using repository test conventions.
 Start Bash without profiles and Zsh without user startup files, with an isolated HOME and completion cache.
@@ -86,12 +86,12 @@ Test an empty positional prefix separately and assert no filesystem candidates a
 Put failing stub executables for both command names on PATH and assert they remain uncalled.
 Include unreadable query and document fixtures, asserting their names still complete without content access.
 
-- [ ] **Step 2: Confirm the regressions fail before implementation.**
+- [x] **Step 2: Confirm the regressions fail before implementation.**
 
 Run `bundle exec rspec spec/integration/cli_completion_spec.rb`.
 Expect failures caused by missing shell assets or registration, not terminal setup or timeout errors.
 
-- [ ] **Step 3: Implement the two shell definitions.**
+- [x] **Step 3: Implement the two shell definitions.**
 
 Create the definitions and registrations specified by the interfaces above.
 Track path values and the standalone delimiter without reproducing mode validation.
@@ -100,13 +100,13 @@ Preserve quoted and equals-value forms, including Bash's default word breaks.
 Avoid default filename fallback for positional expressions and after the delimiter.
 Keep files independent of checkout paths, executables, Ruby, and input contents.
 
-- [ ] **Step 4: Verify shell behavior and syntax.**
+- [x] **Step 4: Verify shell behavior and syntax.**
 
 Run `bash -n completions/jmespath.bash` and `zsh -n completions/_jmespath`.
 Run `bundle exec rspec spec/integration/cli_completion_spec.rb`.
 Expect successful syntax checks and zero failing examples for installed shells.
 
-- [ ] **Step 5: Commit the shell feature.**
+- [x] **Step 5: Commit the shell feature.**
 
 Stage only both shell assets and their tests and helper.
 Commit with `feat(cli): add Bash and Zsh completion definitions`.
