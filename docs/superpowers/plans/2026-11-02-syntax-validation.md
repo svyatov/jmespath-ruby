@@ -45,7 +45,7 @@
 - Extend `Diagnostic.format(Errors::SyntaxError | SyntaxDiagnostic) -> String`.
 - Use an internal `SyntaxDiagnostic.new(error)` constructor, documented with `@api private` and declared in RBS.
 
-- [ ] **Step 1: Add failing Ruby contract tests.**
+- [x] **Step 1: Add failing Ruby contract tests.**
 
 Include named examples for valid syntax, first-failure metadata, and record freezing:
 
@@ -68,7 +68,8 @@ expect(JMESPath::Diagnostic.format(diagnostic))
 
 Cover empty input, malformed operators, unterminated quotes, trailing LF, tabs, controls, Unicode, multiline queries, and nesting failures.
 Reuse diagnostic-spec inputs, with expected coordinates independent of the implementation.
-Check valid examples `unknown()`, `length()`, `length(\`4\`)`, and `[::0]` without evaluation.
+Check valid examples `unknown()`, `length()`, and `length(\`4\`)` without evaluation.
+Check `[::0]` propagates `InvalidValueError`, matching the parser and compilation.
 Compare acceptance and failure fields with uncached `compile` across valid, invalid, encoding, and depth cases.
 For invalid UTF-8 and binary `"\xFF"`, assert the reason is `Expression has invalid encoding`.
 Assert encoding diagnostics have empty expressions, nil coordinates, false `location_known?`, and reason-only formatting.
@@ -86,12 +87,12 @@ For R3, install raising spies on `Plan.build`, `Cache#fetch`, `Functions#definit
 Register a raising custom callback in a test registry; assert its query validates without invoking the callback.
 Inject an unrelated parser exception and assert the same exception propagates.
 
-- [ ] **Step 2: Run the failing tests.**
+- [x] **Step 2: Run the failing tests.**
 
 Run `bundle exec rspec spec/unit/syntax_validation_spec.rb spec/unit/diagnostic_spec.rb`.
 Expected: missing `validate` or `SyntaxDiagnostic` failures, with prior formatter tests still passing.
 
-- [ ] **Step 3: Implement the Ruby contract and documentation.**
+- [x] **Step 3: Implement the Ruby contract and documentation.**
 
 Require the record from `lib/jmespath.rb`; copy only syntax error data and freeze the record and its strings.
 Derive known coordinates from the error; use nil coordinates for unknown locations without retaining the exception.
@@ -103,13 +104,13 @@ Update internal formatter signatures for the same union.
 Add YARD types and executable examples for validation and record readers.
 Document syntax-only acceptance, the single-failure limit, coordinate rules, and invalid-argument exceptions in the errors guide.
 
-- [ ] **Step 4: Verify Ruby behavior, types, and examples.**
+- [x] **Step 4: Verify Ruby behavior, types, and examples.**
 
 Run `bundle exec rspec spec/unit/syntax_validation_spec.rb spec/unit/diagnostic_spec.rb spec/unit/errors_spec.rb spec/integration/compilation_spec.rb`.
 Run `bundle exec rake types docs:check`.
 Expected: zero test failures, type errors, and documentation errors.
 
-- [ ] **Step 5: Commit only Task 1 files.**
+- [x] **Step 5: Commit only Task 1 files.**
 
 Use `feat(validation): add immutable syntax diagnostics`.
 

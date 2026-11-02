@@ -2,6 +2,7 @@
 
 require_relative "jmespath/version"
 require_relative "jmespath/errors"
+require_relative "jmespath/syntax_diagnostic"
 require_relative "jmespath/diagnostic"
 require_relative "jmespath/token"
 require_relative "jmespath/lexer"
@@ -73,6 +74,32 @@ module JMESPath
       config = compilation_options(cache_expressions, max_depth, functions, disable_visit_errors)
       compiled = compile_syntax(expression, cache_expressions, max_depth)
       config.equal?(Options::DEFAULT) ? compiled : compiled.configured(config)
+    end
+
+    # Validate syntax without evaluating data or checking function availability.
+    # @param expression [String] query text
+    # @param max_depth [Integer] maximum nesting from 1 through 128
+    # @raise [ArgumentError] expression type or depth is invalid
+    # @example Validate syntax without an input document
+    #   JMESPath.validate("items[*].name") #=> []
+    #   failure = JMESPath.validate("items[?active").fetch(0)
+    #   failure.reason #=> "Expected rbracket, received eof"
+    #   failure.position #=> 13
+    #   failure.line #=> 1
+    #   failure.column #=> 14
+    # @return [Array<SyntaxDiagnostic>] frozen array containing zero or one immutable diagnostic
+    def validate(expression, max_depth: 128)
+      raise ArgumentError, "Expression must be a String" unless expression.is_a?(String)
+      unless max_depth.is_a?(Integer) && (1..128).cover?(max_depth)
+        raise ArgumentError, "max_depth must be an integer from 1 through 128"
+      end
+
+      Parser.new(expression, max_depth: max_depth).parse
+      # @type var diagnostics: Array[SyntaxDiagnostic]
+      diagnostics = []
+      diagnostics.freeze
+    rescue Errors::SyntaxError => e
+      [SyntaxDiagnostic.new(e)].freeze
     end
 
     private

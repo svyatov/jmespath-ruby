@@ -5,6 +5,17 @@ module JMESPath
 
   def self.search: (String, value, ?Hash[Symbol, value], **value) -> value
   def self.compile: (String, ?cache_expressions: bool, ?max_depth: Integer, ?functions: Functions, ?disable_visit_errors: bool) -> Expression
+  def self.validate: (String, ?max_depth: Integer) -> Array[SyntaxDiagnostic]
+
+  class SyntaxDiagnostic
+    attr_reader reason: String
+    attr_reader expression: String
+    attr_reader position: Integer?
+    attr_reader line: Integer?
+    attr_reader column: Integer?
+    def initialize: (Errors::SyntaxError) -> void
+    def location_known?: () -> bool
+  end
 
   module Errors
     class Error < StandardError
@@ -53,7 +64,7 @@ module JMESPath
   end
 
   module Diagnostic
-    def self.format: (Errors::SyntaxError) -> String
+    def self.format: (Errors::SyntaxError | SyntaxDiagnostic) -> String
   end
 
   class Expression
