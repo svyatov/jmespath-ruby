@@ -1,6 +1,6 @@
 # CLI JSON Lines input
 
-Status: proposed for user approval.
+Status: approved by the user on 2026-11-02.
 Scope: [issue #21](https://github.com/svyatov/jmespath-ruby/issues/21).
 
 ## Intent and boundaries
@@ -18,7 +18,7 @@ Exclude parallel evaluation, multiline records, automatic format detection, reco
 | O2: Extract a private record processor | Separates iteration and record context | Adds an abstraction for one CLI mode | Rejected for this scope |
 
 The user selected query compilation before reading any records.
-The remaining details are implementation proposals for approval.
+The user approved the argument, record-processing, diagnostic, and verification contracts below.
 
 ## Arguments and query preparation
 
