@@ -48,7 +48,7 @@ Produce private `CLI::FunctionListing.render(Functions) -> String`, ending in ex
 Use private singleton helpers `signature(Functions::Metadata) -> String`, `argument(Array[Symbol], bool) -> String`, and `type_name(Symbol) -> String`.
 Keep `CLI.run` and argument parser return types unchanged.
 
-- [ ] **Step 1: Add failing listing and formatter examples.**
+- [x] **Step 1: Add failing listing and formatter examples.**
 
 In `cli_functions_spec.rb`, use `run_cli(arguments, input:, output:)` returning `[status, stdout_text, stderr_text]`.
 Supply stdin with `read` and `gets` methods that raise on access.
@@ -74,12 +74,12 @@ In `cli_function_listing_spec.rb`, create immutable synthetic registries for R5 
 Assert `zero() Zero.`, `sample((string|null)...) Sample.`, and `sample(boolean, array<number>, any...) Sample.` independently.
 Check an empty registry renders the blank separator and legend without invoking callbacks.
 
-- [ ] **Step 2: Run the examples and confirm missing-feature failures.**
+- [x] **Step 2: Run the examples and confirm missing-feature failures.**
 
 Run `bundle exec rspec spec/integration/cli_functions_spec.rb spec/unit/cli_function_listing_spec.rb`.
 Expect failures because standalone listing and its formatter are absent.
 
-- [ ] **Step 3: Implement the formatter and standalone dispatch.**
+- [x] **Step 3: Implement the formatter and standalone dispatch.**
 
 Create the private formatter module and its declared methods in `lib/jmespath/cli/function_listing.rb`.
 Render signatures and descriptions exactly as the spec defines, followed by the exact legend.
@@ -92,7 +92,7 @@ Explain standalone listing, unread stdin, notation, conflicts, and listing statu
 Update module YARD descriptions and private RBS declarations for the formatter and helpers.
 Extend every literal usage expectation identified in the file map, including the embedded subprocess expectation in `cli_spec.rb`.
 
-- [ ] **Step 4: Add conflict, compatibility, and output-failure regressions.**
+- [x] **Step 4: Add conflict, compatibility, and output-failure regressions.**
 
 Assert `[2, "", usage]` for repeated flags, values, abbreviations, positional queries, and conflicts with every supported mode or information flag.
 Test both orders of each conflict, except the exact two-argument literal validation form.
@@ -106,7 +106,7 @@ For R4, make stdout raise `IOError, "write failed"`; assert status 1 and `"write
 Also assert an unrelated `RuntimeError` from stdout propagates unchanged.
 Assert help includes listing usage and notation while help and version retain their standalone behavior.
 
-- [ ] **Step 5: Add subprocess checks and run all CLI examples.**
+- [x] **Step 5: Add subprocess checks and run all CLI examples.**
 
 Use `Open3.popen3` and `Timeout.timeout(5)` with the cleanup pattern in `cli_json_lines_spec.rb`.
 For both executable names, verify listing finishes with status 0 while stdin stays open.
@@ -115,14 +115,14 @@ For both executable names, verify a conflicting request finishes with `[2, "", u
 Run `bundle exec rspec spec/integration/cli_functions_spec.rb spec/unit/cli_function_listing_spec.rb spec/integration/cli_spec.rb spec/integration/cli_file_spec.rb spec/integration/cli_query_file_spec.rb spec/integration/cli_pretty_spec.rb spec/integration/cli_raw_output_spec.rb spec/integration/cli_json_lines_spec.rb`.
 Expect zero failures.
 
-- [ ] **Step 6: Document the feature.**
+- [x] **Step 6: Document the feature.**
 
 Add standalone `jmespath --functions` examples to the README and functions guide.
 Explain unions, homogeneous arrays, expression references, required variadic arguments, and narrower runtime checks.
 State the conflict rules, literal validation exception, and that listing leaves stdin unread.
 Keep shell completion scoped to issue #27.
 
-- [ ] **Step 7: Run required checks and verify actual CLI behavior.**
+- [x] **Step 7: Run required checks and verify actual CLI behavior.**
 
 Run `env RUBOCOP_CACHE_ROOT=/private/tmp/jmespath-rubocop-cache bundle exec rake`.
 Expect all checks to pass, including 100% line and branch coverage.
@@ -131,8 +131,21 @@ Run both executables with standalone `--functions` and confirm the documented en
 Run the prose checker on changed documentation and `git diff --check`; expect zero findings.
 Review the diff against every spec requirement, including R1 through R5.
 
-- [ ] **Step 8: Commit the verified feature.**
+- [x] **Step 8: Commit the verified feature.**
 
 Stage only task files and completed plan checkboxes.
 Commit with `feat(cli): list built-in functions and signatures`.
 Report verification evidence and preserve separate authorization for remote operations.
+
+## Execution evidence
+
+Implemented in `/private/tmp/jmespath-cli-functions` on `feat/cli-functions`.
+The baseline passed 290 CLI examples.
+The initial listing and formatter checks failed before implementation.
+The focused run passed 306 CLI and formatter examples.
+The full gate passed 6,465 examples with 100% line and branch coverage.
+RuboCop, RBS validation, Steep, complexity checks, and executable documentation checks passed.
+`bundle exec rake docs` passed with 100% public documentation coverage.
+Both executables produced the documented listing and legend.
+Prose and whitespace checks passed.
+The installed Ruby/YARD combination emitted its `irb/notifier` warning during documentation checks.

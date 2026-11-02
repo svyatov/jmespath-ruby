@@ -9,7 +9,7 @@ RSpec.describe "Command-line queries" do
   def usage
     "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
       "(EXPRESSION | --query-file PATH)\n       " \
-      "jmespath --validate (EXPRESSION | --query-file PATH)\n"
+      "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n"
   end
 
   def cli(arguments, input)
@@ -273,7 +273,8 @@ RSpec.describe "Command-line queries" do
       ["[::0]"] => ["[]", 1, "Slice step cannot be zero\n"],
       ["@"] => ['{"private_marker":BROKEN}', 1, "Invalid JSON input\n"],
       [] => ["", 2, "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
-                    "(EXPRESSION | --query-file PATH)\n       jmespath --validate (EXPRESSION | --query-file PATH)\n"]
+                    "(EXPRESSION | --query-file PATH)\n       " \
+                    "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n"]
     }.each do |arguments, (input, expected_status, expected_errors)|
       it "reports #{arguments.inspect} failures through #{name}" do
         output, errors, status = Open3.capture3(

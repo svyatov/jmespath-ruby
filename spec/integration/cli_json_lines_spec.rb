@@ -26,7 +26,7 @@ RSpec.describe "Command-line JSON Lines" do
   def usage
     "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
       "(EXPRESSION | --query-file PATH)\n       " \
-      "jmespath --validate (EXPRESSION | --query-file PATH)\n"
+      "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n"
   end
 
   def run_cli(arguments, input: double("unused stdin"), output: StringIO.new)

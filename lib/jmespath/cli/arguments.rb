@@ -3,7 +3,7 @@
 require_relative "argument_parser"
 
 module JMESPath
-  # Executes document or JSON Lines queries, or validates query syntax.
+  # Executes queries, validates syntax, or lists built-in functions.
   module CLI
     # @api private
     def self.literal_validation?(argv)
@@ -43,7 +43,7 @@ module JMESPath
     # @api private
     def self.argument_parser(paths)
       ArgumentParser.new do |options|
-        options.on("-h", "--help", "--version", "--*-completion-bash", "--*-completion-zsh") do
+        options.on("-h", "--help", "--version", "--functions", "--*-completion-bash", "--*-completion-zsh") do
           raise OptionParser::InvalidOption, "unsupported option combination"
         end
         %w[file query-file].each do |name|

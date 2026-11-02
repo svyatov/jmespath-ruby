@@ -211,6 +211,24 @@ Supply exactly one query source: a positional expression or `--query-file PATH`.
 Repeated file options, unknown options, missing values, and conflicting or absent query sources are usage failures.
 Help and version flags must appear alone.
 
+List built-in functions from the shell without reading stdin:
+
+```sh
+jmespath --functions
+```
+
+Each line shows a name, accepted argument types, and the description from public function metadata.
+The listing is alphabetical and ends with a notation legend.
+Unions use `|`, homogeneous arrays use `array<T>`, and expression references use `expref`.
+A final `...` means the last argument repeats and remains required.
+Runtime checks can be narrower than the declared types.
+See [the function listing](docs/guides/functions.md#command-line-reference) for examples.
+
+Use `--functions` alone; queries, paths, other modes, repeated flags, and values are usage failures.
+The two-argument form `--validate --functions` retains literal query validation.
+Listing exits with status 0 on success, 1 for output failures, or 2 for usage failures.
+Usage failures leave stdout empty and print usage guidance on stderr.
+
 Query files retain all source text, including trailing newlines and Unicode diagnostic coordinates.
 An empty query file produces a syntax failure.
 Query files close after reading, before document input is accessed.
