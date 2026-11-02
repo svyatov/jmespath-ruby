@@ -5,6 +5,11 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) for t
 
 ## [Unreleased]
 
+### Added
+
+- Add `JMESPath.validate` with immutable syntax diagnostics and configurable nesting limits.
+- Add `--validate EXPRESSION` to both executables for syntax validation without reading standard input.
+
 ## [0.1.2] - 2026-11-02
 
 ### Added

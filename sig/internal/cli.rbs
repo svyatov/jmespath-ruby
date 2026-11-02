@@ -4,6 +4,7 @@ module JMESPath
     HELP: String
     def self.parse_arguments: (Array[String]) -> [String, String?]
     def self.read_document: (String?, _Reader) -> value
+    def self.validation: (Array[String], _Writer) -> Integer
     def self.information: (Array[String], _Writer) -> Integer
   end
 end

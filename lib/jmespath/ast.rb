@@ -7,18 +7,23 @@ module JMESPath
     class Node
       attr_reader :kind, :value, :children, :start, :finish, :depth
 
-      def initialize(kind:, value: nil, children: [], start: 0, finish: 0)
+      def initialize(kind:, value: nil, children: [], start: 0, finish: 0, synthetic: false) # rubocop:disable Metrics/ParameterLists
         @kind = kind
         @value = self.class.immutable(value)
         @children = children.freeze
         @start = start
         @finish = finish
+        @synthetic = synthetic
         @depth = if kind == :literal
                    self.class.literal_depth(value)
                  else
                    (children.map(&:depth).max || -1) + 1
                  end
         freeze
+      end
+
+      def synthetic?
+        @synthetic
       end
 
       def self.literal_depth(value)

@@ -123,6 +123,25 @@ Compiled expressions are immutable and safe to share between threads.
 Each search uses separate evaluation state.
 Custom callbacks and input objects remain the caller's responsibility.
 
+In Ruby code, inspect the query without evaluating input or resolving function names:
+
+```ruby
+JMESPath.compile("user.name").explain[:root][:operation] #=> "subexpression"
+```
+
+See [query inspection](docs/guides/compilation.md#query-inspection) for the immutable tree format, operation IDs, and source ranges.
+
+In Ruby code, trace omissions during one evaluation with a bounded event limit:
+
+```ruby
+query = JMESPath.compile("items[*].name")
+report = query.trace({items: [{name: "Ada"}, {}, {name: false}]}, limit: 100)
+report[:value] #=> ["Ada", false]
+report[:events].map { |event| event[:type] } #=> ["field_null", "projection_omission"]
+```
+
+See [evaluation tracing](docs/guides/compilation.md#evaluation-tracing) for event types, local item indexes, and truncation.
+
 In Ruby code, save evaluation options when compiling a query, then use `search` or its `call` alias:
 
 ```ruby
@@ -192,6 +211,18 @@ Unknown functions suggest similar registered names.
 Malformed JSON input reports `Invalid JSON input` without including document fragments.
 These failures go to standard error and exit with status 1.
 Usage failures exit with status 2; `--help` and `--version` exit with status 0 without reading input.
+
+Validate syntax without providing a JSON document by running this shell command:
+
+```sh
+jmespath --validate 'items[*].name'
+```
+
+Both executables support `--validate EXPRESSION` without reading standard input.
+Valid syntax produces no output and exits with status 0.
+Query failures print a diagnostic to standard error and exit with status 1; incorrect usage exits with status 2.
+Validation does not check function availability or runtime argument types.
+The Ruby interface is `JMESPath.validate(expression, max_depth: 128)`.
 See [CLI diagnostics](docs/guides/errors.md#cli-diagnostics) for examples and fallback behavior.
 
 ## Guides

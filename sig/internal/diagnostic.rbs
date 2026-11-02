@@ -2,7 +2,7 @@ module JMESPath
   module Diagnostic
     private
     def self.located: (String, String, String) -> String
-    def self.source_parts: (Errors::SyntaxError) -> [String, String]?
+    def self.source_parts: (Errors::SyntaxError | SyntaxDiagnostic) -> [String, String]?
     def self.render: (String) -> String
     def self.render_character: (String, Integer) -> String
   end

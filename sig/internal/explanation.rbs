@@ -1,0 +1,19 @@
+module JMESPath
+  class Explanation
+    OPERATORS: Hash[Symbol, String]
+    ROLES: Hash[Symbol, String | Array[String]]
+    @next_id: Integer
+    def self.syntax_children: (AST::Node) -> Array[AST::Node]
+    def self.build: (String, AST::Node) -> explanation
+    def initialize: () -> void
+    def node: (AST::Node) -> explanation_node
+    private
+    def operation: (Symbol) -> String
+    def details: (AST::Node) -> explanation_details
+    def slice_details: (value) -> explanation_details
+    def children: (AST::Node, String) -> Array[explanation_child]
+    def syntax_children: (AST::Node) -> Array[AST::Node]
+    # Parsed literals and slice components contain JSON values only.
+    def snapshot: (value) -> untyped
+  end
+end

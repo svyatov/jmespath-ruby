@@ -19,6 +19,10 @@ RSpec.describe "Command-line document files" do
 
   before { File.write(path, '{"user":{"name":"café"}}', encoding: "UTF-8") }
 
+  def usage
+    "Usage: jmespath [--file PATH] EXPRESSION\n       jmespath --validate EXPRESSION\n"
+  end
+
   def run_cli(arguments, input: unreadable_input)
     output = StringIO.new
     errors = StringIO.new
@@ -92,7 +96,7 @@ RSpec.describe "Command-line document files" do
     it "rejects malformed arguments #{arguments.inspect} without accessing input" do
       allow(File).to receive(:open).and_raise("must not open a file")
       original = arguments.dup
-      expect(run_cli(arguments.freeze)).to eq([2, "", "Usage: jmespath [--file PATH] EXPRESSION\n"])
+      expect(run_cli(arguments.freeze)).to eq([2, "", usage])
       expect(arguments).to eq(original)
     end
   end
@@ -104,13 +108,22 @@ RSpec.describe "Command-line document files" do
       expect([status, errors]).to eq([0, ""])
       expect(output).not_to be_empty
       [[flag, "@"], ["--file", path, flag], [flag, "--file", path, "@"]].each do |arguments|
-        expect(run_cli(arguments)).to eq([2, "", "Usage: jmespath [--file PATH] EXPRESSION\n"])
+        expect(run_cli(arguments)).to eq([2, "", usage])
       end
     end
   end
 
   it "preserves an empty expression as a query failure" do
     expect(run_cli(["--file", path, ""]).take(2)).to eq([1, ""])
+  end
+
+  it "keeps syntax validation independent from file input" do
+    allow(File).to receive(:open).and_raise("must not open a file")
+    expect(run_cli(["--validate", "unknown()"])).to eq([0, "", ""])
+    [["--validate", "@", "--file", path], ["--file", path, "--validate", "@"],
+     ["@", "--file", path, "--validate"]].each do |arguments|
+      expect(run_cli(arguments)).to eq([2, "", usage])
+    end
   end
 
   it "reports missing files with escaped paths" do
@@ -242,7 +255,7 @@ RSpec.describe "Command-line document files" do
       File.write(path, '{"private_marker":BROKEN}')
       expect(executable(name, ["--file", path, "items["])).to eq([1, "", "Invalid JSON input\n"])
       expect(executable(name, ["--file"]))
-        .to eq([2, "", "Usage: jmespath [--file PATH] EXPRESSION\n"])
+        .to eq([2, "", usage])
     end
 
     it "reports unreadable document paths through #{name}" do

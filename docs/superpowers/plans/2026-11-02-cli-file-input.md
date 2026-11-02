@@ -170,3 +170,14 @@ Runtime verification used Ruby 4.0.9; other Ruby versions and operating systems 
 
 The reviewer excluded programmatic paths containing NUL bytes because operating-system command-line arguments cannot contain NUL.
 These malformed programmatic paths retain Ruby's `ArgumentError`; callers of `CLI.run` must handle that exception themselves.
+
+## Integration verification
+
+Integrated `main` at `c98eb9b` after opening PR #41.
+The resolution preserves syntax-only validation dispatch and file-based evaluation, with both forms listed in usage.
+The completed inspection, tracing, and validation documents use main's recorded results and clarifications.
+A regression verifies validation and document-file options remain separate modes without input access on rejected combinations.
+
+The combined tree passed `bundle exec rake`: 6,301 examples, zero failures, and 100% line and branch coverage.
+Lint, types, complexity, documentation checks, YARD generation, and offline package verification passed.
+Independent follow-up QA passed 36 observations covering both executables and the affected CLI modes.

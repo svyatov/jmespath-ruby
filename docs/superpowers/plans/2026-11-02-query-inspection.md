@@ -71,7 +71,7 @@ Keep benchmark reports in a scratch directory outside either checkout.
 - Preserve integer `start` and `finish` metadata for diagnostic and execution callers.
 - Task 2 uses `synthetic?` to return nil ranges without changing AST evaluation semantics.
 
-- [ ] **Step 1: Add failing parser metadata examples.**
+- [x] **Step 1: Add failing parser metadata examples.**
 
 Add examples in `spec/unit/parser_spec.rb` with these explicit assertions:
 
@@ -94,12 +94,12 @@ Assert every implicit identity is synthetic and every explicit `@` is not synthe
 Assert explicit bounds for `(@)`, `!active`, `&name`, `items[].name`, and `{key: value}` entries.
 Retain the 2,000-field chain depth assertion and the exact 128/129 nesting acceptance tests for R2 and R5.
 
-- [ ] **Step 2: Run metadata tests before implementation.**
+- [x] **Step 2: Run metadata tests before implementation.**
 
 Run `bundle exec rspec spec/unit/parser_spec.rb`.
 Expect failures for missing `synthetic?`, plus any inaccurate explicit ranges exposed by the assertions.
 
-- [ ] **Step 3: Add synthetic metadata and repair explicit ranges.**
+- [x] **Step 3: Add synthetic metadata and repair explicit ranges.**
 
 Define `synthetic?` and the constructor keyword in `lib/jmespath/ast.rb`.
 Pass the keyword through `Parser#node` in `lib/jmespath/parser.rb`.
@@ -109,13 +109,13 @@ Repair explicit bounds in the parser only where the approved range rules require
 Keep parser binding powers, child ordering, depth calculation, and semantic node kinds unchanged.
 Update `sig/internal/parser.rbs` with matching constructors, instance metadata, and helper declarations.
 
-- [ ] **Step 4: Verify parser and diagnostic compatibility.**
+- [x] **Step 4: Verify parser and diagnostic compatibility.**
 
 Run `bundle exec rspec spec/unit/parser_spec.rb spec/unit/diagnostic_spec.rb spec/unit/boundaries_spec.rb spec/integration/function_validation_context_spec.rb spec/integration/compilation_spec.rb`.
 Run `bundle exec rake types`.
 Require passing examples and type checks, including exact function-error ranges and unchanged callback counts.
 
-- [ ] **Step 5: Commit the metadata change.**
+- [x] **Step 5: Commit the metadata change.**
 
 Stage only Task 1 files.
 Commit with `refactor(parser): identify implicit source expressions`.
@@ -146,7 +146,7 @@ type explanation_node = {
 type explanation = { source: String, root: explanation_node }
 ```
 
-- [ ] **Step 1: Add failing public schema and vocabulary tests.**
+- [x] **Step 1: Add failing public schema and vocabulary tests.**
 
 In `spec/integration/query_inspection_spec.rb`, assert the complete `user.name` hash from the approved design.
 Use independently written expectations, not translator constants or private AST traversal.
@@ -160,7 +160,7 @@ Keep duplicate hash entries in source order even when their names match.
 Assert literal arrays and objects remain literal values rather than explanation children.
 Assert a 2,000-field chain produces 2,000 `step` children without stack overflow, satisfying R2.
 
-- [ ] **Step 2: Add failing public source-range tests.**
+- [x] **Step 2: Add failing public source-range tests.**
 
 In `spec/integration/query_inspection_ranges_spec.rb`, assert exact ranges and extracted substrings for these examples:
 
@@ -180,7 +180,7 @@ For R1, compile `"'café'".encode(Encoding::UTF_16LE)`.
 Assert the explanation source equals UTF-8 `"'café'"`, root range `[0, 7]`, and literal value `"café"`.
 Assert the expression's original source encoding and bytes remain unchanged.
 
-- [ ] **Step 3: Add failing ownership and non-execution tests.**
+- [x] **Step 3: Add failing ownership and non-execution tests.**
 
 Recursively check frozen hashes, arrays, strings, hash keys, operation names, roles, and literal contents, covering R3.
 Assert attempted mutation fails, while ordinary literal search results remain independent and mutable.
@@ -192,12 +192,12 @@ Assert inspection never invokes `definition`, `metadata`, `names`, `call`, `call
 Compile a built-in override as well, so inspection cannot silently consult default definitions.
 Assert `Expression#explain` rejects positional and keyword arguments with `ArgumentError`.
 
-- [ ] **Step 4: Run the public regression tests before implementation.**
+- [x] **Step 4: Run the public regression tests before implementation.**
 
 Run `bundle exec rspec spec/integration/query_inspection_spec.rb spec/integration/query_inspection_ranges_spec.rb`.
 Expect failures for the missing `Expression#explain` method, not parser setup or invalid query syntax.
 
-- [ ] **Step 5: Implement translation and public types.**
+- [x] **Step 5: Implement translation and public types.**
 
 Implement `Explanation.build(source, root)` and `Expression#explain` using the Task 2 interfaces.
 Load the translator from `lib/jmespath.rb` before expressions use it.
@@ -211,7 +211,7 @@ Keep arbitrary function names as strings and avoid registry lookup.
 Add public recursive RBS records and private translator types in the mapped signature files.
 Add YARD documentation and an executable example for `Expression#explain`.
 
-- [ ] **Step 6: Document the contract.**
+- [x] **Step 6: Document the contract.**
 
 Extend `docs/guides/compilation.md` with the complete schema, operation table, coordinate rules, ID scope, and logical evaluation rules.
 State that traversal order is structural, while filters evaluate conditions before projecting selected elements.
@@ -220,7 +220,7 @@ Document immutable literal values, nil ranges, UTF-8 source normalization, runti
 Add a short executable README example showing `JMESPath.compile("user.name").explain[:root][:operation] #=> "subexpression"`.
 Keep CLI behavior and help unchanged.
 
-- [ ] **Step 7: Verify behavior, quality, and performance impact.**
+- [x] **Step 7: Verify behavior, quality, and performance impact.**
 
 Run the Task 2 focused command, then `bundle exec rake` and `bundle exec rake docs`.
 Require all examples, coverage thresholds, lint, types, complexity checks, and documentation checks to pass.
@@ -235,7 +235,7 @@ Run the repository prose checker on touched documentation and run `git diff --ch
 Run `bundle exec rake package:check` to confirm the translator loads from the packaged gem.
 Review the complete diff for imported-fixture edits, unrelated files, and unintended public classes.
 
-- [ ] **Step 8: Commit and report the public interface.**
+- [x] **Step 8: Commit and report the public interface.**
 
 Stage only Task 2 files.
 Commit with `feat(expression): explain compiled query structure`.
