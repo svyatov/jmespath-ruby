@@ -23,17 +23,42 @@ module JMESPath
     # @param keywords [Hash] keyword evaluation options
     # @return [Object] the query result, including nil
     def search(data, options = Options::EMPTY, **keywords)
-      if options.equal?(Options::EMPTY) && keywords.empty?
-        return @plan.call(data.is_a?(Hash) ? data : Input.load(data))
-      end
+      FailureCapture.application do
+        if options.equal?(Options::EMPTY) && keywords.empty?
+          return @plan.call(data.is_a?(Hash) ? data : Input.load(data))
+        end
 
-      config = Options.new(options, keywords, default_depth: @max_depth, defaults: @options)
-      evaluate(Input.load(data), config)
+        config = Options.new(options, keywords, default_depth: @max_depth, defaults: @options)
+        evaluate(Input.load(data), config)
+      end
     end
 
     # Search input using the same options and behavior as {#search}.
     # @return [Object] the query result, including nil
     alias call search
+
+    # Search input and return its value or a library-owned failure.
+    # @param data [Object] the same input forms accepted by {#search}
+    # @param options [Hash] positional evaluation options
+    # @param keywords [Hash] keyword evaluation options
+    # @return [SearchResult] frozen outcome retaining the original value or error
+    # @raise [ArgumentError] evaluation options are invalid
+    # Application callback and conversion exceptions propagate unchanged.
+    # @example Distinguish successful null from failure
+    #   JMESPath.compile("missing").try_search({}).success? #=> true
+    #   JMESPath.compile("@").try_search(false).value #=> false
+    #   JMESPath.compile("length(@)").try_search(4).success? #=> false
+    def try_search(data, options = Options::EMPTY, **keywords)
+      fast = options.equal?(Options::EMPTY) && keywords.empty?
+      config = fast ? @options : Options.new(options, keywords, default_depth: @max_depth, defaults: @options)
+      FailureCapture.run do
+        if fast
+          @plan.call(data.is_a?(Hash) ? data : Input.load(data))
+        else
+          evaluate(Input.load(data), config)
+        end
+      end
+    end
 
     # Search input and require a non-null result.
     # @param data [Object] the same input forms accepted by {#search}
@@ -68,14 +93,16 @@ module JMESPath
     # @example Trace a missing field
     #   JMESPath.compile("name").trace({})[:events].first[:type] #=> "field_null"
     def trace(data, options = Options::EMPTY, limit: 1000, **keywords)
-      raise ArgumentError, "limit must be a positive Integer" unless limit.is_a?(Integer) && limit.positive?
+      FailureCapture.application do
+        raise ArgumentError, "limit must be a positive Integer" unless limit.is_a?(Integer) && limit.positive?
 
-      fast = options.equal?(Options::EMPTY) && keywords.empty?
-      config = fast ? @options : Options.new(options, keywords, default_depth: @max_depth, defaults: @options)
-      collector = Tracing::Collector.new(root: @root, limit: limit)
-      collector.finish(trace_value(trace_input(data, fast), config, collector))
-    ensure
-      collector&.close
+        fast = options.equal?(Options::EMPTY) && keywords.empty?
+        config = fast ? @options : Options.new(options, keywords, default_depth: @max_depth, defaults: @options)
+        collector = Tracing::Collector.new(root: @root, limit: limit)
+        collector.finish(trace_value(trace_input(data, fast), config, collector))
+      ensure
+        collector&.close
+      end
     end
 
     # @api private
@@ -88,7 +115,7 @@ module JMESPath
     # @api private
     def evaluate(data, config)
       if @root.depth > config.max_depth
-        raise Errors::SyntaxError.new("Expression exceeds nesting limit", expression: source)
+        raise FailureCapture.owned(Errors::SyntaxError.new("Expression exceeds nesting limit", expression: source))
       end
 
       return @plan.call(data) if config.equal?(@options) || configured_for?(config)

@@ -84,9 +84,16 @@ module JMESPath
     def self.format: (Errors::SyntaxError | SyntaxDiagnostic) -> String
   end
 
+  class SearchResult
+    attr_reader value: value
+    attr_reader error: StandardError?
+    def success?: () -> bool
+  end
+
   class Expression
     attr_reader source: String
     def search: (value, ?Hash[Symbol, value], **value) -> value
+    def try_search: (value, ?Hash[Symbol, value], **value) -> SearchResult
     def fetch: (value, ?Hash[Symbol, value], **value) -> Object
     def trace: (value, ?Hash[Symbol, value], ?limit: Integer, **value) -> trace_report
     alias call search

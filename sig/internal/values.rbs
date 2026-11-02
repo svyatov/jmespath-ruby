@@ -40,11 +40,15 @@ module JMESPath
   class Normalizer
     @pending: Array[^() -> void]
     @active: Hash[Integer, bool]
-    def initialize: () -> void
+    @scalar: (^(value) -> value)?
+    @key: (^(value) -> value)?
+    def initialize: (?key: (^(value) -> value)?) ?{ (value) -> value } -> void
     def call: (value) -> value
     private
     def enqueue: (value) { (value) -> void } -> void
     def visit: (value) { (value) -> void } -> void
+    def activate: (value) -> Integer
+    def scalar: (value) -> value
     def array: (Array[value]) { (value) -> void } -> void
     def object: (Hash[value, value]) { (value) -> void } -> void
   end

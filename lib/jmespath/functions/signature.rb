@@ -44,8 +44,8 @@ module JMESPath
       def validate!(values, name, origin: nil, context: nil)
         context ||= ValidationContext.new(name, self)
         unless valid_arity?(values.length)
-          raise context.arity_error("Invalid number of arguments for #{name}", actual_arity: values.length,
-                                                                               origin: origin)
+          raise FailureCapture.owned(context.arity_error("Invalid number of arguments for #{name}",
+                                                         actual_arity: values.length, origin: origin))
         end
 
         values.each_with_index do |value, index|
@@ -60,8 +60,10 @@ module JMESPath
 
       def reject_type!(value, index, types, name, origin, context) # rubocop:disable Metrics/ParameterLists
         actual_type = Types.name(value)
-        raise context.type_error("Invalid argument #{index + 1} for #{name}: #{actual_type}",
-                                 position: index + 1, expected_types: types, actual_type: actual_type, origin: origin)
+        raise FailureCapture.owned(
+          context.type_error("Invalid argument #{index + 1} for #{name}: #{actual_type}",
+                             position: index + 1, expected_types: types, actual_type: actual_type, origin: origin)
+        )
       end
 
       def valid_definition?(arguments)

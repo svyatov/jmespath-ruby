@@ -54,3 +54,26 @@ JMESPath.search("{name: user.name, missing: absent}", {user: {name: "Ada"}}) #=>
 An omitted negative-slice stop differs from an explicit `-1`.
 A zero slice step raises InvalidValueError.
 Multiselects construct new arrays or hashes and retain explicit nil values.
+
+## Search results
+
+Use `Expression#try_search` when an integration needs to display library-owned failures without rescuing exceptions.
+The frozen `JMESPath::SearchResult` exposes `success?`, `value`, and `error`.
+Successful null and false remain successful values:
+
+```ruby
+query = JMESPath.compile("name")
+query.try_search({}).success? #=> true
+query.try_search({}).value #=> nil
+query.try_search({name: false}).value #=> false
+query.try_search({name: false}).error #=> nil
+failure = JMESPath.compile("length(name)").try_search({name: nil})
+failure.success? #=> false
+failure.value #=> nil
+failure.error.is_a?(JMESPath::Errors::InvalidTypeError) #=> true
+```
+
+The container retains selected value identity without copying or freezing the value.
+Failures retain the original exception, metadata, and backtrace without freezing the exception.
+Each call evaluates once, with the same inputs and evaluation options as `search`.
+See [failure ownership](errors.md#failure-results) and [compiled result handling](compilation.md#failure-results).

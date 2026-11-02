@@ -17,7 +17,7 @@ module JMESPath
         if implementation.is_a?(Symbol)
           send(implementation, *arguments, context: context)
         else
-          implementation.call(*arguments)
+          FailureCapture.application { implementation.call(*arguments) }
         end
       rescue Signature::TypeMismatch, Signature::ArityMismatch => e
         raise unless disable_visit_errors && e.origin.equal?(self)

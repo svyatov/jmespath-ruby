@@ -2,6 +2,7 @@
 
 require_relative "jmespath/version"
 require_relative "jmespath/errors"
+require_relative "jmespath/failure_capture"
 require_relative "jmespath/syntax_diagnostic"
 require_relative "jmespath/diagnostic"
 require_relative "jmespath/token"
@@ -22,6 +23,7 @@ require_relative "jmespath/input"
 require_relative "jmespath/cache"
 require_relative "jmespath/plan"
 require_relative "jmespath/explanation"
+require_relative "jmespath/search_result"
 require_relative "jmespath/expression"
 require_relative "jmespath/tracing/collector"
 require_relative "jmespath/tracing/field_lookup"
@@ -49,15 +51,17 @@ module JMESPath
     #   JMESPath.search("items[*].name", {items: [{name: "Ada"}]}) #=> ["Ada"]
     # @return [Object] the query result, including nil
     def search(expression, data, options = Options::EMPTY, **keywords)
-      config = if options.equal?(Options::EMPTY) && keywords.empty?
-                 Options::DEFAULT
-               else
-                 Options.new(options, keywords)
-               end
-      raise ArgumentError, "Expression must be a String" unless expression.is_a?(String)
+      FailureCapture.application do
+        config = if options.equal?(Options::EMPTY) && keywords.empty?
+                   Options::DEFAULT
+                 else
+                   Options.new(options, keywords)
+                 end
+        raise ArgumentError, "Expression must be a String" unless expression.is_a?(String)
 
-      compiled = compile_syntax(expression, config.cache_expressions, config.max_depth)
-      compiled.evaluate(Input.load(data), config)
+        compiled = compile_syntax(expression, config.cache_expressions, config.max_depth)
+        compiled.evaluate(Input.load(data), config)
+      end
     end
 
     # Parse an expression for repeated searches.

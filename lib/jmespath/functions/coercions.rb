@@ -13,25 +13,32 @@ module JMESPath
         return value if value.is_a?(Integer)
         return value if value.is_a?(Float) && value.finite?
 
-        raise type_failure(value, "Expected a finite number", [:number], context, position, stage)
+        raise FailureCapture.owned(type_failure(value, "Expected a finite number", [:number], context, position, stage))
       end
 
       def string(value, context: nil, position: nil)
-        DataAccess.string(value) || raise(type_failure(value, "Expected a string", [:string], context, position))
+        DataAccess.string(value) || raise(FailureCapture.owned(
+                                            type_failure(value, "Expected a string", [:string], context, position)
+                                          ))
       end
 
       def array(value, context: nil, position: nil)
-        DataAccess.array(value) || raise(type_failure(value, "Expected an array", [:array], context, position))
+        DataAccess.array(value) || raise(FailureCapture.owned(
+                                           type_failure(value, "Expected an array", [:array], context, position)
+                                         ))
       end
 
       def reference(value, context: nil, position: nil)
         return value if value.is_a?(ExpressionReference)
 
-        raise type_failure(value, "Expected an expression reference", [:expref], context, position)
+        raise FailureCapture.owned(type_failure(value, "Expected an expression reference", [:expref], context,
+                                                position))
       end
 
       def object(value, context: nil, position: nil)
-        DataAccess.object(value) || raise(type_failure(value, "Expected an object", [:object], context, position))
+        DataAccess.object(value) || raise(FailureCapture.owned(
+                                            type_failure(value, "Expected an object", [:object], context, position)
+                                          ))
       end
 
       private

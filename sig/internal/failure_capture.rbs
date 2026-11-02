@@ -1,0 +1,18 @@
+module JMESPath
+  class FailureCapture
+    KEY: Symbol
+    attr_reader owned: Hash[StandardError, bool]
+    attr_reader excluded: Hash[StandardError, bool]
+    def initialize: () -> void
+    def result: () { () -> value } -> SearchResult
+    def self.run: () { () -> value } -> SearchResult
+    def self.owned: [E < StandardError] (E) -> E
+    def self.active?: () -> bool
+    def self.application: [V] () { () -> V } -> V
+    def self.excluded?: (StandardError) -> bool
+  end
+
+  class SearchResult
+    def initialize: (value: value, error: StandardError?) -> void
+  end
+end
