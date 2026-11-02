@@ -202,7 +202,7 @@ jmespath --pretty 'items' < document.json
 jmespath --raw-output 'user.name' < document.json
 ```
 
-Files are read as UTF-8 and closed after parsing, before query evaluation.
+Document files are read as UTF-8 and closed after parsing, before query evaluation in single-document mode.
 File input leaves stdin unused; omitting `--file` selects stdin.
 Paths are literal: `--file -` reads a file named `-`.
 Quote filenames with spaces; use the equals form or `./` prefix for option-like filenames.
@@ -215,7 +215,7 @@ Query files retain all source text, including trailing newlines and Unicode diag
 An empty query file produces a syntax failure.
 Query files close after reading, before document input is accessed.
 Missing or unreadable query files leave document input untouched.
-After reading the query, execution parses JSON before compiling the expression.
+In single-document mode, execution parses JSON before compiling the expression.
 Query paths follow the document path rules: `--query-file -` reads a literal file named `-`.
 
 The result goes to standard output as compact JSON followed by a newline.
@@ -235,6 +235,28 @@ Unknown functions suggest similar registered names.
 Malformed JSON input reports `Invalid JSON input` without including document fragments.
 These failures go to standard error and exit with status 1.
 Usage failures exit with status 2; `--help` and `--version` exit with status 0 without reading input.
+
+Process independent JSON records with these shell commands:
+
+```sh
+jmespath --json-lines 'user.name' < events.jsonl
+jmespath --json-lines --file events.jsonl --query-file query.jmespath
+```
+
+JSON Lines mode compiles the query once before opening document input or reading stdin.
+Each physical line must contain one complete JSON value; blank and whitespace-only lines fail.
+LF, CRLF, and a final record without a newline are accepted.
+Each result is compact JSON followed by a newline, including `null` and `false`.
+Empty input succeeds without output when the query is valid; an invalid query still fails.
+
+Processing stops at the first failure with status 1 and an `Input line N:` diagnostic prefix.
+Earlier results remain on stdout; check the exit status before treating output as complete.
+Query compilation and file-open errors have no input line prefix.
+Memory is proportional to the current record, its evaluation, and its serialized result, plus the compiled query.
+Output uses normal buffering.
+Owned files close after processing; caller-owned streams remain open.
+Injected `CLI.run` input needs `gets` for JSON Lines or `read` for document mode; output needs only `puts`.
+Repeated `--json-lines` flags and combinations with `--pretty`, `--raw-output`, or validation are usage failures.
 
 Validate syntax without providing a JSON document by running this shell command:
 

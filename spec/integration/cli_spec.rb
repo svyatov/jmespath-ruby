@@ -7,7 +7,8 @@ require "timeout"
 
 RSpec.describe "Command-line queries" do
   def usage
-    "Usage: jmespath [--pretty | --raw-output] [--file PATH] (EXPRESSION | --query-file PATH)\n       " \
+    "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
+      "(EXPRESSION | --query-file PATH)\n       " \
       "jmespath --validate (EXPRESSION | --query-file PATH)\n"
   end
 
@@ -271,9 +272,8 @@ RSpec.describe "Command-line queries" do
       ["lenght(name)"] => ["{}", 1, "Unknown function: lenght. Did you mean length?\n"],
       ["[::0]"] => ["[]", 1, "Slice step cannot be zero\n"],
       ["@"] => ['{"private_marker":BROKEN}', 1, "Invalid JSON input\n"],
-      [] => ["", 2, "Usage: jmespath [--pretty | --raw-output] [--file PATH] " \
-                    "(EXPRESSION | --query-file PATH)\n       " \
-                    "jmespath --validate (EXPRESSION | --query-file PATH)\n"]
+      [] => ["", 2, "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
+                    "(EXPRESSION | --query-file PATH)\n       jmespath --validate (EXPRESSION | --query-file PATH)\n"]
     }.each do |arguments, (input, expected_status, expected_errors)|
       it "reports #{arguments.inspect} failures through #{name}" do
         output, errors, status = Open3.capture3(

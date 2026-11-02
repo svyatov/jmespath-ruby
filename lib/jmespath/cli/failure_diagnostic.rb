@@ -21,6 +21,7 @@ module JMESPath
 
         def message(error)
           return "Invalid JSON input" if error.is_a?(JSON::ParserError)
+          return "Invalid JSON result" if error.is_a?(JSON::GeneratorError)
 
           details = case error
                     when Errors::InvalidTypeError then type_message(error)

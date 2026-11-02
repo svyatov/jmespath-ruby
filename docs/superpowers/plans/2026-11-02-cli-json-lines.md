@@ -34,6 +34,8 @@
 | File | Responsibility |
 | --- | --- |
 | `lib/jmespath/cli.rb` | Flag parsing, compile-before-input dispatch, line iteration, and contextual failures |
+| `lib/jmespath/cli/arguments.rb` | Private argument handling, extracted to satisfy the module-size limit |
+| `lib/jmespath/cli/failure_diagnostic.rb` | Generic diagnostics for result serialization failures |
 | `sig/internal/cli.rbs` | Private helper signatures and the extended argument tuple |
 | `sig/jmespath.rbs` | Mode-specific input protocols accepted by `CLI.run` |
 | `spec/integration/cli_json_lines_spec.rb` | Regression, stream, diagnostic, file-lifetime, and executable tests |
@@ -53,11 +55,11 @@ Add private `execute_lines(expression: String, path: String?, stdin: _LineReader
 
 Add private `process_lines(compiled: Expression, expression: String, input: _LineReader, output: _Writer, errors: _Writer) -> Integer`. It owns the active line number and handles record failures with the standard exception set. Keep mode-specific RBS assertions at dispatch boundaries where Steep needs narrowing.
 
-- [ ] **Step 1: Verify the CLI baseline.**
+- [x] **Step 1: Verify the CLI baseline.**
 
 Run `bundle exec rspec spec/integration/cli_spec.rb spec/integration/cli_file_spec.rb spec/integration/cli_query_file_spec.rb spec/integration/cli_pretty_spec.rb`. Require zero failures before adding tests. Recheck branch state and raw-output implementation before editing.
 
-- [ ] **Step 2: Add output and query-preparation regression tests.**
+- [x] **Step 2: Add output and query-preparation regression tests.**
 
 Create `spec/integration/cli_json_lines_spec.rb` with the UTF-8 StringIO helper and temporary-directory pattern from `cli_pretty_spec.rb`. Include these exact assertions:
 
@@ -74,7 +76,7 @@ Test `@` with objects, arrays, strings, integers, floats, booleans, and null in 
 
 Spy on `JMESPath.compile` with `and_call_original`; assert one call for several records and one for empty input. Reject invalid syntax before document opening. For R2, test invalid query text plus a missing document, and a missing query file plus a missing document. Assert no `Input line` prefix.
 
-- [ ] **Step 3: Add parsing, diagnostic, and termination regressions.**
+- [x] **Step 3: Add parsing, diagnostic, and termination regressions.**
 
 For query `@`, feed `1\nBROKEN\n2\n`; assert `[1, "1\n", "Input line 2:\nInvalid JSON input\n"]`. Repeat with a blank line and a whitespace-only line, including malformed JSON containing `private_marker`; assert no document fragments leak.
 
@@ -89,7 +91,7 @@ length(@)
 
 For R4, use a saved query `['✓',\n length(@)]\n` and input `[]\n4\n`. Assert prior output `["✓",0]\n`, `Input line 2:`, and the type diagnostic at query line 2, column 2 with the excerpt and caret. Cover arity, unknown-function, and invalid-value failures with the same contextual prefix and no failed-record output. Assert unrelated RuntimeError and ArgumentError propagate unchanged.
 
-- [ ] **Step 4: Add incremental-reader and stream-ownership regressions.**
+- [x] **Step 4: Add incremental-reader and stream-ownership regressions.**
 
 For R3, provide a reader implementing only `gets`, returning `1\n`, `2\n`, then nil. Use an ordered spy to assert `gets`, `puts("1")`, `gets`, `puts("2")`, then the EOF read. Make whole-stream `read` unavailable. On malformed or invalid-type record 2, assert record 3 is never requested. Separately retain a document-mode reader implementing only `read`.
 
@@ -97,7 +99,7 @@ For R1, raise IOError from the second `gets`; assert retained `1\n`, status 1, a
 
 Observe files opened by the CLI and assert closure after success, parse failure, evaluation failure, and read failure. Assert selected file input leaves stdin unused. Assert caller-owned input and output streams remain open after success and failure.
 
-- [ ] **Step 5: Add option and executable regressions.**
+- [x] **Step 5: Add option and executable regressions.**
 
 Cover flags before and after queries, both query sources, stdin and file sources, equals paths, literal `-`, spaces, option-like paths, delimiters, POSIXLY_CORRECT, and frozen unchanged arguments. Update literal usage expectations to include `[--pretty | --json-lines]`, retaining the separate validation line. Include raw output in that exclusive group only if implemented.
 
@@ -105,11 +107,11 @@ Reject repeated flags, `--json-lines=true`, abbreviations, short aliases, missin
 
 For both executable names, assert successful multiple records, file input, saved queries, empty input, invalid-query failure, and retained output after a later parse or evaluation failure. For R5, use the `Open3.popen3` timeout and cleanup pattern to prove validation conflicts exit before stdin closes.
 
-- [ ] **Step 6: Run the new tests and confirm feature failures.**
+- [x] **Step 6: Run the new tests and confirm feature failures.**
 
 Run `bundle exec rspec spec/integration/cli_json_lines_spec.rb`. Confirm failures arise from unsupported JSON Lines behavior, then implement the feature.
 
-- [ ] **Step 7: Add the minimal CLI execution path and signatures.**
+- [x] **Step 7: Add the minimal CLI execution path and signatures.**
 
 Register `json-lines` as a boolean flag with repetition rejection. Reject conflicts in `check_sources` before query loading. Extend validation restrictions while preserving the exact two-argument dispatch.
 
@@ -119,20 +121,42 @@ In `process_lines`, increment the active line number before each `gets` attempt.
 
 Update RBS for the new protocol, argument tuple, and helpers. Update YARD to describe mode-specific injected streams. Retain read-only document readers without requiring `gets` globally.
 
-- [ ] **Step 8: Verify focused behavior and type correctness.**
+- [x] **Step 8: Verify focused behavior and type correctness.**
 
 Run the baseline CLI specs plus `spec/integration/cli_json_lines_spec.rb`; require zero failures. Run `bundle exec rake types`; require successful RBS validation and Steep checks. Address only failures caused by this change.
 
-- [ ] **Step 9: Document the feature and run full checks.**
+- [x] **Step 9: Document the feature and run full checks.**
 
 Add help, README, and errors-guide examples for `jmespath --json-lines 'user.name' < events.jsonl` and file input. Explain empty input, compilation before input, rejected blank lines, mode conflicts, partial output, memory proportional to the current record and result, and normal buffering. Describe injected-stream requirements and line-prefixed query diagnostics. Preserve default document-mode documentation.
 
 Run `env RUBOCOP_CACHE_ROOT=/private/tmp/jmespath-rubocop-cache bundle exec rake` and `bundle exec rake docs`. Require zero failures, full line and branch coverage, and successful documentation generation. Run the oss-writing prose checker on the touched prose and `git diff --check`.
 
-- [ ] **Step 10: Commit the verified feature.**
+- [x] **Step 10: Commit the verified feature.**
 
 Stage only the implementation, signatures, tests, and documentation listed above. Commit as `feat(cli): evaluate JSON Lines incrementally`. Keep remote operations and release work outside this plan.
 
 ## Self-review
 
 The single task covers each approved requirement, including all five review-focus cases. Its tests precede implementation and preserve default-mode compatibility. No dependency installation, public expression API change, executable wrapper change, or imported fixture edit is required.
+
+## Execution evidence
+
+The baseline CLI suite passed 213 examples. The JSON Lines suite passed 36 examples after verification repairs.
+The final `bundle exec rake` passed 6,408 examples with 100% line and branch coverage, lint, types, complexity, and documentation checks.
+`bundle exec rake docs` generated fully documented public API pages. `bundle exec rake package:check` verified an offline production installation.
+The prose checker and `git diff --check` passed.
+
+Independent QA found malformed UTF-8 could expose record contents through a generator backtrace. A failing regression preceded UTF-8 validation at the record boundary.
+Independent review found overflow exponents could raise an unhandled `JSON::GeneratorError`. A failing regression preceded the contextual `Invalid JSON result` diagnostic.
+QA confirmed both repairs through both executables and verified retained output and unread later records. The final full gate passed after both repairs.
+
+Argument handling moved into a private file to satisfy the module-size limit. Zero-step slices retain compile-time diagnostics without a record number.
+Document-mode generator failures remain unchanged, preserving the approved scope. No minor review findings were deferred.
+
+## PR integration
+
+The PR branch starts from `6bd1d14`, which includes raw output. It contains only the JSON Lines design, plan, and implementation commits.
+Conflict resolution preserves raw-output execution, parser checks, and documentation. The argument tuple retains raw output before the JSON Lines flag.
+A failing regression confirmed the unintended `--json_lines` alias. The parser rejects that alias while preserving literal filenames and query text.
+All 290 CLI examples pass, including both feature suites. The integrated full gate passes 6,449 examples with 100% line and branch coverage.
+YARD generation and prose checks pass. Independent integration QA passes 64 checks across both executables; independent integration review reports no new findings.

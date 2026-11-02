@@ -2,12 +2,13 @@
 
 require_relative "../jmespath"
 require_relative "cli/failure_diagnostic"
-require_relative "cli/argument_parser"
+require_relative "cli/arguments"
 
 module JMESPath
-  # Executes queries as JSON or raw strings, or validates query syntax.
+  # Executes document or JSON Lines queries, or validates query syntax.
   module CLI
-    USAGE = "Usage: jmespath [--pretty | --raw-output] [--file PATH] (EXPRESSION | --query-file PATH)\n       " \
+    USAGE = "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
+            "(EXPRESSION | --query-file PATH)\n       " \
             "jmespath --validate (EXPRESSION | --query-file PATH)"
     HELP = "#{USAGE}\n" \
            "Read one UTF-8 JSON document from --file PATH, or stdin when omitted.\n" \
@@ -20,6 +21,11 @@ module JMESPath
            "Use --raw-output for literal string results; other results remain compact JSON.\n" \
            "Raw strings retain all their newlines and receive one additional output newline.\n" \
            "Output flags cannot be repeated or combined with each other or --validate.\n" \
+           "Use --json-lines for one JSON record per physical input line and one compact result per record.\n" \
+           "JSON Lines compiles once before input; empty input succeeds with a valid query.\n" \
+           "Blank records are invalid; failures report the input line, retain earlier output, and exit 1.\n" \
+           "Memory follows the current record and result; output uses normal buffering.\n" \
+           "The --json-lines flag cannot be repeated or combined with --pretty, --raw-output, or --validate.\n" \
            "Function arguments and expression-reference results are validated; failures exit with status 1.\n" \
            "Unknown functions suggest similar registered names.\n" \
            "Query failures include source locations when available.\n" \
@@ -29,18 +35,23 @@ module JMESPath
            "Validation exits with status 0 for valid syntax, 1 for query failures, and 2 for usage failures.".freeze
 
     # @param argv [Array<String>] command-line arguments
-    # @param stdin [IO, StringIO] source JSON stream
+    # @param stdin [IO, StringIO] source stream: read for documents, gets for JSON Lines
     # @param stdout [IO, StringIO] result stream
     # @param stderr [IO, StringIO] diagnostic stream
     # @return [Integer] zero on success, one on input failure, two on usage failure
     def self.run(argv, stdin: $stdin, stdout: $stdout, stderr: $stderr)
-      return validation(argv, stderr) if argv.first == "--validate" && argv.length == 2
+      return validation(argv, stderr) if literal_validation?(argv)
       return information(argv, stdout) if [%w[--help], %w[-h], %w[--version]].include?(argv)
 
-      expression, path, query_path, validate, pretty, raw_output = parse_arguments(argv)
+      expression, path, query_path, validate, pretty, raw_output, json_lines = parse_arguments(argv)
       expression = read_query(expression, query_path)
       return validation(["--validate", expression], stderr) if validate
+      if json_lines
+        # @type var stdin: _LineReader
+        return execute_lines(expression, path, stdin, stdout, stderr)
+      end
 
+      # @type var stdin: _Reader
       execute(expression, read_document(path, stdin), stdout, pretty, raw_output)
     rescue OptionParser::ParseError
       stderr.puts(USAGE)
@@ -48,54 +59,6 @@ module JMESPath
     rescue JSON::ParserError, Errors::Error, IOError, SystemCallError => e
       stderr.puts(FailureDiagnostic.format(e, expression))
       1
-    end
-
-    # @api private
-    def self.parse_arguments(argv)
-      return [argv.fetch(0), nil, nil, false, false, false] if argv.one? && !argv.fetch(0).start_with?("-")
-
-      paths = {} # : Hash[String, String]
-      arguments = argument_parser(paths).permute(argv)
-      check_sources(arguments, paths)
-
-      [arguments.first, paths["file"], paths["query-file"],
-       paths.key?("validate"), paths.key?("pretty"), paths.key?("raw-output")]
-    end
-
-    # @api private
-    def self.check_sources(arguments, paths)
-      sources = arguments.length + (paths.key?("query-file") ? 1 : 0)
-      raise OptionParser::InvalidArgument, "expected one query source" unless sources == 1
-
-      modes = paths.keys & %w[validate pretty raw-output]
-      raise OptionParser::InvalidArgument, "conflicting modes" if modes.length > 1
-      return unless paths.key?("validate")
-      return if paths.key?("query-file") && !paths.key?("file")
-
-      raise OptionParser::InvalidArgument, "validation requires a query file"
-    end
-
-    # @api private
-    def self.argument_parser(paths)
-      ArgumentParser.new do |options|
-        options.on("-h", "--help", "--version", "--*-completion-bash", "--*-completion-zsh") do
-          raise OptionParser::InvalidOption, "unsupported option combination"
-        end
-        %w[file query-file].each do |name|
-          options.on("--#{name} PATH") do |value|
-            raise OptionParser::InvalidOption, "--#{name} repeated" if paths.key?(name)
-
-            paths[name] = value
-          end
-        end
-        %w[validate pretty raw-output].each do |name|
-          options.on("--#{name}") do
-            raise OptionParser::InvalidOption, "--#{name} repeated" if paths.key?(name)
-
-            paths[name] = ""
-          end
-        end
-      end
     end
 
     # @api private
@@ -122,6 +85,34 @@ module JMESPath
                end
       stdout.puts(output)
       0
+    end
+
+    # @api private
+    def self.execute_lines(expression, path, stdin, stdout, stderr)
+      compiled = JMESPath.compile(expression)
+      return process_lines(compiled, expression, stdin, stdout, stderr) unless path
+
+      File.open(path, "r:UTF-8") { |file| process_lines(compiled, expression, file, stdout, stderr) }
+    end
+
+    # @api private
+    def self.process_lines(compiled, expression, input, output, errors)
+      line_number = 0
+      loop do
+        line_number += 1
+        line = input.gets
+        break unless line
+
+        line = line.dup.force_encoding(Encoding::UTF_8)
+        raise JSON::ParserError, "Invalid UTF-8 input" unless line.valid_encoding?
+
+        output.puts(JSON.generate(compiled.search(JSON.parse(line))))
+      end
+      0
+    rescue JSON::ParserError, JSON::GeneratorError, Errors::Error, IOError, SystemCallError => e
+      errors.puts("Input line #{line_number}:")
+      errors.puts(FailureDiagnostic.format(e, expression))
+      1
     end
 
     # @api private

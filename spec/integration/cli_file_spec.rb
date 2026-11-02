@@ -20,7 +20,8 @@ RSpec.describe "Command-line document files" do
   before { File.write(path, '{"user":{"name":"café"}}', encoding: "UTF-8") }
 
   def usage
-    "Usage: jmespath [--pretty | --raw-output] [--file PATH] (EXPRESSION | --query-file PATH)\n       " \
+    "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
+      "(EXPRESSION | --query-file PATH)\n       " \
       "jmespath --validate (EXPRESSION | --query-file PATH)\n"
   end
 
