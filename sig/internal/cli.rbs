@@ -7,8 +7,12 @@ module JMESPath
 
     USAGE: String
     HELP: String
-    def self.parse_arguments: (Array[String]) -> [String, String?]
+    def self.parse_arguments: (Array[String]) -> [String?, String?, String?, bool]
+    def self.argument_parser: (Hash[String, String]) -> ArgumentParser
+    def self.check_sources: (Array[String], Hash[String, String]) -> void
+    def self.read_query: (String?, String?) -> String
     def self.read_document: (String?, _Reader) -> value
+    def self.execute: (String, String?, _Reader, _Writer) -> Integer
     def self.validation: (Array[String], _Writer) -> Integer
     def self.information: (Array[String], _Writer) -> Integer
   end

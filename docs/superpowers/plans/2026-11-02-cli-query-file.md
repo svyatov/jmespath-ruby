@@ -53,7 +53,7 @@
 - Retain `CLI.validation(argv: Array[String], errors: _Writer) -> Integer` for legacy positional syntax validation.
 - Reuse `CLI.read_document(path, stdin)` and `CLI::FailureDiagnostic.format(error, expression)` without public changes.
 
-- [ ] **Step 1: Add failing argument and success regressions.**
+- [x] **Step 1: Add failing argument and success regressions.**
 
 Create the query-file spec with temporary UTF-8 files and a helper returning `[status, stdout, stderr]`.
 Use an input double that rejects access when stdin must remain unused.
@@ -79,7 +79,7 @@ Pin R3 using frozen arrays and restored `POSIXLY_CORRECT=1` for successful and r
 Retain `--validate --help` as a syntax failure and `--validate --query-file` as literal query text, both status 1.
 Require validation of `unknown()` and `length()` from files to succeed without document input.
 
-- [ ] **Step 2: Add failing source, diagnostic, and ownership regressions.**
+- [x] **Step 2: Add failing source, diagnostic, and ownership regressions.**
 
 Use query `['✓',\n length(@)]\n` with JSON `4`.
 Expect status 1, empty stdout, the existing type message at line 2, column 2, excerpt ` length(@)]`, and one space before `^`.
@@ -97,12 +97,12 @@ Pin R4 with actual owned file objects and injected `IOError`, `Errno::EIO`, and 
 Assert closure after success and failure, and exception identity for unrelated errors.
 Verify query files close before document access and validation or evaluation starts.
 
-- [ ] **Step 3: Confirm the regressions fail for missing query-file support.**
+- [x] **Step 3: Confirm the regressions fail for missing query-file support.**
 
 Run `bundle exec rspec spec/integration/cli_query_file_spec.rb spec/integration/cli_spec.rb spec/integration/cli_file_spec.rb`.
 Require the new feature tests to fail for absent support, while baseline positional and document-file tests pass.
 
-- [ ] **Step 4: Extend the parser and query reading.**
+- [x] **Step 4: Extend the parser and query reading.**
 
 Keep the exact two-argument `--validate EXPRESSION` dispatch ahead of option parsing.
 Register `--query-file PATH` and `--validate` in the exact-match parser, preserving nonmutating option permutation.
@@ -116,7 +116,7 @@ Retain expected-error handling and propagate unrelated exceptions.
 Update private RBS declarations and CLI YARD comments to match these interfaces.
 Update usage and all literal usage expectations for query-file execution and validation.
 
-- [ ] **Step 5: Add executable regressions and documentation.**
+- [x] **Step 5: Add executable regressions and documentation.**
 
 Exercise both `exe/jmespath` and `exe/jmespath.rb` through `Open3`.
 Cover Unicode success with stdin, success with `--file`, multiline syntax/type/arity diagnostics, missing queries, and source conflicts.
@@ -126,7 +126,7 @@ Assert exit status, exact stderr, and empty stdout on every expected failure.
 Update help, README examples, and the errors guide for both query sources, literal paths, and syntax-only file validation.
 Explain the legacy two-argument validation precedence and query-read-before-document ordering.
 
-- [ ] **Step 6: Verify the complete feature.**
+- [x] **Step 6: Verify the complete feature.**
 
 Run the three CLI spec files and require zero failures.
 Run `bundle exec rake` and require lint, types, full tests, coverage, complexity, and documentation checks to pass.
@@ -135,8 +135,24 @@ Run `bundle exec rake package:check` and require both packaged executables to pa
 Run the installed prose checker on touched Markdown and require zero findings.
 Run `git diff --check` and inspect the feature diff against the approved design.
 
-- [ ] **Step 7: Commit the feature.**
+- [x] **Step 7: Commit the feature.**
 
 Stage only the task's files and commit with `feat(cli): read queries from files`.
 Record the actual verification results in this plan and preserve unrelated work.
 Leave remote operations and publication outside this plan.
+
+## Verification record
+
+Native execution uses the current checkout on `feat/cli-file-input`, as delegated by the user.
+The baseline CLI suite passed 145 examples.
+The initial query-file regression run failed 20 examples while 146 passed.
+After implementation, the three CLI spec files passed 177 examples.
+The complete `bundle exec rake` run passed 6,336 examples with 100% line and branch coverage.
+Lint, RBS, Steep, complexity, and documentation checks passed.
+`bundle exec rake docs` generated documentation with 100% of public items documented.
+`bundle exec rake package:check` passed the offline installation and executable checks.
+Prose and whitespace checks passed.
+
+Argument parsing now rejects malformed validation usage before calling the private validation handler.
+Removing that handler's unreachable argument-count guard restores full coverage and preserves public behavior.
+Direct misuse of the private handler can raise `IndexError`.

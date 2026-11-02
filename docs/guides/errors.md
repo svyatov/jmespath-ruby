@@ -216,6 +216,21 @@ Missing or unreadable document files produce escaped operating-system messages o
 File failures leave stdin unused, and files opened by the CLI close after parsing, including when parsing fails.
 Query diagnostics retain their source locations when JSON comes from a file.
 
+Select a saved UTF-8 query with `--query-file PATH` and supply the document through stdin or `--file PATH`.
+Query files retain their source text, including Unicode, line breaks, and trailing newlines.
+Syntax and function diagnostics use that text for their excerpts, coordinates, and carets.
+An empty file produces an empty-expression syntax diagnostic with status 1.
+Missing or unreadable query files produce escaped operating-system messages with status 1, leaving document input untouched.
+Query files close after reading, including read failures, before document input is accessed.
+After the query file is read, malformed JSON takes precedence over query syntax errors.
+Absent or conflicting query sources, repeated options, and missing values produce usage failures before opening files.
+
+To execute a saved query, run this command in a shell:
+
+```sh
+jmespath --query-file query.jmespath --file document.json
+```
+
 To query a UTF-8 document file, run this command in a shell:
 
 ```sh
@@ -227,6 +242,7 @@ Run this command in a shell:
 
 ```sh
 jmespath --validate 'items[*].name'
+jmespath --validate --query-file query.jmespath
 ```
 
 Valid syntax leaves both output streams empty and exits with status 0.
@@ -235,7 +251,9 @@ For invalid syntax, the command prints a formatted diagnostic to stderr and exit
 Parser value failures, including a zero slice step, also exit with status 1.
 Missing or excess validation arguments print usage to stderr and exit with status 2.
 Every validation outcome leaves stdout empty and does not read stdin.
-The token after `--validate` is query text, even when it resembles a flag.
+In the exact two-argument form `--validate EXPRESSION`, the second argument is query text, even when it resembles a flag.
+Thus `--validate --query-file` validates the literal expression `--query-file`.
+File validation also accepts `--query-file PATH --validate` and rejects `--file`.
 
 To inspect a function type failure, run this command in a shell:
 

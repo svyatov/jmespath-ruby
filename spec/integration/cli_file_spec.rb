@@ -20,7 +20,8 @@ RSpec.describe "Command-line document files" do
   before { File.write(path, '{"user":{"name":"café"}}', encoding: "UTF-8") }
 
   def usage
-    "Usage: jmespath [--file PATH] EXPRESSION\n       jmespath --validate EXPRESSION\n"
+    "Usage: jmespath [--file PATH] (EXPRESSION | --query-file PATH)\n       " \
+      "jmespath --validate (EXPRESSION | --query-file PATH)\n"
   end
 
   def run_cli(arguments, input: unreadable_input)
