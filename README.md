@@ -185,6 +185,7 @@ See [errors and diagnostics](docs/guides/errors.md) for examples, nullable field
 ## Command line
 
 Both `jmespath` and `jmespath.rb` accept an expression and a JSON document from stdin or `--file PATH`.
+Use `--query-file PATH` to read the expression from a UTF-8 file.
 
 ```sh
 printf '%s\n' '{"user":{"name":"Ada"}}' | jmespath 'user.name'
@@ -195,6 +196,8 @@ jmespath --file=--document.json 'user.name'
 jmespath --file ./--document.json 'user.name'
 jmespath --file - 'user.name'
 jmespath --file document.json -- 'user.name'
+jmespath --query-file query.jmespath < document.json
+jmespath --query-file query.jmespath --file document.json
 ```
 
 Files are read as UTF-8 and closed after parsing, before query evaluation.
@@ -202,8 +205,16 @@ File input leaves stdin unused; omitting `--file` selects stdin.
 Paths are literal: `--file -` reads a file named `-`.
 Quote filenames with spaces; use the equals form or `./` prefix for option-like filenames.
 Options can precede or follow the expression; `--` ends option parsing.
-Repeated file options, unknown options, missing values, and missing or extra expressions are usage failures.
+Supply exactly one query source: a positional expression or `--query-file PATH`.
+Repeated file options, unknown options, missing values, and conflicting or absent query sources are usage failures.
 Help and version flags must appear alone.
+
+Query files retain all source text, including trailing newlines and Unicode diagnostic coordinates.
+An empty query file produces a syntax failure.
+Query files close after reading, before document input is accessed.
+Missing or unreadable query files leave document input untouched.
+After reading the query, execution parses JSON before compiling the expression.
+Query paths follow the document path rules: `--query-file -` reads a literal file named `-`.
 
 The result goes to standard output as JSON.
 Syntax, function type, and arity failures include source coordinates, a query excerpt, and a caret when available.
@@ -216,9 +227,13 @@ Validate syntax without providing a JSON document by running this shell command:
 
 ```sh
 jmespath --validate 'items[*].name'
+jmespath --validate --query-file query.jmespath
+jmespath --query-file query.jmespath --validate
 ```
 
 Both executables support `--validate EXPRESSION` without reading standard input.
+File validation also leaves stdin untouched and rejects document options such as `--file`.
+The exact two-argument form `--validate EXPRESSION` always treats the second argument as query text, including flag-like text.
 Valid syntax produces no output and exits with status 0.
 Query failures print a diagnostic to standard error and exit with status 1; incorrect usage exits with status 2.
 Validation does not check function availability or runtime argument types.
