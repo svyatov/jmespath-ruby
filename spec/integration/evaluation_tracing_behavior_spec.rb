@@ -64,4 +64,31 @@ RSpec.describe "Tracing behavior parity" do
     hash.define_singleton_method(:each_key) { |&block| super(&block) }
     expect(JMESPath.compile("x").trace(hash)[:events].first[:details][:reason]).to eq("unknown")
   end
+
+  it "finishes filter conditions before projections even after truncation" do
+    log = []
+    functions = JMESPath::Functions.default.with("keep", signature: [[:any]]) do |value|
+      log << [:keep, value]
+      value != 2
+    end
+    functions = functions.with("emit", signature: [[:any]]) do |value|
+      log << [:emit, value]
+      value == 1 ? nil : false
+    end
+    query = JMESPath.compile("items[?keep(@)].emit(@)", functions: functions)
+    report = query.trace({ items: [1, 2, 3] }, limit: 1)
+    expect(report[:value]).to eq([false])
+    expect(log).to eq([[:keep, 1], [:keep, 2], [:keep, 3], [:emit, 1], [:emit, 3]])
+    expect(report[:events].length).to eq(1)
+    expect(report[:events].first[:type]).to eq("filter_exclusion")
+    expect(report[:truncated]).to be(true)
+  end
+
+  it "keeps short-circuited callbacks and their diagnostics unvisited" do
+    functions = JMESPath::Functions.default.with("bomb", signature: []) { raise "visited" }
+    ["x || bomb()", "x && bomb()"].zip([true, false]).each do |source, input|
+      report = JMESPath.compile(source, functions: functions).trace({ x: input })
+      expect(report).to eq(value: input, events: [], truncated: false)
+    end
+  end
 end

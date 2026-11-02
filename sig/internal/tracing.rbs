@@ -9,6 +9,10 @@ module JMESPath
       @collector: Collector
       def initialize: (functions: Functions, collector: Collector, ?disable_visit_errors: bool) -> void
       def evaluate: (AST::Node, value) -> value
+      private
+      def project_item: (AST::Node, AST::Node, value, Integer) -> value
+      def filter_rejected?: (AST::Node, value, Integer) -> value
+      def project_selected: (AST::Node, Array[value], Array[Integer]) -> Array[value]
     end
     class Collector
       @ids: Hash[AST::Node, Integer]
