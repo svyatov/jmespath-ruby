@@ -187,6 +187,22 @@ See [registry inspection](docs/guides/functions.md#registry-inspection) for all 
 
 ## Errors and diagnostics
 
+Use `Expression#try_search` in Ruby code to distinguish a successful null result from a library-owned failure:
+
+```ruby
+query = JMESPath.compile("length(@)")
+query.try_search("Ada").value #=> 3
+query.try_search(4).success? #=> false
+query.try_search(4).error.function_name #=> "length"
+JMESPath.compile("missing").try_search({}).success? #=> true
+```
+
+The frozen `JMESPath::SearchResult` exposes `success?`, `value`, and the original `error`.
+Library-owned evaluation, JSON parsing, and native input I/O failures become failure results.
+Invalid options and exceptions from application callbacks or conversions still raise.
+Compilation can raise syntax errors before `try_search` runs.
+See [failure results](docs/guides/errors.md#failure-results) for ownership and suppression rules.
+
 Format syntax failures in Ruby with `JMESPath::Diagnostic.format(error)` to get source coordinates, a query excerpt, and a caret.
 Function type and arity errors expose immutable validation data, including the function name, signature, argument counts or types, and available source ranges.
 Unknown-function errors expose the missing name and up to three suggestions from the active registry.

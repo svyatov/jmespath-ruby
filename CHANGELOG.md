@@ -9,6 +9,16 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) for t
 
 - Add `JMESPath.validate` with immutable syntax diagnostics and configurable nesting limits.
 - Add `--validate EXPRESSION` to both executables for syntax validation without reading standard input.
+- Add `Expression#explain` with an immutable query tree, operation IDs, and source ranges.
+- Add `Expression#trace` with bounded events for null fields and omitted projection items.
+- Add `Expression#fetch` to require a non-null result and raise `NullResultError` when the result is null.
+- Add `Expression#try_search` and `SearchResult` to return library-owned failures while preserving exceptions from application callbacks and conversions.
+- Add `--file PATH` for JSON documents and `--query-file PATH` for UTF-8 query text.
+- Add `--pretty` for indented JSON and `--raw-output` for unquoted string results.
+- Add `--json-lines` to compile once and process independent JSON records incrementally.
+- Add `--functions` to list built-in function signatures and descriptions without reading input.
+- Add `--interactive --file PATH` to load one document and evaluate successive queries with recovery from query failures.
+- Package manually installed Bash and Zsh completion for options and paths through both executable names.
 
 ## [0.1.2] - 2026-11-02
 
