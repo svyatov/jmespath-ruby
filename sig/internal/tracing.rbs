@@ -1,0 +1,43 @@
+module JMESPath
+  module Tracing
+    module FieldLookup
+      def self.call: (value, String) -> [value, String?]
+      def self.fallback: (Hash[untyped, value], String) -> [value, String]
+      def self.native_lookup?: (untyped) -> bool
+      def self.classify: (untyped, value, String) -> String
+    end
+    class Evaluator < JMESPath::Evaluator
+      @collector: Collector
+      @native_functions: Array[AST::Node]?
+      @compiled_functions: Hash[AST::Node, bool]
+      def initialize: (config: Options, collector: Collector, root: AST::Node, planned: bool, native_functions: Array[AST::Node]?) -> void
+      def evaluate: (AST::Node, value) -> value
+      private
+      def native_string: (AST::Node, value) -> value
+      def index_plan: (AST::Node) -> void
+      def project_item: (AST::Node, AST::Node, value, Integer) -> value
+      def filter_rejected?: (AST::Node, value, Integer) -> value
+      def project_selected: (AST::Node, Array[value], Array[Integer]) -> Array[value]
+    end
+    class Collector
+      @ids: Hash[AST::Node, Integer]
+      @limit: Integer
+      @events: Array[trace_event]
+      @contexts: Hash[Thread, Array[trace_context]]
+      @references: Hash[Integer, Integer]
+      @truncated: bool
+      @closed: bool
+      @mutex: Mutex
+      def initialize: (root: AST::Node, limit: Integer) -> void
+      def operation_id: (AST::Node) -> Integer
+      def within: (AST::Node, Integer) { () -> value } -> value
+      def reference: (AST::Node) { () -> value } -> value
+      def emit: (String, AST::Node, ?Hash[Symbol, String]) -> void
+      def finish: (value) -> trace_report
+      def close: () -> void
+      private
+      def index: (AST::Node) -> void
+      def clear: () -> void
+    end
+  end
+end

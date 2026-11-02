@@ -22,6 +22,9 @@ require_relative "jmespath/cache"
 require_relative "jmespath/plan"
 require_relative "jmespath/explanation"
 require_relative "jmespath/expression"
+require_relative "jmespath/tracing/collector"
+require_relative "jmespath/tracing/field_lookup"
+require_relative "jmespath/tracing/evaluator"
 
 # Search JSON-compatible Ruby values with JMESPath expressions.
 module JMESPath

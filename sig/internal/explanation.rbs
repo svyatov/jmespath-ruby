@@ -3,6 +3,7 @@ module JMESPath
     OPERATORS: Hash[Symbol, String]
     ROLES: Hash[Symbol, String | Array[String]]
     @next_id: Integer
+    def self.syntax_children: (AST::Node) -> Array[AST::Node]
     def self.build: (String, AST::Node) -> explanation
     def initialize: () -> void
     def node: (AST::Node) -> explanation_node
