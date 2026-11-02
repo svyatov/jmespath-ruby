@@ -2,25 +2,12 @@
 
 require_relative "../jmespath"
 require_relative "cli/failure_diagnostic"
-require "optparse"
+require_relative "cli/argument_parser"
 
 module JMESPath
-  # Executes queries as compact or pretty JSON, or validates query syntax.
+  # Executes queries as JSON or raw strings, or validates query syntax.
   module CLI
-    # Avoid require_exact, which breaks equals values and delimiters on Ruby 3.3.
-    # @api private
-    class ArgumentParser < OptionParser
-      private
-
-      def complete(kind, name, *)
-        switch = search(kind, name)
-        raise InvalidOption, name unless switch
-
-        [switch, name]
-      end
-    end
-
-    USAGE = "Usage: jmespath [--pretty] [--file PATH] (EXPRESSION | --query-file PATH)\n       " \
+    USAGE = "Usage: jmespath [--pretty | --raw-output] [--file PATH] (EXPRESSION | --query-file PATH)\n       " \
             "jmespath --validate (EXPRESSION | --query-file PATH)"
     HELP = "#{USAGE}\n" \
            "Read one UTF-8 JSON document from --file PATH, or stdin when omitted.\n" \
@@ -30,7 +17,9 @@ module JMESPath
            "Paths are literal: --file - reads the file named -.\n" \
            "Query paths follow the same rules: --query-file - reads the query file named -.\n" \
            "Output is compact JSON by default; --pretty uses two-space indentation and a final newline.\n" \
-           "The --pretty flag cannot be repeated or combined with --validate.\n" \
+           "Use --raw-output for literal string results; other results remain compact JSON.\n" \
+           "Raw strings retain all their newlines and receive one additional output newline.\n" \
+           "Output flags cannot be repeated or combined with each other or --validate.\n" \
            "Function arguments and expression-reference results are validated; failures exit with status 1.\n" \
            "Unknown functions suggest similar registered names.\n" \
            "Query failures include source locations when available.\n" \
@@ -48,11 +37,11 @@ module JMESPath
       return validation(argv, stderr) if argv.first == "--validate" && argv.length == 2
       return information(argv, stdout) if [%w[--help], %w[-h], %w[--version]].include?(argv)
 
-      expression, path, query_path, validate, pretty = parse_arguments(argv)
+      expression, path, query_path, validate, pretty, raw_output = parse_arguments(argv)
       expression = read_query(expression, query_path)
       return validation(["--validate", expression], stderr) if validate
 
-      execute(expression, path, stdin, stdout, pretty)
+      execute(expression, read_document(path, stdin), stdout, pretty, raw_output)
     rescue OptionParser::ParseError
       stderr.puts(USAGE)
       2
@@ -63,21 +52,25 @@ module JMESPath
 
     # @api private
     def self.parse_arguments(argv)
-      return [argv.fetch(0), nil, nil, false, false] if argv.one? && !argv.fetch(0).start_with?("-")
+      return [argv.fetch(0), nil, nil, false, false, false] if argv.one? && !argv.fetch(0).start_with?("-")
 
       paths = {} # : Hash[String, String]
       arguments = argument_parser(paths).permute(argv)
       check_sources(arguments, paths)
 
-      [arguments.first, paths["file"], paths["query-file"], paths.key?("validate"), paths.key?("pretty")]
+      [arguments.first, paths["file"], paths["query-file"],
+       paths.key?("validate"), paths.key?("pretty"), paths.key?("raw-output")]
     end
 
     # @api private
     def self.check_sources(arguments, paths)
       sources = arguments.length + (paths.key?("query-file") ? 1 : 0)
       raise OptionParser::InvalidArgument, "expected one query source" unless sources == 1
+
+      modes = paths.keys & %w[validate pretty raw-output]
+      raise OptionParser::InvalidArgument, "conflicting modes" if modes.length > 1
       return unless paths.key?("validate")
-      return if paths.key?("query-file") && !paths.key?("file") && !paths.key?("pretty")
+      return if paths.key?("query-file") && !paths.key?("file")
 
       raise OptionParser::InvalidArgument, "validation requires a query file"
     end
@@ -95,7 +88,7 @@ module JMESPath
             paths[name] = value
           end
         end
-        %w[validate pretty].each do |name|
+        %w[validate pretty raw-output].each do |name|
           options.on("--#{name}") do
             raise OptionParser::InvalidOption, "--#{name} repeated" if paths.key?(name)
 
@@ -120,10 +113,14 @@ module JMESPath
     end
 
     # @api private
-    def self.execute(expression, path, stdin, stdout, pretty)
-      data = read_document(path, stdin)
+    def self.execute(expression, data, stdout, pretty, raw_output)
       result = JMESPath.search(expression, data)
-      stdout.puts(pretty ? JSON.pretty_generate(result) : JSON.generate(result))
+      output = if raw_output && result.is_a?(String)
+                 "#{result}\n"
+               else
+                 pretty ? JSON.pretty_generate(result) : JSON.generate(result)
+               end
+      stdout.puts(output)
       0
     end
 

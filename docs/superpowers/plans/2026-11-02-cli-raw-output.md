@@ -31,6 +31,7 @@ Issue #21 owns rejection of raw output combined with JSON Lines processing.
 | File | Responsibility |
 | --- | --- |
 | `lib/jmespath/cli.rb` | Parse the flag, reject conflicts, write raw results, and update help |
+| `lib/jmespath/cli/argument_parser.rb` | Preserve exact matching and reject the underscore alias before normalization |
 | `sig/internal/cli.rbs` | Match private tuple and execution signatures |
 | `spec/integration/cli_raw_output_spec.rb` | Cover output, arguments, diagnostics, stream compatibility, and both executables |
 | `spec/integration/cli_spec.rb` | Update literal usage expectations |
@@ -45,16 +46,20 @@ Issue #21 owns rejection of raw output combined with JSON Lines processing.
 **Interfaces:** Preserve `CLI.run(argv, stdin:, stdout:, stderr:) -> Integer` and public `_Reader` and `_Writer` protocols.
 Extend private `CLI.parse_arguments(Array[String]) -> [String?, String?, String?, bool, bool, bool]`.
 The final booleans are `validate`, `pretty`, and `raw_output`, respectively; all default to false.
-Extend private `CLI.execute(expression, path, stdin, stdout, pretty, raw_output) -> Integer` with positional boolean parameters.
+Use private `CLI.execute(expression, data, stdout, pretty, raw_output) -> Integer` with positional boolean parameters.
+Read the document in `run` after validation returns; keep document parsing before query evaluation.
 Use presence of the string-valued parser hash key `raw-output` to represent the flag.
 Keep both executable entry points and other helper signatures unchanged.
+Move the parser class into its own file to keep the CLI within the repository's module size limit.
+Override `ArgumentParser.permute(Array[String]) -> Array[String]` to reject `--raw_output` before OptionParser normalizes underscores.
+Preserve file option values, the `--` delimiter, frozen arguments, and legacy query-file spelling behavior.
 
-- [ ] **Step 1: Verify the CLI baseline.**
+- [x] **Step 1: Verify the CLI baseline.**
 
 Run `bundle exec rspec spec/integration/cli_spec.rb spec/integration/cli_file_spec.rb spec/integration/cli_query_file_spec.rb spec/integration/cli_pretty_spec.rb`.
 Require zero failures.
 
-- [ ] **Step 2: Add failing formatting and stream regressions.**
+- [x] **Step 2: Add failing formatting and stream regressions.**
 
 Create `cli_raw_output_spec.rb` using the UTF-8 StringIO helper and temporary files from `cli_pretty_spec.rb`.
 Use a `run_cli` helper returning `[status, stdout, stderr]`.
@@ -77,7 +82,7 @@ Assert exact compact input bytes plus one newline for raw and default invocation
 The example `formats the selected result` asserts query `user.name` with `{"user":{"name":"Ada"}}` produces `[0, "Ada\n", ""]`.
 The example `supports a puts-only output stream` uses a double with only `puts` and expects the argument `"Ada\n\n"` for a newline-terminated result.
 
-- [ ] **Step 3: Add failing argument and diagnostic regressions.**
+- [x] **Step 3: Add failing argument and diagnostic regressions.**
 
 Set the literal execution usage line in all CLI specs to `Usage: jmespath [--pretty | --raw-output] [--file PATH] (EXPRESSION | --query-file PATH)`.
 Keep the validation usage line unchanged; update both usage literals in `cli_spec.rb`.
@@ -87,6 +92,7 @@ Test trailing options with `POSIXLY_CORRECT=1` and restore its value in `ensure`
 
 The example `rejects invalid options before input access` expects `[2, "", usage]` with an unreadable stdin and `File.open` forbidden.
 Cover missing queries, extra queries, conflicting query sources, repeats, `--raw-output=true`, `--raw`, `-r`, and help/version combinations.
+Reject `--raw_output` and `--raw_output=true` while retaining literal filenames and query text with that spelling.
 Cover both orders of pretty/raw and validation/raw conflicts, including query-file and document-file combinations.
 Assert `--validate --raw-output` produces `[1, "", "Expected a digit at line 1, column 1\n--raw-output\n^\n"]` without input access.
 
@@ -98,27 +104,28 @@ Verify injected `RuntimeError` and `ArgumentError` evaluation failures propagate
 For each executable, assert raw output with trailing newlines, non-string JSON, unchanged default output, syntax/type failures, and pretty/raw usage rejection.
 Use the timeout and cleanup pattern from `cli_pretty_spec.rb` to verify conflict rejection completes while stdin remains open.
 
-- [ ] **Step 4: Confirm feature failures.**
+- [x] **Step 4: Confirm feature failures.**
 
 Run the Step 1 command with `spec/integration/cli_raw_output_spec.rb` added.
 Expect failures for the unsupported flag and changed usage, without setup failures.
 
-- [ ] **Step 5: Implement the flag, conflicts, and private types.**
+- [x] **Step 5: Implement the flag, conflicts, and private types.**
 
 Register `raw-output` alongside the boolean flags, retaining repeat rejection.
 Thread its boolean through the positional fast path, parsed tuple, `run`, and `execute` using the interfaces above.
 Reject pretty/raw combinations in `check_sources`, before validation handling or input access.
-Reject raw output in the allowed query-file validation branch while preserving the two-argument validation fast path.
+Reject multiple selected modes through the intersection of parsed keys with `validate`, `pretty`, and `raw-output`.
+Preserve the two-argument validation fast path and query-file validation rules.
 In `execute`, evaluate once; for a raw string, pass the result plus one newline to `stdout.puts`.
 Otherwise retain the selected JSON generator and output behavior.
 Keep exception handling and input read order unchanged.
 Update usage, help, YARD descriptions, and private RBS signatures; preserve `sig/jmespath.rbs`.
 
-- [ ] **Step 6: Confirm the CLI regressions pass.**
+- [x] **Step 6: Confirm the CLI regressions pass.**
 
 Run the Step 4 command and require zero failures.
 
-- [ ] **Step 7: Document raw output.**
+- [x] **Step 7: Document raw output.**
 
 Add `jmespath --raw-output 'user.name' < document.json` to the README command-line examples.
 Explain literal string output, JSON fallback, exactly one appended newline, and preserved embedded/trailing newlines in the README and errors guide.
@@ -126,11 +133,23 @@ Explain repeats, pretty/validation conflicts, and the exact `--validate --raw-ou
 State that raw output preserves stderr diagnostics and failure statuses, with empty stdout before output starts.
 Retain default compact and pretty behavior; do not advertise JSON Lines support.
 
-- [ ] **Step 8: Verify and commit the feature.**
+- [x] **Step 8: Verify and commit the feature.**
 
 Run `bundle exec rake`; require successful lint, RBS, Steep, tests, full coverage, complexity, and documentation checks.
 Run `bundle exec rake docs`; require successful generation and documentation coverage.
+Run `bundle exec rake package:check`; require the extracted parser in the gem and both installed executable names to work.
 Run the oss-writing prose checker on changed Markdown files and `git diff --check`; require no findings.
 Review the diff against the design, mark completed checkboxes, and stage only this task's files.
 Commit as `feat(cli): add raw string output`.
 Leave unrelated files unstaged; do not push, open a PR, close the issue, or publish without separate authorization.
+
+## Verification results
+
+The baseline CLI suite passed 213 examples.
+The feature regressions failed before implementation because the flag was unsupported and usage lacked it.
+QA exposed OptionParser's underscore normalization; the added regression failed before the alias fix and passed afterward.
+The final CLI suite passed 254 examples.
+The full `bundle exec rake` check passed 6,413 examples with 100% line and branch coverage.
+Lint, RBS validation, Steep, coverage-aware complexity, and documentation checks passed.
+`bundle exec rake docs package:check` passed with 100% documented public interfaces and both installed executables working offline.
+Independent QA passed 48 follow-up executable scenarios and three public CLI scenarios, carrying forward 378 unaffected passes and 52 baseline comparisons.
