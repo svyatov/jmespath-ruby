@@ -53,11 +53,11 @@ module ShellCompletion
 
   def self.candidates(**) = probe(**).fetch(1)
 
-  def self.probe(shell:, root:, line:)
+  def self.probe(shell:, root:, line:, home_directory: nil)
     Dir.mktmpdir("jmespath-shell") do |home|
       startup = File.join(home, shell == "bash" ? "bashrc" : ".zshrc")
       File.write(startup, shell == "bash" ? BASH : ZSH)
-      environment = probe_environment(root, home)
+      environment = probe_environment(root, home, home_directory)
       arguments = shell == "bash" ? ["--noprofile", "--rcfile", startup, "-i"] : ["-d", "-i"]
       result = nil
       PTY.spawn(environment, shell, *arguments) do |reader, writer, pid|
@@ -83,8 +83,8 @@ module ShellCompletion
     end
   end
 
-  def self.probe_environment(root, home)
-    { "HOME" => home, "ZDOTDIR" => home, "TERM" => "dumb", "INPUTRC" => "/dev/null",
+  def self.probe_environment(root, home, home_directory)
+    { "HOME" => home_directory || home, "ZDOTDIR" => home, "TERM" => "dumb", "INPUTRC" => "/dev/null",
       "PROBE_ROOT" => root, "PROBE_RESULT" => File.join(home, "result"),
       "PROBE_CANDIDATES" => File.join(home, "candidates") }
   end

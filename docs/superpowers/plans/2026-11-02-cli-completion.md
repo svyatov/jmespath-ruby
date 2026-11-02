@@ -161,7 +161,7 @@ The baseline passed 93 CLI examples.
 Shell tests failed before assets existed; packaging and help checks failed before inclusion and documentation changes.
 Independent QA found Bash equals-boundary errors, each covered by failing regressions before correction.
 A separate regression caught option-name directories changing option insertion; filename mode now applies only to path arguments.
-The final full gate passed 6661 examples with 100% line and branch coverage.
+The final full gate passed 6663 examples with 100% line and branch coverage.
 RuboCop, RBS, Steep, complexity analysis, and executable documentation checks passed.
 `bundle exec rake docs` passed with 100% public documentation coverage.
 Bash 3.2.57 and Zsh 5.9 passed syntax and real terminal tests; no installed-shell checks were skipped.
@@ -172,4 +172,22 @@ Focused follow-ups passed 34 and seven scenarios; newline filenames also complet
 QA evidence: `/private/tmp/jmespath-completion-qa.SWhbb6/report.md`, `/private/tmp/jmespath-completion-qa-followup.nE0bCD/report.md`, and `/private/tmp/jmespath-completion-qa-collision.lJcNGa/report.md`.
 Prose and whitespace checks passed.
 The installed Ruby/YARD combination emitted its existing `irb/notifier` warning during documentation checks.
-Final independent code review is pending.
+Independent code review found one important home-path defect and two minor groups.
+The home-path regressions failed before correction and passed afterward; the full gate then passed 6663 examples.
+A focused independent QA follow-up passed ten checks, including accepted arguments and the actual selected HOME or literal paths.
+Its evidence is `/private/tmp/jmespath-completion-qa-home.hhn9f1/report.md`.
+
+### Deferred minor findings
+
+F2: Quoted option names and delimiters, ANSI-C quoted filename prefixes, and quoted literal tildes in Zsh equals values need further normalization.
+F3: Bash completion inside a word can return no candidates.
+These do not change query execution; they limit completion in those inputs.
+
+### Review rulings
+
+D1: Retain the approved exclusions for Fish, expression completion, and conflict filtering.
+Cost: those features remain unavailable.
+D2: Keep arbitrary shell substitution evaluation outside completion; safely expand only supported HOME references.
+Cost: other constructed path prefixes may remain incomplete.
+D3: Record Zsh mid-word completion as unverified because the review harness could not drive that cursor position.
+Cost: that editing flow retains a verification gap.

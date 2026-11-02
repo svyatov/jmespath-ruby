@@ -16,7 +16,7 @@ _jmespath_completion_words() {
   done
 }
 
-# Decode shell quoting without evaluating filename text.
+# Decode quoting and HOME references without evaluating filename text.
 _jmespath_completion_unquote() {
   local text=$1 character next quote=
   REPLY=
@@ -33,6 +33,12 @@ _jmespath_completion_unquote() {
         text=${text:1}
         [[ $next != $'\n' ]] && REPLY+=$next
       fi
+    elif [[ $character == '$' && ( $text == HOME || $text == HOME[/\"]* ) ]]; then
+      REPLY+=$HOME
+      text=${text#HOME}
+    elif [[ $character == '$' && $text == '{HOME}'* ]]; then
+      REPLY+=$HOME
+      text=${text#'{HOME}'}
     elif [[ $character == "'" || $character == '"' ]]; then
       if [[ $quote == "$character" ]]; then
         quote=
@@ -50,7 +56,7 @@ _jmespath_completion_unquote() {
 _jmespath_completion() {
   local -a words=()
   local current word candidate prefix REPLY
-  local index expecting_path=0
+  local index expecting_path=0 expand_home=0
   _jmespath_completion_words
   current=${words[${#words[@]}-1]}
   COMPREPLY=()
@@ -74,11 +80,23 @@ _jmespath_completion() {
   fi
 
   if ((expecting_path)); then
+    case $current in
+      '~'|'~/'*) expand_home=1 ;;
+      '~'*) return ;;
+    esac
     # Readline replaces only the suffix after its last unquoted word break.
     _jmespath_completion_unquote "${current%"${2-}"}"
     prefix=$REPLY
     _jmespath_completion_unquote "$current"
     current=$REPLY
+    if ((expand_home)); then
+      current=$HOME${current#\~}
+      [[ $prefix == '~'* ]] && prefix=$HOME${prefix#\~}
+    elif [[ $current == '~'* ]]; then
+      # A quoted or escaped tilde must stay literal when Readline rewrites it.
+      current=./$current
+      [[ -n $prefix ]] && prefix=./$prefix
+    fi
     while IFS= read -r -d '' candidate; do
       COMPREPLY[${#COMPREPLY[@]}]=${candidate#"$prefix"}
     done < <(

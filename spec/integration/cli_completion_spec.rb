@@ -106,6 +106,37 @@ RSpec.describe "Shell completion" do
             File.unlink(name)
           end
         end
+
+        next unless shell == "bash"
+
+        it "distinguishes home paths from literal tildes for #{command}" do
+          Dir.mktmpdir("jmespath home") do |home|
+            home_path = File.join(home, "home-only.json")
+            File.write(home_path, "not read")
+            Dir.mkdir("~")
+            File.write("~/literal-only.json", "not read")
+            prefixes = { "~/home-o" => home_path, '"$HOME/home-o' => home_path,
+                         "${HOME}/home-o" => home_path, "\\~/lit" => "./~/literal-only.json",
+                         "'~/lit" => "./~/literal-only.json", '"~/lit' => "./~/literal-only.json" }
+            %w[--file --query-file].each do |option|
+              [" ", "="].each do |separator|
+                prefixes.each do |prefix, expected_path|
+                  line = "#{command} #{option}#{separator}#{prefix}"
+                  result = ShellCompletion.complete(shell: shell, root: root, line: line, home_directory: home)
+                  expected = if separator == "="
+                               [command, "#{option}=#{expected_path}"]
+                             else
+                               [command, option, expected_path]
+                             end
+                  expect(Shellwords.split(result)).to eq(expected)
+                end
+                line = "#{command} #{option}#{separator}~/lit"
+                result = ShellCompletion.complete(shell: shell, root: root, line: line, home_directory: home)
+                expect(result).to eq(line)
+              end
+            end
+          end
+        end
       end
 
       it "does not execute commands from executable names or filename text" do

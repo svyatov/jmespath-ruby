@@ -15,6 +15,9 @@ source "$jmespath_gem_root/completions/jmespath.bash"
 
 The definition uses Bash built-ins and supports Bash 3.2 or later.
 It requires no completion framework.
+Unquoted `~/`, `$HOME/`, and `${HOME}/` prefixes use your home directory.
+Quoted or escaped tildes remain literal, with `./` added when necessary to preserve the selected path.
+Bash completion leaves named-user prefixes such as `~other/` unchanged.
 
 ## Zsh setup
 
