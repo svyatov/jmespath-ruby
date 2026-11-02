@@ -11,7 +11,7 @@ module JMESPath
         index = 0
         while (argument = argv[index])
           break if argument == "--"
-          raise InvalidOption, argument if argument.match?(/\A--raw_output(?:=|\z)/)
+          raise InvalidOption, argument if argument.match?(/\A--(?:raw_output|json_lines)(?:=|\z)/)
 
           index += %w[--file --query-file --query_file].include?(argument) ? 2 : 1
         end

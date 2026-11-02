@@ -208,7 +208,7 @@ Invalid options raise ArgumentError.
 
 Both `jmespath` and `jmespath.rb` print expected input and query failures to stderr and exit with status 1.
 Failures before output starts leave stdout empty.
-Successful queries print one JSON result to stdout.
+Successful document queries print one JSON result to stdout.
 With `--raw-output`, string results print without JSON quotes or escape encoding; other types retain compact JSON encoding.
 Raw output appends one newline while preserving every embedded and trailing newline in the string.
 An empty string produces one newline; a string ending with one newline produces two.
@@ -222,8 +222,50 @@ Usage failures print usage to stderr and exit with status 2 without reading stdi
 Help and version requests exit with status 0 without reading stdin.
 With `--file PATH`, usage failures and informational requests do not open the document.
 Missing or unreadable document files produce escaped operating-system messages on stderr with status 1.
-File failures leave stdin unused, and files opened by the CLI close after parsing, including when parsing fails.
+File failures leave stdin unused; single-document files close after parsing, including when parsing fails.
 Query diagnostics retain their source locations when JSON comes from a file.
+
+### JSON Lines failures
+
+Use `--json-lines` to read independent records from stdin or `--file PATH`:
+
+```sh
+jmespath --json-lines 'length(@)' < records.jsonl
+jmespath --json-lines --file records.jsonl --query-file query.jmespath
+```
+
+The query compiles once before document input is accessed, including for empty input.
+A valid query with empty input returns status 0 without output; an invalid query returns status 1.
+Each physical line must contain one complete JSON value.
+Blank and whitespace-only lines fail with `Invalid JSON input`.
+LF, CRLF, and a final unterminated record are accepted.
+Results use compact JSON with one final newline per record, including null and false values.
+
+If the input contains `[]` on line 1 and `4` on line 2, the first command prints `0` before failing.
+Its stderr identifies both the input record and the query location:
+
+```text
+Input line 2:
+Invalid argument 1 for length: expected string, array, or object; received number at line 1, column 1
+length(@)
+^
+```
+
+Processing stops at the failing record with status 1, preserving earlier results and omitting the failed result.
+Check the exit status before treating stdout as complete.
+Parsing failures retain the generic message without document fragments.
+Results that cannot be encoded as JSON report `Invalid JSON result` without result fragments.
+Query excerpts and function context remain available after the input-line prefix.
+Compilation and file-open failures have no record number.
+
+The CLI reads the next line after writing the preceding result, using normal output buffering.
+Memory is proportional to the current record, its evaluation, and its serialized result, plus the compiled query.
+Owned files close after processing succeeds or fails; caller-owned streams remain open.
+Injected input needs `gets` for JSON Lines and `read` for document mode; injected output needs only `puts`.
+Repeated flags or combinations with `--pretty`, `--raw-output`, or validation fail with status 2 before input access.
+The exact two-argument invocation `--validate --json-lines` validates literal query text.
+
+### Saved queries
 
 Select a saved UTF-8 query with `--query-file PATH` and supply the document through stdin or `--file PATH`.
 Query files retain their source text, including Unicode, line breaks, and trailing newlines.
@@ -231,7 +273,7 @@ Syntax and function diagnostics use that text for their excerpts, coordinates, a
 An empty file produces an empty-expression syntax diagnostic with status 1.
 Missing or unreadable query files produce escaped operating-system messages with status 1, leaving document input untouched.
 Query files close after reading, including read failures, before document input is accessed.
-After the query file is read, malformed JSON takes precedence over query syntax errors.
+In single-document mode, malformed JSON takes precedence over query syntax errors after the query file is read.
 Absent or conflicting query sources, repeated options, and missing values produce usage failures before opening files.
 
 To execute a saved query, run this command in a shell:
