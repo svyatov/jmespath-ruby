@@ -16,7 +16,8 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 3.3"
   spec.files = Dir["lib/**/*.rb", "sig/jmespath.rbs", "exe/*", "README.md", "CONTRIBUTING.md", "CHANGELOG.md",
                    "VERSIONING.md",
-                   "SECURITY.md", "LICENSE", "LICENSES/*", "docs/guides/*.md"]
+                   "SECURITY.md", "LICENSE", "LICENSES/*", "docs/guides/*.md",
+                   "completions/jmespath.bash", "completions/_jmespath"]
   spec.require_paths = ["lib"]
   spec.bindir = "exe"
   spec.executables = Dir["exe/*"].map { |path| File.basename(path) }

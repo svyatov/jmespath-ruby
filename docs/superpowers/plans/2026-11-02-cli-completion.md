@@ -45,7 +45,7 @@ R5: Completion loaded from a gem outside the checkout must work without either e
 
 **Interfaces:**
 
-Bash defines `_jmespath_completion()` with no arguments, consuming `COMP_WORDS`, `COMP_CWORD`, `COMP_LINE`, and `COMP_POINT` as needed.
+Bash defines `_jmespath_completion()`, consuming Readline callback arguments and `COMP_WORDS`, `COMP_CWORD`, `COMP_LINE`, and `COMP_POINT`.
 It populates the `COMPREPLY` array and registers through `complete` for both executable names.
 Zsh defines `_jmespath()` with no arguments and registers both names through the standard completion system.
 Both definitions consume only shell state and filesystem entry names.
@@ -120,7 +120,7 @@ Consume the existing `PackageCheck#build(destination)` and `Gem::Package` extrac
 Produce packaged paths `completions/jmespath.bash`, `completions/_jmespath`, and `docs/guides/completion.md`.
 No public Ruby API changes are required.
 
-- [ ] **Step 1: Write failing artifact checks.**
+- [x] **Step 1: Write failing artifact checks.**
 
 Extend `spec/packaging/gem_spec.rb` to assert all three packaged paths.
 Extract the built gem into the existing temporary test directory.
@@ -129,7 +129,7 @@ Retain access to shell binaries and standard Zsh completion facilities.
 Assert a unique option and a path containing spaces complete through the shared helper.
 Run `bundle exec rspec spec/packaging/gem_spec.rb`; expect missing-asset failures.
 
-- [ ] **Step 2: Package and document the feature.**
+- [x] **Step 2: Package and document the feature.**
 
 Add explicit completion asset patterns to `spec.files` in `jmespath-ruby.gemspec`.
 Write the guide with an installed gem path discovered through RubyGems, preserving spaces through shell quoting.
@@ -138,7 +138,7 @@ Explain optional persistent setup as manual user actions; run no commands that e
 Document both command names, both path options, equals values, spaces, the delimiter, and O1's conflict behavior.
 Link the guide from README CLI documentation and `CLI::HELP`; update affected help assertions.
 
-- [ ] **Step 3: Verify the complete deliverable.**
+- [x] **Step 3: Verify the complete deliverable.**
 
 Run `bundle exec rspec spec/integration/cli_completion_spec.rb spec/packaging/gem_spec.rb` and expect zero failures.
 Run `env RUBOCOP_CACHE_ROOT=/private/tmp/jmespath-rubocop-cache bundle exec rake` and expect every gate to pass.
@@ -148,8 +148,28 @@ Manually try both documented shell setups against extracted assets in disposable
 Verify filenames containing spaces become one argument, including equals-value syntax.
 Record shell versions, skips, package evidence, and full-gate results in the plan.
 
-- [ ] **Step 4: Commit the packaged feature.**
+- [x] **Step 4: Commit the packaged feature.**
 
 Stage only task files and completed plan checkboxes.
-Commit with `feat(cli): package and document shell completion`.
+Commit with `feat(cli): package shell completion`.
 Report local verification; preserve separate authorization for remote operations.
+
+## Execution evidence
+
+Implemented on `feat/cli-completion` in `/Users/leonid/.codex/worktrees/4fd0/jmespath-ruby`.
+The baseline passed 93 CLI examples.
+Shell tests failed before assets existed; packaging and help checks failed before inclusion and documentation changes.
+Independent QA found Bash equals-boundary errors, each covered by failing regressions before correction.
+A separate regression caught option-name directories changing option insertion; filename mode now applies only to path arguments.
+The final full gate passed 6661 examples with 100% line and branch coverage.
+RuboCop, RBS, Steep, complexity analysis, and executable documentation checks passed.
+`bundle exec rake docs` passed with 100% public documentation coverage.
+Bash 3.2.57 and Zsh 5.9 passed syntax and real terminal tests; no installed-shell checks were skipped.
+Other shell versions were not available for local verification.
+Built gem checks verified both assets and the guide, then exercised extracted definitions without CLI executables on PATH.
+Independent tmux QA verified exact manual setup, both names, both terminal widths, literal quoting, directories, and unreadable inputs.
+Focused follow-ups passed 34 and seven scenarios; newline filenames also completed as one argument.
+QA evidence: `/private/tmp/jmespath-completion-qa.SWhbb6/report.md`, `/private/tmp/jmespath-completion-qa-followup.nE0bCD/report.md`, and `/private/tmp/jmespath-completion-qa-collision.lJcNGa/report.md`.
+Prose and whitespace checks passed.
+The installed Ruby/YARD combination emitted its existing `irb/notifier` warning during documentation checks.
+Final independent code review is pending.

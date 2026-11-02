@@ -256,6 +256,10 @@ RSpec.describe "Command-line queries" do
                             "0 for valid syntax", "1 for query failures", "2 for usage failures")
   end
 
+  it "links the manual shell completion guide from help" do
+    expect(cli(["--help"], "invalid")[1]).to include("docs/guides/completion.md")
+  end
+
   it "propagates unrelated exceptions during validation" do
     failure = RuntimeError.new("Validation defect")
     allow(JMESPath).to receive(:validate).with("@").and_raise(failure)
