@@ -1,6 +1,6 @@
 # CLI pretty JSON output
 
-Status: awaiting design approval.
+Status: approved by the user on 2026-11-02.
 Scope: [issue #19](https://github.com/svyatov/jmespath-ruby/issues/19).
 
 ## Intent and boundaries
