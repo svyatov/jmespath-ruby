@@ -45,6 +45,7 @@ module JMESPath
     private
     def enqueue: (value) { (value) -> void } -> void
     def visit: (value) { (value) -> void } -> void
+    def activate: (value) -> Integer
     def array: (Array[value]) { (value) -> void } -> void
     def object: (Hash[value, value]) { (value) -> void } -> void
   end

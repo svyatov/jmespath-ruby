@@ -95,9 +95,13 @@ module JMESPath
     def call_with_context(name, arguments, source_range:, disable_visit_errors: nil)
       # Preserve compiled keyword omission separately from the evaluator's explicit false.
       unless method(:call).owner.equal?(Functions)
-        return call(name, arguments) if disable_visit_errors.nil?
-
-        return call(name, arguments, disable_visit_errors: disable_visit_errors)
+        return FailureCapture.application do
+          if disable_visit_errors.nil?
+            call(name, arguments)
+          else
+            call(name, arguments, disable_visit_errors: disable_visit_errors)
+          end
+        end
       end
 
       invoke(name, arguments, source_range: source_range, disable_visit_errors: !!disable_visit_errors)
@@ -112,8 +116,10 @@ module JMESPath
 
     def invoke(name, arguments, disable_visit_errors:, source_range: nil)
       definition = @definitions.fetch(name) do
-        raise Errors::UnknownFunctionError.new("Unknown function: #{name}", function_name: name,
-                                                                            suggestions: Suggestions.for(name, names))
+        raise FailureCapture.owned(
+          Errors::UnknownFunctionError.new("Unknown function: #{name}", function_name: name,
+                                                                        suggestions: Suggestions.for(name, names))
+        )
       end
       context = ValidationContext.new(name, definition.signature, source_range: source_range)
       invocation = disable_visit_errors ? FunctionCall.new : FunctionCall::STRICT

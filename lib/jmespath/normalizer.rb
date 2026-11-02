@@ -28,12 +28,19 @@ module JMESPath
       collection = DataAccess.array(value) || DataAccess.object(value)
       return assign.call(DataAccess.string(value) || value) unless collection
 
-      id = value.object_id
-      raise Errors::InvalidValueError, "Cyclic values cannot be compared or serialized" if @active[id]
-
-      @active[id] = true
+      id = activate(value)
       @pending << -> { @active.delete(id) }
       collection.is_a?(Array) ? array(collection, &assign) : object(collection, &assign)
+    end
+
+    def activate(value)
+      id = value.object_id
+      if @active[id]
+        raise FailureCapture.owned(Errors::InvalidValueError.new("Cyclic values cannot be compared or serialized"))
+      end
+
+      @active[id] = true
+      id
     end
 
     def array(values)

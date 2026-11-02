@@ -41,7 +41,7 @@ module JMESPath
       end
 
       def object(value)
-        return value.to_h if value.is_a?(Struct)
+        return FailureCapture.application { value.to_h } if value.is_a?(Struct)
 
         convert(value, Hash, :to_hash)
       end
@@ -54,9 +54,10 @@ module JMESPath
 
       def convert(value, type, method)
         return value if value.is_a?(type)
-        return nil unless value.respond_to?(method)
 
-        result = value.public_send(method)
+        result = FailureCapture.application do
+          value.public_send(method) if value.respond_to?(method)
+        end
         return result if result.nil? || result.is_a?(type)
 
         raise TypeError, "#{method} must return #{type}"

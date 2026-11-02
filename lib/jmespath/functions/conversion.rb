@@ -14,8 +14,10 @@ module JMESPath
 
       def to_string(value, **)
         DataAccess.string(value) || JSON.generate(Types.normalize(value))
-      rescue JSON::NestingError
-        raise Errors::InvalidValueError, "Value is too deeply nested to serialize"
+      rescue JSON::NestingError => e
+        raise if FailureCapture.excluded?(e)
+
+        raise FailureCapture.owned(Errors::InvalidValueError.new("Value is too deeply nested to serialize"))
       end
 
       def to_number(value, **)

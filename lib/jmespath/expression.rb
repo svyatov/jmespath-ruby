@@ -46,12 +46,13 @@ module JMESPath
     def try_search(data, options = Options::EMPTY, **keywords)
       fast = options.equal?(Options::EMPTY) && keywords.empty?
       config = fast ? @options : Options.new(options, keywords, default_depth: @max_depth, defaults: @options)
-      value = if fast
-                @plan.call(data.is_a?(Hash) ? data : Input.load(data))
-              else
-                evaluate(Input.load(data), config)
-              end
-      SearchResult.new(value: value, error: nil)
+      FailureCapture.run do
+        if fast
+          @plan.call(data.is_a?(Hash) ? data : Input.load(data))
+        else
+          evaluate(Input.load(data), config)
+        end
+      end
     end
 
     # Search input and require a non-null result.
@@ -107,7 +108,7 @@ module JMESPath
     # @api private
     def evaluate(data, config)
       if @root.depth > config.max_depth
-        raise Errors::SyntaxError.new("Expression exceeds nesting limit", expression: source)
+        raise FailureCapture.owned(Errors::SyntaxError.new("Expression exceeds nesting limit", expression: source))
       end
 
       return @plan.call(data) if config.equal?(@options) || configured_for?(config)

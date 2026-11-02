@@ -2,6 +2,7 @@
 
 require_relative "jmespath/version"
 require_relative "jmespath/errors"
+require_relative "jmespath/failure_capture"
 require_relative "jmespath/syntax_diagnostic"
 require_relative "jmespath/diagnostic"
 require_relative "jmespath/token"

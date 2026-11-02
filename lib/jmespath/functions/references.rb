@@ -58,18 +58,19 @@ module JMESPath
       def checked_type(value, expected, context:)
         type = Types.name(value)
         unless SORTABLE_TYPES.include?(type)
-          raise context.type_error(
-            "Expression keys must be numbers or strings",
-            position: 2, expected_types: expected ? [expected] : SORTABLE_TYPES, actual_type: type,
-            origin: validation_origin, stage: :expression_result
-          )
+          raise FailureCapture.owned(context.type_error(
+                                       "Expression keys must be numbers or strings",
+                                       position: 2, expected_types: expected ? [expected] : SORTABLE_TYPES,
+                                       actual_type: type,
+                                       origin: validation_origin, stage: :expression_result
+                                     ))
         end
         if expected && expected != type
-          raise context.type_error(
-            "Expression keys must have one type",
-            position: 2, expected_types: [expected], actual_type: type,
-            origin: validation_origin, stage: :expression_result
-          )
+          raise FailureCapture.owned(context.type_error(
+                                       "Expression keys must have one type",
+                                       position: 2, expected_types: [expected], actual_type: type,
+                                       origin: validation_origin, stage: :expression_result
+                                     ))
         end
 
         type
