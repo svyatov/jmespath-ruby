@@ -1,6 +1,6 @@
 # CLI raw string output
 
-Status: proposed for approval.
+Status: approved by the user on 2026-11-02.
 Scope: [issue #20](https://github.com/svyatov/jmespath-ruby/issues/20).
 
 ## Intent and boundaries
@@ -38,7 +38,8 @@ Evaluate the complete query before writing output.
 For string results with `--raw-output`, write the string unchanged and append exactly one newline.
 Preserve Unicode, quotes, backslashes, embedded newlines, and every trailing newline in the string.
 An empty string produces one newline; a string ending with one newline produces two.
-Use explicit writes because `puts` can omit the additional newline required by this contract.
+Pass the string plus one newline to `puts` to preserve the public output protocol, which requires only `puts`.
+Calling `puts` with the result alone would omit the additional newline when the result ends with one.
 
 For non-string results, retain compact JSON encoding followed by one newline.
 Preserve compact and pretty output byte for byte when raw output is absent.
