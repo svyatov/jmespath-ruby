@@ -211,6 +211,16 @@ Failures before output starts leave stdout empty.
 Successful queries print one JSON result to stdout.
 Usage failures print usage to stderr and exit with status 2 without reading stdin.
 Help and version requests exit with status 0 without reading stdin.
+With `--file PATH`, usage failures and informational requests do not open the document.
+Missing or unreadable document files produce escaped operating-system messages on stderr with status 1.
+File failures leave stdin unused, and files opened by the CLI close after parsing, including when parsing fails.
+Query diagnostics retain their source locations when JSON comes from a file.
+
+To query a UTF-8 document file, run this command in a shell:
+
+```sh
+jmespath --file document.json 'length(@)'
+```
 
 Both executables also support validation without reading stdin.
 Run this command in a shell:
@@ -254,7 +264,7 @@ Missing or unusable source ranges omit coordinates, the query line, and the care
 Incomplete validation metadata retains the escaped exception message and any usable source location.
 Unknown-function diagnostics retain suggestions; invalid-value failures use message-only diagnostics.
 
-Malformed stdin JSON prints `Invalid JSON input` without parser messages or document fragments.
+Malformed JSON from stdin or a file prints `Invalid JSON input` without parser messages or document fragments.
 For example, run this command in a shell:
 
 ```sh

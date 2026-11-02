@@ -6,4 +6,5 @@ target :lib do
   library "json"
   library "stringio"
   library "pathname"
+  library "optparse"
 end

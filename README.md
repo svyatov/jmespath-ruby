@@ -184,11 +184,26 @@ See [errors and diagnostics](docs/guides/errors.md) for examples, nullable field
 
 ## Command line
 
-Both `jmespath` and `jmespath.rb` accept an expression and a JSON document on standard input.
+Both `jmespath` and `jmespath.rb` accept an expression and a JSON document from stdin or `--file PATH`.
 
 ```sh
 printf '%s\n' '{"user":{"name":"Ada"}}' | jmespath 'user.name'
+jmespath --file document.json 'user.name'
+jmespath 'user.name' --file document.json
+jmespath --file 'my document.json' 'user.name'
+jmespath --file=--document.json 'user.name'
+jmespath --file ./--document.json 'user.name'
+jmespath --file - 'user.name'
+jmespath --file document.json -- 'user.name'
 ```
+
+Files are read as UTF-8 and closed after parsing, before query evaluation.
+File input leaves stdin unused; omitting `--file` selects stdin.
+Paths are literal: `--file -` reads a file named `-`.
+Quote filenames with spaces; use the equals form or `./` prefix for option-like filenames.
+Options can precede or follow the expression; `--` ends option parsing.
+Repeated file options, unknown options, missing values, and missing or extra expressions are usage failures.
+Help and version flags must appear alone.
 
 The result goes to standard output as JSON.
 Syntax, function type, and arity failures include source coordinates, a query excerpt, and a caret when available.

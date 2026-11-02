@@ -1,8 +1,14 @@
 module JMESPath
   module CLI
+    class ArgumentParser < ::OptionParser
+      private
+      def complete: (Symbol, String, *untyped) -> [OptionParser::Switch, String]
+    end
+
     USAGE: String
     HELP: String
-    def self.query: (String, _Reader, _Writer) -> Integer
+    def self.parse_arguments: (Array[String]) -> [String, String?]
+    def self.read_document: (String?, _Reader) -> value
     def self.validation: (Array[String], _Writer) -> Integer
     def self.information: (Array[String], _Writer) -> Integer
   end

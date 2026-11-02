@@ -7,7 +7,7 @@ require "timeout"
 
 RSpec.describe "Command-line queries" do
   def usage
-    "Usage: jmespath EXPRESSION < document.json\n       jmespath --validate EXPRESSION\n"
+    "Usage: jmespath [--file PATH] EXPRESSION\n       jmespath --validate EXPRESSION\n"
   end
 
   def cli(arguments, input)
@@ -270,7 +270,7 @@ RSpec.describe "Command-line queries" do
       ["lenght(name)"] => ["{}", 1, "Unknown function: lenght. Did you mean length?\n"],
       ["[::0]"] => ["[]", 1, "Slice step cannot be zero\n"],
       ["@"] => ['{"private_marker":BROKEN}', 1, "Invalid JSON input\n"],
-      [] => ["", 2, "Usage: jmespath EXPRESSION < document.json\n       jmespath --validate EXPRESSION\n"]
+      [] => ["", 2, "Usage: jmespath [--file PATH] EXPRESSION\n       jmespath --validate EXPRESSION\n"]
     }.each do |arguments, (input, expected_status, expected_errors)|
       it "reports #{arguments.inspect} failures through #{name}" do
         output, errors, status = Open3.capture3(

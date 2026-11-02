@@ -2,12 +2,30 @@
 
 require_relative "../jmespath"
 require_relative "cli/failure_diagnostic"
+require "optparse"
 
 module JMESPath
-  # Runs a query against standard input or validates query syntax alone.
+  # Queries a JSON document from stdin or a UTF-8 file, or validates query syntax alone.
   module CLI
-    USAGE = "Usage: jmespath EXPRESSION < document.json\n       jmespath --validate EXPRESSION"
+    # Avoid require_exact, which breaks equals values and delimiters on Ruby 3.3.
+    # @api private
+    class ArgumentParser < OptionParser
+      private
+
+      def complete(kind, name, *)
+        switch = search(kind, name)
+        raise InvalidOption, name unless switch
+
+        [switch, name]
+      end
+    end
+
+    USAGE = "Usage: jmespath [--file PATH] EXPRESSION\n       jmespath --validate EXPRESSION"
     HELP = "#{USAGE}\n" \
+           "Read one UTF-8 JSON document from --file PATH, or stdin when omitted.\n" \
+           "Options may precede or follow EXPRESSION; -- ends option parsing.\n" \
+           "Quote spaces: --file 'my document.json'. Use --file=--document.json for option-like names.\n" \
+           "Paths are literal: --file - reads the file named -.\n" \
            "Function arguments and expression-reference results are validated; failures exit with status 1.\n" \
            "Unknown functions suggest similar registered names.\n" \
            "Query failures include source locations when available.\n" \
@@ -23,21 +41,43 @@ module JMESPath
       return validation(argv, stderr) if argv.first == "--validate"
       return information(argv, stdout) if [%w[--help], %w[-h], %w[--version]].include?(argv)
 
-      unless argv.length == 1
-        stderr.puts(USAGE)
-        return 2
-      end
-      query(argv.fetch(0), stdin, stdout)
+      expression, path = parse_arguments(argv)
+      data = read_document(path, stdin)
+      stdout.puts(JSON.generate(JMESPath.search(expression, data)))
+      0
+    rescue OptionParser::ParseError
+      stderr.puts(USAGE)
+      2
     rescue JSON::ParserError, Errors::Error, IOError, SystemCallError => e
-      stderr.puts(FailureDiagnostic.format(e, argv.first))
+      stderr.puts(FailureDiagnostic.format(e, expression))
       1
     end
 
     # @api private
-    def self.query(expression, input, output)
-      data = JSON.parse(input.read.to_s)
-      output.puts(JSON.generate(JMESPath.search(expression, data)))
-      0
+    def self.parse_arguments(argv)
+      return [argv.fetch(0), nil] if argv.one? && !argv.fetch(0).start_with?("-")
+
+      path = nil
+      arguments = ArgumentParser.new do |options|
+        options.on("-h", "--help", "--version", "--*-completion-bash", "--*-completion-zsh") do
+          raise OptionParser::InvalidOption, "unsupported option combination"
+        end
+        options.on("--file PATH") do |value|
+          raise OptionParser::InvalidOption, "--file repeated" if path
+
+          path = value
+        end
+      end.permute(argv)
+      raise OptionParser::InvalidArgument, "expected one expression" unless arguments.length == 1
+
+      [arguments.fetch(0), path]
+    end
+
+    # @api private
+    def self.read_document(path, stdin)
+      return JSON.parse(stdin.read.to_s) unless path
+
+      File.open(path, "r:UTF-8") { |file| JSON.parse(file.read) }
     end
 
     # @api private
