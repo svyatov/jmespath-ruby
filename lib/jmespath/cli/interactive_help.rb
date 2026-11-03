@@ -10,6 +10,8 @@ module JMESPath
         Enter one UTF-8 query per line; empty lines and lines containing only spaces or tabs are ignored.
         Queries accept LF, CRLF, and a final line without a newline.
         :help shows session help; :quit or EOF exits with status 0, even after query failures.
+        :functions lists built-in names, signatures, and descriptions on stderr.
+        :explain QUERY shows the query's operation tree and source locations on stderr without evaluating data.
         Query errors, unknown commands, and invalid UTF-8 lines report diagnostics; the session continues.
         Failed queries print no result. Successful queries print compact JSON and a newline to stdout.
         Prompts, help, and diagnostics use stderr. Prompts appear only when stdin is a terminal.

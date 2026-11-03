@@ -1,0 +1,22 @@
+module JMESPath
+  module CLI
+    class InspectionReport
+      @source: String
+      @root: explanation_node
+      def self.explain: (explanation) -> String
+      def initialize: (explanation) -> void
+      def explain: () -> String
+      private
+      def tree: (explanation_node, ?String, ?String?) -> Array[String]
+      def label: (explanation_node) -> String
+      def location: ([Integer, Integer]?) -> String
+      def details: (explanation_details) -> String
+    end
+    module InteractiveCommands
+      def self.call: (String) -> String
+      def self.execute: (String, String, String) -> String
+      def self.functions: (String) -> String
+      def self.explain: (String) -> String
+    end
+  end
+end

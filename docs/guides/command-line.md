@@ -175,6 +175,17 @@ Empty and unknown prefixes remain unchanged without diagnostics.
 Multiline editing and document reloads are unavailable.
 Terminal editing is tested on macOS through a pseudo terminal; Windows terminal behavior is unverified.
 
+Use `:functions` to list built-in names, signatures, descriptions, and the type legend on stderr.
+Use `:explain QUERY` to inspect an operation tree without evaluating the document.
+Each tree node shows its public operation ID, role, details, source line and character column, and byte range.
+Byte ranges have exclusive ends; missing source locations are labeled explicitly.
+The query is the complete remainder after the command separator, preserving trailing whitespace.
+Explanations show unknown function names without checking their availability.
+Both commands work with terminal or piped input and leave stdout empty.
+Command errors produce diagnostics and leave the session usable.
+Tab completes function names within explanation arguments on supported terminals.
+For structured inspection, use the public [explanation API](compilation.md#query-inspection).
+
 ## Help
 
 Run `jmespath --help` or `jmespath -h` for usage, options, common examples, and topic commands.

@@ -17,6 +17,36 @@ RSpec.describe "Interactive query session" do
     expect(session("  :quit\t\nname\n")).to eq([0, "", ""])
   end
 
+  it "lists built-in signatures and descriptions only on stderr" do
+    status, output, errors = session(":functions\n")
+    expect([status, output]).to eq([0, ""])
+    expect(errors).to include("length(", "Types: any accepts any value", "expref", "Signatures describe")
+  end
+
+  it "explains the complete query remainder without evaluating the document" do
+    expect(JMESPath).to receive(:compile).with("unknown(name) \t").once.and_call_original
+    expect(JMESPath).not_to receive(:search)
+    expect(data).not_to receive(:[])
+    status, output, errors = session(" \t:explain \t unknown(name) \t\n")
+    expect([status, output]).to eq([0, ""])
+    expect(errors).to include("function", 'name="unknown"', "line 1, column 1")
+    expect(errors).not_to include("Unknown function")
+  end
+
+  [":explain", ":explain \t", ":functions extra", ":explainx name", ":quit extra", ":help extra"].each do |command|
+    it "recovers from invalid command #{command.inspect}" do
+      status, output, errors = session("#{command}\nname\n:quit\n")
+      expect([status, output]).to eq([0, "\"café\"\n"])
+      expect(errors).not_to be_empty
+    end
+  end
+
+  it "recovers from invalid explanation syntax" do
+    status, output, errors = session(":explain items[\nname\n")
+    expect([status, output]).to eq([0, "\"café\"\n"])
+    expect(errors).to include("items[\n      ^")
+  end
+
   it "explains commands and recovers from unknown commands and malformed UTF-8" do
     status, output, errors = session(":help\n:bad\e\n\xFF\nname\n".b)
     expect([status, output]).to eq([0, "\"café\"\n"])
