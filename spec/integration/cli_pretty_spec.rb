@@ -36,7 +36,8 @@ RSpec.describe "Command-line pretty output" do
     "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
       "(EXPRESSION | --query-file PATH)\n       " \
       "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n       " \
-      "jmespath --interactive --file PATH\n"
+      "jmespath --interactive --file PATH\n" \
+      "Use jmespath --help for options and topic help.\n"
   end
 
   {
@@ -160,7 +161,7 @@ RSpec.describe "Command-line pretty output" do
   end
 
   it "explains output formatting and validation conflicts in help" do
-    status, output, errors = run_cli(["--help"])
+    status, output, errors = run_cli(%w[--help output])
     expect([status, errors]).to eq([0, ""])
     expect(output).to include("--pretty", "two-space", "compact", "repeated", "--validate")
   end

@@ -31,7 +31,7 @@ Quote filenames with spaces; use the equals form or `./` prefix for option-like 
 Options can precede or follow the expression; `--` ends option parsing.
 Supply exactly one query source: a positional expression or `--query-file PATH`.
 Repeated file options, unknown options, missing values, and conflicting or absent query sources are usage failures.
-Help and version flags must appear alone.
+Version flags must appear alone; help accepts one optional topic, as described under [Help](#help).
 
 Query files retain all source text, including trailing newlines and Unicode diagnostic coordinates.
 An empty query file produces a syntax failure.
@@ -159,9 +159,26 @@ Caller-owned streams remain open; history, completion, multiline editing, and do
 
 ## Help
 
-Run `jmespath --help` or `jmespath -h` for usage and reference rules.
+Run `jmespath --help` or `jmespath -h` for usage, options, common examples, and topic commands.
+Read detailed rules without accessing stdin or opening document or query files:
+
+```sh
+jmespath --help input
+jmespath --help output
+jmespath --help validate
+jmespath --help functions
+jmespath --help interactive
+```
+
+Both executable names accept `-h TOPIC` as an alias.
+Help must be the first argument, with zero or one exact, case-sensitive topic name.
+Abbreviations, equals forms, unknown topics, extra arguments, and combinations with execution flags are usage failures.
+Invalid help requests leave stdout empty and print usage guidance to stderr without accessing any input.
+Valid help writes to stdout with status 0; output failures return 1 and usage failures return 2.
+The exact two-argument form `jmespath --validate --help` still validates the literal query `--help`.
+
 Run `jmespath --version` for the gem version.
-These flags must appear alone and leave document and query input untouched.
+The version flag must appear alone and leaves document and query input untouched.
 
 ## Exit statuses
 

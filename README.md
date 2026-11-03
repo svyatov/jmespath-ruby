@@ -156,6 +156,7 @@ jmespath --file document.json 'user.name'
 For a document containing `{"user":{"name":"Ada"}}`, stdout contains `"Ada"` and a newline.
 See the [command-line reference](docs/guides/command-line.md) for query files, output modes, validation, and interactive sessions.
 Use [shell completion](docs/guides/completion.md) for Bash and Zsh setup.
+Run `jmespath --help` for common commands or `jmespath --help input` for input rules.
 
 ## Custom functions
 

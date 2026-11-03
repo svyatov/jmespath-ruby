@@ -45,6 +45,12 @@ module JMESPath
 
     USAGE: String
     HELP: String
+    module Help
+      GUIDE: String
+      TOPICS: Hash[String, String]
+      def self.render: (String?) -> String
+    end
+    def self.help: (Array[String], _Writer) -> Integer
     def self.literal_validation?: (Array[String]) -> bool
     def self.parse_arguments: (Array[String]) -> [String?, String?, String?, bool, bool, bool, bool, bool]
     def self.argument_parser: (Hash[String, String]) -> ArgumentParser

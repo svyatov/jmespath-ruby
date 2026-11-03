@@ -17,11 +17,12 @@ module JMESPath
     # @return [Integer] zero on success, one on input failure, two on usage failure
     def self.run(argv, stdin: $stdin, stdout: $stdout, stderr: $stderr)
       return validation(argv, stderr) if literal_validation?(argv)
-      return information(argv, stdout) if [%w[--help], %w[-h], %w[--version], %w[--functions]].include?(argv)
+      return help(argv, stdout) if %w[--help -h].include?(argv.first)
+      return information(argv, stdout) if [%w[--version], %w[--functions]].include?(argv)
 
       query(argv, stdin, stdout, stderr)
     rescue OptionParser::ParseError
-      stderr.puts(USAGE)
+      stderr.puts("#{USAGE}\nUse jmespath --help for options and topic help.")
       2
     rescue JSON::ParserError, Errors::Error, IOError, SystemCallError => e
       failure(e, nil, stderr)
@@ -124,13 +125,21 @@ module JMESPath
     end
 
     # @api private
+    def self.help(argv, output)
+      raise OptionParser::InvalidArgument, "expected at most one help topic" if argv.length > 2
+
+      output.puts(Help.render(argv[1]))
+      0
+    end
+
+    # @api private
     def self.information(argv, output)
       if argv == ["--functions"]
         output.puts(FunctionListing.render(Functions.default))
         return 0
       end
 
-      output.puts(argv == ["--version"] ? "jmespath-ruby #{VERSION}" : HELP)
+      output.puts("jmespath-ruby #{VERSION}")
       0
     end
   end

@@ -23,7 +23,8 @@ RSpec.describe "Command-line document files" do
     "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
       "(EXPRESSION | --query-file PATH)\n       " \
       "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n       " \
-      "jmespath --interactive --file PATH\n"
+      "jmespath --interactive --file PATH\n" \
+      "Use jmespath --help for options and topic help.\n"
   end
 
   def run_cli(arguments, input: unreadable_input)
@@ -211,7 +212,7 @@ RSpec.describe "Command-line document files" do
   end
 
   it "explains file input and literal paths in help" do
-    status, output, errors = run_cli(["--help"])
+    status, output, errors = run_cli(%w[--help input])
     expect([status, errors]).to eq([0, ""])
     expect(output).to include("--file PATH", "UTF-8", "--file -", "--file=--document.json", "'my document.json'")
   end

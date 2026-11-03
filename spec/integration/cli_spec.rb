@@ -10,7 +10,8 @@ RSpec.describe "Command-line queries" do
     "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
       "(EXPRESSION | --query-file PATH)\n       " \
       "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n       " \
-      "jmespath --interactive --file PATH\n"
+      "jmespath --interactive --file PATH\n" \
+      "Use jmespath --help for options and topic help.\n"
   end
 
   def cli(arguments, input)
@@ -49,7 +50,7 @@ RSpec.describe "Command-line queries" do
       .to eq([1, "", "Unknown function: lenght. Did you mean length?\n"])
     expect(cli(["zzzzzzzz()"], "{}"))
       .to eq([1, "", "Unknown function: zzzzzzzz\n"])
-    expect(cli(["--help"], "invalid")[1]).to include("Unknown functions suggest similar registered names")
+    expect(cli(%w[--help functions], "invalid")[1]).to include("Unknown functions suggest similar registered names")
   end
 
   it "offers help and version without reading JSON" do
@@ -60,7 +61,7 @@ RSpec.describe "Command-line queries" do
   end
 
   it "explains validation in help and preserves failure output" do
-    expect(cli(["--help"],
+    expect(cli(%w[--help functions],
                "invalid")[1]).to include("Function arguments and expression-reference results are validated")
     expected = "Invalid argument 1 for length: expected string, array, or object; received number " \
                "at line 1, column 1\nlength(@)\n^\n"
@@ -178,7 +179,7 @@ RSpec.describe "Command-line queries" do
   end
 
   it "explains located query failures in help" do
-    expect(cli(["--help"], "invalid")[1]).to include("Query failures include source locations when available.")
+    expect(cli(%w[--help input], "invalid")[1]).to include("Query failures include source locations when available.")
   end
 
   [["--help"], ["-h"], ["--version"], [], %w[a b]].each do |arguments|
@@ -251,7 +252,7 @@ RSpec.describe "Command-line queries" do
   end
 
   it "documents syntax-only validation, stdin independence, and statuses" do
-    help = cli(["--help"], "invalid")[1]
+    help = cli(%w[--help validate], "invalid")[1]
     expect(help).to include("--validate EXPRESSION", "without reading stdin", "syntax only",
                             "0 for valid syntax", "1 for query failures", "2 for usage failures")
   end
@@ -280,7 +281,8 @@ RSpec.describe "Command-line queries" do
       [] => ["", 2, "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
                     "(EXPRESSION | --query-file PATH)\n       " \
                     "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n       " \
-                    "jmespath --interactive --file PATH\n"]
+                    "jmespath --interactive --file PATH\n" \
+                    "Use jmespath --help for options and topic help.\n"]
     }.each do |arguments, (input, expected_status, expected_errors)|
       it "reports #{arguments.inspect} failures through #{name}" do
         output, errors, status = Open3.capture3(
