@@ -58,17 +58,17 @@ module JMESPath
     end
     def self.help: (Array[String], _Writer) -> Integer
     def self.literal_validation?: (Array[String]) -> bool
-    def self.parse_arguments: (Array[String]) -> [String?, String?, String?, bool, bool, bool, bool, bool]
+    def self.parse_arguments: (Array[String]) -> [String?, String?, String?, String?]
     def self.argument_parser: (Hash[String, String]) -> ArgumentParser
-    def self.check_sources: (Array[String], Hash[String, String]) -> void
-    def self.check_modes: (Hash[String, String]) -> void
+    def self.check_sources: (Array[String], Hash[String, String]) -> String?
+    def self.check_modes: (Hash[String, String]) -> String?
     def self.check_interactive: (Array[String], Hash[String, String]) -> void
     def self.interactive_session: (String?, _Reader | _LineReader, _Writer, _Writer) -> Integer
     def self.query: (Array[String], _Reader | _LineReader, _Writer, _Writer) -> Integer
     def self.failure: (StandardError, String?, _Writer) -> Integer
     def self.read_query: (String?, String?) -> String
     def self.read_document: (String?, _Reader) -> value
-    def self.execute: (String, value, _Writer, bool, bool) -> Integer
+    def self.execute: (String, value, _Writer, String?) -> Integer
     def self.execute_lines: (String, String?, _LineReader, _Writer, _Writer) -> Integer
     def self.process_lines: (Expression, String, _LineReader, _Writer, _Writer) -> Integer
     def self.validation: (Array[String], _Writer) -> Integer

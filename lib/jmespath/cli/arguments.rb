@@ -12,16 +12,13 @@ module JMESPath
 
     # @api private
     def self.parse_arguments(argv)
-      if argv.one? && !argv.fetch(0).start_with?("-")
-        return [argv.fetch(0), nil, nil, false, false, false, false, false]
-      end
+      return [argv.fetch(0), nil, nil, nil] if argv.one? && !argv.fetch(0).start_with?("-")
 
       paths = {} # : Hash[String, String]
       arguments = argument_parser(paths).permute(argv)
-      check_sources(arguments, paths)
+      mode = check_sources(arguments, paths)
 
-      [arguments.first, paths["file"], paths["query-file"], paths.key?("validate"), paths.key?("pretty"),
-       paths.key?("raw-output"), paths.key?("json-lines"), paths.key?("interactive")]
+      [arguments.first, paths["file"], paths["query-file"], mode]
     end
 
     # @api private
@@ -41,8 +38,8 @@ module JMESPath
     def self.check_modes(paths)
       modes = paths.keys & %w[validate pretty raw-output json-lines interactive]
       raise OptionParser::InvalidArgument, "conflicting modes" if modes.length > 1
-      return unless paths.key?("validate")
-      return if paths.key?("query-file") && !paths.key?("file")
+      return modes.first unless paths.key?("validate")
+      return modes.first if paths.key?("query-file") && !paths.key?("file")
 
       raise OptionParser::InvalidArgument, "validation requires a query file"
     end

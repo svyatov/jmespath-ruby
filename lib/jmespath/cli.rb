@@ -32,18 +32,18 @@ module JMESPath
 
     # @api private
     def self.query(argv, stdin, stdout, stderr)
-      expression, path, query_path, validate, pretty, raw_output, json_lines, interactive = parse_arguments(argv)
-      return interactive_session(path, stdin, stdout, stderr) if interactive
+      expression, path, query_path, mode = parse_arguments(argv)
+      return interactive_session(path, stdin, stdout, stderr) if mode == "interactive"
 
       expression = read_query(expression, query_path)
-      return validation(["--validate", expression], stderr) if validate
-      if json_lines
+      return validation(["--validate", expression], stderr) if mode == "validate"
+      if mode == "json-lines"
         # @type var stdin: _LineReader
         return execute_lines(expression, path, stdin, stdout, stderr)
       end
 
       # @type var stdin: _Reader
-      execute(expression, read_document(path, stdin), stdout, pretty, raw_output)
+      execute(expression, read_document(path, stdin), stdout, mode)
     rescue JSON::ParserError, Errors::Error => e
       failure(e, expression, stderr)
     end
@@ -78,12 +78,12 @@ module JMESPath
     end
 
     # @api private
-    def self.execute(expression, data, stdout, pretty, raw_output)
+    def self.execute(expression, data, stdout, mode)
       result = JMESPath.search(expression, data)
-      output = if raw_output && result.is_a?(String)
+      output = if mode == "raw-output" && result.is_a?(String)
                  "#{result}\n"
                else
-                 pretty ? JSON.pretty_generate(result) : JSON.generate(result)
+                 mode == "pretty" ? JSON.pretty_generate(result) : JSON.generate(result)
                end
       stdout.puts(output)
       0
