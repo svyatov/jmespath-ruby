@@ -25,7 +25,11 @@ RSpec.describe "Installed gem artifact" do
       "CHANGELOG.md",
       "VERSIONING.md", "SECURITY.md",
       "LICENSE", "LICENSES/python-MIT.txt", "LICENSES/ruby-Apache-2.0.txt", "docs/guides/compatibility.md",
-      "docs/guides/command-line.md"
+      "docs/guides/command-line.md",
+      "lib/jmespath/cli/interactive_editor.rb", "lib/jmespath/cli/interactive_editor_state.rb",
+      "lib/jmespath/cli/interactive_completion.rb", "lib/jmespath/cli/interactive_commands.rb",
+      "lib/jmespath/cli/interactive_key_stroke.rb",
+      "lib/jmespath/cli/inspection_report.rb", "lib/jmespath/cli/interactive_help.rb"
     )
     expect(specification.files.grep(%r{\A(?:spec/|coverage/|doc/|sig/internal/|\.git|\.superpowers/)})).to be_empty
     expect(specification.files).not_to include("Gemfile", "Gemfile.lock")
@@ -84,6 +88,17 @@ RSpec.describe "Installed gem artifact" do
     end
 
     expect { @checker.verify(@artifact) }.to raise_error(RuntimeError, /frozen/)
+  end
+
+  it "rejects an interactive executable that produces no traced result" do
+    allow(@checker).to receive(:command).and_wrap_original do |command, environment, directory, *arguments, **options|
+      if arguments.include?("--interactive")
+        ""
+      else
+        command.call(environment, directory, *arguments, **options)
+      end
+    end
+    expect { @checker.verify(@artifact) }.to raise_error(RuntimeError, /Incorrect installed interactive executable/)
   end
 
   it "fills an empty build checksum before the frozen installation" do

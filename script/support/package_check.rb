@@ -18,6 +18,7 @@ class PackageCheck
     installed = Gem.loaded_specs.fetch("jmespath-ruby").full_gem_path
     raise "Wrong provider: #{source}" unless source == File.join(installed, "lib/jmespath.rb")
     raise "Missing public signatures" unless File.file?(File.join(installed, "sig/jmespath.rbs"))
+    raise "Eager terminal editor load" if $LOADED_FEATURES.any? { |path| path.include?("/reline") }
     puts JSON.generate(version: JMESPath::VERSION,
                        search: JMESPath.search("people[*].name", {"people" => [{"name" => "Ada"}]}),
                        validation: JMESPath.validate("people[*].name"),
@@ -106,6 +107,16 @@ class PackageCheck
       result = command(environment, directory, "exec", executable, "foo.bar",
                        input: '{"foo":{"bar":2}}')
       raise "Incorrect installed executable: #{executable}" unless result == "2\n"
+
+      verify_interactive(environment, directory, executable)
     end
+  end
+
+  def verify_interactive(environment, directory, executable)
+    path = File.join(directory, "document.json")
+    File.write(path, '{"foo":{"bar":2}}')
+    result = command(environment, directory, "exec", executable, "--interactive", "--file", path,
+                     input: ":functions\n:explain foo.bar\n:trace foo.bar\n:quit\n")
+    raise "Incorrect installed interactive executable: #{executable}" unless result == "2\n"
   end
 end
