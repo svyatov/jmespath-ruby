@@ -24,7 +24,8 @@ RSpec.describe "Installed gem artifact" do
       "lib/jmespath.rb", "lib/jmespath/syntax_diagnostic.rb", "sig/jmespath.rbs", "README.md", "CONTRIBUTING.md",
       "CHANGELOG.md",
       "VERSIONING.md", "SECURITY.md",
-      "LICENSE", "LICENSES/python-MIT.txt", "LICENSES/ruby-Apache-2.0.txt", "docs/guides/compatibility.md"
+      "LICENSE", "LICENSES/python-MIT.txt", "LICENSES/ruby-Apache-2.0.txt", "docs/guides/compatibility.md",
+      "docs/guides/command-line.md"
     )
     expect(specification.files.grep(%r{\A(?:spec/|coverage/|doc/|sig/internal/|\.git|\.superpowers/)})).to be_empty
     expect(specification.files).not_to include("Gemfile", "Gemfile.lock")

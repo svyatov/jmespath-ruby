@@ -5,7 +5,6 @@ Search JSON and Ruby data with reusable queries and typed custom functions.
 - Runs on Ruby 3.3 and later with a pure Ruby implementation.
 - Replaces [jmespath.rb](https://github.com/jmespath/jmespath.rb)'s documented `JMESPath.search` API; see the [migration limits](#replace-jmespathrb).
 - Reuses compiled queries and supports typed custom functions.
-- Measured 7.97x geometric-mean public-search speedup over jmespath 1.6.2 on MRI 4.0.9; see the [benchmark results](docs/guides/comparison.md).
 
 ## Install
 
@@ -26,48 +25,16 @@ JMESPath.search("user.name", data) #=> "Ada"
 
 Run it with `bundle exec ruby example.rb`. The final expression returns `"Ada"`.
 
-## Performance
+## Common tasks
 
-**Fastest public search in every matching MRI benchmark case.**
-On MRI 4.0.9, jmespath-ruby beats each competing implementation on every workload that both return correctly.
-
-| Implementation | Version | Correct workloads | jmespath-ruby public-search speedup |
-| --- | --- | ---: | ---: |
-| **jmespath-ruby** | **0.1.0** | **18/18** | **Baseline** |
-| jmespath (jmespath.rb) | 1.6.2 | 18/18 | **7.97x** |
-| BurtPath | 1.1.2 | 15/18 | **9.99x** |
-| Jamespath | 0.5.1 | 13/18 | **8.07x** |
-
-Speedups use geometric means of median times across each competitor's correctly evaluated workloads.
-Measurements use five rounds of 20,000 searches on an Apple M1 Pro.
-The suite includes all 12 upstream benchmark cases and six supplemental cases.
-Results vary by workload: **1.35x to 78.48x faster than jmespath 1.6.2** in this run.
-
-Query reuse has different results: BurtPath's private cached runtime is faster in five workloads, and Jamespath has three lower medians.
-The [full comparison](docs/guides/comparison.md) includes those results, JRuby, failures, methodology, and raw samples.
-The JRuby-only `jmespath-jruby` 1.0.0.pre0 fails on the tested JRuby 10.1 runtime; its results are recorded separately.
-
-## Why choose jmespath-ruby?
-
-- **Reuse work across searches.** Compile once, save query options, and share immutable expressions across threads.
-- **Add functions without global patches.** Typed, immutable registries validate arguments before your callback runs.
-- **Type-check integrations.** The gem ships RBS signatures for its public API.
-- **Use Ruby data directly.** Search string-keyed or symbol-keyed hashes, Structs, arrays, JSON streams, and Pathname inputs.
-- **Control query growth.** The synchronized cache holds at most 32 queries and 1 MiB of source text; expression nesting has an explicit limit.
-
-Both Ruby and Python upstream compliance corpora run in the test suite, alongside Ruby-specific input and error checks.
-The [comparison with existing implementations](docs/guides/comparison.md) includes exact versions, rejected workloads, and reproducible measurements.
-
-| Feature | jmespath-ruby | jmespath | BurtPath | Jamespath | jmespath-jruby |
-| --- | --- | --- | --- | --- | --- |
-| Public query compilation | Yes | No | No | Yes | Yes |
-| Documented typed function registry | Yes | No | No | No | No |
-| Packaged RBS signatures | Yes | No | No | No | No |
-| Pure Ruby implementation | Yes | Yes | Yes | Yes | No |
-| Ordinary `JMESPath.search` calls | Yes | Yes | Yes | No | No |
-
-`jmespath` and BurtPath support reuse through private runtime classes.
-The [full comparison](docs/guides/comparison.md) distinguishes those classes from public compilation APIs.
+| Task | Example | Reference |
+| --- | --- | --- |
+| Search Ruby data | [Search](#search) | [Search semantics](docs/guides/search.md) |
+| Reuse a query | [Compile once](#compile-once) | [Compilation](docs/guides/compilation.md) |
+| Require a non-null result | [Required results](#required-results) | [Result rules](docs/guides/compilation.md#required-results) |
+| Handle an evaluation failure | [Failure results](#failure-results) | [Failure ownership](docs/guides/errors.md#failure-results) |
+| Debug an unexpected result | [Trace and inspect](#debug-a-query) | [Tracing](docs/guides/compilation.md#evaluation-tracing) and [inspection](docs/guides/compilation.md#query-inspection) |
+| Search a JSON file from the shell | [Command line](#command-line) | [Command-line reference](docs/guides/command-line.md) |
 
 ## Replace jmespath.rb
 
@@ -94,16 +61,6 @@ See [compatibility and deliberate corrections](docs/guides/compatibility.md) bef
 
 ## Search
 
-Use `Expression#fetch` when a Ruby caller requires a non-null result:
-
-```ruby
-JMESPath.compile("user.name").fetch({user: {name: "Ada"}}) #=> "Ada"
-```
-
-Null results raise `JMESPath::Errors::NullResultError`, whose `expression` attribute contains the query text.
-False, zero, and empty values succeed.
-See [required query results](docs/guides/compilation.md#required-results) for options and suppression behavior.
-
 Use `JMESPath.search` in Ruby code to evaluate a query:
 
 ```ruby
@@ -119,6 +76,8 @@ Missing fields return nil.
 Projections omit nil results and retain false values.
 The library preserves selected input objects and does not mutate the input.
 
+See [search semantics](docs/guides/search.md) for inputs, filters, and projections.
+
 ## Compile once
 
 Use `JMESPath.compile` in Ruby code to reuse a parsed expression:
@@ -132,6 +91,40 @@ expression.search({user: {name: "Lin"}}) #=> "Lin"
 Compiled expressions are immutable and safe to share between threads.
 Each search uses separate evaluation state.
 Custom callbacks and input objects remain the caller's responsibility.
+
+See [compilation](docs/guides/compilation.md) for saved options, caching, and threading.
+
+## Required results
+
+Use `Expression#fetch` when a Ruby caller requires a non-null result:
+
+```ruby
+JMESPath.compile("user.name").fetch({user: {name: "Ada"}}) #=> "Ada"
+```
+
+Null results raise `JMESPath::Errors::NullResultError`, whose `expression` attribute contains the query text.
+False, zero, and empty values succeed.
+See [required query results](docs/guides/compilation.md#required-results) for options and suppression behavior.
+
+## Failure results
+
+Use `Expression#try_search` in Ruby code to distinguish a successful null result from a library-owned failure:
+
+```ruby
+query = JMESPath.compile("length(@)")
+query.try_search("Ada").value #=> 3
+query.try_search(4).success? #=> false
+query.try_search(4).error.function_name #=> "length"
+JMESPath.compile("missing").try_search({}).success? #=> true
+```
+
+The frozen `JMESPath::SearchResult` exposes `success?`, `value`, and the original `error`.
+Library-owned evaluation, JSON parsing, and native input I/O failures become failure results.
+Invalid options and exceptions from application callbacks or conversions still raise.
+Compilation can raise syntax errors before `try_search` runs.
+See [failure results](docs/guides/errors.md#failure-results) for ownership and suppression rules.
+
+## Debug a query
 
 In Ruby code, inspect the query without evaluating input or resolving function names:
 
@@ -152,13 +145,17 @@ report[:events].map { |event| event[:type] } #=> ["field_null", "projection_omis
 
 See [evaluation tracing](docs/guides/compilation.md#evaluation-tracing) for event types, local item indexes, and truncation.
 
-In Ruby code, save evaluation options when compiling a query, then use `search` or its `call` alias:
+## Command line
 
-```ruby
-query = JMESPath.compile("length(name)", disable_visit_errors: true)
-query.call({name: "Ada"}) #=> 3
-query.call({name: nil}) #=> nil
+Both `jmespath` and `jmespath.rb` search JSON from a file or stdin:
+
+```sh
+jmespath --file document.json 'user.name'
 ```
+
+For a document containing `{"user":{"name":"Ada"}}`, stdout contains `"Ada"` and a newline.
+See the [command-line reference](docs/guides/command-line.md) for query files, output modes, validation, and interactive sessions.
+Use [shell completion](docs/guides/completion.md) for Bash and Zsh setup.
 
 ## Custom functions
 
@@ -187,173 +184,32 @@ See [registry inspection](docs/guides/functions.md#registry-inspection) for all 
 
 ## Errors and diagnostics
 
-Use `Expression#try_search` in Ruby code to distinguish a successful null result from a library-owned failure:
-
-```ruby
-query = JMESPath.compile("length(@)")
-query.try_search("Ada").value #=> 3
-query.try_search(4).success? #=> false
-query.try_search(4).error.function_name #=> "length"
-JMESPath.compile("missing").try_search({}).success? #=> true
-```
-
-The frozen `JMESPath::SearchResult` exposes `success?`, `value`, and the original `error`.
-Library-owned evaluation, JSON parsing, and native input I/O failures become failure results.
-Invalid options and exceptions from application callbacks or conversions still raise.
-Compilation can raise syntax errors before `try_search` runs.
-See [failure results](docs/guides/errors.md#failure-results) for ownership and suppression rules.
-
 Format syntax failures in Ruby with `JMESPath::Diagnostic.format(error)` to get source coordinates, a query excerpt, and a caret.
 Function type and arity errors expose immutable validation data, including the function name, signature, argument counts or types, and available source ranges.
 Unknown-function errors expose the missing name and up to three suggestions from the active registry.
 See [errors and diagnostics](docs/guides/errors.md) for examples, nullable fields, and source-location limits.
 
-## Command line
+## Performance
 
-Both `jmespath` and `jmespath.rb` accept an expression and a JSON document from stdin or `--file PATH`.
-Use `--query-file PATH` to read the expression from a UTF-8 file.
-See [shell completion](docs/guides/completion.md) for manual Bash and Zsh setup for both executable names.
+Measured public search is 7.97x faster than jmespath 1.6.2 by geometric mean on MRI 4.0.9 across 18 matching workloads.
+Query reuse has different results across implementations and runtimes.
+See the [full comparison](docs/guides/comparison.md) for exact versions, workload results, and methodology.
+See [performance measurements](docs/guides/performance.md) for cache, startup, and memory experiments.
 
-```sh
-printf '%s\n' '{"user":{"name":"Ada"}}' | jmespath 'user.name'
-jmespath --file document.json 'user.name'
-jmespath 'user.name' --file document.json
-jmespath --file 'my document.json' 'user.name'
-jmespath --file=--document.json 'user.name'
-jmespath --file ./--document.json 'user.name'
-jmespath --file - 'user.name'
-jmespath --file document.json -- 'user.name'
-jmespath --query-file query.jmespath < document.json
-jmespath --query-file query.jmespath --file document.json
-jmespath --pretty 'items' < document.json
-jmespath --raw-output 'user.name' < document.json
-```
+## Why choose jmespath-ruby?
 
-Document files are read as UTF-8 and closed after parsing, before query evaluation in single-document mode.
-File input leaves stdin unused; omitting `--file` selects stdin.
-Paths are literal: `--file -` reads a file named `-`.
-Quote filenames with spaces; use the equals form or `./` prefix for option-like filenames.
-Options can precede or follow the expression; `--` ends option parsing.
-Supply exactly one query source: a positional expression or `--query-file PATH`.
-Repeated file options, unknown options, missing values, and conflicting or absent query sources are usage failures.
-Help and version flags must appear alone.
+- **Reuse work across searches.** Compile once, save query options, and share immutable expressions across threads.
+- **Add functions without global patches.** Typed, immutable registries validate arguments before your callback runs.
+- **Type-check integrations.** The gem ships RBS signatures for its public API.
+- **Use Ruby data directly.** Search string-keyed or symbol-keyed hashes, Structs, arrays, JSON streams, and Pathname inputs.
+- **Control query growth.** The synchronized cache holds at most 32 queries and 1 MiB of source text; expression nesting has an explicit limit.
 
-List built-in functions from the shell without reading stdin:
-
-```sh
-jmespath --functions
-```
-
-Each line shows a name, accepted argument types, and the description from public function metadata.
-The listing is alphabetical and ends with a notation legend.
-Unions use `|`, homogeneous arrays use `array<T>`, and expression references use `expref`.
-A final `...` means the last argument repeats and remains required.
-Runtime checks can be narrower than the declared types.
-See [the function listing](docs/guides/functions.md#command-line-reference) for examples.
-
-Use `--functions` alone; queries, paths, other modes, repeated flags, and values are usage failures.
-The two-argument form `--validate --functions` retains literal query validation.
-Listing exits with status 0 on success, 1 for output failures, or 2 for usage failures.
-Usage failures leave stdout empty and print usage guidance on stderr.
-
-Query files retain all source text, including trailing newlines and Unicode diagnostic coordinates.
-An empty query file produces a syntax failure.
-Query files close after reading, before document input is accessed.
-Missing or unreadable query files leave document input untouched.
-In single-document mode, execution parses JSON before compiling the expression.
-Query paths follow the document path rules: `--query-file -` reads a literal file named `-`.
-
-The result goes to standard output as compact JSON followed by a newline.
-Use `--pretty` for JSON with two-space indentation and one final newline.
-Both formats support objects, arrays, strings, numbers, booleans, and null, with Unicode preserved.
-Pretty output works with positional or file queries and either document source.
-Repeated `--pretty` options are usage failures.
-Pretty formatting preserves stderr diagnostics, source coordinates, and exit statuses; failures before output starts leave stdout empty.
-Use `--raw-output` to print string results without JSON quotes or escape encoding.
-Other result types retain compact JSON encoding.
-Raw output appends one newline and preserves every embedded and trailing newline in the result.
-An empty string produces one newline; a string ending with one newline produces two.
-Repeated `--raw-output` options and combinations with `--pretty` are usage failures.
-Raw output preserves stderr diagnostics, source coordinates, and exit statuses; failures before output starts leave stdout empty.
-Syntax, function type, and arity failures include source coordinates, a query excerpt, and a caret when available.
-Unknown functions suggest similar registered names.
-Malformed JSON input reports `Invalid JSON input` without including document fragments.
-These failures go to standard error and exit with status 1.
-Usage failures exit with status 2; `--help` and `--version` exit with status 0 without reading input.
-
-Process independent JSON records with these shell commands:
-
-```sh
-jmespath --json-lines 'user.name' < events.jsonl
-jmespath --json-lines --file events.jsonl --query-file query.jmespath
-```
-
-JSON Lines mode compiles the query once before opening document input or reading stdin.
-Each physical line must contain one complete JSON value; blank and whitespace-only lines fail.
-LF, CRLF, and a final record without a newline are accepted.
-Each result is compact JSON followed by a newline, including `null` and `false`.
-Empty input succeeds without output when the query is valid; an invalid query still fails.
-
-Processing stops at the first failure with status 1 and an `Input line N:` diagnostic prefix.
-Earlier results remain on stdout; check the exit status before treating output as complete.
-Query compilation and file-open errors have no input line prefix.
-Memory is proportional to the current record, its evaluation, and its serialized result, plus the compiled query.
-Output uses normal buffering.
-Owned files close after processing; caller-owned streams remain open.
-Injected `CLI.run` input needs `gets` for JSON Lines or `read` for document mode; output needs only `puts`.
-Repeated `--json-lines` flags and combinations with `--pretty`, `--raw-output`, or validation are usage failures.
-
-Start a session against one loaded document:
-
-```sh
-jmespath --interactive --file document.json
-```
-
-Enter one UTF-8 query per line; empty lines and lines containing only spaces or tabs are ignored.
-Use `:help` for session instructions and `:quit` to finish, or end input with EOF.
-Queries accept LF, CRLF, and a final line without a newline.
-Each successful query prints compact JSON and a final newline to stdout, then flushes when the stream supports it.
-Prompts appear only when stdin is a terminal; prompts, help, and diagnostics use stderr.
-The document loads once and its file closes before the first prompt or command read.
-
-Queries can also come from a pipe without prompts:
-
-```sh
-printf 'user.name\nlength(user.name)\n' | jmespath --interactive --file document.json
-```
-
-Query errors, unknown commands, and invalid UTF-8 query lines produce diagnostics and allow the session to continue.
-Failed queries produce no JSON result; successful results remain available.
-EOF and `:quit` return status 0 even after query failures.
-Document and stream failures terminate with status 1; usage failures return status 2.
-Interactive mode requires `--file PATH` and rejects positional queries, `--query-file`, other modes, information flags, and repeated flags.
-Readers supplied to `CLI.run` need `gets`; `tty?` is optional and absent detection means no prompts.
-Writers need `puts`; `flush` is optional except for terminal prompts, whose diagnostic stream needs both `print` and `flush`.
-Caller-owned streams remain open; history, completion, multiline editing, and document reloads are unavailable.
-
-Validate syntax without providing a JSON document by running this shell command:
-
-```sh
-jmespath --validate 'items[*].name'
-jmespath --validate --query-file query.jmespath
-jmespath --query-file query.jmespath --validate
-```
-
-Both executables support `--validate EXPRESSION` without reading standard input.
-File validation also leaves stdin untouched and rejects document options such as `--file`.
-Combining `--pretty` with validation is a usage failure, rejected before opening input files or reading stdin.
-Combining `--raw-output` with validation follows the same rule.
-The exact two-argument form `--validate EXPRESSION` always treats the second argument as query text, including flag-like text.
-Thus `jmespath --validate --pretty` validates the literal expression `--pretty`.
-Likewise, `jmespath --validate --raw-output` validates the literal expression `--raw-output`.
-Valid syntax produces no output and exits with status 0.
-Query failures print a diagnostic to standard error and exit with status 1; incorrect usage exits with status 2.
-Validation does not check function availability or runtime argument types.
-The Ruby interface is `JMESPath.validate(expression, max_depth: 128)`.
-See [CLI diagnostics](docs/guides/errors.md#cli-diagnostics) for examples and fallback behavior.
+Both Ruby and Python upstream compliance corpora run in the test suite, alongside Ruby-specific input and error checks.
+The [comparison with existing implementations](docs/guides/comparison.md) includes exact versions, rejected workloads, and reproducible measurements.
 
 ## Guides
 
+- [Command-line reference](docs/guides/command-line.md)
 - [Search semantics](docs/guides/search.md)
 - [Compilation, caching, and threading](docs/guides/compilation.md)
 - [Built-in and custom functions](docs/guides/functions.md)
