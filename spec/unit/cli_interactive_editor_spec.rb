@@ -53,14 +53,58 @@ RSpec.describe "Interactive editor selection" do
     end
   end
 
+  [13, 4].each do |byte|
+    it "handles an invalid sequence ending with byte #{byte} without consuming the next line" do
+      errors = StringIO.new
+      editor = JMESPath::CLI::InteractiveEditor.new(input: StringIO.new, errors: errors)
+      error = JMESPath::CLI::InteractiveKeyStroke::InvalidInput.new(byte)
+      allow(Reline).to receive(:readline).and_raise(error)
+      expect(Reline::IOGate).not_to receive(:getc)
+      line = editor.gets
+      valid = line && line.dup.force_encoding(Encoding::UTF_8).valid_encoding?
+      expect(valid).to eq(byte == 4 ? nil : false)
+      expect(errors.string).to eq("\n")
+    end
+  end
+
+  [nil, 4, 13].each do |terminator|
+    it "discards an invalid edit through terminal terminator #{terminator.inspect}" do
+      PTY.open do |_master, slave|
+        editor = JMESPath::CLI::InteractiveEditor.new(input: slave, errors: StringIO.new)
+        error = JMESPath::CLI::InteractiveKeyStroke::InvalidInput.new(255)
+        allow(Reline).to receive(:readline).and_raise(error)
+        allow(Reline::IOGate).to receive(:getc).with(Float::INFINITY).and_return(65, terminator)
+        editor.open do
+          line = editor.gets
+          valid = line && line.dup.force_encoding(Encoding::UTF_8).valid_encoding?
+          expect(valid).to eq(terminator == 13 ? false : nil)
+        end
+      end
+    end
+  end
+
+  it "cancels a discarded invalid edit on interrupt" do
+    PTY.open do |_master, slave|
+      errors = StringIO.new
+      editor = JMESPath::CLI::InteractiveEditor.new(input: slave, errors: errors)
+      error = JMESPath::CLI::InteractiveKeyStroke::InvalidInput.new(255)
+      expect(Reline).to receive(:readline).ordered.and_raise(error)
+      expect(Reline).to receive(:readline).ordered.and_return("name")
+      allow(Reline::IOGate).to receive(:getc).and_raise(Interrupt)
+      editor.open { expect(editor.gets).to eq("name") }
+      expect(errors.string).to eq("^C\n")
+    end
+  end
+
   [["lengzz(name)", 4, "length(name)", 6, ""],
-   ["to_", 3, "to_", 3, "\nto_array  to_number  to_string\n"],
+   ["to_", 3, "to_", 3, "to_array  to_number  to_string\n"],
    ["zzzz", 4, "zzzz", 4, ""]].each do |line, point, expected, cursor, diagnostic|
     it "applies the terminal completion callback to #{line}" do
       PTY.open do |_master, slave|
         errors = StringIO.new
         editor = JMESPath::CLI::InteractiveEditor.new(input: slave, errors: errors)
         editor.open do
+          allow(Reline.core.line_editor).to receive(:render_finished)
           Reline.insert_text(line)
           Reline.point = point
           expect(Reline.completion_proc.call("")).to be_nil
@@ -96,6 +140,18 @@ RSpec.describe "Interactive editor selection" do
   it "rejects nonterminal IO without reading it" do
     File.open(File::NULL) do |input|
       expect(JMESPath::CLI::InteractiveEditor.supported?(input: input, errors: input)).to be(false)
+    end
+  end
+
+  it "falls back when Reline has an unsupported terminal backend" do
+    PTY.open do |_master, slave|
+      backend = double("dumb backend", dumb?: true)
+      stub_const("Reline::IOGate", backend)
+      expect(JMESPath::CLI::InteractiveEditor.supported?(input: slave, errors: slave)).to be(false)
+      allow(backend).to receive(:dumb?).and_return(false)
+      expect(JMESPath::CLI::InteractiveEditor.supported?(input: slave, errors: slave)).to be(false)
+      allow(backend).to receive(:input=)
+      expect(JMESPath::CLI::InteractiveEditor.supported?(input: slave, errors: slave)).to be(false)
     end
   end
 

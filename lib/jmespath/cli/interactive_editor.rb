@@ -15,7 +15,13 @@ module JMESPath
         return false unless [input, errors].all? { |stream| stream.is_a?(IO) && !stream.closed? && stream.tty? }
 
         require "io/console"
-        true
+        backend_supported?
+      end
+
+      def self.backend_supported?
+        require "reline"
+        backend = Reline::IOGate
+        !backend.dumb? && backend.respond_to?(:input=) && backend.respond_to?(:output=)
       end
 
       def self.terminal_environment?
@@ -23,6 +29,8 @@ module JMESPath
       end
 
       def initialize(input:, errors:)
+        require "reline"
+        require_relative "interactive_key_stroke"
         @input = input
         @errors = errors
         @history = []
@@ -32,7 +40,6 @@ module JMESPath
       end
 
       def open
-        require "reline"
         state = InteractiveEditorState.new
         begin
           state.configure(@input, @errors)
@@ -46,16 +53,7 @@ module JMESPath
       def gets
         return @pending.shift unless @pending.empty?
 
-        @writing_errors = true
-        line = Reline.readline("jmespath> ", false)
-        @writing_errors = false
-        return unless line
-
-        lines = Reline.core.line_editor.whole_lines
-        return line if lines.length == 1
-
-        @pending = lines
-        @pending.shift
+        read_line
       rescue Interrupt
         @errors.puts("^C")
         retry
@@ -73,6 +71,41 @@ module JMESPath
 
       private
 
+      def read_line
+        @writing_errors = true
+        line = Reline.readline("jmespath> ", false)
+        @writing_errors = false
+        return unless line
+
+        lines = Reline.core.line_editor.whole_lines
+        return line if lines.length == 1
+
+        @pending = lines
+        @pending.shift
+      rescue InteractiveKeyStroke::InvalidInput => e
+        reject_invalid(e)
+      end
+
+      def reject_invalid(error)
+        terminator = error.ended? ? error.byte : discard_line
+        @errors.puts("")
+        @writing_errors = false
+        return if terminator.nil? || terminator == 4
+
+        "\xFF".b
+      end
+
+      def discard_line
+        # @type var input: Object & _RawInput
+        input = @input
+        input.raw(intr: true) do
+          loop do
+            byte = Reline::IOGate.getc(Float::INFINITY)
+            break byte if byte.nil? || [4, 10, 13].include?(byte)
+          end
+        end
+      end
+
       def complete(_target)
         line = Reline.line_buffer
         result = @completion.complete(line, point: Reline.point)
@@ -81,9 +114,14 @@ module JMESPath
           Reline.insert_text(result[:line])
           Reline.point = result[:point]
         elsif result[:candidates].length > 1
-          @errors.puts("\n#{result[:candidates].join('  ')}")
+          list_candidates(result[:candidates])
         end
         nil
+      end
+
+      def list_candidates(candidates)
+        Reline.core.line_editor.render_finished
+        @errors.puts(candidates.join("  "))
       end
     end
   end

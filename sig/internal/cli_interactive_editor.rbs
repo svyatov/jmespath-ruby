@@ -1,5 +1,16 @@
 module JMESPath
   module CLI
+    interface _RawInput
+      def raw: [T] (intr: bool) { () -> T } -> T
+    end
+    class InteractiveKeyStroke < ::Reline::KeyStroke
+      class InvalidInput < StandardError
+        attr_reader byte: Integer
+        def initialize: (Integer) -> void
+        def ended?: () -> bool
+      end
+      def match_status: (Array[Integer]) -> Symbol
+    end
     type completion_result = { line: String, point: Integer, candidates: Array[String] }
     class InteractiveCompletion
       @names: Array[String]
@@ -23,6 +34,7 @@ module JMESPath
       @writing_errors: bool
       def self.supported?: (input: untyped, errors: untyped) -> bool
       def self.terminal_environment?: () -> bool
+      def self.backend_supported?: () -> bool
       def initialize: (input: _LineReader, errors: _Writer) -> void
       def open: [T] () { () -> T } -> T
       def gets: () -> String?
@@ -30,6 +42,10 @@ module JMESPath
       def writing_errors?: () -> bool
       private
       def complete: (String) -> nil
+      def list_candidates: (Array[String]) -> void
+      def read_line: () -> String?
+      def reject_invalid: (InteractiveKeyStroke::InvalidInput) -> String?
+      def discard_line: () -> Integer?
     end
     class InteractiveEditorState
       PROPERTIES: Array[Symbol]
@@ -67,6 +83,7 @@ module Reline
   end
   class KeyStroke
     def self.new: (untyped, Encoding) -> untyped
+    def match_status: (Array[Integer]) -> Symbol
   end
   class LineEditor
     def self.new: (untyped) -> untyped

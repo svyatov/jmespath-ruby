@@ -35,7 +35,7 @@ module JMESPath
         config.history_size = InteractiveEditor::HISTORY_LIMIT
         Reline::IOGate.set_default_key_bindings(config)
         @core.config = config
-        @core.key_stroke = Reline::KeyStroke.new(config, Reline::IOGate.encoding)
+        @core.key_stroke = InteractiveKeyStroke.new(config, Reline::IOGate.encoding)
         @core.line_editor = Reline::LineEditor.new(config)
       end
 

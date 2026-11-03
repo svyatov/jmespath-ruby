@@ -34,6 +34,30 @@ RSpec.describe "Interactive terminal editing" do
   end
 
   %w[jmespath jmespath.rb].each do |name|
+    it "recovers from invalid terminal UTF-8 through #{name}" do
+      with_terminal(arguments(name)) do |master, output, _pid|
+        terminal_until(master, "jmespath> ")
+        master.write("\xFF\r".b)
+        terminal_until(master, "Invalid UTF-8 query")
+        terminal_until(master, "jmespath> ")
+        master.write("name\r")
+        expect(output.gets).to eq("\"café\"\n")
+        terminal_until(master, "jmespath> ")
+        master.write(":quit\r")
+      end
+    end
+
+    it "preserves a query queued after invalid UTF-8 through #{name}" do
+      with_terminal(arguments(name)) do |master, output, _pid|
+        terminal_until(master, "jmespath> ")
+        master.write("\xFF\rname\r".b)
+        terminal_until(master, "Invalid UTF-8 query")
+        expect(output.gets).to eq("\"café\"\n")
+        terminal_until(master, "jmespath> ")
+        master.write(":quit\r")
+      end
+    end
+
     it "uses inspection commands through #{name} with JSON-only stdout" do
       with_terminal(arguments(name)) do |master, output, _pid|
         terminal_until(master, "jmespath> ")
@@ -75,6 +99,9 @@ RSpec.describe "Interactive terminal editing" do
         terminal_until(master, "jmespath> ")
         master.write("to_\t")
         terminal_until(master, "to_array  to_number  to_string")
+        terminal_until(master, "jmespath> ")
+        master.write("s")
+        terminal_until(master, "to_s")
         master.write("\x15'leng\t'\r")
         terminal_until(master, "jmespath> ")
         expect(output.gets).to eq("\"leng\"\n")
