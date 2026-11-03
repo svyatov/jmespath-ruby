@@ -24,6 +24,7 @@ module JMESPath
       def read_queries: () -> Integer
       def process?: (String) -> bool
       def command?: (String, String) -> bool
+      def execute_command: (String) -> void
       def evaluate: (String) -> String?
       def write_result: (String) -> void
       def diagnostic: (String) -> void

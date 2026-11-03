@@ -321,7 +321,8 @@ Trace state is separate for each call, including concurrent calls and nested cal
 Ordinary search builds no trace collector or operation map.
 Tracing propagates original evaluation and input exceptions without attaching a report or retrying evaluation.
 Suppression retains its ordinary behavior; a suppressed nil result can produce a downstream omission.
-There is no dedicated validation-failure event, automatic logging, module-level trace method, or CLI trace flag.
+There is no dedicated validation-failure event, automatic logging, or module-level trace method.
+Interactive sessions expose tracing through `:trace QUERY`; see the [command-line guide](command-line.md#interactive).
 
 ## Saved options
 

@@ -177,6 +177,14 @@ RSpec.describe "Command-line interactive sessions" do
       end
     end
 
+    it "routes inspection commands through #{name} without piped prompts" do
+      queries = ":functions\n:explain name\n:trace missing\n:trace flag\n:quit\n"
+      output, errors, status = Open3.capture3(*executable(name), stdin_data: queries)
+      expect([status.exitstatus, output]).to eq([0, "null\nfalse\n"])
+      expect(errors).to include("length(", "#0 field", "field_null", "Trace: no diagnostic events.")
+      expect(errors).not_to include("jmespath> ", "Unknown command")
+    end
+
     it "flushes results before receiving another piped query through #{name}" do
       Open3.popen3(*executable(name)) do |input, output, errors, waiter|
         Timeout.timeout(5) do

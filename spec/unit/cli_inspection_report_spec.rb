@@ -32,4 +32,25 @@ RSpec.describe "Interactive inspection reports" do
     expect(text).not_to include("\e")
     expect(explain("`1e999`")).to include("value=Infinity")
   end
+
+  it "renders trace locations and item context through public operation IDs" do
+    query = JMESPath.compile("items[*].name")
+    report = query.trace({ "items" => [{}] })
+    text = JMESPath::CLI::InspectionReport.trace(query.explain, report, limit: 1000)
+    expect(text).to eq(
+      "field_null #2 line 1, column 10 (bytes 9...13) name=\"name\" reason=\"missing\" context=[#0 index=0]\n" \
+      "projection_omission #0 line 1, column 1 (bytes 0...13) context=[#0 index=0]"
+    )
+  end
+
+  it "retains nested contexts and filter exclusions" do
+    query = JMESPath.compile("groups[*].items[*].name")
+    report = query.trace({ "groups" => [{ "items" => [{}] }] })
+    text = JMESPath::CLI::InspectionReport.trace(query.explain, report, limit: 1000)
+    expect(text).to include("context=[#0 index=0, #2 index=0]")
+    query = JMESPath.compile("items[?active].name")
+    report = query.trace({ "items" => [{ "active" => false }, { "active" => true, "name" => false }] })
+    expect(JMESPath::CLI::InspectionReport.trace(query.explain, report, limit: 1000))
+      .to include("filter_exclusion #0", "context=[#0 index=0]")
+  end
 end

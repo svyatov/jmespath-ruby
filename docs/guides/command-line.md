@@ -186,6 +186,16 @@ Command errors produce diagnostics and leave the session usable.
 Tab completes function names within explanation arguments on supported terminals.
 For structured inspection, use the public [explanation API](compilation.md#query-inspection).
 
+Use `:trace QUERY` to evaluate once and inspect null fields, filter exclusions, and omitted projection results.
+The readable report uses stderr; the successful value is written once as compact JSON on stdout, including null and false.
+Events retain public operation IDs, source locations, reasons, and zero-based item context.
+Traces retain at most 1,000 events; a truncation notice states that evaluation completed.
+An empty report prints `Trace: no diagnostic events.`
+Serialization failures produce diagnostics without a report or result; the session remains usable.
+Stream failures terminate the session with status 1.
+Tab completes function names in trace arguments on supported terminals.
+Reports use private text layouts; use the [tracing API](compilation.md#evaluation-tracing) for structured data.
+
 ## Help
 
 Run `jmespath --help` or `jmespath -h` for usage, options, common examples, and topic commands.

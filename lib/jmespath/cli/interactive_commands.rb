@@ -6,18 +6,23 @@ module JMESPath
   module CLI
     # @api private
     module InteractiveCommands
-      def self.call(line)
+      TRACE_LIMIT = 1000
+
+      def self.call(line, data:)
         parts = line.sub(/\A[ \t]+/, "").split(/[ \t]+/, 2)
         query = parts.fetch(1, "")
-        execute(parts.fetch(0), query, line)
-      rescue Errors::Error => e
-        FailureDiagnostic.format(e, query)
+        execute(parts.fetch(0), query, line, data)
+      rescue JSON::NestingError
+        ["Invalid JSON result", nil]
+      rescue Errors::Error, JSON::GeneratorError => e
+        [FailureDiagnostic.format(e, query), nil]
       end
 
-      def self.execute(name, query, line)
+      def self.execute(name, query, line, data)
         case name
-        when ":functions" then functions(query)
-        when ":explain" then explain(query)
+        when ":functions" then [functions(query), nil]
+        when ":explain" then [explain(query), nil]
+        when ":trace" then trace(query, data)
         else
           command = line.gsub(/\A[ \t]+|[ \t]+\z/, "")
           raise Errors::Error, "Unknown command: #{command}"
@@ -31,12 +36,23 @@ module JMESPath
       end
 
       def self.explain(query)
-        raise Errors::Error, ":explain requires a query" if query.empty?
-
-        InspectionReport.explain(JMESPath.compile(query).explain)
+        InspectionReport.explain(compile(query, ":explain").explain)
       end
 
-      private_class_method :execute, :functions, :explain
+      def self.compile(query, command)
+        raise Errors::Error, "#{command} requires a query" if query.empty?
+
+        JMESPath.compile(query)
+      end
+
+      def self.trace(query, data)
+        expression = compile(query, ":trace")
+        report = expression.trace(data, limit: TRACE_LIMIT)
+        result = JSON.generate(report[:value])
+        [InspectionReport.trace(expression.explain, report, limit: TRACE_LIMIT), result]
+      end
+
+      private_class_method :execute, :functions, :explain, :compile, :trace
     end
   end
 end

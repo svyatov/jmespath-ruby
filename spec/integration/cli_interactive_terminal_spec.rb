@@ -34,6 +34,32 @@ RSpec.describe "Interactive terminal editing" do
   end
 
   %w[jmespath jmespath.rb].each do |name|
+    it "uses inspection commands through #{name} with JSON-only stdout" do
+      with_terminal(arguments(name)) do |master, output, _pid|
+        terminal_until(master, "jmespath> ")
+        master.write(":functions\r")
+        terminal_until(master, "Signatures describe")
+        terminal_until(master, "jmespath> ")
+        master.write(":explain name\r")
+        terminal_until(master, "#0 field")
+        terminal_until(master, "jmespath> ")
+        master.write(":trace missing\r")
+        terminal_until(master, "field_null")
+        expect(output.gets).to eq("null\n")
+        terminal_until(master, "jmespath> ")
+        master.write(":quit\r")
+      end
+    end
+
+    it "restores the terminal after result output fails through #{name}" do
+      with_terminal(arguments(name), expected_status: 1) do |master, output, _pid|
+        terminal_until(master, "jmespath> ")
+        output.close
+        master.write(":trace flag\r")
+        terminal_until(master, "Broken pipe")
+      end
+    end
+
     it "completes a function inside a query through #{name}" do
       with_terminal(arguments(name)) do |master, output, _pid|
         terminal_until(master, "jmespath> ")

@@ -6,7 +6,7 @@ require "timeout"
 require "rbconfig"
 
 module InteractiveTerminal
-  def with_terminal(arguments, environment: {})
+  def with_terminal(arguments, environment: {}, expected_status: 0)
     reset_terminal_buffers
     PTY.open do |master, slave|
       original = prepare_terminal(slave)
@@ -15,7 +15,7 @@ module InteractiveTerminal
       writer.close
       status = await_terminal(pid) { yield master, output, pid }
       pid = nil
-      verify_terminal(slave, original, status)
+      verify_terminal(slave, original, status, expected_status)
     rescue Timeout::Error
       raise "Terminal timeout: #{@terminal_transcript.inspect}"
     ensure
@@ -47,8 +47,8 @@ module InteractiveTerminal
     IO.popen(["stty", "-g"], "r", in: slave, &:read)
   end
 
-  def verify_terminal(slave, original, status)
-    expect(status.exitstatus).to eq(0)
+  def verify_terminal(slave, original, status, expected_status)
+    expect(status.exitstatus).to eq(expected_status)
     expect(IO.popen(["stty", "-g"], "r", in: slave, &:read)).to eq(original)
   end
 
