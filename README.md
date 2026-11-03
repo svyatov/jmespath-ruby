@@ -11,7 +11,7 @@ Search JSON and Ruby data with reusable queries and typed custom functions.
 In your Ruby project, add the gem with Bundler. Run `bundle init` first if the project has no Gemfile.
 
 ```sh
-bundle add jmespath-ruby --version "~> 0.1.3"
+bundle add jmespath-ruby --version "~> 1.0"
 ```
 
 Save this Ruby example as `example.rb`:
@@ -43,7 +43,7 @@ Replace that Gemfile entry:
 
 ```diff
 -gem "jmespath"
-+gem "jmespath-ruby", "~> 0.1.3"
++gem "jmespath-ruby", "~> 1.0"
 ```
 
 Run `bundle install`. Your Ruby code keeps the same entry points:
@@ -156,7 +156,10 @@ jmespath --file document.json 'user.name'
 For a document containing `{"user":{"name":"Ada"}}`, stdout contains `"Ada"` and a newline.
 See the [command-line reference](docs/guides/command-line.md) for query files, output modes, validation, and interactive sessions.
 Interactive sessions support query editing, session history, and function completion.
+Start a session with `jmespath --interactive --file document.json`.
+Use `:functions` to list built-in signatures and descriptions.
 Use `:explain QUERY` for structure or `:trace QUERY` for missing-value diagnostics.
+Inspection reports use stderr; query results use stdout as JSON.
 Use [shell completion](docs/guides/completion.md) for Bash and Zsh setup.
 Run `jmespath --help` for common commands or `jmespath --help input` for input rules.
 
