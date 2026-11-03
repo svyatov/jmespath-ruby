@@ -1,0 +1,45 @@
+module JMESPath
+  module CLI
+    class InteractiveEditor
+      @input: _LineReader
+      @errors: _Writer
+      def self.supported?: (input: untyped, errors: untyped) -> bool
+      def self.terminal_environment?: () -> bool
+      def initialize: (input: _LineReader, errors: _Writer) -> void
+      def open: [T] () { () -> T } -> T
+      def gets: () -> String?
+    end
+    class InteractiveEditorState
+      CALLBACKS: Array[Symbol]
+      @core: untyped
+      @input: untyped
+      @output: untyped
+      @configuration: Array[untyped]
+      @callbacks: Hash[Symbol, untyped]
+      @history: Array[String]
+      def initialize: () -> void
+      def configure: (_LineReader, _Writer) -> void
+      def configure_core: () -> void
+      def restore: () -> void
+    end
+  end
+end
+
+# Version-bounded signatures for the Reline 0.7 adapter boundary.
+module Reline
+  HISTORY: Array[String]
+  IOGate: untyped
+  def self.core: () -> untyped
+  def self.input=: (untyped) -> untyped
+  def self.output=: (untyped) -> untyped
+  def self.readline: (String, bool) -> String?
+  class Config
+    def self.new: () -> untyped
+  end
+  class KeyStroke
+    def self.new: (untyped, Encoding) -> untyped
+  end
+  class LineEditor
+    def self.new: (untyped) -> untyped
+  end
+end

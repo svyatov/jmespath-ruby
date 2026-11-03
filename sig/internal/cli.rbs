@@ -17,9 +17,11 @@ module JMESPath
       @output: _Writer
       @errors: _Writer
       @writing_errors: bool
+      @editor: InteractiveEditor?
       def initialize: (value, input: _LineReader, output: _Writer, errors: _Writer) -> void
       def run: () -> Integer
       private
+      def read_queries: () -> Integer
       def process?: (String) -> bool
       def command?: (String, String) -> bool
       def evaluate: (String) -> String?

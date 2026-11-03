@@ -15,19 +15,30 @@ module JMESPath
       end
 
       def run
-        loop do
-          prompt
-          line = @input.gets
-          break unless line
-          break if process?(line)
+        if InteractiveEditor.supported?(input: @input, errors: @errors)
+          editor = InteractiveEditor.new(input: @input, errors: @errors)
+          @editor = editor
+          editor.open { read_queries }
+        else
+          read_queries
         end
-        0
       rescue IOError, SystemCallError => e
         report_stream_failure(e)
         1
       end
 
       private
+
+      def read_queries
+        loop do
+          prompt unless @editor
+          editor = @editor
+          line = editor ? editor.gets : @input.gets
+          break unless line
+          break if process?(line)
+        end
+        0
+      end
 
       def process?(line)
         expression = line.dup.force_encoding(Encoding::UTF_8)

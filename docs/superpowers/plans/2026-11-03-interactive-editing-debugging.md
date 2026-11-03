@@ -73,8 +73,8 @@ Readline configuration comes from Reline; the application writes no configuratio
 Use `Reline.input=`, `Reline.output=`, completion properties, and `Reline::HISTORY` within the adapter only.
 Reline exposes `line_buffer`, byte-based `point`, `delete_text`, and `insert_text`, but marks several accessors undocumented.
 Restoring input also requires checking source-exposed state because the module provides no matching public input getter.
-The plan proposes a narrow exception to the design's documented-interface rule for these adapter calls.
-Verify each against the selected release and cover it directly; never access Reline instance variables or patch its classes.
+The user approved a narrow exception for exported adapter calls and one private read of the backend's `@input`.
+Verify each against the selected release and cover it directly; restore input through its setter and never patch Reline classes.
 If the required restoration or cursor behavior cannot be achieved through exported methods, stop and report the evidence before implementation continues.
 
 ### Task 1: Connect terminal editing and cleanup

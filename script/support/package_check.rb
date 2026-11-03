@@ -54,7 +54,7 @@ class PackageCheck
     cache = File.join(directory, "vendor/cache")
     FileUtils.mkdir_p(cache)
     FileUtils.cp(artifact, cache)
-    %w[json stringio].each do |name|
+    %w[json reline io-console stringio].each do |name|
       archive = Gem.loaded_specs.fetch(name).cache_file
       raise "Missing cached runtime gem: #{archive}" unless File.file?(archive)
 
@@ -70,7 +70,8 @@ class PackageCheck
 
   def prepare_lock(directory, artifact, specification)
     environment = environment_for(directory).merge("BUNDLE_FROZEN" => "false")
-    command(environment, directory, "lock", "--local", "--add-checksums")
+    # Bundler's --add-checksums forces remote resolution, even with --local.
+    command(environment, directory, "install", "--local", "--quiet")
     path = File.join(directory, "Gemfile.lock")
     checksum = "  #{specification.name} (#{specification.version}) sha256=#{Digest::SHA256.file(artifact).hexdigest}"
     identity = Regexp.escape("#{specification.name} (#{specification.version})")
@@ -82,6 +83,9 @@ class PackageCheck
       "BUNDLE_GEMFILE" => File.join(directory, "Gemfile"),
       "BUNDLE_PATH" => File.join(directory, "installed"),
       "BUNDLE_APP_CONFIG" => File.join(directory, ".bundle"),
+      "BUNDLE_USER_HOME" => File.join(directory, "bundler"),
+      "GEM_SPEC_CACHE" => File.join(directory, "gem-spec-cache"),
+      "GEM_HOME" => File.join(directory, "gems"), "GEM_PATH" => File.join(directory, "gems"),
       "BUNDLE_FROZEN" => "true", "BUNDLE_DEPLOYMENT" => "false",
       "BUNDLE_WITHOUT" => "", "RUBYOPT" => nil, "RUBYLIB" => nil
     )

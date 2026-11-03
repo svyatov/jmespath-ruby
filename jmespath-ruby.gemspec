@@ -22,5 +22,6 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = Dir["exe/*"].map { |path| File.basename(path) }
   spec.add_dependency "json", ">= 2.7", "< 4"
+  spec.add_dependency "reline", "~> 0.7.0"
   spec.add_dependency "stringio", ">= 3.0", "< 4"
 end
