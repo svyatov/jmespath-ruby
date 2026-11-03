@@ -29,6 +29,26 @@ RSpec.describe "Shell completion" do
       end
 
       %w[jmespath jmespath.rb].each do |command|
+        it "offers help topics only after initial help for #{command}" do
+          %w[--help -h].each do |flag|
+            expect(ShellCompletion.candidates(shell: shell, root: root, line: "#{command} #{flag} ").sort)
+              .to eq(%w[functions input interactive output validate])
+            expect(complete(line: "#{command} #{flag} val")).to eq("#{command} #{flag} validate ")
+            expect(Shellwords.split(complete(line: "#{command} '#{flag}' val")))
+              .to eq([command, flag, "validate"])
+            ["input ", "'input' ", "input --", "unknown "].each do |suffix|
+              expect(ShellCompletion.candidates(shell: shell, root: root, line: "#{command} #{flag} #{suffix}"))
+                .to eq([])
+            end
+          end
+          ["--validate --help ", "-- --help ", "@ --help "].each do |suffix|
+            expect(ShellCompletion.candidates(shell: shell, root: root, line: "#{command} #{suffix}")).to eq([])
+          end
+          File.write("--help-document.json", "not read")
+          expect(Shellwords.split(complete(line: "#{command} --file=--help-d")))
+            .to eq([command, "--file=--help-document.json"])
+        end
+
         it "offers every supported option for #{command} before and after queries" do
           Dir.mkdir("--query-file")
           ["#{command} -", "#{command} '@' -", "#{command} --pretty -"].each do |line|
@@ -149,6 +169,9 @@ RSpec.describe "Shell completion" do
         ENV["PATH"] = "#{Dir.pwd}:#{original}"
         result = complete(line: "jmespath --file dan")
         expect(Shellwords.split(result)).to eq(["jmespath", "--file", "danger$(touch SENTINEL).json"])
+        %w[jmespath jmespath.rb].each do |command|
+          expect(complete(line: "#{command} --help val")).to eq("#{command} --help validate ")
+        end
         expect(File).not_to exist("CALLED")
         expect(File).not_to exist("SENTINEL")
       ensure

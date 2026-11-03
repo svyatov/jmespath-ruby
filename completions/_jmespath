@@ -1,6 +1,15 @@
 #compdef jmespath jmespath.rb
 local index expecting_path=0 literal_path=0 value raw option candidate suffix
 local -a paths
+if ((CURRENT > 2)); then
+  case ${(Q)words[2]} in
+    --help|-h)
+      if ((CURRENT == 3)); then
+        compadd -- input output validate functions interactive
+      fi
+      return ;;
+  esac
+fi
 for ((index = 2; index < CURRENT; index++)); do
   if ((expecting_path)); then expecting_path=0; continue; fi
   case ${(Q)words[index]} in

@@ -31,7 +31,8 @@ RSpec.describe "Command-line interactive sessions" do
     "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
       "(EXPRESSION | --query-file PATH)\n       " \
       "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n       " \
-      "jmespath --interactive --file PATH\n"
+      "jmespath --interactive --file PATH\n" \
+      "Use jmespath --help for options and topic help.\n"
   end
 
   it "supports option order, frozen arguments, and delimiter handling" do
@@ -156,7 +157,7 @@ RSpec.describe "Command-line interactive sessions" do
   end
 
   it "documents interactive mode in help" do
-    status, output, errors = run_cli(["--help"], input: double("unused input"))
+    status, output, errors = run_cli(%w[--help interactive], input: double("unused input"))
     expect([status, errors]).to eq([0, ""])
     expect(output).to include("--interactive --file PATH", ":help", ":quit", "terminal")
   end

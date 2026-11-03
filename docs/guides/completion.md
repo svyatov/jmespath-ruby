@@ -2,6 +2,7 @@
 
 The gem includes Bash and Zsh completion definitions for `jmespath` and `jmespath.rb`.
 They suggest option names and filesystem paths after `--file` and `--query-file`.
+They also suggest `input`, `output`, `validate`, `functions`, and `interactive` after an initial `--help` or `-h`.
 Both `--file PATH` and `--file=PATH` forms support completion, including spaces in filenames.
 
 ## Bash setup
@@ -54,6 +55,8 @@ These examples show the key as `<Tab>`:
 jmespath --que<Tab>
 jmespath --query-file queries/rep<Tab>
 jmespath.rb --file=my<Tab>
+jmespath --help val<Tab>
+jmespath.rb -h int<Tab>
 ```
 
 Directories remain available for further path completion, without filtering by file extension.
@@ -63,6 +66,8 @@ Hyphen-leading filenames follow the CLI's literal-path rules, such as `--file=--
 Options remain available before or after an expression until a standalone `--` delimiter.
 Repeated or conflicting options remain visible; the CLI validates combinations when you run the command.
 Completion does not suggest JMESPath expressions or complete arguments after the delimiter.
+Help topics are offered only as the first argument after an initial help flag, with no suggestions after the topic.
+The literal-validation form `--validate --help` does not offer help topics.
 It lists filesystem names without running the CLI, evaluating queries, or reading document or query contents.
 Ruby runs only during the installation-path lookup shown above.
 

@@ -26,7 +26,8 @@ RSpec.describe "Command-line function listing" do
     "Usage: jmespath [--pretty | --raw-output | --json-lines] [--file PATH] " \
       "(EXPRESSION | --query-file PATH)\n       " \
       "jmespath --validate (EXPRESSION | --query-file PATH)\n       jmespath --functions\n       " \
-      "jmespath --interactive --file PATH\n"
+      "jmespath --interactive --file PATH\n" \
+      "Use jmespath --help for options and topic help.\n"
   end
 
   it "lists every built-in once in metadata order without input access or evaluation" do
@@ -119,9 +120,9 @@ RSpec.describe "Command-line function listing" do
 
   it "explains listing in help and preserves standalone information modes" do
     %w[--help -h].each do |flag|
-      status, output, errors = run_cli([flag])
+      status, output, errors = run_cli([flag, "functions"])
       expect([status, errors]).to eq([0, ""])
-      expect(output).to start_with(usage)
+      expect(output).to start_with("Functions:")
       expect(output).to include("standalone --functions", "without reading stdin", legend)
     end
     expect(run_cli(["--version"])).to eq([0, "jmespath-ruby #{JMESPath::VERSION}\n", ""])
