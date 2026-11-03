@@ -31,6 +31,7 @@ module JMESPath
       def initialize(input:, errors:)
         require "reline"
         require_relative "interactive_key_stroke"
+        require_relative "interactive_line_editor"
         @input = input
         @errors = errors
         @history = []

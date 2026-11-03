@@ -29,6 +29,7 @@ RSpec.describe "Installed gem artifact" do
       "lib/jmespath/cli/interactive_editor.rb", "lib/jmespath/cli/interactive_editor_state.rb",
       "lib/jmespath/cli/interactive_completion.rb", "lib/jmespath/cli/interactive_commands.rb",
       "lib/jmespath/cli/interactive_key_stroke.rb",
+      "lib/jmespath/cli/interactive_line_editor.rb",
       "lib/jmespath/cli/inspection_report.rb", "lib/jmespath/cli/interactive_help.rb"
     )
     expect(specification.files.grep(%r{\A(?:spec/|coverage/|doc/|sig/internal/|\.git|\.superpowers/)})).to be_empty

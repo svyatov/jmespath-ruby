@@ -36,7 +36,7 @@ module JMESPath
         Reline::IOGate.set_default_key_bindings(config)
         @core.config = config
         @core.key_stroke = InteractiveKeyStroke.new(config, Reline::IOGate.encoding)
-        @core.line_editor = Reline::LineEditor.new(config)
+        @core.line_editor = InteractiveLineEditor.new(config)
       end
 
       def restore

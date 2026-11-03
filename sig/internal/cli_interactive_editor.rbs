@@ -10,6 +10,14 @@ module JMESPath
         def ended?: () -> bool
       end
       def match_status: (Array[Integer]) -> Symbol
+      def expand: (Array[Integer]) -> [Array[untyped], Array[Integer]]
+      private
+      def validate_prefix: (Array[Integer]) -> void
+      def read_paste: () -> String
+      def read_quoted: () -> String
+    end
+    class InteractiveLineEditor < ::Reline::LineEditor
+      def add_dialog_proc: (untyped, untyped, ?untyped) -> void
     end
     type completion_result = { line: String, point: Integer, candidates: Array[String] }
     class InteractiveCompletion
@@ -84,8 +92,12 @@ module Reline
   class KeyStroke
     def self.new: (untyped, Encoding) -> untyped
     def match_status: (Array[Integer]) -> Symbol
+    def expand: (Array[Integer]) -> [Array[untyped], Array[Integer]]
   end
   class LineEditor
     def self.new: (untyped) -> untyped
+  end
+  class Key
+    def self.new: (String, Symbol) -> untyped
   end
 end

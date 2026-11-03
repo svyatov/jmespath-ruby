@@ -19,6 +19,25 @@ RSpec.describe "Interactive terminal editing" do
     [File.expand_path("../../exe/#{name}", __dir__), "--interactive", "--file", @path]
   end
 
+  it "isolates and restores another consumer's dialog callback" do
+    source = <<~RUBY
+      require "jmespath/cli"
+      require "reline"
+      callback = -> { raise "external callback invoked" }
+      Reline.add_dialog_proc(:external, callback)
+      status = JMESPath::CLI.run(ARGV)
+      raise "lost callback" unless Reline.dialog_proc(:external).dialog_proc.equal?(callback)
+      exit status
+    RUBY
+    with_terminal(["-Ilib", "-e", source, "--", "--interactive", "--file", @path]) do |master, output, _|
+      terminal_until(master, "jmespath> ")
+      master.write("name\r")
+      expect(output.gets).to eq("\"café\"\n")
+      terminal_until(master, "jmespath> ")
+      master.write(":quit\r")
+    end
+  end
+
   it "creates no history or configuration files" do
     Dir.mktmpdir("jmespath-terminal-home") do |home|
       environment = { "HOME" => home, "XDG_CONFIG_HOME" => home }
@@ -34,6 +53,19 @@ RSpec.describe "Interactive terminal editing" do
   end
 
   %w[jmespath jmespath.rb].each do |name|
+    ["\e[200~\xFF\e[201~", "\x11\xFF"].each do |payload|
+      it "rejects invalid UTF-8 in payload #{payload.b.inspect} through #{name}" do
+        with_terminal(arguments(name)) do |master, output, _|
+          terminal_until(master, "jmespath> ")
+          master.write("name#{payload}\rflag\r".b)
+          terminal_until(master, "Invalid UTF-8 query")
+          expect(output.gets).to eq("false\n")
+          terminal_until(master, "jmespath> ")
+          master.write(":quit\r")
+        end
+      end
+    end
+
     it "recovers from invalid terminal UTF-8 through #{name}" do
       with_terminal(arguments(name)) do |master, output, _pid|
         terminal_until(master, "jmespath> ")
