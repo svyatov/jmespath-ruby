@@ -1,6 +1,6 @@
 # Developer documentation and CLI help
 
-Status: proposed for user approval.
+Status: approved by the user on 2026-11-03.
 Scope: [issue #52](https://github.com/svyatov/jmespath-ruby/issues/52).
 
 ## Intent
