@@ -17,11 +17,14 @@ module JMESPath
       @output: _Writer
       @errors: _Writer
       @writing_errors: bool
+      @editor: InteractiveEditor?
       def initialize: (value, input: _LineReader, output: _Writer, errors: _Writer) -> void
       def run: () -> Integer
       private
+      def read_queries: () -> Integer
       def process?: (String) -> bool
       def command?: (String, String) -> bool
+      def execute_command: (String) -> void
       def evaluate: (String) -> String?
       def write_result: (String) -> void
       def diagnostic: (String) -> void
@@ -49,6 +52,9 @@ module JMESPath
       GUIDE: String
       TOPICS: Hash[String, String]
       def self.render: (String?) -> String
+    end
+    module InteractiveHelp
+      TEXT: String
     end
     def self.help: (Array[String], _Writer) -> Integer
     def self.literal_validation?: (Array[String]) -> bool

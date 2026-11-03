@@ -155,7 +155,47 @@ Document and stream failures terminate with status 1; usage failures return stat
 Interactive mode requires `--file PATH` and rejects positional queries, `--query-file`, other modes, information flags, and repeated flags.
 Readers supplied to `CLI.run` need `gets`; `tty?` is optional and absent detection means no prompts.
 Writers need `puts`; `flush` is optional except for terminal prompts, whose diagnostic stream needs both `print` and `flush`.
-Caller-owned streams remain open; history, completion, multiline editing, and document reloads are unavailable.
+Caller-owned streams remain open.
+
+On supported terminals, Reline provides single-line editing and previous-query recall.
+Editing requires terminal IO on stdin and stderr and a usable `TERM`; redirected stdout remains available for JSON results.
+Keep up to 500 submitted queries in memory for the session, including failed queries and duplicates.
+Commands, blanks, and invalid UTF-8 input are excluded; the oldest query is discarded when the limit is reached.
+History starts empty for each session and creates no files or shell configuration.
+Ctrl-C discards the current edit without evaluating partial input.
+Pasted physical lines are submitted as separate queries after confirmation.
+Pipes, injected readers, redirected stderr, and unsupported terminals use the plain line reader without loading Reline.
+The plain reader retains its interruption behavior.
+Tab completes built-in function names at the cursor, replacing the complete name token while preserving surrounding Unicode text.
+Completion inserts no parentheses or spaces and does not inspect the document or evaluate queries.
+Quoted identifiers, single-quoted strings, and backtick literals remain unchanged.
+A unique match inserts the name; multiple matches extend their common prefix when possible.
+When no extension is possible, sorted alternatives appear on stderr and the query remains unchanged.
+Empty and unknown prefixes remain unchanged without diagnostics.
+Multiline editing and document reloads are unavailable.
+Terminal editing is tested on macOS through a pseudo terminal.
+CI includes Linux checks on Ruby 3.3, 3.4, and 4.0 and a macOS terminal check; Windows terminal behavior is unverified.
+
+Use `:functions` to list built-in names, signatures, descriptions, and the type legend on stderr.
+Use `:explain QUERY` to inspect an operation tree without evaluating the document.
+Each tree node shows its public operation ID, role, details, source line and character column, and byte range.
+Byte ranges have exclusive ends; missing source locations are labeled explicitly.
+The query is the complete remainder after the command separator, preserving trailing whitespace.
+Explanations show unknown function names without checking their availability.
+Both commands work with terminal or piped input and leave stdout empty.
+Command errors produce diagnostics and leave the session usable.
+Tab completes function names within explanation arguments on supported terminals.
+For structured inspection, use the public [explanation API](compilation.md#query-inspection).
+
+Use `:trace QUERY` to evaluate once and inspect null fields, filter exclusions, and omitted projection results.
+The readable report uses stderr; the successful value is written once as compact JSON on stdout, including null and false.
+Events retain public operation IDs, source locations, reasons, and zero-based item context.
+Traces retain at most 1,000 events; a truncation notice states that evaluation completed.
+An empty report prints `Trace: no diagnostic events.`
+Serialization failures produce diagnostics without a report or result; the session remains usable.
+Stream failures terminate the session with status 1.
+Tab completes function names in trace arguments on supported terminals.
+Reports use private text layouts; use the [tracing API](compilation.md#evaluation-tracing) for structured data.
 
 ## Help
 
