@@ -38,11 +38,15 @@ module JMESPath
         before = line.byteslice(0, point).to_s
         return if quoted?(before)
 
-        prefix = before[/[A-Za-z0-9_]+\z/]
+        prefix = identifier_prefix(before)
         return unless prefix&.match?(/\A[A-Za-z_]/)
 
         suffix = line.byteslice(point..).to_s[/\A[A-Za-z0-9_]*/].to_s
         [prefix, point - prefix.bytesize, point + suffix.bytesize]
+      end
+
+      def identifier_prefix(before)
+        before.reverse[/\A[A-Za-z0-9_]+/]&.reverse
       end
 
       def valid_cursor?(line, point)

@@ -23,6 +23,15 @@ RSpec.describe "Interactive query session" do
     expect(errors).to include("length(", "Types: any accepts any value", "expref", "Signatures describe")
   end
 
+  it "trims only horizontal whitespace around long unknown commands" do
+    tabs = "\t" * 25_000
+    report, result = JMESPath::CLI::InteractiveCommands.call(" \t:未知#{tabs}x \t", data: {})
+    expect(result).to be_nil
+    expect(report).to eq("Unknown command: :未知#{'    ' * 25_000}x")
+    expect(JMESPath::CLI::InteractiveCommands.call(":bad\v \t", data: {}))
+      .to eq(["Unknown command: :bad\\v", nil])
+  end
+
   it "explains the complete query remainder without evaluating the document" do
     expect(JMESPath).to receive(:compile).with("unknown(name) \t").once.and_call_original
     expect(JMESPath).not_to receive(:search)

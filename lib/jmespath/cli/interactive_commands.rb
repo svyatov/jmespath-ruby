@@ -24,7 +24,7 @@ module JMESPath
         when ":explain" then [explain(query), nil]
         when ":trace" then trace(query, data)
         else
-          command = line.gsub(/\A[ \t]+|[ \t]+\z/, "")
+          command = line.sub(/\A[ \t]+/, "").reverse.sub(/\A[ \t]+/, "").reverse
           raise Errors::Error, "Unknown command: #{command}"
         end
       end

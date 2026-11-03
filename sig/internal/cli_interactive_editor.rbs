@@ -27,6 +27,7 @@ module JMESPath
       private
       def replace: (String, Integer, Integer, String) -> String
       def token: (String, Integer) -> [String, Integer, Integer]?
+      def identifier_prefix: (String) -> String?
       def valid_cursor?: (String, Integer) -> bool
       def query?: (String, Integer) -> bool
       def quoted?: (String) -> bool

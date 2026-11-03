@@ -24,6 +24,16 @@ RSpec.describe "Interactive function completion" do
     expect(complete("[lengzz]", 5)).to eq(line: "[length]", point: 7, candidates: ["length"])
   end
 
+  it "preserves long digit runs when completing or rejecting a token" do
+    digits = "0" * 100_000
+    line = "#{digits}!"
+    expect(complete(line)).to eq(line: line, point: 100_001, candidates: [])
+    expect(complete("#{digits}leng")).to eq(line: "#{digits}leng", point: 100_004, candidates: [])
+    line = "é#{digits} lengzz('✓')"
+    expect(complete(line, 100_007))
+      .to eq(line: "é#{digits} length('✓')", point: 100_009, candidates: ["length"])
+  end
+
   ["", "zzzz", "123leng", "length(", "\"leng", "'leng", "`leng", "\"escaped\\\"leng",
    "'escaped\\'leng", "`escaped\\`leng", "'\\\\leng", "name\nleng", "\xFF".b].each do |line|
     it "preserves #{line.inspect} without candidates" do
