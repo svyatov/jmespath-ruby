@@ -34,6 +34,28 @@ RSpec.describe "Interactive terminal editing" do
   end
 
   %w[jmespath jmespath.rb].each do |name|
+    it "completes a function inside a query through #{name}" do
+      with_terminal(arguments(name)) do |master, output, _pid|
+        terminal_until(master, "jmespath> ")
+        master.write("['✓', lengzz(name)]#{"\e[D" * 9}\t\x05\r")
+        terminal_until(master, "jmespath> ")
+        expect(output.gets).to eq("[\"✓\",4]\n")
+        master.write(":quit\r")
+      end
+    end
+
+    it "lists ambiguous functions and preserves quoted text through #{name}" do
+      with_terminal(arguments(name)) do |master, output, _pid|
+        terminal_until(master, "jmespath> ")
+        master.write("to_\t")
+        terminal_until(master, "to_array  to_number  to_string")
+        master.write("\x15'leng\t'\r")
+        terminal_until(master, "jmespath> ")
+        expect(output.gets).to eq("\"leng\"\n")
+        master.write(":quit\r")
+      end
+    end
+
     it "recalls an invalid query for correction through #{name}" do
       with_terminal(arguments(name)) do |master, output, _pid|
         terminal_until(master, "jmespath> ")

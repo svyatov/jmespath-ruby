@@ -166,7 +166,13 @@ Ctrl-C discards the current edit without evaluating partial input.
 Pasted physical lines are submitted as separate queries after confirmation.
 Pipes, injected readers, redirected stderr, and unsupported terminals use the plain line reader without loading Reline.
 The plain reader retains its interruption behavior.
-Completion, multiline editing, and document reloads are unavailable.
+Tab completes built-in function names at the cursor, replacing the complete name token while preserving surrounding Unicode text.
+Completion inserts no parentheses or spaces and does not inspect the document or evaluate queries.
+Quoted identifiers, single-quoted strings, and backtick literals remain unchanged.
+A unique match inserts the name; multiple matches extend their common prefix when possible.
+When no extension is possible, sorted alternatives appear on stderr and the query remains unchanged.
+Empty and unknown prefixes remain unchanged without diagnostics.
+Multiline editing and document reloads are unavailable.
 Terminal editing is tested on macOS through a pseudo terminal; Windows terminal behavior is unverified.
 
 ## Help

@@ -26,7 +26,9 @@ Other concrete defaults below are proposed builder decisions, subject to approva
 | O3: Readable inspection reports | Supports debugging within the terminal | Requires private text renderers | Selected by the user |
 | O4: JSON inspection reports | Directly represents public API data | Nested data is harder to inspect beside prompts and diagnostics | Rejected |
 
-Use Reline's documented interface and require it only after selecting a terminal editing session.
+Use Reline's readline-compatible interface and require it only after selecting a terminal editing session.
+Keep version-tested, source-exported cursor and state accessors inside the adapter.
+The user additionally approved one private read of the backend's `@input` for restoration through its setter.
 Retain a plain reader for streams and terminals that cannot support editing.
 Dependency declaration guarantees installation, not terminal capability.
 The implementation plan must verify a compatible release against upstream before choosing constraints and updating the lockfile.

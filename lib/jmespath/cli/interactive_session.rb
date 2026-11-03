@@ -7,6 +7,7 @@ module JMESPath
       HELP = "Enter one query per line; blank lines are ignored.\n:help shows help; :quit ends the session.\n" \
              "Supported terminals provide editing and recall of the last 500 queries for this session only.\n" \
              "Ctrl-C cancels the current edit. Other streams use the plain line reader.\n" \
+             "Tab completes function names outside quotes; ambiguous prefixes list sorted names.\n" \
              "Prompts and diagnostics use stderr; successful JSON results use stdout."
 
       def initialize(data, input:, output:, errors:)
@@ -112,7 +113,9 @@ module JMESPath
       end
 
       def report_stream_failure(error)
-        diagnostic(FailureDiagnostic.format(error, nil)) unless @writing_errors
+        return if @writing_errors || @editor&.writing_errors?
+
+        diagnostic(FailureDiagnostic.format(error, nil))
       rescue IOError, SystemCallError
         nil
       end

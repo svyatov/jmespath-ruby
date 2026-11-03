@@ -43,6 +43,33 @@ RSpec.describe "Interactive editor selection" do
     end
   end
 
+  it "does not retry terminal output after an editor write fails" do
+    PTY.open do |_master, slave|
+      allow(Reline).to receive(:readline) { Reline.core.output.write("jmespath> ") }
+      expect(slave).to receive(:write).once.and_raise(IOError, "terminal failed")
+      expect(slave).not_to receive(:puts)
+      status = JMESPath::CLI::InteractiveSession.new({}, input: slave, output: StringIO.new, errors: slave).run
+      expect(status).to eq(1)
+    end
+  end
+
+  [["lengzz(name)", 4, "length(name)", 6, ""],
+   ["to_", 3, "to_", 3, "\nto_array  to_number  to_string\n"],
+   ["zzzz", 4, "zzzz", 4, ""]].each do |line, point, expected, cursor, diagnostic|
+    it "applies the terminal completion callback to #{line}" do
+      PTY.open do |_master, slave|
+        errors = StringIO.new
+        editor = JMESPath::CLI::InteractiveEditor.new(input: slave, errors: errors)
+        editor.open do
+          Reline.insert_text(line)
+          Reline.point = point
+          expect(Reline.completion_proc.call("")).to be_nil
+          expect([Reline.line_buffer, Reline.point, errors.string]).to eq([expected, cursor, diagnostic])
+        end
+      end
+    end
+  end
+
   it "rejects injected readers even if they claim to be terminals" do
     input = StringIO.new
     allow(input).to receive(:tty?).and_return(true)
@@ -126,6 +153,22 @@ RSpec.describe "Interactive editor selection" do
     Reline::HISTORY.replace(previous_history)
   end
 
+  it "allows recall beyond a caller's smaller history limit" do
+    config = Reline.core.config
+    previous_size = config.history_size
+    config.history_size = 2
+    PTY.open do |_master, slave|
+      editor = JMESPath::CLI::InteractiveEditor.new(input: slave, errors: slave)
+      editor.open do
+        5.times { |index| editor.remember("q#{index}") }
+        expect(Reline::HISTORY[4]).to eq("q4")
+      end
+    end
+    expect(config.history_size).to eq(2)
+  ensure
+    config.history_size = previous_size
+  end
+
   it "does not load Reline for library calls or piped sessions" do
     source = <<~RUBY
       require "jmespath/cli"
@@ -155,7 +198,7 @@ RSpec.describe "Interactive editor selection" do
         action = lambda do
           editor.open do
             expect(Reline::HISTORY).to be_empty
-            expect(Reline.completion_proc).to be_nil
+            expect(Reline.completion_proc).not_to equal(callback)
             expect(Reline.core.output).to equal(slave)
             raise failure, "failure" if failure
           end
