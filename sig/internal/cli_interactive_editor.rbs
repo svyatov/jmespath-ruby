@@ -1,0 +1,104 @@
+module JMESPath
+  module CLI
+    interface _RawInput
+      def raw: [T] (intr: bool) { () -> T } -> T
+    end
+    class InteractiveKeyStroke < ::Reline::KeyStroke
+      class InvalidInput < StandardError
+        attr_reader byte: Integer
+        def initialize: (Integer) -> void
+        def ended?: () -> bool
+      end
+      def match_status: (Array[Integer]) -> Symbol
+      def expand: (Array[Integer]) -> [Array[untyped], Array[Integer]]
+      private
+      def validate_prefix: (Array[Integer]) -> void
+      def read_paste: () -> String
+      def read_quoted: () -> String
+    end
+    class InteractiveLineEditor < ::Reline::LineEditor
+      def add_dialog_proc: (untyped, untyped, ?untyped) -> void
+    end
+    type completion_result = { line: String, point: Integer, candidates: Array[String] }
+    class InteractiveCompletion
+      @names: Array[String]
+      def initialize: (?functions: Functions) -> void
+      def complete: (String, point: Integer) -> completion_result
+      private
+      def replace: (String, Integer, Integer, String) -> String
+      def token: (String, Integer) -> [String, Integer, Integer]?
+      def identifier_prefix: (String) -> String?
+      def valid_cursor?: (String, Integer) -> bool
+      def query?: (String, Integer) -> bool
+      def quoted?: (String) -> bool
+      def common_prefix: (Array[String]) -> String
+    end
+    class InteractiveEditor
+      HISTORY_LIMIT: Integer
+      @input: _LineReader
+      @errors: _Writer
+      @history: Array[String]
+      @pending: Array[String]
+      @completion: InteractiveCompletion
+      @writing_errors: bool
+      def self.supported?: (input: untyped, errors: untyped) -> bool
+      def self.terminal_environment?: () -> bool
+      def self.backend_supported?: () -> bool
+      def initialize: (input: _LineReader, errors: _Writer) -> void
+      def open: [T] () { () -> T } -> T
+      def gets: () -> String?
+      def remember: (String) -> void
+      def writing_errors?: () -> bool
+      private
+      def complete: (String) -> nil
+      def list_candidates: (Array[String]) -> void
+      def read_line: () -> String?
+      def reject_invalid: (InteractiveKeyStroke::InvalidInput) -> String?
+      def discard_line: () -> Integer?
+    end
+    class InteractiveEditorState
+      PROPERTIES: Array[Symbol]
+      @core: untyped
+      @input: untyped
+      @output: untyped
+      @configuration: Array[untyped]
+      @callbacks: Hash[Symbol, untyped]
+      @history: Array[String]
+      @history_size: Integer
+      def initialize: () -> void
+      def configure: (_LineReader, _Writer) -> void
+      def configure_core: () -> void
+      def restore: () -> void
+    end
+  end
+end
+
+# Version-bounded signatures for the Reline 0.7 adapter boundary.
+module Reline
+  HISTORY: Array[String]
+  IOGate: untyped
+  def self.core: () -> untyped
+  def self.input=: (untyped) -> untyped
+  def self.output=: (untyped) -> untyped
+  def self.readline: (String, bool) -> String?
+  def self.completion_proc=: (untyped) -> untyped
+  def self.line_buffer: () -> String
+  def self.point: () -> Integer
+  def self.point=: (Integer) -> Integer
+  def self.delete_text: () -> untyped
+  def self.insert_text: (String) -> untyped
+  class Config
+    def self.new: () -> untyped
+  end
+  class KeyStroke
+    def self.new: (untyped, Encoding) -> untyped
+    def match_status: (Array[Integer]) -> Symbol
+    def expand: (Array[Integer]) -> [Array[untyped], Array[Integer]]
+  end
+  class LineEditor
+    def self.new: (untyped) -> untyped
+  end
+  class Key
+    def self.new: (String, Symbol) -> untyped
+  end
+end

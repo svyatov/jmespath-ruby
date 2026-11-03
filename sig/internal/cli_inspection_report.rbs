@@ -1,0 +1,30 @@
+module JMESPath
+  module CLI
+    class InspectionReport
+      @source: String
+      @root: explanation_node
+      def self.explain: (explanation) -> String
+      def self.trace: (explanation, trace_report, limit: Integer) -> String
+      def initialize: (explanation) -> void
+      def explain: () -> String
+      def trace: (trace_report, limit: Integer) -> String
+      private
+      def index_locations: (explanation_node, Hash[Integer, String]) -> void
+      def event_line: (trace_event, Hash[Integer, String]) -> String
+      def context: (Array[trace_context]) -> String
+      def tree: (explanation_node, ?String, ?String?) -> Array[String]
+      def label: (explanation_node) -> String
+      def location: ([Integer, Integer]?) -> String
+      def details: (explanation_details) -> String
+    end
+    module InteractiveCommands
+      TRACE_LIMIT: Integer
+      def self.call: (String, data: value) -> [String, String?]
+      def self.execute: (String, String, String, value) -> [String, String?]
+      def self.functions: (String) -> String
+      def self.explain: (String) -> String
+      def self.compile: (String, String) -> Expression
+      def self.trace: (String, value) -> [String, String]
+    end
+  end
+end

@@ -4,7 +4,13 @@ module JMESPath
   module CLI
     # @api private
     class InteractiveSession
-      HELP = "Enter one query per line; blank lines are ignored.\n:help shows help; :quit ends the session."
+      HELP = "Enter one query per line; blank lines are ignored.\n:help shows help; :quit ends the session.\n" \
+             ":functions lists built-ins; :explain QUERY shows structure without evaluating the document.\n" \
+             ":trace QUERY evaluates once; at most 1000 events use stderr and one JSON result uses stdout.\n" \
+             "Supported terminals provide editing and recall of the last 500 queries for this session only.\n" \
+             "Ctrl-C cancels the current edit. Other streams use the plain line reader.\n" \
+             "Tab completes function names outside quotes; ambiguous prefixes list sorted names.\n" \
+             "Prompts and diagnostics use stderr; successful JSON results use stdout."
 
       def initialize(data, input:, output:, errors:)
         @data = data
@@ -15,19 +21,30 @@ module JMESPath
       end
 
       def run
-        loop do
-          prompt
-          line = @input.gets
-          break unless line
-          break if process?(line)
+        if InteractiveEditor.supported?(input: @input, errors: @errors)
+          editor = InteractiveEditor.new(input: @input, errors: @errors)
+          @editor = editor
+          editor.open { read_queries }
+        else
+          read_queries
         end
-        0
       rescue IOError, SystemCallError => e
         report_stream_failure(e)
         1
       end
 
       private
+
+      def read_queries
+        loop do
+          prompt unless @editor
+          editor = @editor
+          line = editor ? editor.gets : @input.gets
+          break unless line
+          break if process?(line)
+        end
+        0
+      end
 
       def process?(line)
         expression = line.dup.force_encoding(Encoding::UTF_8)
@@ -47,12 +64,19 @@ module JMESPath
         if command == ":help"
           diagnostic(HELP)
         elsif command.start_with?(":")
-          diagnostic(FailureDiagnostic.format(Errors::Error.new("Unknown command: #{command}"), nil))
+          execute_command(expression)
         else
+          @editor&.remember(expression)
           result = evaluate(expression)
           write_result(result) if result
         end
         false
+      end
+
+      def execute_command(expression)
+        report, result = InteractiveCommands.call(expression, data: @data)
+        diagnostic(report)
+        write_result(result) if result
       end
 
       def evaluate(expression)
@@ -97,7 +121,9 @@ module JMESPath
       end
 
       def report_stream_failure(error)
-        diagnostic(FailureDiagnostic.format(error, nil)) unless @writing_errors
+        return if @writing_errors || @editor&.writing_errors?
+
+        diagnostic(FailureDiagnostic.format(error, nil))
       rescue IOError, SystemCallError
         nil
       end

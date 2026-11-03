@@ -25,11 +25,16 @@ RSpec.describe "Installed gem artifact" do
       "CHANGELOG.md",
       "VERSIONING.md", "SECURITY.md",
       "LICENSE", "LICENSES/python-MIT.txt", "LICENSES/ruby-Apache-2.0.txt", "docs/guides/compatibility.md",
-      "docs/guides/command-line.md"
+      "docs/guides/command-line.md",
+      "lib/jmespath/cli/interactive_editor.rb", "lib/jmespath/cli/interactive_editor_state.rb",
+      "lib/jmespath/cli/interactive_completion.rb", "lib/jmespath/cli/interactive_commands.rb",
+      "lib/jmespath/cli/interactive_key_stroke.rb",
+      "lib/jmespath/cli/interactive_line_editor.rb",
+      "lib/jmespath/cli/inspection_report.rb", "lib/jmespath/cli/interactive_help.rb"
     )
     expect(specification.files.grep(%r{\A(?:spec/|coverage/|doc/|sig/internal/|\.git|\.superpowers/)})).to be_empty
     expect(specification.files).not_to include("Gemfile", "Gemfile.lock")
-    expect(specification.dependencies.map(&:name).sort).to eq(%w[json stringio])
+    expect(specification.dependencies.map(&:name).sort).to eq(%w[json reline stringio])
   end
 
   it "installs offline and resolves API and both executables from the artifact" do
@@ -39,7 +44,7 @@ RSpec.describe "Installed gem artifact" do
     expect(result.fetch("validation")).to eq([])
     expect(result.fetch("syntax_failure")).to eq("Expected rbracket, received eof")
     expect(result.fetch("source")).to include("/jmespath-ruby-#{JMESPath::VERSION}/lib/jmespath.rb")
-    expect(result.fetch("dependencies").sort).to eq(%w[bundler jmespath-ruby json stringio])
+    expect(result.fetch("dependencies").sort).to eq(%w[bundler io-console jmespath-ruby json reline stringio])
   end
 
   it "ships shell definitions and their manual installation guide" do
@@ -86,10 +91,21 @@ RSpec.describe "Installed gem artifact" do
     expect { @checker.verify(@artifact) }.to raise_error(RuntimeError, /frozen/)
   end
 
+  it "rejects an interactive executable that produces no traced result" do
+    allow(@checker).to receive(:command).and_wrap_original do |command, environment, directory, *arguments, **options|
+      if arguments.include?("--interactive")
+        ""
+      else
+        command.call(environment, directory, *arguments, **options)
+      end
+    end
+    expect { @checker.verify(@artifact) }.to raise_error(RuntimeError, /Incorrect installed interactive executable/)
+  end
+
   it "fills an empty build checksum before the frozen installation" do
     allow(@checker).to receive(:command).and_wrap_original do |command, environment, directory, *arguments, **options|
       output = command.call(environment, directory, *arguments, **options)
-      if arguments.first == "lock"
+      if arguments.first == "install" && environment.fetch("BUNDLE_FROZEN") == "false"
         path = File.join(directory, "Gemfile.lock")
         File.write(path, File.read(path).sub(/(  jmespath-ruby \([^\n]+\)) sha256=.+$/, '\1'))
       end

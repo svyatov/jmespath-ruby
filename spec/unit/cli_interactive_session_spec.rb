@@ -6,8 +6,8 @@ require "jmespath/cli"
 RSpec.describe "Interactive query session" do
   let(:data) { { "name" => "café", "flag" => false } }
 
-  def session(text = "", input: StringIO.new(text), output: StringIO.new, errors: StringIO.new)
-    status = JMESPath::CLI::InteractiveSession.new(data, input: input, output: output, errors: errors).run
+  def session(text = "", input: StringIO.new(text), output: StringIO.new, errors: StringIO.new, document: data)
+    status = JMESPath::CLI::InteractiveSession.new(document, input: input, output: output, errors: errors).run
     [status, output.string, errors.string]
   end
 
@@ -15,6 +15,99 @@ RSpec.describe "Interactive query session" do
     expect(session("name\nmissing\nflag\n")).to eq([0, "\"café\"\nnull\nfalse\n", ""])
     expect(session("\n \t\r\nname\r\nflag")).to eq([0, "\"café\"\nfalse\n", ""])
     expect(session("  :quit\t\nname\n")).to eq([0, "", ""])
+  end
+
+  it "lists built-in signatures and descriptions only on stderr" do
+    status, output, errors = session(":functions\n")
+    expect([status, output]).to eq([0, ""])
+    expect(errors).to include("length(", "Types: any accepts any value", "expref", "Signatures describe")
+  end
+
+  it "trims only horizontal whitespace around long unknown commands" do
+    tabs = "\t" * 25_000
+    report, result = JMESPath::CLI::InteractiveCommands.call(" \t:未知#{tabs}x \t", data: {})
+    expect(result).to be_nil
+    expect(report).to eq("Unknown command: :未知#{'    ' * 25_000}x")
+    expect(JMESPath::CLI::InteractiveCommands.call(":bad\v \t", data: {}))
+      .to eq(["Unknown command: :bad\\v", nil])
+  end
+
+  it "explains the complete query remainder without evaluating the document" do
+    expect(JMESPath).to receive(:compile).with("unknown(name) \t").once.and_call_original
+    expect(JMESPath).not_to receive(:search)
+    expect(data).not_to receive(:[])
+    status, output, errors = session(" \t:explain \t unknown(name) \t\n")
+    expect([status, output]).to eq([0, ""])
+    expect(errors).to include("function", 'name="unknown"', "line 1, column 1")
+    expect(errors).not_to include("Unknown function")
+  end
+
+  [":explain", ":explain \t", ":functions extra", ":explainx name", ":quit extra", ":help extra"].each do |command|
+    it "recovers from invalid command #{command.inspect}" do
+      status, output, errors = session("#{command}\nname\n:quit\n")
+      expect([status, output]).to eq([0, "\"café\"\n"])
+      expect(errors).not_to be_empty
+    end
+  end
+
+  it "recovers from invalid explanation syntax" do
+    status, output, errors = session(":explain items[\nname\n")
+    expect([status, output]).to eq([0, "\"café\"\n"])
+    expect(errors).to include("items[\n      ^")
+  end
+
+  it "traces once and writes one JSON result with ordered omission diagnostics" do
+    document = { "items" => [{ "name" => "Ada" }, {}, { "name" => false }] }
+    expect(JMESPath).to receive(:compile).with("items[*].name").once.and_call_original
+    expect(JMESPath).not_to receive(:search)
+    calls = 0
+    observer = TracePoint.new(:call) do |event|
+      calls += 1 if event.defined_class == JMESPath::Expression && event.method_id == :trace
+    end
+    status, output, errors = observer.enable { session(":trace items[*].name\n", document: document) }
+    expect(calls).to eq(1)
+    expect([status, output]).to eq([0, "[\"Ada\",false]\n"])
+    expect(errors.lines.map { |line| line.split.first }).to eq(%w[field_null projection_omission])
+    expect(errors).to include('name="name" reason="missing"', "context=[#0 index=1]")
+  end
+
+  it "retains null and false trace results and reports an empty trace" do
+    status, output, errors = session(":trace missing\n:trace flag\n")
+    expect([status, output]).to eq([0, "null\nfalse\n"])
+    expect(errors).to include("field_null", "Trace: no diagnostic events.")
+  end
+
+  it "limits diagnostic events while completing the full evaluation" do
+    document = { "items" => Array.new(1001) { {} } + [{ "name" => "last" }] }
+    status, output, errors = session(":trace items[*].name\n", document: document)
+    expect([status, output]).to eq([0, "[\"last\"]\n"])
+    expect(errors.lines.count { |line| line.match?(/\A(?:field_null|projection_omission) /) }).to eq(1000)
+    expect(errors).to include("first 1000 events", "evaluation completed")
+  end
+
+  it "recovers from all supported trace failures before an ordinary query" do
+    text = ":trace\n:trace items[\n:trace length(flag)\n:trace length()\n:trace lenght(name)\nname\n"
+    status, output, errors = session(text)
+    expect([status, output]).to eq([0, "\"café\"\n"])
+    expect(errors).to include(":trace requires a query", "items[\n      ^", "received boolean", "received 0",
+                              "Did you mean length?")
+  end
+
+  ["`1e999`", "#{'[' * 101}flag#{']' * 101}"].each do |query|
+    it "serializes #{query.inspect} before writing a trace report" do
+      status, output, errors = session(":trace #{query}\nname\n")
+      expect([status, output, errors]).to eq([0, "\"café\"\n", "Invalid JSON result\n"])
+    end
+  end
+
+  %i[puts flush].each do |method|
+    it "terminates without a result or repeated write after trace report #{method} fails" do
+      input = StringIO.new(":trace flag\nname\n")
+      errors = StringIO.new
+      expect(errors).to receive(method).once.and_raise(IOError, "report failed")
+      status, output, = session(input: input, errors: errors)
+      expect([status, output, input.gets]).to eq([1, "", "name\n"])
+    end
   end
 
   it "explains commands and recovers from unknown commands and malformed UTF-8" do

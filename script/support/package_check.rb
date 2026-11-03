@@ -18,6 +18,7 @@ class PackageCheck
     installed = Gem.loaded_specs.fetch("jmespath-ruby").full_gem_path
     raise "Wrong provider: #{source}" unless source == File.join(installed, "lib/jmespath.rb")
     raise "Missing public signatures" unless File.file?(File.join(installed, "sig/jmespath.rbs"))
+    raise "Eager terminal editor load" if $LOADED_FEATURES.any? { |path| path.include?("/reline") }
     puts JSON.generate(version: JMESPath::VERSION,
                        search: JMESPath.search("people[*].name", {"people" => [{"name" => "Ada"}]}),
                        validation: JMESPath.validate("people[*].name"),
@@ -54,7 +55,7 @@ class PackageCheck
     cache = File.join(directory, "vendor/cache")
     FileUtils.mkdir_p(cache)
     FileUtils.cp(artifact, cache)
-    %w[json stringio].each do |name|
+    %w[json reline io-console stringio].each do |name|
       archive = Gem.loaded_specs.fetch(name).cache_file
       raise "Missing cached runtime gem: #{archive}" unless File.file?(archive)
 
@@ -70,7 +71,8 @@ class PackageCheck
 
   def prepare_lock(directory, artifact, specification)
     environment = environment_for(directory).merge("BUNDLE_FROZEN" => "false")
-    command(environment, directory, "lock", "--local", "--add-checksums")
+    # Bundler's --add-checksums forces remote resolution, even with --local.
+    command(environment, directory, "install", "--local", "--quiet")
     path = File.join(directory, "Gemfile.lock")
     checksum = "  #{specification.name} (#{specification.version}) sha256=#{Digest::SHA256.file(artifact).hexdigest}"
     identity = Regexp.escape("#{specification.name} (#{specification.version})")
@@ -82,6 +84,9 @@ class PackageCheck
       "BUNDLE_GEMFILE" => File.join(directory, "Gemfile"),
       "BUNDLE_PATH" => File.join(directory, "installed"),
       "BUNDLE_APP_CONFIG" => File.join(directory, ".bundle"),
+      "BUNDLE_USER_HOME" => File.join(directory, "bundler"),
+      "GEM_SPEC_CACHE" => File.join(directory, "gem-spec-cache"),
+      "GEM_HOME" => File.join(directory, "gems"), "GEM_PATH" => File.join(directory, "gems"),
       "BUNDLE_FROZEN" => "true", "BUNDLE_DEPLOYMENT" => "false",
       "BUNDLE_WITHOUT" => "", "RUBYOPT" => nil, "RUBYLIB" => nil
     )
@@ -102,6 +107,16 @@ class PackageCheck
       result = command(environment, directory, "exec", executable, "foo.bar",
                        input: '{"foo":{"bar":2}}')
       raise "Incorrect installed executable: #{executable}" unless result == "2\n"
+
+      verify_interactive(environment, directory, executable)
     end
+  end
+
+  def verify_interactive(environment, directory, executable)
+    path = File.join(directory, "document.json")
+    File.write(path, '{"foo":{"bar":2}}')
+    result = command(environment, directory, "exec", executable, "--interactive", "--file", path,
+                     input: ":functions\n:explain foo.bar\n:trace foo.bar\n:quit\n")
+    raise "Incorrect installed interactive executable: #{executable}" unless result == "2\n"
   end
 end
