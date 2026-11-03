@@ -64,6 +64,10 @@ RSpec.describe "Installed gem artifact" do
               expect(line).to eq("#{command} --query-file ")
               line = ShellCompletion.complete(shell: shell, root: root, line: "#{command} --file=my")
               expect(Shellwords.split(line)).to eq([command, "--file=my document.json"])
+              %w[--help -h].each do |flag|
+                line = ShellCompletion.complete(shell: shell, root: root, line: "#{command} #{flag} val")
+                expect(line).to eq("#{command} #{flag} validate ")
+              end
             end
           end
         end

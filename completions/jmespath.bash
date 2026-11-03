@@ -103,6 +103,19 @@ _jmespath_completion() {
   current=${words[${#words[@]}-1]}
   COMPREPLY=()
 
+  if ((${#words[@]} > 2)); then
+    _jmespath_completion_unquote "${words[1]}"
+    case $REPLY in
+      --help|-h)
+        ((${#words[@]} == 3)) || return
+        _jmespath_completion_unquote "$current"
+        while IFS= read -r candidate; do
+          COMPREPLY[${#COMPREPLY[@]}]=$candidate
+        done < <(compgen -W 'input output validate functions interactive' -- "$REPLY")
+        return ;;
+    esac
+  fi
+
   for ((index = 1; index < ${#words[@]} - 1; index++)); do
     _jmespath_completion_unquote "${words[index]}"
     word=$REPLY
