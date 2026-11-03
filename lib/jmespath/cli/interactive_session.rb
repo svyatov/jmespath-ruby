@@ -4,7 +4,10 @@ module JMESPath
   module CLI
     # @api private
     class InteractiveSession
-      HELP = "Enter one query per line; blank lines are ignored.\n:help shows help; :quit ends the session."
+      HELP = "Enter one query per line; blank lines are ignored.\n:help shows help; :quit ends the session.\n" \
+             "Supported terminals provide editing and recall of the last 500 queries for this session only.\n" \
+             "Ctrl-C cancels the current edit. Other streams use the plain line reader.\n" \
+             "Prompts and diagnostics use stderr; successful JSON results use stdout."
 
       def initialize(data, input:, output:, errors:)
         @data = data
@@ -60,6 +63,7 @@ module JMESPath
         elsif command.start_with?(":")
           diagnostic(FailureDiagnostic.format(Errors::Error.new("Unknown command: #{command}"), nil))
         else
+          @editor&.remember(expression)
           result = evaluate(expression)
           write_result(result) if result
         end

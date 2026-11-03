@@ -155,7 +155,19 @@ Document and stream failures terminate with status 1; usage failures return stat
 Interactive mode requires `--file PATH` and rejects positional queries, `--query-file`, other modes, information flags, and repeated flags.
 Readers supplied to `CLI.run` need `gets`; `tty?` is optional and absent detection means no prompts.
 Writers need `puts`; `flush` is optional except for terminal prompts, whose diagnostic stream needs both `print` and `flush`.
-Caller-owned streams remain open; history, completion, multiline editing, and document reloads are unavailable.
+Caller-owned streams remain open.
+
+On supported terminals, Reline provides single-line editing and previous-query recall.
+Editing requires terminal IO on stdin and stderr and a usable `TERM`; redirected stdout remains available for JSON results.
+Keep up to 500 submitted queries in memory for the session, including failed queries and duplicates.
+Commands, blanks, and invalid UTF-8 input are excluded; the oldest query is discarded when the limit is reached.
+History starts empty for each session and creates no files or shell configuration.
+Ctrl-C discards the current edit without evaluating partial input.
+Pasted physical lines are submitted as separate queries after confirmation.
+Pipes, injected readers, redirected stderr, and unsupported terminals use the plain line reader without loading Reline.
+The plain reader retains its interruption behavior.
+Completion, multiline editing, and document reloads are unavailable.
+Terminal editing is tested on macOS through a pseudo terminal; Windows terminal behavior is unverified.
 
 ## Help
 

@@ -1,13 +1,17 @@
 module JMESPath
   module CLI
     class InteractiveEditor
+      HISTORY_LIMIT: Integer
       @input: _LineReader
       @errors: _Writer
+      @history: Array[String]
+      @pending: Array[String]
       def self.supported?: (input: untyped, errors: untyped) -> bool
       def self.terminal_environment?: () -> bool
       def initialize: (input: _LineReader, errors: _Writer) -> void
       def open: [T] () { () -> T } -> T
       def gets: () -> String?
+      def remember: (String) -> void
     end
     class InteractiveEditorState
       CALLBACKS: Array[Symbol]

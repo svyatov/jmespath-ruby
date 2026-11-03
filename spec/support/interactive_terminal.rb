@@ -6,11 +6,12 @@ require "timeout"
 require "rbconfig"
 
 module InteractiveTerminal
-  def with_terminal(arguments)
+  def with_terminal(arguments, environment: {})
+    reset_terminal_buffers
     PTY.open do |master, slave|
       original = prepare_terminal(slave)
       output, writer = IO.pipe
-      pid = spawn_terminal(arguments, slave, writer)
+      pid = spawn_terminal(arguments, slave, writer, environment)
       writer.close
       status = await_terminal(pid) { yield master, output, pid }
       pid = nil
@@ -21,6 +22,11 @@ module InteractiveTerminal
       stop_terminal(pid) if pid
       close_terminal_streams(output, writer)
     end
+  end
+
+  def reset_terminal_buffers
+    @terminal_buffer = +""
+    @terminal_transcript = +""
   end
 
   def close_terminal_streams(*streams)
@@ -46,8 +52,8 @@ module InteractiveTerminal
     expect(IO.popen(["stty", "-g"], "r", in: slave, &:read)).to eq(original)
   end
 
-  def spawn_terminal(arguments, slave, writer)
-    Process.spawn({ "TERM" => "xterm-256color" }, RbConfig.ruby, *arguments,
+  def spawn_terminal(arguments, slave, writer, environment)
+    Process.spawn({ "TERM" => "xterm-256color" }.merge(environment), RbConfig.ruby, *arguments,
                   in: slave, out: writer, err: slave)
   end
 
@@ -57,17 +63,15 @@ module InteractiveTerminal
   end
 
   def terminal_until(master, text)
-    @terminal_transcript ||= +""
-    buffer = +""
-    until buffer.include?(text)
+    until @terminal_buffer.include?(text)
       chunk = master.readpartial(4096)
       @terminal_transcript << chunk
-      buffer << chunk
-      if buffer.include?("\e[6n")
+      @terminal_buffer << chunk
+      if @terminal_buffer.include?("\e[6n")
         master.write("\e[1;1R")
-        buffer.gsub!("\e[6n", "")
+        @terminal_buffer.gsub!("\e[6n", "")
       end
     end
-    buffer
+    @terminal_buffer.slice!(0, @terminal_buffer.index(text) + text.bytesize)
   end
 end

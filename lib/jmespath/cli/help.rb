@@ -97,7 +97,10 @@ module JMESPath
           Startup or stream failures exit with status 1; usage failures return 2 before reading input.
           CLI.run input needs gets; tty? is optional and absent detection means no prompts.
           Writers need puts; output flush is optional. Terminal prompts require stderr print and flush.
-          Caller-owned streams remain open; history, completion, multiline editing, and document reloads are unavailable.
+          Supported terminals provide editing and recall of the last 500 queries for this session only.
+          Ctrl-C cancels the current edit. History includes failed queries, excludes commands, and creates no files.
+          Editing requires terminal IO on stdin and stderr and a usable TERM; other streams use a plain reader.
+          Caller-owned streams remain open; completion, multiline editing, and document reloads are unavailable.
         TEXT
       }.freeze
 

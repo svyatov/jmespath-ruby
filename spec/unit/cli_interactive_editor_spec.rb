@@ -24,6 +24,15 @@ RSpec.describe "Interactive editor selection" do
     expect(errors.string).to eq("^C\n")
   end
 
+  it "returns all confirmed pasted lines without another terminal read" do
+    editor = JMESPath::CLI::InteractiveEditor.new(input: StringIO.new, errors: StringIO.new)
+    allow(Reline).to receive(:readline).with("jmespath> ", false).and_return("flag", nil)
+    allow(Reline.core.line_editor).to receive(:whole_lines).and_return(%w[name flag])
+    expect(editor.gets).to eq("name")
+    expect(editor.gets).to eq("flag")
+    expect(editor.gets).to be_nil
+  end
+
   it "runs a session through the editor without an extra prompt" do
     PTY.open do |_master, slave|
       output = StringIO.new
@@ -61,6 +70,60 @@ RSpec.describe "Interactive editor selection" do
     File.open(File::NULL) do |input|
       expect(JMESPath::CLI::InteractiveEditor.supported?(input: input, errors: input)).to be(false)
     end
+  end
+
+  it "retains 500 queries in submission order including duplicates" do
+    PTY.open do |_master, slave|
+      editor = JMESPath::CLI::InteractiveEditor.new(input: slave, errors: slave)
+      editor.open do
+        501.times { |index| editor.remember("q#{index}") }
+        expect(Reline::HISTORY.size).to eq(500)
+        expect(Reline::HISTORY.first).to eq("q1")
+        expect(Reline::HISTORY.last).to eq("q500")
+        editor.remember("q500")
+        expect(Reline::HISTORY.last(2)).to eq(%w[q500 q500])
+      end
+    end
+  end
+
+  it "records failed queries and excludes commands and malformed input" do
+    PTY.open do |_master, slave|
+      output = StringIO.new
+      lines = ["\n", " \t\r\n", "\xFF".b, ":help", ":bad", "  name\r\n", "items[", "name", nil]
+      allow(Reline).to receive(:readline).and_return(*lines)
+      history = nil
+      allow(JMESPath).to receive(:search).and_wrap_original do |original, expression, data|
+        history = Reline::HISTORY.to_a
+        original.call(expression, data)
+      end
+      status = JMESPath::CLI::InteractiveSession.new({ "name" => "Ada" },
+                                                     input: slave, output: output, errors: slave).run
+      expect(status).to eq(0)
+      expect(history).to eq(["  name", "items[", "name"])
+      expect(output.string).to eq("\"Ada\"\n\"Ada\"\n")
+    end
+  end
+
+  it "isolates session history from external history settings" do
+    config = Reline.core.config
+    previous_size = config.history_size
+    previous_history = Reline::HISTORY.to_a
+    config.history_size = 0
+    Reline::HISTORY.replace(["external"])
+    PTY.open do |_master, slave|
+      2.times do
+        editor = JMESPath::CLI::InteractiveEditor.new(input: slave, errors: slave)
+        editor.open do
+          expect(Reline::HISTORY).to be_empty
+          editor.remember("name")
+          expect(Reline::HISTORY.to_a).to eq(["name"])
+        end
+        expect(Reline::HISTORY.to_a).to eq(["external"])
+      end
+    end
+  ensure
+    config.history_size = previous_size
+    Reline::HISTORY.replace(previous_history)
   end
 
   it "does not load Reline for library calls or piped sessions" do

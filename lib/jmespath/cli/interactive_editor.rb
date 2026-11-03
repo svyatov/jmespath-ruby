@@ -6,6 +6,8 @@ module JMESPath
   module CLI
     # @api private
     class InteractiveEditor
+      HISTORY_LIMIT = 500
+
       def self.supported?(input:, errors:)
         return false unless terminal_environment?
 
@@ -22,6 +24,8 @@ module JMESPath
       def initialize(input:, errors:)
         @input = input
         @errors = errors
+        @history = []
+        @pending = []
       end
 
       def open
@@ -36,10 +40,25 @@ module JMESPath
       end
 
       def gets
-        Reline.readline("jmespath> ", false)
+        return @pending.shift unless @pending.empty?
+
+        line = Reline.readline("jmespath> ", false)
+        return unless line
+
+        lines = Reline.core.line_editor.whole_lines
+        return line if lines.length == 1
+
+        @pending = lines
+        @pending.shift
       rescue Interrupt
         @errors.puts("^C")
         retry
+      end
+
+      def remember(query)
+        @history << query
+        @history.shift if @history.length > HISTORY_LIMIT
+        Reline::HISTORY.replace(@history)
       end
     end
   end
