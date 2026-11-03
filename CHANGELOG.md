@@ -5,6 +5,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) for t
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-03
+
 ### Added
 
 - Add topic help for input, output, validation, functions, and interactive sessions, with Bash and Zsh topic completion.
@@ -76,7 +78,8 @@ Initial implementation for Ruby 3.3 and later.
 The compatibility guide documents intentional corrections and limits.
 Applications that depend on the gem name `jmespath` must change that dependency explicitly.
 
-[unreleased]: https://github.com/svyatov/jmespath-ruby/compare/v0.1.3...HEAD
+[unreleased]: https://github.com/svyatov/jmespath-ruby/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/svyatov/jmespath-ruby/compare/v0.1.3...v1.0.0
 [0.1.3]: https://github.com/svyatov/jmespath-ruby/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/svyatov/jmespath-ruby/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/svyatov/jmespath-ruby/compare/v0.1.0...v0.1.1

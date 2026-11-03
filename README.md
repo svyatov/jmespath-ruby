@@ -11,7 +11,7 @@ Search JSON and Ruby data with reusable queries and typed custom functions.
 In your Ruby project, add the gem with Bundler. Run `bundle init` first if the project has no Gemfile.
 
 ```sh
-bundle add jmespath-ruby --version "~> 0.1.3"
+bundle add jmespath-ruby --version "~> 1.0"
 ```
 
 Save this Ruby example as `example.rb`:
@@ -43,7 +43,7 @@ Replace that Gemfile entry:
 
 ```diff
 -gem "jmespath"
-+gem "jmespath-ruby", "~> 0.1.3"
++gem "jmespath-ruby", "~> 1.0"
 ```
 
 Run `bundle install`. Your Ruby code keeps the same entry points:
