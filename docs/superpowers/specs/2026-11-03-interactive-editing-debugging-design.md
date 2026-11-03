@@ -1,6 +1,6 @@
 # Interactive query editing and debugging
 
-Status: proposed for approval.
+Status: approved by the user on 2026-11-03.
 Scope: [issue #53](https://github.com/svyatov/jmespath-ruby/issues/53).
 
 ## Intent and boundaries
