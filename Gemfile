@@ -5,7 +5,7 @@ gemspec
 
 group :development, :test do
   gem "bundler-audit", "~> 0.9.3", require: false
-  gem "crap4ruby", "~> 0.2.2", require: false
+  gem "crap4ruby", "~> 0.2.3", require: false
   gem "rake", "~> 13.4", require: false
   gem "rbs", "~> 4.2", require: false
   gem "rspec", "~> 3.13", require: false
